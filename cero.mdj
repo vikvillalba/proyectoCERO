@@ -20348,6 +20348,42 @@
 															"height": 13,
 															"text": "+clasesImpartidas: lista<Clase>",
 															"horizontalAlignment": 0
+														},
+														{
+															"_type": "UMLAttributeView",
+															"_id": "AAAAAAGU+1HexAt79lY=",
+															"_parent": {
+																"$ref": "AAAAAAGU93b6PYY/7a8="
+															},
+															"model": {
+																"$ref": "AAAAAAGU+1HenQsqEv8="
+															},
+															"font": "Arial;13;0",
+															"parentStyle": true,
+															"left": 1917,
+															"top": 482,
+															"width": 184.8916015625,
+															"height": 13,
+															"text": "+usuario: texto",
+															"horizontalAlignment": 0
+														},
+														{
+															"_type": "UMLAttributeView",
+															"_id": "AAAAAAGU+1IHbBKElSg=",
+															"_parent": {
+																"$ref": "AAAAAAGU93b6PYY/7a8="
+															},
+															"model": {
+																"$ref": "AAAAAAGU+1IHUxIzbog="
+															},
+															"font": "Arial;13;0",
+															"parentStyle": true,
+															"left": 1917,
+															"top": 497,
+															"width": 184.8916015625,
+															"height": 13,
+															"text": "+contrasena: texto",
+															"horizontalAlignment": 0
 														}
 													],
 													"font": "Arial;13;0",
@@ -20355,7 +20391,7 @@
 													"left": 1912,
 													"top": 462,
 													"width": 194.8916015625,
-													"height": 23
+													"height": 53
 												},
 												{
 													"_type": "UMLOperationCompartmentView",
@@ -20369,7 +20405,7 @@
 													"font": "Arial;13;0",
 													"parentStyle": true,
 													"left": 1912,
-													"top": 485,
+													"top": 515,
 													"width": 194.8916015625,
 													"height": 10
 												},
@@ -20412,7 +20448,7 @@
 											"left": 1912,
 											"top": 424,
 											"width": 193.8916015625,
-											"height": 71,
+											"height": 101,
 											"nameCompartment": {
 												"$ref": "AAAAAAGU93b6PIY6AXE="
 											},
@@ -20549,8 +20585,8 @@
 													"visible": false,
 													"font": "Arial;13;0",
 													"parentStyle": false,
-													"left": 1866,
-													"top": 453,
+													"left": 1865,
+													"top": 460,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 15,
@@ -20571,8 +20607,8 @@
 													"visible": null,
 													"font": "Arial;13;0",
 													"parentStyle": false,
-													"left": 1865,
-													"top": 468,
+													"left": 1863,
+													"top": 475,
 													"height": 13,
 													"alpha": 1.5707963267948966,
 													"distance": 30,
@@ -20593,8 +20629,8 @@
 													"visible": false,
 													"font": "Arial;13;0",
 													"parentStyle": false,
-													"left": 1869,
-													"top": 424,
+													"left": 1870,
+													"top": 431,
 													"height": 13,
 													"alpha": -1.5707963267948966,
 													"distance": 15,
@@ -20613,7 +20649,7 @@
 												"$ref": "AAAAAAGU93b6PIY5npA="
 											},
 											"lineStyle": 1,
-											"points": "1911:449;1825:441",
+											"points": "1911:459;1825:446",
 											"showVisibility": true,
 											"nameLabel": {
 												"$ref": "AAAAAAGU93h8c+SvPME="
@@ -23162,6 +23198,24 @@
 											},
 											"name": "clasesImpartidas",
 											"type": "lista<Clase>"
+										},
+										{
+											"_type": "UMLAttribute",
+											"_id": "AAAAAAGU+1HenQsqEv8=",
+											"_parent": {
+												"$ref": "AAAAAAGU93b6O4Y4CMA="
+											},
+											"name": "usuario",
+											"type": "texto"
+										},
+										{
+											"_type": "UMLAttribute",
+											"_id": "AAAAAAGU+1IHUxIzbog=",
+											"_parent": {
+												"$ref": "AAAAAAGU93b6O4Y4CMA="
+											},
+											"name": "contrasena",
+											"type": "texto"
 										}
 									]
 								}
