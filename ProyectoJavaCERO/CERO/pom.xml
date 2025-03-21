@@ -6,6 +6,9 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>Presentacion</module>
+        <module>Negocio</module>
+        <module>Persistencia</module>
         <module>InscribirClase</module>
     </modules>
     <properties>

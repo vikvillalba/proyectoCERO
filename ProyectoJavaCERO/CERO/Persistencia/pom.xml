@@ -6,11 +6,11 @@
         <artifactId>CERO</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>InscribirClase</artifactId>
+    <artifactId>Persistencia</artifactId>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>22</maven.compiler.source>
         <maven.compiler.target>22</maven.compiler.target>
-        <exec.mainClass>com.mycompany.inscribirclase.InscribirClase</exec.mainClass>
+        <exec.mainClass>com.mycompany.persistencia.Persistencia</exec.mainClass>
     </properties>
 </project>
