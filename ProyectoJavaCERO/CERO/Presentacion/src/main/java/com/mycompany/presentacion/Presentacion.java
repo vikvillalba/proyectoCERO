@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 
 package com.mycompany.presentacion;
+
+import FRMs.FrmMenuPrincipal;
 
 /**
  *
@@ -11,6 +10,7 @@ package com.mycompany.presentacion;
 public class Presentacion {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        FrmMenuPrincipal menu = new FrmMenuPrincipal();
+        menu.setVisible(true);
     }
 }
