@@ -1,6 +1,7 @@
 
 package FRMs;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -33,7 +34,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         };
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 710));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
+        
+        this.setSize(1000, 700); // Ajusta el tamaño del JFrame
+        this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
         pack(); 
     
@@ -46,50 +50,58 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btnCerrarSesion = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        btnGaleriaProyectos = new javax.swing.JButton();
         btnGestionarClases = new javax.swing.JButton();
-        btnInscribirClase = new javax.swing.JButton();
+        btnInscribir = new javax.swing.JButton();
         btnGestionarAlumnos = new javax.swing.JButton();
         btnControlAsistencias = new javax.swing.JButton();
-        btnGaleriaProyectos = new javax.swing.JButton();
+        btnInscribir4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/logoAzul.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 520, 130));
-
-        btnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesion.png"))); // NOI18N
-        btnCerrarSesion.setBorder(null);
-        btnCerrarSesion.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesionHovered.png"))); // NOI18N
-        getContentPane().add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 590, -1, -1));
-
-        btnGestionarClases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/GestionarClase.png"))); // NOI18N
-        btnGestionarClases.setBorder(null);
-        btnGestionarClases.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarClasesHovered.png"))); // NOI18N
-        btnGestionarClases.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarClasesHovered.png"))); // NOI18N
-        getContentPane().add(btnGestionarClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
-
-        btnInscribirClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClase.png"))); // NOI18N
-        btnInscribirClase.setBorder(null);
-        btnInscribirClase.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClaseHovered.png"))); // NOI18N
-        getContentPane().add(btnInscribirClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
-
-        btnGestionarAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnos.png"))); // NOI18N
-        btnGestionarAlumnos.setBorder(null);
-        btnGestionarAlumnos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnosHovered.png"))); // NOI18N
-        getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, -1, -1));
-
-        btnControlAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/controlAsistencias.png"))); // NOI18N
-        btnControlAsistencias.setBorder(null);
-        btnControlAsistencias.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/asistenciasHovered.png"))); // NOI18N
-        getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(30, 47, 86));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/logoAzul.png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, -1, 180));
 
         btnGaleriaProyectos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/galeriaProyectos.png"))); // NOI18N
         btnGaleriaProyectos.setBorder(null);
+        btnGaleriaProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGaleriaProyectos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
-        getContentPane().add(btnGaleriaProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, -1, -1));
+        btnGaleriaProyectos.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
+        getContentPane().add(btnGaleriaProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, -1));
+
+        btnGestionarClases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/GestionarClase.png"))); // NOI18N
+        btnGestionarClases.setBorder(null);
+        btnGestionarClases.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestionarClases.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarClasesHovered.png"))); // NOI18N
+        getContentPane().add(btnGestionarClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, -1, -1));
+
+        btnInscribir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClase.png"))); // NOI18N
+        btnInscribir.setBorder(null);
+        btnInscribir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInscribir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClaseHovered.png"))); // NOI18N
+        getContentPane().add(btnInscribir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, -1));
+
+        btnGestionarAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnos.png"))); // NOI18N
+        btnGestionarAlumnos.setBorder(null);
+        btnGestionarAlumnos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestionarAlumnos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnosHovered.png"))); // NOI18N
+        getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, -1, -1));
+
+        btnControlAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/controlAsistencias.png"))); // NOI18N
+        btnControlAsistencias.setBorder(null);
+        btnControlAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnControlAsistencias.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/asistenciasHovered.png"))); // NOI18N
+        getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, -1, -1));
+
+        btnInscribir4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesion.png"))); // NOI18N
+        btnInscribir4.setBorder(null);
+        btnInscribir4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnInscribir4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesionHovered.png"))); // NOI18N
+        getContentPane().add(btnInscribir4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 600, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -97,12 +109,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnControlAsistencias;
     private javax.swing.JButton btnGaleriaProyectos;
     private javax.swing.JButton btnGestionarAlumnos;
     private javax.swing.JButton btnGestionarClases;
-    private javax.swing.JButton btnInscribirClase;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnInscribir;
+    private javax.swing.JButton btnInscribir4;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

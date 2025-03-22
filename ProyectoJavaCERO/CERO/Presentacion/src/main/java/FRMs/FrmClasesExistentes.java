@@ -52,6 +52,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
             }
         };
         // Lista de clases hardcodeadas con un arreglo de Object
+        // Jackkkkk, este es un método que tienes que llamar desde el control del InscribirClase :P
         Object[][] clases = {
             {1, "Contemporanea", "08:00 - 10:00"+System.lineSeparator()+"LUN-MIE-VIE", "Profesor A"},
             {2, "Contemporanea", "10:00 - 12:00,MAR-JUEV", "Profesor B"},
@@ -103,7 +104,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("CLASES EXISTENTES");
 
