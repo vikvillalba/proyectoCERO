@@ -1,6 +1,7 @@
 
 package FRMs;
 
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -83,6 +84,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnInscribir.setBorder(null);
         btnInscribir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInscribir.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClaseHovered.png"))); // NOI18N
+        btnInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInscribirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnInscribir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, -1));
 
         btnGestionarAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnos.png"))); // NOI18N
@@ -105,6 +111,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirActionPerformed
+        ControlNavegacion.mostrarInscribirClase();
+    }//GEN-LAST:event_btnInscribirActionPerformed
 
     
 

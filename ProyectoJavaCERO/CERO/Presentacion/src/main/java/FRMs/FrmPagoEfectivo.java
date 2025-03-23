@@ -1,6 +1,11 @@
 
 package FRMs;
 
+import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.NuevoPagoDTO;
+import com.mycompany.negocio.dtos.PagoDTO;
+import com.mycompany.negocio.dtos.PagoEfectivoDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,13 +18,18 @@ import javax.swing.JPanel;
  */
 public class FrmPagoEfectivo extends javax.swing.JFrame {
     private Image imagenFondo;
+    private ClaseDTO clase;
+    
 
     /**
      * Creates new form FrmMenuPrincipal
+     * @param clase clase a la que se está realizando la inscripcion
      */
-    public FrmPagoEfectivo() {
+    public FrmPagoEfectivo(ClaseDTO clase) {
         initComponents();
+        this.clase = clase;
         this.setTitle("Pago en efectivo");
+        lblTotalPago.setText(clase.getPrecio().toString());
         
         // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -40,6 +50,8 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
         pack(); 
+        
+        
     
     }
     
@@ -68,7 +80,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         lblCambio.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         lblCambio.setForeground(new java.awt.Color(255, 255, 255));
         lblCambio.setText("0.00");
-        getContentPane().add(lblCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, -1, -1));
+        getContentPane().add(lblCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, 230, -1));
 
         jLabel3.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(30, 47, 86));
@@ -108,17 +120,26 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         lblTotalPago.setText("0.00");
         getContentPane().add(lblTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
 
-        btnRegresar.setBackground(null);
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 590, -1, -1));
 
         btnCalcularCambio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambio.png"))); // NOI18N
         btnCalcularCambio.setBorder(null);
+        btnCalcularCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularCambioActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCalcularCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, -1, -1));
 
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
+        btnRealizarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarPagoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, -1, -1));
 
         pack();
@@ -128,6 +149,28 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         txtEfectivoRecibido.setText(" ");
         txtEfectivoRecibido.setForeground(Color.BLACK);
     }//GEN-LAST:event_txtEfectivoRecibidoMousePressed
+
+    private void btnCalcularCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularCambioActionPerformed
+        boolean efectivoValido = ControlNavegacion.getInscribirClase().validarEfectivoRecibido(clase.getPrecio(), Float.parseFloat(txtEfectivoRecibido.getText()));
+        if(!efectivoValido){
+            ControlNavegacion.mostrarMensajeErrorEfectivoFaltante(this);
+        }
+        Float cambio = ControlNavegacion.getInscribirClase().calcularCambio(clase.getPrecio(), Float.parseFloat(txtEfectivoRecibido.getText()));
+        lblCambio.setText(cambio.toString());
+    }//GEN-LAST:event_btnCalcularCambioActionPerformed
+
+    private void btnRealizarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPagoActionPerformed
+        //hacer pagoefectivodto
+        PagoEfectivoDTO pagoEfectivo = new PagoEfectivoDTO(Float.parseFloat(txtEfectivoRecibido.getText()), Float.parseFloat(lblCambio.getText()));
+        // armar nuevopagodto
+        NuevoPagoDTO nuevoPago = new NuevoPagoDTO(clase.getPrecio(), pagoEfectivo);
+        PagoDTO pago = ControlNavegacion.getInscribirClase().realizarPagoEfectivo(nuevoPago);
+        
+        if(pago != null){
+            ControlNavegacion.mostrarMensajePagoExitoso(this);
+        }
+        
+    }//GEN-LAST:event_btnRealizarPagoActionPerformed
 
     
 
