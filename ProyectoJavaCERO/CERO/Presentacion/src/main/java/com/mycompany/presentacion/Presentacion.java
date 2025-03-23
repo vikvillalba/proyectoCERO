@@ -14,12 +14,12 @@ import java.util.List;
 public class Presentacion {
 
     public static void main(String[] args) {
-        ControlNavegacion control = new ControlNavegacion(new InscribirClase()); // posible fábrica 
+        ControlNavegacion control = new ControlNavegacion(); // posible fábrica 
 
         // clase para probar. borrar después. 
         List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
         ClaseDTO clase = new ClaseDTO(1, "Contemporáneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", 500.0f);
 
-        ControlNavegacion.mostrarMenuPrincipal();
+        ControlNavegacion.mostrarPagoTarjeta(clase);
     }
 }

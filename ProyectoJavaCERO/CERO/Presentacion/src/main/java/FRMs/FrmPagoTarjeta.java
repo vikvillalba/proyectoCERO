@@ -1,10 +1,21 @@
 
 package FRMs;
 
+import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
+import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.NuevoPagoDTO;
+import com.mycompany.negocio.dtos.PagoDTO;
+import com.mycompany.negocio.dtos.PagoTarjetaDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -14,12 +25,15 @@ import javax.swing.JPanel;
  */
 public class FrmPagoTarjeta extends javax.swing.JFrame {
     private Image imagenFondo;
+    private ClaseDTO clase;
+    private JDateChooser fechaVencimiento;
 
     /**
      * Creates new form FrmMenuPrincipal
      */
-    public FrmPagoTarjeta() {
+    public FrmPagoTarjeta(ClaseDTO clase) {
         initComponents();
+        this.clase = clase;
         this.setTitle("Pago con tarjeta");
         
         // Cargar la imagen de fondo 
@@ -40,7 +54,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 700));
 
         // Agregar JDateChooser dentro del JPanel
-        JDateChooser fechaVencimiento = new JDateChooser();
+        fechaVencimiento = new JDateChooser();
         jPanel1.add(fechaVencimiento);
         
         fechaVencimiento.setBounds(440, 330, 290, 30); // (x, y, ancho, alto)
@@ -105,6 +119,11 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
         btnRealizarPago.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRealizarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRealizarPagoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
@@ -156,6 +175,34 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
 
         txtPropietario.setForeground(Color.BLACK);
     }//GEN-LAST:event_txtPropietarioMousePressed
+
+    private void btnRealizarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPagoActionPerformed
+        // validar datos
+        // armar nuevopagoTarjetaDTo
+        String numeroCuenta = txtNumeroCuenta.getText();
+        String propietario = txtPropietario.getText();
+        Date fechaSeleccionada = fechaVencimiento.getDate();
+        Integer cvv = Integer.parseInt(txtCvv.getText());
+
+        if (fechaSeleccionada == null) {
+            // convertir a excepcion
+            System.out.println("No se ha seleccionado ninguna fecha.");
+        }
+        LocalDate fechaVencimiento = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        Float monto = clase.getPrecio();
+        NuevoPagoTarjetaDTO nuevoPago = new NuevoPagoTarjetaDTO(numeroCuenta, propietario, fechaVencimiento, cvv, monto);
+        
+        PagoRealizadoDTO pagoRealizado = ControlNavegacion.getInscribirClase().confirmarPagoTarjeta(nuevoPago);
+        // enviarlo al control
+        
+        PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizado.getCodigoConfirmacion(), pagoRealizado.getFechaHora());
+        NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(monto, pagoTarjeta);
+        PagoDTO pago = ControlNavegacion.getInscribirClase().realizarPagoTarjeta(nuevoPagoDTO);
+        
+        if(pago != null){
+            ControlNavegacion.mostrarMensajePagoExitoso(this);
+        }
+    }//GEN-LAST:event_btnRealizarPagoActionPerformed
 
     
 

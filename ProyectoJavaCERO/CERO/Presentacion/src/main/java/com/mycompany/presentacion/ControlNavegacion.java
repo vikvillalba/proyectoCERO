@@ -16,8 +16,8 @@ public class ControlNavegacion {
     
     private static InscribirClase inscribirClase;
 
-    public ControlNavegacion(InscribirClase inscribirClase) {
-        this.inscribirClase = inscribirClase;
+    public ControlNavegacion() {
+        this.inscribirClase = new InscribirClase();
     }
 
     public static InscribirClase getInscribirClase() {
@@ -43,8 +43,8 @@ public class ControlNavegacion {
     }
     
      /** Muestra la pantalla para registrar un pago con tarjeta para el caso de uso de inscribir a un alumno. */
-    public static void mostrarPagoTarjeta(){
-        FrmPagoTarjeta pagoTarjeta = new FrmPagoTarjeta();
+    public static void mostrarPagoTarjeta(ClaseDTO clase){
+        FrmPagoTarjeta pagoTarjeta = new FrmPagoTarjeta(clase);
         pagoTarjeta.setVisible(true);
     }
     

@@ -1,8 +1,10 @@
 
 package com.mycompany.inscribirclase.implementaciones;
 
-import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.infraestructura.sistemaPago.IGestorPagos;
+import com.mycompany.infraestructura.sistemaPago.implementaciones.GestorPagos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
+import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.negocio.dtos.MetodoPagoDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
@@ -40,19 +42,30 @@ public class InscribirClase implements IInscribirClase{
         
     }
 
-    @Override
-    public PagoRealizadoDTO confirmarPagoTarjeta(NuevoPagoTarjetaDTO pagoTarjeta) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public PagoDTO realizarPagoTarjeta(NuevoPagoDTO nuevoPago) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public boolean validarEfectivoRecibido(Float costoClase, Float efectivo) {
         return efectivo >= costoClase;
+    }
+
+    @Override
+    public PagoRealizadoDTO confirmarPagoTarjeta(NuevoPagoTarjetaDTO pagoTarjeta) {
+        IGestorPagos gestorPagosExterno = new GestorPagos();
+        return gestorPagosExterno.registrarPago(pagoTarjeta);
+    }
+
+    @Override
+    public PagoDTO realizarPagoTarjeta(NuevoPagoDTO nuevoPago) {
+        Random random = new Random();
+        
+        Float total = nuevoPago.getTotal();
+        MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
+        int codigo = random.nextInt(1000) + 1;
+        LocalDateTime fecha = LocalDateTime.now();
+        PagoDTO pago =  new PagoDTO(codigo, total, metodoPago, fecha, true);
+        
+        pagos.add(pago);
+        return pago;
     }
 
 

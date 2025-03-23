@@ -1,8 +1,8 @@
 
 package com.mycompany.inscribirclase;
 
-import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
+import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
 /**
