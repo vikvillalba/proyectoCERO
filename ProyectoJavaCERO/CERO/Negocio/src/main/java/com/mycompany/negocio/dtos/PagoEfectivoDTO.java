@@ -1,35 +1,39 @@
 
 package com.mycompany.negocio.dtos;
 
+import java.math.BigDecimal;
+
 /**
  * Clase de transporte para un pago con efectivo.
  * @author victoria
  */
 public class PagoEfectivoDTO implements MetodoPagoDTO {
     
-    private Float cantidadRecibida;
-    private Float cambio;
+    private BigDecimal cantidadRecibida;
+    private BigDecimal cambio;
 
-    public PagoEfectivoDTO(Float cantidadRecibida, Float cambio) {
+    public PagoEfectivoDTO(BigDecimal cantidadRecibida, BigDecimal cambio) {
         this.cantidadRecibida = cantidadRecibida;
         this.cambio = cambio;
     }
 
-    public Float getCantidadRecibida() {
+    public BigDecimal getCantidadRecibida() {
         return cantidadRecibida;
     }
 
-    public void setCantidadRecibida(Float cantidadRecibida) {
+    public void setCantidadRecibida(BigDecimal cantidadRecibida) {
         this.cantidadRecibida = cantidadRecibida;
     }
 
-    public Float getCambio() {
+    public BigDecimal getCambio() {
         return cambio;
     }
 
-    public void setCambio(Float cambio) {
+    public void setCambio(BigDecimal cambio) {
         this.cambio = cambio;
     }
+
+
     
     
 }

@@ -6,9 +6,15 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.GestorPagos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
+import com.mycompany.negocio.dtos.AlumnoDTO;
+import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.MetodoPagoDTO;
+import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +26,26 @@ import java.util.Random;
  */
 public class InscribirClase implements IInscribirClase{
     
-    private List<PagoDTO> pagos = new ArrayList<>();
+    private List<PagoDTO> pagos;
+    private List<InscripcionDTO> inscripciones;
+
+    public InscribirClase() {
+        this.pagos = new ArrayList<>();
+        this.inscripciones = new ArrayList<>();
+    }
+    
+    
 
     @Override
-    public Float calcularCambio(Float costoClase, Float cantidadRecibida) {
-        return cantidadRecibida - costoClase;
+    public BigDecimal calcularCambio(BigDecimal costoClase, BigDecimal cantidadRecibida) {
+        return cantidadRecibida.subtract(costoClase);
     }
 
     @Override
     public PagoDTO realizarPagoEfectivo(NuevoPagoDTO nuevoPago) {
         Random random = new Random();
         
-        Float total = nuevoPago.getTotal();
+        BigDecimal total = nuevoPago.getTotal();
         MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
         int codigo = random.nextInt(1000) + 1;
         LocalDateTime fecha = LocalDateTime.now();
@@ -44,8 +58,11 @@ public class InscribirClase implements IInscribirClase{
 
 
     @Override
-    public boolean validarEfectivoRecibido(Float costoClase, Float efectivo) {
-        return efectivo >= costoClase;
+    public boolean validarEfectivoRecibido(BigDecimal costoClase, BigDecimal efectivo) {
+        if (costoClase == null || efectivo == null) {
+            return false; // No se puede validar si hay valores nulos
+        }
+        return efectivo.compareTo(costoClase) >= 0 && efectivo.compareTo(BigDecimal.ZERO) > 0;
     }
 
     @Override
@@ -58,7 +75,7 @@ public class InscribirClase implements IInscribirClase{
     public PagoDTO realizarPagoTarjeta(NuevoPagoDTO nuevoPago) {
         Random random = new Random();
         
-        Float total = nuevoPago.getTotal();
+        BigDecimal total = nuevoPago.getTotal();
         MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
         int codigo = random.nextInt(1000) + 1;
         LocalDateTime fecha = LocalDateTime.now();
@@ -66,6 +83,43 @@ public class InscribirClase implements IInscribirClase{
         
         pagos.add(pago);
         return pago;
+    }
+
+    @Override
+    public boolean validarNumeroCuenta(String numeroCuenta) {
+        return numeroCuenta != null
+                && !numeroCuenta.isEmpty()
+                && numeroCuenta.length() == 16
+                && numeroCuenta.matches("\\d{16}");
+    }
+
+    @Override
+    public boolean validarPropietarioTarjeta(String propietario) {
+        return propietario != null && !propietario.trim().isEmpty();
+    }
+
+    @Override
+    public boolean validarFechaExpiracion(LocalDate fecha) {
+        return fecha != null && fecha.isAfter(LocalDate.now());
+    }
+
+    @Override
+    public boolean validarCVV(int cvv) {
+         return cvv >= 100 && cvv <= 9999;
+    }
+
+    @Override
+    public InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion) {
+        Random random = new Random();
+        AlumnoDTO alumno = inscripcion.getAlumno();
+        PagoDTO pago = inscripcion.getPago();
+        ClaseDTO clase = inscripcion.getClase();
+        LocalDateTime fechaHora = inscripcion.getFecha();
+        int codigo = random.nextInt(1000) + 1;
+        InscripcionDTO nuevaInscripcion = new InscripcionDTO(codigo, alumno, clase, fechaHora, pago);
+        
+        inscripciones.add(nuevaInscripcion);
+        return nuevaInscripcion;
     }
 
 

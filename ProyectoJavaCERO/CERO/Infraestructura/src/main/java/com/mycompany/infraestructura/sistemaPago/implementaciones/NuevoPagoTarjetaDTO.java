@@ -1,6 +1,7 @@
 
 package com.mycompany.infraestructura.sistemaPago.implementaciones;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -12,9 +13,9 @@ public class NuevoPagoTarjetaDTO {
     private String propietario;
     private LocalDate fechaExpiracion;
     private int cvv;
-    private Float monto;
+    private BigDecimal monto;
 
-    public NuevoPagoTarjetaDTO(String numeroCuenta, String propietario, LocalDate fechaExpiracion, int cvv, Float monto) {
+    public NuevoPagoTarjetaDTO(String numeroCuenta, String propietario, LocalDate fechaExpiracion, int cvv, BigDecimal monto) {
         this.numeroCuenta = numeroCuenta;
         this.propietario = propietario;
         this.fechaExpiracion = fechaExpiracion;
@@ -38,7 +39,7 @@ public class NuevoPagoTarjetaDTO {
         return cvv;
     }
 
-    public Float getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
     

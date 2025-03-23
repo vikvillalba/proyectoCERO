@@ -1,7 +1,10 @@
 
 package FRMs;
 
+import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.InscripcionDTO;
+import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
 import com.mycompany.negocio.dtos.PagoEfectivoDTO;
@@ -9,6 +12,8 @@ import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -19,15 +24,17 @@ import javax.swing.JPanel;
 public class FrmPagoEfectivo extends javax.swing.JFrame {
     private Image imagenFondo;
     private ClaseDTO clase;
+    private AlumnoDTO alumno;
     
 
     /**
      * Creates new form FrmMenuPrincipal
      * @param clase clase a la que se está realizando la inscripcion
      */
-    public FrmPagoEfectivo(ClaseDTO clase) {
+    public FrmPagoEfectivo(ClaseDTO clase, AlumnoDTO alumno) {
         initComponents();
         this.clase = clase;
+        this.alumno = alumno;
         this.setTitle("Pago en efectivo");
         lblTotalPago.setText(clase.getPrecio().toString());
         
@@ -122,10 +129,12 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
+        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 590, -1, -1));
 
         btnCalcularCambio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambio.png"))); // NOI18N
         btnCalcularCambio.setBorder(null);
+        btnCalcularCambio.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambioHovered.png"))); // NOI18N
         btnCalcularCambio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCalcularCambioActionPerformed(evt);
@@ -135,6 +144,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
 
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
+        btnRealizarPago.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPagoHovered.png"))); // NOI18N
         btnRealizarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRealizarPagoActionPerformed(evt);
@@ -151,23 +161,29 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEfectivoRecibidoMousePressed
 
     private void btnCalcularCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularCambioActionPerformed
-        boolean efectivoValido = ControlNavegacion.getInscribirClase().validarEfectivoRecibido(clase.getPrecio(), Float.parseFloat(txtEfectivoRecibido.getText()));
+        boolean efectivoValido = ControlNavegacion.getInscribirClase().validarEfectivoRecibido(clase.getPrecio(), new BigDecimal(txtEfectivoRecibido.getText()));
         if(!efectivoValido){
             ControlNavegacion.mostrarMensajeErrorEfectivoFaltante(this);
         }
-        Float cambio = ControlNavegacion.getInscribirClase().calcularCambio(clase.getPrecio(), Float.parseFloat(txtEfectivoRecibido.getText()));
+        BigDecimal cambio = ControlNavegacion.getInscribirClase().calcularCambio(clase.getPrecio(), new BigDecimal(txtEfectivoRecibido.getText()));
         lblCambio.setText(cambio.toString());
     }//GEN-LAST:event_btnCalcularCambioActionPerformed
 
     private void btnRealizarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPagoActionPerformed
         //hacer pagoefectivodto
-        PagoEfectivoDTO pagoEfectivo = new PagoEfectivoDTO(Float.parseFloat(txtEfectivoRecibido.getText()), Float.parseFloat(lblCambio.getText()));
+        PagoEfectivoDTO pagoEfectivo = new PagoEfectivoDTO(new BigDecimal(txtEfectivoRecibido.getText()), new BigDecimal(lblCambio.getText()));
         // armar nuevopagodto
         NuevoPagoDTO nuevoPago = new NuevoPagoDTO(clase.getPrecio(), pagoEfectivo);
         PagoDTO pago = ControlNavegacion.getInscribirClase().realizarPagoEfectivo(nuevoPago);
         
         if(pago != null){
-            ControlNavegacion.mostrarMensajePagoExitoso(this);
+             LocalDateTime fechaActual = LocalDateTime.now();
+            NuevaInscripcionDTO inscripcion = new NuevaInscripcionDTO(clase, alumno, fechaActual, pago);
+            InscripcionDTO inscripcionRealizada = ControlNavegacion.getInscribirClase().realizarInscripcion(inscripcion);
+
+            if (inscripcionRealizada != null) {
+                ControlNavegacion.mostrarMensajePagoExitoso(this);
+            }
         }
         
     }//GEN-LAST:event_btnRealizarPagoActionPerformed

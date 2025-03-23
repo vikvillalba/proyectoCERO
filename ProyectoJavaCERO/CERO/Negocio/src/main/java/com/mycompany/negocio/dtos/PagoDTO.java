@@ -1,6 +1,7 @@
 
 package com.mycompany.negocio.dtos;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 public class PagoDTO {
     
     private int codigo;
-    private Float total;
+    private BigDecimal total;
     private MetodoPagoDTO metodoPago;
     private LocalDateTime fechaHora;
     private boolean realizado;
@@ -18,7 +19,7 @@ public class PagoDTO {
     public PagoDTO() {
     }
 
-    public PagoDTO(int codigo, Float total, MetodoPagoDTO metodoPago, LocalDateTime fechaHora, boolean realizado) {
+    public PagoDTO(int codigo, BigDecimal total, MetodoPagoDTO metodoPago, LocalDateTime fechaHora, boolean realizado) {
         this.codigo = codigo;
         this.total = total;
         this.metodoPago = metodoPago;
@@ -34,11 +35,11 @@ public class PagoDTO {
         this.codigo = codigo;
     }
 
-    public Float getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Float total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -65,6 +66,8 @@ public class PagoDTO {
     public void setRealizado(boolean realizado) {
         this.realizado = realizado;
     }
+
+
     
     
 }

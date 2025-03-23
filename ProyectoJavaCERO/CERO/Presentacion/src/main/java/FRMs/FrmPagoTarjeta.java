@@ -3,7 +3,10 @@ package FRMs;
 
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
+import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.InscripcionDTO;
+import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
 import com.mycompany.negocio.dtos.PagoTarjetaDTO;
@@ -12,6 +15,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,14 +30,16 @@ import javax.swing.JPanel;
 public class FrmPagoTarjeta extends javax.swing.JFrame {
     private Image imagenFondo;
     private ClaseDTO clase;
+    private AlumnoDTO alumno;
     private JDateChooser fechaVencimiento;
 
     /**
      * Creates new form FrmMenuPrincipal
      */
-    public FrmPagoTarjeta(ClaseDTO clase) {
+    public FrmPagoTarjeta(ClaseDTO clase, AlumnoDTO alumno) {
         initComponents();
         this.clase = clase;
+        this.alumno = alumno;
         this.setTitle("Pago con tarjeta");
         
         // Cargar la imagen de fondo 
@@ -114,11 +120,13 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 590, -1, -1));
+        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, -1, -1));
 
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
         btnRealizarPago.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRealizarPago.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPagoHovered.png"))); // NOI18N
         btnRealizarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRealizarPagoActionPerformed(evt);
@@ -178,18 +186,33 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
 
     private void btnRealizarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPagoActionPerformed
         // validar datos
-        // armar nuevopagoTarjetaDTo
+        
         String numeroCuenta = txtNumeroCuenta.getText();
         String propietario = txtPropietario.getText();
         Date fechaSeleccionada = fechaVencimiento.getDate();
-        Integer cvv = Integer.parseInt(txtCvv.getText());
-
-        if (fechaSeleccionada == null) {
-            // convertir a excepcion
-            System.out.println("No se ha seleccionado ninguna fecha.");
-        }
+        Integer cvv = Integer.valueOf(txtCvv.getText());
         LocalDate fechaVencimiento = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        Float monto = clase.getPrecio();
+
+        // validar datos
+        if(!ControlNavegacion.getInscribirClase().validarNumeroCuenta(numeroCuenta)){
+            ControlNavegacion.mostrarMensajeErrorNumeroCuentaInvalido(this);
+        }
+        
+        if(!ControlNavegacion.getInscribirClase().validarPropietarioTarjeta(propietario)){
+            ControlNavegacion.mostrarMensajeErrorPropietarioTarjetaInvalido(this);
+        }
+        
+        if(!ControlNavegacion.getInscribirClase().validarFechaExpiracion(fechaVencimiento)){
+            ControlNavegacion.mostrarMensajeFechaVencimientoInvalida(this);
+        }
+        
+        if(!ControlNavegacion.getInscribirClase().validarCVV(cvv)){
+            ControlNavegacion.mostrarMensajeErrorCVVInvalido(this);
+        }
+
+        BigDecimal monto = clase.getPrecio();
+        
+        // armar nuevopagoTarjetaDTo
         NuevoPagoTarjetaDTO nuevoPago = new NuevoPagoTarjetaDTO(numeroCuenta, propietario, fechaVencimiento, cvv, monto);
         
         PagoRealizadoDTO pagoRealizado = ControlNavegacion.getInscribirClase().confirmarPagoTarjeta(nuevoPago);
@@ -198,9 +221,18 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizado.getCodigoConfirmacion(), pagoRealizado.getFechaHora());
         NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(monto, pagoTarjeta);
         PagoDTO pago = ControlNavegacion.getInscribirClase().realizarPagoTarjeta(nuevoPagoDTO);
-        
-        if(pago != null){
-            ControlNavegacion.mostrarMensajePagoExitoso(this);
+
+        if (pago != null) {
+            //crear nuevainscripciondto
+            LocalDateTime fechaActual = LocalDateTime.now();
+            NuevaInscripcionDTO inscripcion = new NuevaInscripcionDTO(clase, alumno, fechaActual, pago);
+            InscripcionDTO inscripcionRealizada = ControlNavegacion.getInscribirClase().realizarInscripcion(inscripcion);
+
+            if (inscripcionRealizada != null) {
+                ControlNavegacion.mostrarMensajePagoExitoso(this);
+            }
+
+ 
         }
     }//GEN-LAST:event_btnRealizarPagoActionPerformed
 

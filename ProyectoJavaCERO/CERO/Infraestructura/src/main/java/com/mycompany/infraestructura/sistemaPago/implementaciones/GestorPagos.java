@@ -2,6 +2,7 @@
 package com.mycompany.infraestructura.sistemaPago.implementaciones;
 
 import com.mycompany.infraestructura.sistemaPago.IGestorPagos;
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,11 +52,14 @@ public class GestorPagos implements IGestorPagos {
                 return tarjeta;
             }
         }
-        return null; 
+        return null;
     }
-  
-    private boolean validarSaldoTarjeta(Float cantidad, Tarjeta tarjeta){
-        return tarjeta.getSaldo() >= cantidad;
+
+    private boolean validarSaldoTarjeta(Float cantidad, Tarjeta tarjeta) {
+        if (cantidad == null || tarjeta == null || tarjeta.getSaldo() == null) {
+            return false; 
+        }
+        return tarjeta.getSaldo().compareTo(cantidad) >= 0;
     }
 
     // generar codigo de confirmacion
@@ -73,7 +77,7 @@ public class GestorPagos implements IGestorPagos {
         Tarjeta tarjeta = obtenerTarjeta(pago.getNumeroCuenta());
         LocalDateTime fecha = LocalDateTime.now(); // generar la fecha de registro
         
-        if(tarjeta != null && validarSaldoTarjeta(pago.getMonto(), tarjeta)){
+        if(tarjeta != null && validarSaldoTarjeta(pago.getMonto().floatValue(), tarjeta)){
             PagoRealizadoDTO pagoRealizado = new PagoRealizadoDTO(fecha, generarCodigo()); //armar pagorealizadodto
             pagos.add(pagoRealizado);  // agregar el pago a la lista 
             return pagoRealizado;
