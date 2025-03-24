@@ -5,11 +5,13 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoD
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
+import com.mycompany.negocio.dtos.NombreClaseParam;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 /**
  * Interfaz que abstrae las operaciones para el caso de uso de inscribir alumnos en una clase.
  * @author victoria
@@ -48,4 +50,9 @@ public interface IInscribirClase {
 
     /** Validar Clase por su nombre. */
     public abstract boolean validarNombreClase(String nombre);
+    
+    //METODOS DE SELECCION DE CLASES :BUSQUEDAS
+    public abstract List<ClaseDTO> buscarClasesPorNombre(String nombre);
+    
+    public abstract boolean validarNombreClase(NombreClaseParam nombre);
 }
