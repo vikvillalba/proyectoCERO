@@ -31,6 +31,7 @@ public class InscribirClase implements IInscribirClase{
     
     private List<PagoDTO> pagos;
     private List<InscripcionDTO> inscripciones;
+    // lista de claseDTO clases
 
     public InscribirClase() {
         this.pagos = new ArrayList<>();
@@ -140,6 +141,8 @@ public class InscribirClase implements IInscribirClase{
     ////METODOS DE SELECCION DE CLASES : BUSQUEDAS
     @Override
     public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
+        // buscas en la lista las clases que coincidan
+        // regresas la lista de clases que coinciden con el nombre 
         return null;
     }
 
