@@ -3,6 +3,7 @@ package com.mycompany.inscribirclase;
 
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
@@ -45,5 +46,6 @@ public interface IInscribirClase {
     /** Procesa una nueva Inscripción.  */ 
     public abstract InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion);
 
-
+    /** Validar Clase por su nombre. */
+    public abstract boolean validarNombreClase(String nombre);
 }

@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -121,6 +122,18 @@ public class InscribirClase implements IInscribirClase{
         inscripciones.add(nuevaInscripcion);
         return nuevaInscripcion;
     }
+
+    @Override
+    public boolean validarNombreClase(String nombre) {
+        List<String> clasesExistentes = Arrays.asList("Contemporaneo","danza");
+        if (clasesExistentes.contains(nombre)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
     
     
     
