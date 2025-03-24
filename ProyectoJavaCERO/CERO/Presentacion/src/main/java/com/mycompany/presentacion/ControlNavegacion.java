@@ -1,6 +1,7 @@
 package com.mycompany.presentacion;
 
 import FRMs.*;
+import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.implementaciones.InscribirClase;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
@@ -13,13 +14,13 @@ import javax.swing.JOptionPane;
  */
 public class ControlNavegacion {
 
-    private static InscribirClase inscribirClase;
+    private static IInscribirClase inscribirClase;
 
     public ControlNavegacion() {
         this.inscribirClase = new InscribirClase();
     }
 
-    public static InscribirClase getInscribirClase() {
+    public static IInscribirClase getInscribirClase() {
         return inscribirClase;
     }
 
