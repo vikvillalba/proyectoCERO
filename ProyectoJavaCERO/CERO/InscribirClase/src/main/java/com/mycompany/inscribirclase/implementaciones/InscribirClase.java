@@ -10,6 +10,7 @@ import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.MetodoPagoDTO;
+import com.mycompany.negocio.dtos.NombreClaseParam;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JTextField;
 
 /**
  *
@@ -122,9 +124,18 @@ public class InscribirClase implements IInscribirClase{
         return nuevaInscripcion;
     }
     
-    
-    
-    
+    ////METODOS DE SELECCION DE CLASES : BUSQUEDAS
+    @Override
+    public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
+        
+        
+    }
 
-
+    @Override
+    public boolean validarNombreClase(NombreClaseParam nombre) {
+        String nombreClase = nombre.getNombreClase();
+        //Poner REGLAS DE NEGOCIO PARA LA BUSQUEDA DE NOMBRES CLASE
+        return true;
+    }
+    
 }
