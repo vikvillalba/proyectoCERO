@@ -44,4 +44,6 @@ public interface IInscribirClase {
     
     /** Procesa una nueva Inscripción.  */ 
     public abstract InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion);
+
+
 }

@@ -121,6 +121,10 @@ public class InscribirClase implements IInscribirClase{
         inscripciones.add(nuevaInscripcion);
         return nuevaInscripcion;
     }
+    
+    
+    
+    
 
 
 }

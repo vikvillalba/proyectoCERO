@@ -111,4 +111,13 @@ public class ControlNavegacion {
                 "Fecha de vencimiento inválida", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 
     }
+    
+    /**
+     * Muestra pantalla de DatosClase
+     */
+    public static void mostrarDatosClase() {
+        FrmDatosClase frmDatosClase = new FrmDatosClase();
+        frmDatosClase.setVisible(true);
+    }
+    
 }
