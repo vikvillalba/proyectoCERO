@@ -14,6 +14,7 @@ import javax.swing.JPanel;
  */
 public class FrmMenuPrincipal extends javax.swing.JFrame {
     private Image imagenFondo;
+    private ControlNavegacion controlNav;
 
     /**
      * Creates new form FrmMenuPrincipal
@@ -113,7 +114,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirActionPerformed
-        ControlNavegacion.mostrarInscribirClase();
+        ControlNavegacion.mostrarInscribirClase(this.controlNav);
     }//GEN-LAST:event_btnInscribirActionPerformed
 
     

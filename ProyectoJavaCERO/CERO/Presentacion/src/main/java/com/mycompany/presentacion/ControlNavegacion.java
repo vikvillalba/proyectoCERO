@@ -45,8 +45,9 @@ public class ControlNavegacion {
     /**
      * Muestra la pantalla que inicia el caso de uso para inscribir a un alumno.
      */
-    public static void mostrarInscribirClase() {
-        FrmInscribirClase inscribirClase = new FrmInscribirClase();
+    //Se le pasa el control creado en el main para que solo tenga un control
+    public static void mostrarInscribirClase(ControlNavegacion control) {
+        FrmInscribirClase inscribirClase = new FrmInscribirClase(control);
         inscribirClase.setVisible(true);
     }
 

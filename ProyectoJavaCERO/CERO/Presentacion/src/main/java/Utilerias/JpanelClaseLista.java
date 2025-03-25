@@ -6,6 +6,7 @@ package Utilerias;
 
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.ClaseListaDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -54,7 +55,6 @@ public class JpanelClaseLista extends javax.swing.JPanel {
     }
 
 
-    // 👉 MÉTODO PARA CONFIGURAR EL ENCABEZADO
     private void configurarHeader() {
         JpanelHeader.setBackground(new Color(30, 47, 86));
         JpanelHeader.setLayout(new GridLayout(1, 5, 10, 0));
@@ -78,9 +78,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         JpanelHeader.add(lblColumnMaestro);
     }
     
-
-    // 👉 MÉTODO PARA CONFIGURAR LOS DATOS
-    private void configurarDatos() {
+   private void configurarDatos() {
         JpanelDatos.setBackground(new Color(30, 47, 86));
         JpanelDatos.setLayout(new GridLayout(1, 5, 10, 0));
 
@@ -104,7 +102,6 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         JpanelDatos.add(lblMaestro);
     }
 
-    // 👉 MÉTODO PARA CONFIGURAR EL BOTÓN
     private void configurarBoton() {
         btnSeleccionarClase.setText("Seleccionar clase");
         btnSeleccionarClase.setFont(new Font("Menlo", Font.BOLD, 14));
@@ -112,8 +109,8 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         btnSeleccionarClase.setBackground(new Color(30, 47, 86));
         btnSeleccionarClase.setFocusPainted(false);
     }
-
-    // 👉 MÉTODO PARA CONFIGURAR LOS LABELS DEL HEADER
+    
+    //Configura los Labels del Header
     private void configurarLabel(JLabel label) {
         label.setFont(new Font("Menlo", Font.BOLD, 14));
         label.setForeground(new Color(148, 197, 227));
@@ -122,7 +119,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         label.setPreferredSize(new Dimension(150, 40)); // Espacio suficiente para que no se encimen
     }
 
-    // 👉 MÉTODO PARA CONFIGURAR LOS LABELS DE DATOS
+    // configura los labels de los datos
     private void configurarLabelDatos(JLabel label) {
         label.setFont(new Font("Menlo", Font.PLAIN, 14));
         label.setForeground(Color.WHITE);
@@ -130,31 +127,32 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         label.setBackground(new Color(30, 47, 86));
         label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
     }
+    
 
-     //Método main para ejecutar la interfaz gráfica
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Lista de Clases");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(1200, 500);
-                // clase para probar. borrar después. 
-                String id ="1" ;
-                String nombre ="contemporanea" ;
-                String horarioInicio = "7:00pm";
-                String horarioFin="8:00pm";
-                String dias = "LUN - MIE - VIE" ;
-                String maestro = "Prof.Jose Luis";
-                
-                
-                ClaseListaDTO clase = new ClaseListaDTO(id, nombre, horarioInicio, horarioFin, dias, maestro);
-                frame.add(new JpanelClaseLista(clase));
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
-    }
+     //
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                JFrame frame = new JFrame("Lista de Clases");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setSize(1200, 500);
+//                // clase para probar. borrar después. 
+//                String id ="1" ;
+//                String nombre ="contemporanea" ;
+//                String horarioInicio = "7:00pm";
+//                String horarioFin="8:00pm";
+//                String dias = "LUN - MIE - VIE" ;
+//                String maestro = "Prof.Jose Luis";
+//                
+//                
+//                ClaseListaDTO clase = new ClaseListaDTO(id, nombre, horarioInicio, horarioFin, dias, maestro);
+//                frame.add(new JpanelClaseLista(clase));
+//                frame.setLocationRelativeTo(null);
+//                frame.setVisible(true);
+//            }
+//        });
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -256,6 +254,9 @@ public class JpanelClaseLista extends javax.swing.JPanel {
 
     private void btnSeleccionarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClaseActionPerformed
         // TODO add your handling code here:
+        //UTILIZAR CONTROL NAV PARA ABRIR DATOS CLASE Y OBTIENE EL ID DE LA CLASE Y ESO SE LO PASA A DATOS CLASE
+        ControlNavegacion.mostrarDatosClase();
+        // SI LA CLASE ESTA LLENA DESHABILITAR EL BTN
         
     }//GEN-LAST:event_btnSeleccionarClaseActionPerformed
 
