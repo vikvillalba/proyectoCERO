@@ -48,6 +48,9 @@ public interface IInscribirClase {
     
     /** Procesa una nueva Inscripción.  */ 
     public abstract InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion);
+
+    /** Validar Clase por su nombre. */
+    public abstract boolean validarNombreClase(String nombre);
     
     //METODOS DE SELECCION DE CLASES :BUSQUEDAS
     public abstract List<ClaseListaDTO> buscarClasesPorNombre(String nombre);

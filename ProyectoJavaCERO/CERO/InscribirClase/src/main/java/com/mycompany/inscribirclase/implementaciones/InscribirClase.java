@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JTextField;
@@ -28,8 +28,8 @@ import javax.swing.JTextField;
  *
  * @author victoria
  */
-public class InscribirClase implements IInscribirClase{
-    
+public class InscribirClase implements IInscribirClase {
+
     private List<PagoDTO> pagos;
     private List<InscripcionDTO> inscripciones;
     private List<ClaseDTO> clases;
@@ -38,8 +38,6 @@ public class InscribirClase implements IInscribirClase{
         this.pagos = new ArrayList<>();
         this.inscripciones = new ArrayList<>();
     }
-    
-    
 
     @Override
     public BigDecimal calcularCambio(BigDecimal costoClase, BigDecimal cantidadRecibida) {
@@ -49,18 +47,17 @@ public class InscribirClase implements IInscribirClase{
     @Override
     public PagoDTO realizarPagoEfectivo(NuevoPagoDTO nuevoPago) {
         Random random = new Random();
-        
+
         BigDecimal total = nuevoPago.getTotal();
         MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
         int codigo = random.nextInt(1000) + 1;
         LocalDateTime fecha = LocalDateTime.now();
-        PagoDTO pago =  new PagoDTO(codigo, total, metodoPago, fecha, true);
-        
+        PagoDTO pago = new PagoDTO(codigo, total, metodoPago, fecha, true);
+
         pagos.add(pago);
         return pago;
-        
-    }
 
+    }
 
     @Override
     public boolean validarEfectivoRecibido(BigDecimal costoClase, BigDecimal efectivo) {
@@ -79,13 +76,13 @@ public class InscribirClase implements IInscribirClase{
     @Override
     public PagoDTO realizarPagoTarjeta(NuevoPagoDTO nuevoPago) {
         Random random = new Random();
-        
+
         BigDecimal total = nuevoPago.getTotal();
         MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
         int codigo = random.nextInt(1000) + 1;
         LocalDateTime fecha = LocalDateTime.now();
-        PagoDTO pago =  new PagoDTO(codigo, total, metodoPago, fecha, true);
-        
+        PagoDTO pago = new PagoDTO(codigo, total, metodoPago, fecha, true);
+
         pagos.add(pago);
         return pago;
     }
@@ -110,7 +107,7 @@ public class InscribirClase implements IInscribirClase{
 
     @Override
     public boolean validarCVV(int cvv) {
-         return cvv >= 100 && cvv <= 9999;
+        return cvv >= 100 && cvv <= 9999;
     }
 
     @Override
@@ -122,29 +119,38 @@ public class InscribirClase implements IInscribirClase{
         LocalDateTime fechaHora = inscripcion.getFecha();
         int codigo = random.nextInt(1000) + 1;
         InscripcionDTO nuevaInscripcion = new InscripcionDTO(codigo, alumno, clase, fechaHora, pago);
-        
+
         inscripciones.add(nuevaInscripcion);
         return nuevaInscripcion;
     }
-    
-    ////METODOS DE SELECCION DE CLASES : BUSQUEDAS
+
+    @Override
+    public boolean validarNombreClase(String nombre) {
+        List<String> clasesExistentes = Arrays.asList("Contemporaneo", "danza");
+        if (clasesExistentes.contains(nombre)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //// METODOS DE SELECCION DE CLASES : BUSQUEDAS
     @Override
     public List<ClaseListaDTO> buscarClasesPorNombre(String nombre) {
-       
+
         List<ClaseListaDTO> clasesExistentes = new ArrayList<>();
         ClaseListaDTO claseListaDto = new ClaseListaDTO();
-       
+
         for (ClaseDTO clase : clases) {
-            if(clase.getNombre().toLowerCase().contains(nombre.toLowerCase())){
-                 claseListaDto = convertirClaseListaDTO(clase);
-                 clasesExistentes.add(claseListaDto);
+            if (clase.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                claseListaDto = convertirClaseListaDTO(clase);
+                clasesExistentes.add(claseListaDto);
             }
         }
         claseListaDto.setClasesExistentes(clasesExistentes);
         return clasesExistentes;
     }
-    
-    
+
     private ClaseListaDTO convertirClaseListaDTO(ClaseDTO clase){
         String id = String.valueOf(clase.getCodigo());
         String nombreClase = clase.getNombre();
@@ -161,5 +167,7 @@ public class InscribirClase implements IInscribirClase{
         //Poner REGLAS DE NEGOCIO PARA LA BUSQUEDA DE NOMBRES CLASE
         return true;
     }
+
     
 }
+
