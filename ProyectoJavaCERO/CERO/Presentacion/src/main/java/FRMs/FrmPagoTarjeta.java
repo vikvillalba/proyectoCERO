@@ -1,26 +1,22 @@
-
 package FRMs;
 
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
-import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.InscripcionDTO;
-import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
-import com.mycompany.negocio.dtos.NuevoPagoDTO;
-import com.mycompany.negocio.dtos.PagoDTO;
-import com.mycompany.negocio.dtos.PagoTarjetaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
+import com.mycompany.presentacion.excepciones.PresentacionException;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -28,10 +24,11 @@ import javax.swing.JPanel;
  * @author Usuario
  */
 public class FrmPagoTarjeta extends javax.swing.JFrame {
+
     private Image imagenFondo;
     private ClaseDTO clase;
     private AlumnoDTO alumno;
-    private JDateChooser fechaVencimiento;
+    private JDateChooser selectorFechas;
 
     /**
      * Creates new form FrmMenuPrincipal
@@ -41,12 +38,12 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         this.clase = clase;
         this.alumno = alumno;
         this.setTitle("Pago con tarjeta");
-        
+
         // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
         // Crear un JPanel con la imagen de fondo y lo agrega al frame
-        JPanel jPanel1 = new javax.swing.JPanel() {
+        JPanel panelFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -54,20 +51,27 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
             }
         };
 
-        jPanel1.setLayout(null); // Permite posicionar manualmente los componentes
-        jPanel1.setBounds(0, 0, 800, 700);
+        panelFondo.setLayout(null); // Permite posicionar manualmente los componentes
+        panelFondo.setBounds(0, 0, 800, 700);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 700));
+        getContentPane().add(panelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 700));
 
         // Agregar JDateChooser dentro del JPanel
-        fechaVencimiento = new JDateChooser();
-        jPanel1.add(fechaVencimiento);
-        
-        fechaVencimiento.setBounds(440, 330, 290, 30); // (x, y, ancho, alto)
+        selectorFechas = new JDateChooser();
+        panelFondo.add(selectorFechas);
+
+        selectorFechas.setBounds(440, 330, 290, 30); // (x, y, ancho, alto)
 
         this.setSize(800, 700); // Ajusta el tamaño del JFrame
         this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
+    }
+    
+    private void limpiarCampos(){
+        this.txtCvv.setText("");
+        this.txtNumeroCuenta.setText("");
+        this.txtPropietario.setText("");
+        this.selectorFechas.setDate(null);
     }
 
     /**
@@ -132,7 +136,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
                 btnRealizarPagoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, -1, -1));
+        getContentPane().add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 500, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -186,57 +190,47 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
 
     private void btnRealizarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPagoActionPerformed
         // validar datos
-        
+
         String numeroCuenta = txtNumeroCuenta.getText();
         String propietario = txtPropietario.getText();
-        Date fechaSeleccionada = fechaVencimiento.getDate();
+        Date fechaSeleccionada = selectorFechas.getDate();
+        String cvvTexto = txtCvv.getText();
+        BigDecimal monto = clase.getPrecio();
+
+        // validar que no se manden campos vacios
+        if (numeroCuenta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El número de cuenta no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (propietario.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El nombre del propietario no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (cvvTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El CVV no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (fechaSeleccionada == null) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una fecha de vencimiento.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         Integer cvv = Integer.valueOf(txtCvv.getText());
         LocalDate fechaVencimiento = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        // validar datos
-        if(!ControlNavegacion.getInscribirClase().validarNumeroCuenta(numeroCuenta)){
-            ControlNavegacion.mostrarMensajeErrorNumeroCuentaInvalido(this);
-        }
-        
-        if(!ControlNavegacion.getInscribirClase().validarPropietarioTarjeta(propietario)){
-            ControlNavegacion.mostrarMensajeErrorPropietarioTarjetaInvalido(this);
-        }
-        
-        if(!ControlNavegacion.getInscribirClase().validarFechaExpiracion(fechaVencimiento)){
-            ControlNavegacion.mostrarMensajeFechaVencimientoInvalida(this);
-        }
-        
-        if(!ControlNavegacion.getInscribirClase().validarCVV(cvv)){
-            ControlNavegacion.mostrarMensajeErrorCVVInvalido(this);
-        }
-
-        BigDecimal monto = clase.getPrecio();
-        
         // armar nuevopagoTarjetaDTo
         NuevoPagoTarjetaDTO nuevoPago = new NuevoPagoTarjetaDTO(numeroCuenta, propietario, fechaVencimiento, cvv, monto);
-        
-        PagoRealizadoDTO pagoRealizado = ControlNavegacion.getInscribirClase().confirmarPagoTarjeta(nuevoPago);
-        // enviarlo al control
-        
-        PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizado.getCodigoConfirmacion(), pagoRealizado.getFechaHora());
-        NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(monto, pagoTarjeta);
-        PagoDTO pago = ControlNavegacion.getInscribirClase().realizarPagoTarjeta(nuevoPagoDTO);
 
-        if (pago != null) {
-            //crear nuevainscripciondto
-            LocalDateTime fechaActual = LocalDateTime.now();
-            NuevaInscripcionDTO inscripcion = new NuevaInscripcionDTO(clase, alumno, fechaActual, pago);
-            InscripcionDTO inscripcionRealizada = ControlNavegacion.getInscribirClase().realizarInscripcion(inscripcion);
-
-            if (inscripcionRealizada != null) {
-                ControlNavegacion.mostrarMensajePagoExitoso(this);
-            }
-
- 
+        try {
+            ControlNavegacion.realizarPagoTarjeta(nuevoPago, clase, alumno, this);
+            ControlNavegacion.mostrarMensajePagoExitoso(this);
+        } catch (PresentacionException ex) {
+            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
+            limpiarCampos();
         }
+
+
     }//GEN-LAST:event_btnRealizarPagoActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRealizarPago;
@@ -250,4 +244,5 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
     private javax.swing.JTextField txtNumeroCuenta;
     private javax.swing.JTextField txtPropietario;
     // End of variables declaration//GEN-END:variables
+
 }

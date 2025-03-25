@@ -102,13 +102,13 @@ public class FrmInscribirClase extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
-        if (txfNombreClase.getText() == null) {
-            System.out.println("Error, el nombre no puede estar vacio.");
-        }
-        
-        if (txfNombreClase.getText() != null) {
-            boolean resultado = ControlNavegacion.getInscribirClase().validarNombreClase(txfNombreClase.getText());
-        }
+//        if (txfNombreClase.getText() == null) {
+//            System.out.println("Error, el nombre no puede estar vacio.");
+//        }
+//        
+//        if (txfNombreClase.getText() != null) {
+//            boolean resultado = ControlNavegacion.getInscribirClase().validarNombreClase(txfNombreClase.getText());
+//        }
     }//GEN-LAST:event_botonBuscarClaseActionPerformed
     
     /**

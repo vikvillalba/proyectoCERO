@@ -1,6 +1,5 @@
 package com.mycompany.presentacion;
 
-import com.mycompany.inscribirclase.implementaciones.InscribirClase;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import java.math.BigDecimal;
@@ -32,6 +31,6 @@ public class Presentacion {
                 "juan.gomez@example.com"
         );
 
-        ControlNavegacion.mostrarPagoTarjeta(clase, alumno);
+        ControlNavegacion.mostrarPagoEfectivo(clase, alumno);
     }
 }

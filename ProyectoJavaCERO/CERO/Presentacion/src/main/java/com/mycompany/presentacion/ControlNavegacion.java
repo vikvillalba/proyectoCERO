@@ -1,10 +1,21 @@
 package com.mycompany.presentacion;
 
 import FRMs.*;
+import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.implementaciones.InscribirClase;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.InscripcionDTO;
+import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
+import com.mycompany.negocio.dtos.NuevoPagoDTO;
+import com.mycompany.negocio.dtos.PagoDTO;
+import com.mycompany.negocio.dtos.PagoTarjetaDTO;
+import com.mycompany.presentacion.excepciones.PresentacionException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -18,10 +29,6 @@ public class ControlNavegacion {
 
     public ControlNavegacion() {
         this.inscribirClase = new InscribirClase();
-    }
-
-    public static IInscribirClase getInscribirClase() {
-        return inscribirClase;
     }
 
     /**
@@ -69,50 +76,96 @@ public class ControlNavegacion {
         }
     }
 
-    /**
-     * Muestra mensaje de error cuando hay efectivo faltante para el caso de uso de inscribir a un alumno.
-     */
-    public static void mostrarMensajeErrorEfectivoFaltante(JFrame parentComponent) {
-        JOptionPane.showConfirmDialog(parentComponent, "El efectivo ingresado no es suficiente para realizar el pago.",
-                "Efectivo faltante", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+    public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
+        JOptionPane.showConfirmDialog(parentComponent, exc.getMessage(),
+                "Error :(", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+
+    }
+ 
+    // metodos que ven los formularios
+    public static boolean validarEfectivoRecibido(BigDecimal costoClase, BigDecimal efectivo, JFrame parentComponent) {
+       return inscribirClase.validarEfectivoRecibido(costoClase, efectivo);
 
     }
 
-    /**
-     * Muestra mensaje de error cuando el numero de cuenta de tarjeta es inválido para el caso de uso de inscribir a un alumno.
-     */
-    public static void mostrarMensajeErrorNumeroCuentaInvalido(JFrame parentComponent) {
-        JOptionPane.showConfirmDialog(parentComponent, "El numero de cuenta es inválido. Intente nuevamente ",
-                "Número de cuenta inválido", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+    public static boolean validarNumeroCuenta(String numeroCuenta, JFrame parentComponent) {
+        return inscribirClase.validarNumeroCuenta(numeroCuenta);
 
     }
 
-    /**
-     * Muestra mensaje de error cuando el propietario de tarjeta es inválido para el caso de uso de inscribir a un alumno.
-     */
-    public static void mostrarMensajeErrorPropietarioTarjetaInvalido(JFrame parentComponent) {
-        JOptionPane.showConfirmDialog(parentComponent, "El propietario es un texto inválido. Intente nuevamente ",
-                "Propietario inválido", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+    public static boolean validarPropietarioTarjeta(String propietario, JFrame parentComponent) {
+        return inscribirClase.validarPropietarioTarjeta(propietario);
 
     }
-    /**
-     * Muestra mensaje de error cuando el cvv de tarjeta es inválido para el caso de uso de inscribir a un alumno.
-     */
-    public static void mostrarMensajeErrorCVVInvalido(JFrame parentComponent) {
-        JOptionPane.showConfirmDialog(parentComponent, "El CVV no puede estar vacío, ser menor a 3 dígitos o mayor a 4. Intente nuevamente ",
-                "CVV inválido", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+
+    public static boolean validarFechaExpiracion(LocalDate fecha, JFrame parentComponent) {
+        return inscribirClase.validarFechaExpiracion(fecha);
 
     }
-    
-    /**
-     * Muestra mensaje de error cuando la fecha de vencimiento de tarjeta es inválido para el caso de uso de inscribir a un alumno.
-     */
-    public static void mostrarMensajeFechaVencimientoInvalida(JFrame parentComponent) {
-        JOptionPane.showConfirmDialog(parentComponent, "La fecha de vencimiento es inválida. Intente nuevamente ",
-                "Fecha de vencimiento inválida", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+
+    public static boolean validarCVV(int cvv, JFrame parentComponent) {
+        return inscribirClase.validarCVV(cvv);
 
     }
-    
+
+    public static InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion) {
+        return inscribirClase.realizarInscripcion(inscripcion);
+    }
+
+    private static PagoRealizadoDTO confirmarPagoTarjeta(NuevoPagoTarjetaDTO pagoTarjeta) {
+        // conexion con el sistema externo
+        return inscribirClase.confirmarPagoTarjeta(pagoTarjeta);
+    }
+
+    public static void realizarPagoTarjeta(NuevoPagoTarjetaDTO pago, ClaseDTO clase, AlumnoDTO alumno, JFrame parentComponent) throws PresentacionException {
+        // validar datos 
+        if(!validarNumeroCuenta(pago.getNumeroCuenta(), parentComponent)){
+            throw new PresentacionException("El numero de cuenta es inválido. Verifique e intente nuevamente.");
+        }
+        if(!validarPropietarioTarjeta(pago.getPropietario(), parentComponent)) {
+            throw new PresentacionException("El propietario es inválido. Verifique e intente nuevamente.");
+        }
+        if(!validarFechaExpiracion(pago.getFechaExpiracion(), parentComponent)){
+            throw new PresentacionException("La fecha de vencimiento es inválida. Verifique e intente nuevamente.");
+        }
+        if(!validarCVV(pago.getCvv(), parentComponent)){
+            throw new PresentacionException("El CVV no puede estar vacío, ser menor a 3 dígitos o mayor a 4.  Verifique e intente nuevamente.");
+        }
+
+        PagoRealizadoDTO pagoRealizadoSistemaPagos = confirmarPagoTarjeta(pago);
+        PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizadoSistemaPagos.getCodigoConfirmacion(), pagoRealizadoSistemaPagos.getFechaHora());
+        NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(pago.getMonto(), pagoTarjeta);
+
+        PagoDTO pagoDTO = inscribirClase.realizarPagoTarjeta(nuevoPagoDTO);
+        LocalDateTime fechaActual = LocalDateTime.now();
+        NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pagoDTO);
+
+        InscripcionDTO inscripcion = realizarInscripcion(inscripcionDTO);
+        if (inscripcion == null) {
+            throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
+        }
+
+    }
+
+    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseDTO clase, AlumnoDTO alumno, JFrame parentComponent) throws PresentacionException {
+
+        PagoDTO pago = inscribirClase.realizarPagoEfectivo(nuevoPago);
+        LocalDateTime fechaActual = LocalDateTime.now();
+        NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pago);
+
+        InscripcionDTO inscripcion = realizarInscripcion(inscripcionDTO);
+        if (inscripcion == null) {
+            throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
+        }
+    }
+
+    public static BigDecimal calcularCambio(BigDecimal precioClase, BigDecimal efectivoRecibido, JFrame parentComponent) throws PresentacionException {
+        if (!validarEfectivoRecibido(precioClase, efectivoRecibido, parentComponent)) {
+            throw new PresentacionException("El efectivo ingresado no es suficiente para realizar el pago. Verifique e intente nuevamente.");
+        }
+        return inscribirClase.calcularCambio(precioClase, efectivoRecibido);
+    }
+
     /**
      * Muestra pantalla de DatosClase
      */
@@ -120,5 +173,5 @@ public class ControlNavegacion {
         FrmDatosClase frmDatosClase = new FrmDatosClase();
         frmDatosClase.setVisible(true);
     }
-    
+
 }
