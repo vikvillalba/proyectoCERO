@@ -4,6 +4,7 @@ package com.mycompany.inscribirclase;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.NombreClaseParam;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
@@ -49,7 +50,7 @@ public interface IInscribirClase {
     public abstract InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion);
     
     //METODOS DE SELECCION DE CLASES :BUSQUEDAS
-    public abstract List<ClaseDTO> buscarClasesPorNombre(String nombre);
+    public abstract List<ClaseListaDTO> buscarClasesPorNombre(String nombre);
     
     public abstract boolean validarNombreClase(NombreClaseParam nombre);
 }

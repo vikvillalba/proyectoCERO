@@ -54,12 +54,12 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         // Lista de clases hardcodeadas con un arreglo de Object
         // Jackkkkk, este es un método que tienes que llamar desde el control del InscribirClase :P
         Object[][] clases = {
-            {1, "Contemporanea", "08:00 - 10:00"+System.lineSeparator()+"LUN-MIE-VIE", "Profesor A"},
-            {2, "Contemporanea", "10:00 - 12:00,MAR-JUEV", "Profesor B"},
-            {3, "Contemporanea", "12:00 - 14:00,MAR-JUEV", "Profesor C"}
+            {1, "Contemporanea", "08:00 - 10:00","LUN-MIE-VIE", "Profesor A"},
+            {2, "Contemporanea", "10:00 - 12:00","MAR-JUEV", "Profesor B"},
+            {3, "Contemporanea", "12:00 - 14:00,","MAR-JUEV", "Profesor C"}
         };
 
-        modelo.setColumnIdentifiers(new Object[]{"ID Clase", "Nombre Clase", "Horario", "Maestro", "Seleccionar"});
+        modelo.setColumnIdentifiers(new Object[]{"ID Clase", "Nombre Clase", "Horario","Dias", "Maestro", "Seleccionar"});
        
         //CAMBIARAN POR DTOS
         for (Object[] clase : clases) {
@@ -69,13 +69,14 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
                 clase[1],
                 clase[2],
                 clase[3],
+                clase[4],
                 btn
             });
         }
         tblClasesExistentes.setModel(modelo);
         tblClasesExistentes.getColumn("Seleccionar").setCellRenderer(new RenderTabla());
         tblClasesExistentes.setRowHeight(50);
-        tblClasesExistentes.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tblClasesExistentes.getColumnModel().getColumn(1).setPreferredWidth(100);
         
     }
 
@@ -116,11 +117,11 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Clase", "Nombre Clase", "Horario", "Maestro", "Seleccionar"
+                "ID Clase", "Nombre Clase", "Horario", "Dias", "Maestro", "Seleccionar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -142,6 +143,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
             tblClasesExistentes.getColumnModel().getColumn(1).setResizable(false);
             tblClasesExistentes.getColumnModel().getColumn(2).setResizable(false);
             tblClasesExistentes.getColumnModel().getColumn(3).setResizable(false);
+            tblClasesExistentes.getColumnModel().getColumn(4).setResizable(false);
         }
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N

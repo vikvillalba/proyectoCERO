@@ -8,6 +8,7 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarje
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.MetodoPagoDTO;
 import com.mycompany.negocio.dtos.NombreClaseParam;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JTextField;
@@ -30,6 +32,7 @@ public class InscribirClase implements IInscribirClase{
     
     private List<PagoDTO> pagos;
     private List<InscripcionDTO> inscripciones;
+    private List<ClaseDTO> clases;
 
     public InscribirClase() {
         this.pagos = new ArrayList<>();
@@ -126,9 +129,30 @@ public class InscribirClase implements IInscribirClase{
     
     ////METODOS DE SELECCION DE CLASES : BUSQUEDAS
     @Override
-    public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
-        
-        
+    public List<ClaseListaDTO> buscarClasesPorNombre(String nombre) {
+       
+        List<ClaseListaDTO> clasesExistentes = new ArrayList<>();
+        ClaseListaDTO claseListaDto = new ClaseListaDTO();
+       
+        for (ClaseDTO clase : clases) {
+            if(clase.getNombre().toLowerCase().contains(nombre.toLowerCase())){
+                 claseListaDto = convertirClaseListaDTO(clase);
+                 clasesExistentes.add(claseListaDto);
+            }
+        }
+        claseListaDto.setClasesExistentes(clasesExistentes);
+        return clasesExistentes;
+    }
+    
+    
+    private ClaseListaDTO convertirClaseListaDTO(ClaseDTO clase){
+        String id = String.valueOf(clase.getCodigo());
+        String nombreClase = clase.getNombre();
+        String horaInicio = String.valueOf(clase.getHoraInicio());
+        String horaFin = String.valueOf(clase.getHoraFin());
+        String dias = String.valueOf(clase.getDias());
+        String maestro = clase.getMaestro();
+        return new ClaseListaDTO(id, nombreClase, horaInicio, horaFin, dias, maestro); 
     }
 
     @Override
