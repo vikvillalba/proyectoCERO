@@ -55,5 +55,6 @@ public interface IInscribirClase {
     //METODOS DE SELECCION DE CLASES :BUSQUEDAS
     public abstract List<ClaseListaDTO> buscarClasesPorNombre(String nombre);
     
-    public abstract boolean validarNombreClase(NombreClaseParam nombre);
+    public abstract boolean validarNombreClaseVacio(String nombre);
+    
 }

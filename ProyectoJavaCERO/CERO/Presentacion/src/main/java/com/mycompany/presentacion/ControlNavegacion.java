@@ -7,7 +7,9 @@ import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.implementaciones.InscribirClase;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
+import com.mycompany.negocio.dtos.NombreClaseParam;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
@@ -16,6 +18,7 @@ import com.mycompany.presentacion.excepciones.PresentacionException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -77,8 +80,8 @@ public class ControlNavegacion {
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
-        JOptionPane.showConfirmDialog(parentComponent, exc.getMessage(),
-                "Error :(", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parentComponent, exc.getMessage(),
+                "Error :(",JOptionPane.ERROR_MESSAGE);
 
     }
  
@@ -173,5 +176,25 @@ public class ControlNavegacion {
         FrmDatosClase frmDatosClase = new FrmDatosClase();
         frmDatosClase.setVisible(true);
     }
+    
+    //MOSTRAR CLASES EXISTENTES
+   
+    public static void mostrarClasesExistentes(String nombre) throws PresentacionException{
+        if(inscribirClase.validarNombreClaseVacio(nombre)== true){
+            throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
+        }
+        if(inscribirClase.validarNombreClase(nombre) == false){
+            throw new PresentacionException("El nombre de clase no existe"); 
+        }
+        NombreClaseParam nombreClase = new NombreClaseParam(nombre);
+        List<ClaseListaDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
+        FrmClasesExistentes frmClasesExistentes = new FrmClasesExistentes(clases);
+        frmClasesExistentes.setVisible(true);
+    }
+    
+    private static List<ClaseListaDTO> obtenerClaseLista(String nombre){
+        return inscribirClase.buscarClasesPorNombre(nombre);
+    }
+    
 
 }

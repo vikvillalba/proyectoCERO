@@ -16,13 +16,14 @@ import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import javax.swing.JTextField;
 
 /**
  *
@@ -32,11 +33,15 @@ public class InscribirClase implements IInscribirClase {
 
     private List<PagoDTO> pagos;
     private List<InscripcionDTO> inscripciones;
+    private ClaseDTO clase;
     private List<ClaseDTO> clases;
 
     public InscribirClase() {
         this.pagos = new ArrayList<>();
         this.inscripciones = new ArrayList<>();
+        clase = new ClaseDTO();
+        this.clases = clase.setClases();
+        this.clases = clase.setClases();
     }
 
     @Override
@@ -126,21 +131,23 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public boolean validarNombreClase(String nombre) {
-        List<String> clasesExistentes = Arrays.asList("Contemporaneo", "danza");
-        if (clasesExistentes.contains(nombre)) {
-            return true;
-        } else {
-            return false;
+        // Lista de Nombres que pueden tener un nombreClase
+        List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
+        for (String clasesExistente : clasesExistentes) {
+           if(clasesExistente.toLowerCase().contains(nombre.toLowerCase())){
+               return true;
+           }
+           
         }
+        return false;
     }
 
     //// METODOS DE SELECCION DE CLASES : BUSQUEDAS
     @Override
     public List<ClaseListaDTO> buscarClasesPorNombre(String nombre) {
-
         List<ClaseListaDTO> clasesExistentes = new ArrayList<>();
         ClaseListaDTO claseListaDto = new ClaseListaDTO();
-
+        
         for (ClaseDTO clase : clases) {
             if (clase.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
                 claseListaDto = convertirClaseListaDTO(clase);
@@ -162,10 +169,12 @@ public class InscribirClase implements IInscribirClase {
     }
 
     @Override
-    public boolean validarNombreClase(NombreClaseParam nombre) {
-        String nombreClase = nombre.getNombreClase();
+    public boolean validarNombreClaseVacio (String nombre) {
         //Poner REGLAS DE NEGOCIO PARA LA BUSQUEDA DE NOMBRES CLASE
-        return true;
+        if (nombre == null || nombre.trim().isEmpty() || nombre.equalsIgnoreCase("ingresa nombre clase...")) {
+            return true;
+        }
+        return false;
     }
 
     

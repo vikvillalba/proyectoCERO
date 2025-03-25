@@ -1,6 +1,8 @@
 package FRMs;
 
 import com.mycompany.presentacion.ControlNavegacion;
+import com.mycompany.presentacion.excepciones.PresentacionException;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -14,14 +16,17 @@ import javax.swing.JPanel;
 public class FrmInscribirClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
+    private ControlNavegacion controlNav;
 
     /**
      * Creates new customizer FrmInscribirClase2
      */
     public FrmInscribirClase() {
         initComponents();
-        initComponents();
-        this.setTitle("Finalizar Inscripcion");
+        controlNav = new ControlNavegacion();
+        this.txfNombreClase.setForeground(Color.GRAY);
+        this.txfNombreClase.setText("ingresa nombre clase...");
+        this.setTitle("Inscribir Clase");
 
         // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -36,13 +41,14 @@ public class FrmInscribirClase extends javax.swing.JFrame {
         };
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 552));
 
         this.setSize(1000, 700); // Ajusta el tamaño del JFrame
         this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         pack();
+        //
+        
     }
 
     /**
@@ -57,7 +63,7 @@ public class FrmInscribirClase extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txfNombreClase = new javax.swing.JTextField();
         botonBuscarClase = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         getContentPane().setLayout(null);
 
@@ -71,45 +77,80 @@ public class FrmInscribirClase extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
         jLabel10.setText("INSCRIBIR EN CLASE");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(210, 100, 540, 57);
+        jLabel10.setBounds(240, 50, 540, 62);
 
         txfNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txfNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txfNombreClase.setText("ingresa nombre clase...");
         txfNombreClase.setBorder(null);
+        txfNombreClase.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txfNombreClaseMouseClicked(evt);
+            }
+        });
+        txfNombreClase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfNombreClaseActionPerformed(evt);
+            }
+        });
         getContentPane().add(txfNombreClase);
-        txfNombreClase.setBounds(390, 210, 390, 50);
+        txfNombreClase.setBounds(360, 210, 420, 50);
 
-        botonBuscarClase.setText("Buscar Clase");
+        botonBuscarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarClase.png"))); // NOI18N
+        botonBuscarClase.setBorderPainted(false);
+        botonBuscarClase.setContentAreaFilled(false);
+        botonBuscarClase.setFocusPainted(false);
         botonBuscarClase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarClaseActionPerformed(evt);
             }
         });
         getContentPane().add(botonBuscarClase);
-        botonBuscarClase.setBounds(460, 320, 130, 40);
+        botonBuscarClase.setBounds(250, 350, 470, 60);
 
-        jButton2.setText("Regredar al menu principal");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
+        btnRegresar.setBorderPainted(false);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnRegresar.setFocusPainted(false);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(430, 370, 200, 50);
+        getContentPane().add(btnRegresar);
+        btnRegresar.setBounds(300, 460, 370, 60);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
+    //BUSCAR CLASE BTN
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
-//        if (txfNombreClase.getText() == null) {
-//            System.out.println("Error, el nombre no puede estar vacio.");
-//        }
-//        
-//        if (txfNombreClase.getText() != null) {
-//            boolean resultado = ControlNavegacion.getInscribirClase().validarNombreClase(txfNombreClase.getText());
-//        }
+        try {
+            String campo = txfNombreClase.getText();
+            controlNav.mostrarClasesExistentes(campo);
+            this.dispose();
+        } catch (PresentacionException ex) {
+            controlNav.mostrarMensajeErrorConExcepcion(this, ex);
+            txfNombreClase.setText("");
+        }
+        
+        
     }//GEN-LAST:event_botonBuscarClaseActionPerformed
+
+    private void txfNombreClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreClaseActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_txfNombreClaseActionPerformed
+
+    private void txfNombreClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfNombreClaseMouseClicked
+        // TODO add your handling code here:
+        txfNombreClase.setText("");
+        txfNombreClase.setForeground(Color.BLACK);
+        
+    }//GEN-LAST:event_txfNombreClaseMouseClicked
     
     /**
      * @param args the command line arguments
@@ -148,7 +189,7 @@ public class FrmInscribirClase extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonBuscarClase;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txfNombreClase;
