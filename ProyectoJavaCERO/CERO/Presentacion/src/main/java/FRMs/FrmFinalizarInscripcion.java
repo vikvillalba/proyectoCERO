@@ -278,14 +278,17 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
 
     private void btnPagoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoTarjetaActionPerformed
         ControlNavegacion.mostrarPagoTarjeta(clase, alumno);
+        this.dispose();
     }//GEN-LAST:event_btnPagoTarjetaActionPerformed
 
     private void btnPagoEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoEfectivoActionPerformed
        ControlNavegacion.mostrarPagoEfectivo(clase, alumno);
+       this.dispose();
     }//GEN-LAST:event_btnPagoEfectivoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         ControlNavegacion.mostrarDatosClase(clase);
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

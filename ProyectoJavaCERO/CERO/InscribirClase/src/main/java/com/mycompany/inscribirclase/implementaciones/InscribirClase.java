@@ -6,6 +6,7 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.GestorPagos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
+import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.ClaseListaDTO;
@@ -188,6 +189,15 @@ public class InscribirClase implements IInscribirClase {
         // esta no era mi chamba plebes que onda :( ..... 
         return alumnos;
     }
-    
-}
 
+    @Override
+    public AlumnoDTO obtenerAlumno(AlumnoBusquedaDTO alumnoBusqueda) {
+        for (AlumnoDTO alumno : alumnos) {
+            if (alumno.getCodigo() == alumnoBusqueda.getCodigo()) {
+                return alumno;
+            }
+        }
+        return null; // Retorna null si no se encuentra el alumno
+    }
+
+}

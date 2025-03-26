@@ -5,6 +5,7 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarje
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.implementaciones.InscribirClase;
+import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.AlumnoListaDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
@@ -190,6 +191,7 @@ public class ControlNavegacion {
      * Muestra pantalla de DatosClase
      */
     public static void mostrarDatosClase(ClaseDTO claseDTO) {
+        
         FrmDatosClase frmDatosClase = new FrmDatosClase(claseDTO);
         frmDatosClase.setVisible(true);
     }
@@ -211,6 +213,11 @@ public class ControlNavegacion {
     
     private static List<ClaseDTO> obtenerClaseLista(String nombre){
         return inscribirClase.buscarClasesPorNombre(nombre);
+    }
+    
+    public static AlumnoDTO obtenerAlumno(Integer codigo){
+        AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigo);
+        return inscribirClase.obtenerAlumno(alumnoBusqueda);
     }
     
 

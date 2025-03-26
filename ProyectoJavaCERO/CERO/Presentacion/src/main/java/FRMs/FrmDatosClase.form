@@ -37,23 +37,23 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="306" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnVerAlumnosInscritos" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRegistrarAlumno" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="PanelDatosClase" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="jTextField2" min="-2" pref="275" max="-2" attributes="0"/>
+                              <Component id="txtCodigoAlumno" min="-2" pref="275" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnInscribirAlumno" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -70,25 +70,25 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="PanelDatosClase" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnVerAlumnosInscritos" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnInscribirAlumno" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
-                          <Component id="jTextField2" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="txtCodigoAlumno" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRegistrarAlumno" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRegresar" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="215" max="32767" attributes="0"/>
           </Group>
@@ -118,19 +118,19 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txfIDClase" min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="lblIDClase" min="-2" pref="112" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="txfNombreClase" min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="lblNombreClase" min="-2" pref="112" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="txfHorarioClase" min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="lblHorarioClase" min="-2" pref="112" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="txfMaestro" min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="lblMaestro" min="-2" pref="112" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txfPrecio" min="-2" pref="112" max="-2" attributes="0"/>
+                          <Component id="lblPrecio" min="-2" pref="112" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -160,11 +160,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txfIDClase" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="txfHorarioClase" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="txfMaestro" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="txfPrecio" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="txfNombreClase" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="lblIDClase" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="lblHorarioClase" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="lblMaestro" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="lblPrecio" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="lblNombreClase" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
@@ -227,7 +227,7 @@
             <Property name="text" type="java.lang.String" value="MAESTRO"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txfIDClase">
+        <Component class="javax.swing.JTextField" name="lblIDClase">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -246,7 +246,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txfPrecio">
+        <Component class="javax.swing.JTextField" name="lblPrecio">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -265,7 +265,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txfHorarioClase">
+        <Component class="javax.swing.JTextField" name="lblHorarioClase">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -284,7 +284,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txfMaestro">
+        <Component class="javax.swing.JTextField" name="lblMaestro">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -303,7 +303,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txfNombreClase">
+        <Component class="javax.swing.JTextField" name="lblNombreClase">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -335,7 +335,7 @@
         <Property name="text" type="java.lang.String" value="DATOS DE LA CLASE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnVerAlumnosInscritos">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/verAlumnosInscritos.png"/>
@@ -352,10 +352,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerAlumnosInscritosActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="btnRegresar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/regresar.png"/>
@@ -372,10 +372,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegresarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="btnRegistrarAlumno">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/registrarNuevoAlumno.png"/>
@@ -392,7 +392,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRegistrarAlumnoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
@@ -406,7 +406,7 @@
         <Property name="text" type="java.lang.String" value="ID alumno:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="btnInscribirAlumno">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/inscribirAlumno.png"/>
@@ -423,10 +423,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInscribirAlumnoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="txtCodigoAlumno">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>

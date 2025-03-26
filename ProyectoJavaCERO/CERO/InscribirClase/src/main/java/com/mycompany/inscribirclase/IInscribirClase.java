@@ -3,6 +3,7 @@ package com.mycompany.inscribirclase;
 
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.ClaseListaDTO;
@@ -37,27 +38,39 @@ public interface IInscribirClase {
     
     /** valida que el numero de cuenta sea de 16 caracteres, y que no esté vacío. */
     public abstract boolean validarNumeroCuenta(String numeroCuenta);
-    
-    /** valida que el propietario no esté vacío. */
+
+    /**
+     * valida que el propietario no esté vacío.
+     */
     public abstract boolean validarPropietarioTarjeta(String propietario);
-    
-    /** valida que la tarjeta no esté expirada, y que no esté vacía. */
+
+    /**
+     * valida que la tarjeta no esté expirada, y que no esté vacía.
+     */
     public abstract boolean validarFechaExpiracion(LocalDate fecha);
-    
-    /** valida que el cvv sea de 4 dígitos, y que no esté vacío. */
+
+    /**
+     * valida que el cvv sea de 4 dígitos, y que no esté vacío.
+     */
     public abstract boolean validarCVV(int cvv);
-    
-    /** Procesa una nueva Inscripción.  */ 
+
+    /**
+     * Procesa una nueva Inscripción.
+     */
     public abstract InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion);
 
-    /** Validar Clase por su nombre. */
+    /**
+     * Validar Clase por su nombre.
+     */
     public abstract boolean validarNombreClase(String nombre);
-    
+
     //METODOS DE SELECCION DE CLASES :BUSQUEDAS
     public abstract List<ClaseDTO> buscarClasesPorNombre(String nombre);
-    
+
     public abstract boolean validarNombreClaseVacio(String nombre);
+
+    public List<AlumnoDTO> obtenerAlumnosClase();
     
-     public List<AlumnoDTO> obtenerAlumnosClase();
-    
+    public AlumnoDTO obtenerAlumno(AlumnoBusquedaDTO alumnoBusqueda);
+
 }

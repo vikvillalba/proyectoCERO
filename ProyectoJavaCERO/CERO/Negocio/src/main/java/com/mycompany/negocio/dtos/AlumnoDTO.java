@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * @author victoria
  */
 public class AlumnoDTO {
-    private int codigo;
+    private Integer codigo;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String nombre;
