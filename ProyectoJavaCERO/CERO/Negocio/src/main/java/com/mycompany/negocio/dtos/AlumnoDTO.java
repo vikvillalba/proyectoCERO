@@ -16,6 +16,9 @@ public class AlumnoDTO {
     private LocalDate fechaNacimiento;
     private String correoElectronico;
 
+    public AlumnoDTO() {
+    }
+
     public AlumnoDTO(int codigo, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico) {
         this.codigo = codigo;
         this.apellidoPaterno = apellidoPaterno;

@@ -212,7 +212,7 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Total a pagar:");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(320, 340, 400, 62);
+        jLabel4.setBounds(320, 340, 250, 62);
         jLabel4.getAccessibleContext().setAccessibleDescription("");
 
         jLabel9.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
@@ -239,9 +239,12 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         txfPrecio.setBounds(580, 350, 120, 50);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
+        jButton4.setBorder(null);
+        jButton4.setContentAreaFilled(false);
+        jButton4.setOpaque(false);
         jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
         getContentPane().add(jButton4);
-        jButton4.setBounds(380, 510, 256, 77);
+        jButton4.setBounds(380, 510, 250, 70);
 
         jButton1.setText("Pago Tarjeta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

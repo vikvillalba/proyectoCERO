@@ -6,6 +6,7 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoD
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.implementaciones.InscribirClase;
 import com.mycompany.negocio.dtos.AlumnoDTO;
+import com.mycompany.negocio.dtos.AlumnoListaDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
@@ -78,6 +79,20 @@ public class ControlNavegacion {
             // Si el usuario hace clic en OK, cierra la ventana raiz
             parentComponent.dispose();
         }
+    }
+    
+    /**
+     * Muestra el JFrmae FrmFinalizarInscripcion.
+     * @param claseDTO el DTO que tendra los datos a mostrar.
+     */
+    public static void mostrarFinalizarInscripcion(ClaseDTO claseDTO) {
+        FrmFinalizarInscripcion finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO);
+        finalizarInscripcion.setVisible(true);
+    }
+    
+    public static void mostrarAlumnosInscritos(AlumnoListaDTO alumnos) {
+        FrmAlumnosInscritos frmAlumnosInscritos = new FrmAlumnosInscritos(alumnos);
+        frmAlumnosInscritos.setVisible(true);
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
@@ -173,8 +188,8 @@ public class ControlNavegacion {
     /**
      * Muestra pantalla de DatosClase
      */
-    public static void mostrarDatosClase() {
-        FrmDatosClase frmDatosClase = new FrmDatosClase();
+    public static void mostrarDatosClase(ClaseDTO claseDTO) {
+        FrmDatosClase frmDatosClase = new FrmDatosClase(claseDTO);
         frmDatosClase.setVisible(true);
     }
     
