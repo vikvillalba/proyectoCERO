@@ -16,18 +16,18 @@ import javax.swing.JPanel;
 public class FrmInscribirClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ControlNavegacion controlNav;
+    private ControlNavegacion control;
 
     /**
      * Creates new customizer FrmInscribirClase2
-     * @param controlNav
+     * 
      */
-    public FrmInscribirClase(ControlNavegacion controlNav) {
+    public FrmInscribirClase() {
         initComponents();
-        this.controlNav = controlNav;
         this.txfNombreClase.setForeground(Color.GRAY);
         this.txfNombreClase.setText("ingresa nombre clase...");
         this.setTitle("Inscribir Clase");
+        this.control = new ControlNavegacion();
 
         // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -124,17 +124,18 @@ public class FrmInscribirClase extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+        ControlNavegacion.mostrarMenuPrincipal();
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     //BUSCAR CLASE BTN
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
         try {
             String campo = txfNombreClase.getText();
-            controlNav.mostrarClasesExistentes(campo);
+            this.control.mostrarClasesExistentes(campo);
             this.dispose();
         } catch (PresentacionException ex) {
-            controlNav.mostrarMensajeErrorConExcepcion(this, ex);
+            this.control.mostrarMensajeErrorConExcepcion(this, ex);
             txfNombreClase.setText("");
         }
         

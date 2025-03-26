@@ -20,16 +20,16 @@ public class PruebasDaniel {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        List<DayOfWeek> dias = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
-        ClaseDTO claseDTO = new ClaseDTO(1, "Contemporaneo", dias, LocalTime.MIN, LocalTime.MIN, "maestro", BigDecimal.ZERO);
-        ControlNavegacion.mostrarDatosClase(claseDTO);
-        
-        // FrmAlumnosInscriptos
-        AlumnoDTO a1 = new AlumnoDTO("Paula", "Soto", "nombre", "telefono", LocalDate.MIN, "correoElectronico");
-        AlumnoListaDTO alumnos = new AlumnoListaDTO();
-        alumnos.getAlumnos().add(a1);
-        ControlNavegacion.mostrarAlumnosInscritos(alumnos);
-                
+//        List<DayOfWeek> dias = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
+//        ClaseDTO claseDTO = new ClaseDTO(1, "Contemporaneo", dias, LocalTime.MIN, LocalTime.MIN, "maestro", BigDecimal.ZERO);
+//        ControlNavegacion.mostrarDatosClase(claseDTO);
+//        
+//        // FrmAlumnosInscriptos
+//        AlumnoDTO a1 = new AlumnoDTO("Paula", "Soto", "nombre", "telefono", LocalDate.MIN, "correoElectronico");
+//        AlumnoListaDTO alumnos = new AlumnoListaDTO();
+//        alumnos.getAlumnos().add(a1);
+//        ControlNavegacion.mostrarAlumnosInscritos(alumnos);
+//                
     }
     
 }

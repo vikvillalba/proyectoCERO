@@ -3,6 +3,7 @@ package com.mycompany.inscribirclase;
 
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
@@ -53,8 +54,10 @@ public interface IInscribirClase {
     public abstract boolean validarNombreClase(String nombre);
     
     //METODOS DE SELECCION DE CLASES :BUSQUEDAS
-    public abstract List<ClaseListaDTO> buscarClasesPorNombre(String nombre);
+    public abstract List<ClaseDTO> buscarClasesPorNombre(String nombre);
     
     public abstract boolean validarNombreClaseVacio(String nombre);
+    
+     public List<AlumnoDTO> obtenerAlumnosClase();
     
 }

@@ -4,6 +4,7 @@ import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.AlumnoListaDTO;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,11 +22,11 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
     /**
      * Creates new form FrmAlumnosInscritos
      */
-    public FrmAlumnosInscritos(AlumnoListaDTO alumnos) {
+    public FrmAlumnosInscritos(List<AlumnoDTO> alumnos) {
         initComponents();
         int totalInscripciones = 0;
         int numeroLista = 0;
-        for (AlumnoDTO alumnoDTO : alumnos.getAlumnos()) {
+        for (AlumnoDTO alumnoDTO : alumnos) {
             numeroLista++;
             crearDatosClase(alumnoDTO, numeroLista);
             totalInscripciones++;

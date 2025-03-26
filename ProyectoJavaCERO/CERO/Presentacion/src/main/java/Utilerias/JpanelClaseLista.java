@@ -16,6 +16,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -28,9 +29,9 @@ import javax.swing.SwingUtilities;
  */
 public class JpanelClaseLista extends javax.swing.JPanel {
     
-    private ClaseListaDTO clase;
+    private ClaseDTO clase;
 
-    public JpanelClaseLista(ClaseListaDTO clase) {
+    public JpanelClaseLista(ClaseDTO clase) {
         initComponents();
         this.clase = clase;
         setOpaque(false);
@@ -82,12 +83,17 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         JpanelDatos.setBackground(new Color(30, 47, 86));
         JpanelDatos.setLayout(new GridLayout(1, 5, 10, 0));
 
-        lblIdClase = new JLabel(clase.getId(), SwingConstants.CENTER);
-        lblNombreClase = new JLabel(clase.getNombreClase(), SwingConstants.CENTER);
-        //JUNTAR HORA INICIO Y HORA FIN
-        lblHorario = new JLabel(clase.getHoraInicio()+"-"+clase.getHoraFin(), SwingConstants.CENTER);
-        lblDias = new JLabel(clase.getDias(), SwingConstants.CENTER);
-        lblMaestro = new JLabel(clase.getMaestro(), SwingConstants.CENTER);
+       lblIdClase = new JLabel(String.valueOf(clase.getCodigo()), SwingConstants.CENTER);
+       lblNombreClase = new JLabel(clase.getNombre(), SwingConstants.CENTER);
+       //JUNTAR HORA INICIO Y HORA FIN
+       lblHorario = new JLabel(clase.getHoraInicio() + "-" + clase.getHoraFin(), SwingConstants.CENTER);
+       List<DayOfWeek> diasSemana = clase.getDias();
+       String diasTexto = (diasSemana != null) ? diasSemana.stream()
+               .map(DayOfWeek::toString)
+               .collect(Collectors.joining(", ")) : "Sin días";
+
+       lblDias = new JLabel(diasTexto, SwingConstants.CENTER);
+       lblMaestro = new JLabel(clase.getMaestro(), SwingConstants.CENTER);
 
         configurarLabelDatos(lblIdClase);
         configurarLabelDatos(lblNombreClase);
@@ -255,7 +261,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
     private void btnSeleccionarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClaseActionPerformed
         // TODO add your handling code here:
         //UTILIZAR CONTROL NAV PARA ABRIR DATOS CLASE Y OBTIENE EL ID DE LA CLASE Y ESO SE LO PASA A DATOS CLASE
-        ControlNavegacion.mostrarDatosClase(new ClaseDTO());
+        ControlNavegacion.mostrarDatosClase(clase);
         // SI LA CLASE ESTA LLENA DESHABILITAR EL BTN
         
     }//GEN-LAST:event_btnSeleccionarClaseActionPerformed

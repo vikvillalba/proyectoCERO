@@ -32,7 +32,7 @@ public class ControlNavegacion {
     private static IInscribirClase inscribirClase;
 
     public ControlNavegacion() {
-        this.inscribirClase = new InscribirClase();
+        inscribirClase = new InscribirClase();
     }
 
     /**
@@ -46,9 +46,9 @@ public class ControlNavegacion {
     /**
      * Muestra la pantalla que inicia el caso de uso para inscribir a un alumno.
      */
-    //Se le pasa el control creado en el main para que solo tenga un control
-    public static void mostrarInscribirClase(ControlNavegacion control) {
-        FrmInscribirClase inscribirClase = new FrmInscribirClase(control);
+
+    public static void mostrarInscribirClase() {
+        FrmInscribirClase inscribirClase = new FrmInscribirClase();
         inscribirClase.setVisible(true);
     }
 
@@ -85,12 +85,13 @@ public class ControlNavegacion {
      * Muestra el JFrmae FrmFinalizarInscripcion.
      * @param claseDTO el DTO que tendra los datos a mostrar.
      */
-    public static void mostrarFinalizarInscripcion(ClaseDTO claseDTO) {
-        FrmFinalizarInscripcion finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO);
+    public static void mostrarFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
+        FrmFinalizarInscripcion finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
     }
     
-    public static void mostrarAlumnosInscritos(AlumnoListaDTO alumnos) {
+    public static void mostrarAlumnosInscritos() {
+        List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
         FrmAlumnosInscritos frmAlumnosInscritos = new FrmAlumnosInscritos(alumnos);
         frmAlumnosInscritos.setVisible(true);
     }
@@ -203,12 +204,12 @@ public class ControlNavegacion {
             throw new PresentacionException("El nombre de clase no existe"); 
         }
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
-        List<ClaseListaDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
+        List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
         FrmClasesExistentes frmClasesExistentes = new FrmClasesExistentes(clases);
         frmClasesExistentes.setVisible(true);
     }
     
-    private static List<ClaseListaDTO> obtenerClaseLista(String nombre){
+    private static List<ClaseDTO> obtenerClaseLista(String nombre){
         return inscribirClase.buscarClasesPorNombre(nombre);
     }
     

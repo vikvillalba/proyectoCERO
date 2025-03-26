@@ -6,7 +6,9 @@ package FRMs;
 
 import Utilerias.JpanelClaseLista;
 import Utilerias.RenderTabla;
+import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.negocio.dtos.ClaseListaDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -26,14 +28,14 @@ import javax.swing.table.DefaultTableModel;
 public class FrmClasesExistentes extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private List<ClaseListaDTO> clases;
+    private List<ClaseDTO> clases;
 
     /**
      * Creates new form FrmClasesExistentes
      *
      * @param clases
      */
-    public FrmClasesExistentes(List<ClaseListaDTO> clases) {
+    public FrmClasesExistentes(List<ClaseDTO> clases) {
         initComponents();
         this.clases = clases;
         jScrollClases.setOpaque(true);
@@ -64,9 +66,8 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
 
         // Agregar margen para que los elementos no se vean pegados
         contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
         // Recorrer la lista de clases y agregar filas a la tabla
-        for (ClaseListaDTO clase : clases) {
+        for (ClaseDTO clase : clases) {
             // Crear el panel para la clase
             JpanelClaseLista panelClase = new JpanelClaseLista(clase);
 
@@ -150,8 +151,8 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        System.out.println("Regresar");
+        ControlNavegacion.mostrarInscribirClase();
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 //
 //    /**

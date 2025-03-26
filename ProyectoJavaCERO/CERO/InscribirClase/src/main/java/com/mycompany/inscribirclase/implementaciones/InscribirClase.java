@@ -33,15 +33,22 @@ public class InscribirClase implements IInscribirClase {
 
     private List<PagoDTO> pagos;
     private List<InscripcionDTO> inscripciones;
-    private ClaseDTO clase;
     private List<ClaseDTO> clases;
+    private List<AlumnoDTO> alumnos;
 
     public InscribirClase() {
         this.pagos = new ArrayList<>();
         this.inscripciones = new ArrayList<>();
-        clase = new ClaseDTO();
-        this.clases = clase.setClases();
-        this.clases = clase.setClases();
+        this.clases = new ArrayList<>();
+        this.alumnos = new ArrayList<>();
+        
+        // datos de prueba
+        List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
+        ClaseDTO clase = new ClaseDTO(1, "Contemporaneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
+        AlumnoDTO alumno = new AlumnoDTO(12345, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
+        clases.add(clase);
+        alumnos.add(alumno);
+
     }
 
     @Override
@@ -131,30 +138,27 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public boolean validarNombreClase(String nombre) {
-        // Lista de Nombres que pueden tener un nombreClase
-        List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
-        for (String clasesExistente : clasesExistentes) {
-           if(clasesExistente.toLowerCase().contains(nombre.toLowerCase())){
-               return true;
-           }
-           
-        }
-        return false;
+        // TODO: cambiar validaciones 
+//        List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
+//        for (String clasesExistente : clasesExistentes) {
+//           if(clasesExistente.toLowerCase().contains(nombre.toLowerCase())){
+//               return true;
+//           }
+//           
+//        }
+        return true;
     }
 
-    //// METODOS DE SELECCION DE CLASES : BUSQUEDAS
+    //// METODOS DE SELECC<ION DE CLASES : BUSQUEDAS
     @Override
-    public List<ClaseListaDTO> buscarClasesPorNombre(String nombre) {
-        List<ClaseListaDTO> clasesExistentes = new ArrayList<>();
-        ClaseListaDTO claseListaDto = new ClaseListaDTO();
-        
+    public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
+        List<ClaseDTO> clasesExistentes = new ArrayList<>();
+
         for (ClaseDTO clase : clases) {
             if (clase.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                claseListaDto = convertirClaseListaDTO(clase);
-                clasesExistentes.add(claseListaDto);
+                clasesExistentes.add(clase);
             }
         }
-        claseListaDto.setClasesExistentes(clasesExistentes);
         return clasesExistentes;
     }
 
@@ -168,6 +172,7 @@ public class InscribirClase implements IInscribirClase {
         return new ClaseListaDTO(id, nombreClase, horaInicio, horaFin, dias, maestro); 
     }
 
+
     @Override
     public boolean validarNombreClaseVacio (String nombre) {
         //Poner REGLAS DE NEGOCIO PARA LA BUSQUEDA DE NOMBRES CLASE
@@ -177,6 +182,12 @@ public class InscribirClase implements IInscribirClase {
         return false;
     }
 
+    @Override
+    public List<AlumnoDTO> obtenerAlumnosClase(){
+        // hacer validaciones de que los alumnos si estén inscritos en la clase
+        // esta no era mi chamba plebes que onda :( ..... 
+        return alumnos;
+    }
     
 }
 

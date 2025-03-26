@@ -5,7 +5,10 @@
 package FRMs;
 
 import Utilerias.RenderTabla;
+import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.presentacion.ControlNavegacion;
+import com.mycompany.presentacion.excepciones.PresentacionException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -15,6 +18,8 @@ import java.awt.RenderingHints;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,12 +34,16 @@ import javax.swing.border.AbstractBorder;
 public class FrmDatosClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
+    private ClaseDTO clase;
+    private AlumnoDTO alumno;
 
     /**
      * Creates new form FrmDatosClase
      */
     public FrmDatosClase(ClaseDTO claseDTO) {
         initComponents();
+        this.clase = claseDTO;
+        this.alumno = alumno;
         this.setTitle("Datos Clase");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
@@ -250,6 +259,11 @@ public class FrmDatosClase extends javax.swing.JFrame {
         jButton4.setContentAreaFilled(false);
         jButton4.setOpaque(false);
         jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/registrarNuevoAlumno.png"))); // NOI18N
         jButton3.setBorder(null);
@@ -271,9 +285,13 @@ public class FrmDatosClase extends javax.swing.JFrame {
         jButton5.setContentAreaFilled(false);
         jButton5.setOpaque(false);
         jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirAlumnoHovered.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField2.setText("jTextField2");
         jTextField2.setBorder(null);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -334,12 +352,26 @@ public class FrmDatosClase extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        ControlNavegacion.mostrarAlumnosInscritos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        // llaman al metodo mostrar registrar alumno del controlnavegacion
+        // tampoco era esta mi chamba....
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            ControlNavegacion.mostrarClasesExistentes(clase.getNombre());
+            this.dispose();
+        } catch (PresentacionException ex) {
+            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        ControlNavegacion.mostrarFinalizarInscripcion(clase, alumno);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

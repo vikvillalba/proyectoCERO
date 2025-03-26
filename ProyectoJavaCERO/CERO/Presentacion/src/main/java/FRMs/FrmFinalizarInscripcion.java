@@ -1,6 +1,8 @@
 package FRMs;
 
+import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.math.BigDecimal;
@@ -20,13 +22,17 @@ import javax.swing.JPanel;
 public class FrmFinalizarInscripcion extends javax.swing.JFrame {
 
     private Image imagenFondo;
+    private ClaseDTO clase;
+    private AlumnoDTO alumno;
 
     /**
      * Creates new customizer FrmFinalizarInscripcion
      */
-    public FrmFinalizarInscripcion(ClaseDTO claseDTO) {
+    public FrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
         initComponents();
         this.setTitle("Finalizar Inscripcion");
+        this.clase = claseDTO;
+        this.alumno = alumno;
 
         // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -95,9 +101,9 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txfPrecio = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        b = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        btnPagoTarjeta = new javax.swing.JButton();
+        btnPagoEfectivo = new javax.swing.JButton();
 
         getContentPane().setLayout(null);
 
@@ -219,13 +225,13 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(30, 47, 86));
         jLabel9.setText("FINALIZAR INSCRIPCIÓN");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(220, 40, 580, 62);
+        jLabel9.setBounds(220, 40, 580, 57);
 
         jLabel10.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
         jLabel10.setText("REALIZAR PAGO");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(300, 280, 400, 62);
+        jLabel10.setBounds(300, 280, 400, 57);
 
         txfPrecio.setEditable(false);
         txfPrecio.setBackground(new java.awt.Color(30, 47, 86));
@@ -238,73 +244,54 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         getContentPane().add(txfPrecio);
         txfPrecio.setBounds(580, 350, 120, 50);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setOpaque(false);
-        jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
-        getContentPane().add(jButton4);
-        jButton4.setBounds(380, 510, 250, 70);
-
-        jButton1.setText("Pago Tarjeta");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
+        btnRegresar.setBorder(null);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.setOpaque(false);
+        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(750, 420, 150, 40);
+        getContentPane().add(btnRegresar);
+        btnRegresar.setBounds(380, 510, 250, 70);
 
-        b.setText("Pago Efectivo");
-        getContentPane().add(b);
-        b.setBounds(110, 420, 150, 40);
+        btnPagoTarjeta.setText("Pago Tarjeta");
+        btnPagoTarjeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagoTarjetaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPagoTarjeta);
+        btnPagoTarjeta.setBounds(750, 420, 150, 40);
+
+        btnPagoEfectivo.setText("Pago Efectivo");
+        btnPagoEfectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagoEfectivoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPagoEfectivo);
+        btnPagoEfectivo.setBounds(110, 420, 150, 40);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnPagoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoTarjetaActionPerformed
+        ControlNavegacion.mostrarPagoTarjeta(clase, alumno);
+    }//GEN-LAST:event_btnPagoTarjetaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmClasesExistentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmClasesExistentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmClasesExistentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmClasesExistentes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        List<DayOfWeek> dias = Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY);
-        ClaseDTO claseDTO = new ClaseDTO(1, "Contemporaneo", dias, LocalTime.MIN, LocalTime.MIN, "maestro", BigDecimal.ZERO);
+    private void btnPagoEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoEfectivoActionPerformed
+       ControlNavegacion.mostrarPagoEfectivo(clase, alumno);
+    }//GEN-LAST:event_btnPagoEfectivoActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmFinalizarInscripcion(claseDTO).setVisible(true);
-            }
-        });
-    }
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        ControlNavegacion.mostrarDatosClase(clase);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnPagoEfectivo;
+    private javax.swing.JButton btnPagoTarjeta;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
