@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class FrmInscribirClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ControlNavegacion control;
+
 
     /**
      * Creates new customizer FrmInscribirClase2
@@ -27,7 +27,7 @@ public class FrmInscribirClase extends javax.swing.JFrame {
         this.txfNombreClase.setForeground(Color.GRAY);
         this.txfNombreClase.setText("ingresa nombre clase...");
         this.setTitle("Inscribir Clase");
-        this.control = new ControlNavegacion();
+
 
         // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -132,10 +132,10 @@ public class FrmInscribirClase extends javax.swing.JFrame {
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
         try {
             String campo = txfNombreClase.getText();
-            this.control.mostrarClasesExistentes(campo);
+            ControlNavegacion.mostrarClasesExistentes(campo);
             this.dispose();
         } catch (PresentacionException ex) {
-            this.control.mostrarMensajeErrorConExcepcion(this, ex);
+            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
             txfNombreClase.setText("");
         }
         

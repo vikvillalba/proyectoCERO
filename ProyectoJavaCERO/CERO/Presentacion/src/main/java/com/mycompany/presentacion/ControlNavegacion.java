@@ -7,9 +7,7 @@ import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.implementaciones.InscribirClase;
 import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.AlumnoListaDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.NombreClaseParam;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
@@ -31,6 +29,17 @@ import javax.swing.JOptionPane;
 public class ControlNavegacion {
 
     private static IInscribirClase inscribirClase;
+    
+    // formularios
+    private static FrmAlumnosInscritos alumnosInscritos;
+    private static FrmClasesExistentes clasesExistentes;
+    private static FrmDatosClase datosClase;
+    private static FrmFinalizarInscripcion finalizarInscripcion;
+    private static FrmMenuPrincipal menuPrincipal;
+    private static FrmPagoEfectivo pagoEfectivo;
+    private static FrmPagoTarjeta pagoTarjeta;
+    private static FrmRegistrarAlumno registrarAlumno;
+    private static FrmInscribirClase inscribir;
 
     public ControlNavegacion() {
         inscribirClase = new InscribirClase();
@@ -40,8 +49,8 @@ public class ControlNavegacion {
      * Muestra la pantalla de menú principal.
      */
     public static void mostrarMenuPrincipal() {
-        FrmMenuPrincipal menu = new FrmMenuPrincipal();
-        menu.setVisible(true);
+        menuPrincipal = new FrmMenuPrincipal();
+        menuPrincipal.setVisible(true);
     }
 
     /**
@@ -49,15 +58,15 @@ public class ControlNavegacion {
      */
 
     public static void mostrarInscribirClase() {
-        FrmInscribirClase inscribirClase = new FrmInscribirClase();
-        inscribirClase.setVisible(true);
+        inscribir = new FrmInscribirClase();
+        inscribir.setVisible(true);
     }
 
     /**
      * Muestra la pantalla para registrar un pago en efectivo para el caso de uso de inscribir a un alumno.
      */
     public static void mostrarPagoEfectivo(ClaseDTO clase, AlumnoDTO alumno) {
-        FrmPagoEfectivo pagoEfectivo = new FrmPagoEfectivo(clase, alumno);
+        pagoEfectivo = new FrmPagoEfectivo(clase, alumno);
         pagoEfectivo.setVisible(true);
     }
 
@@ -65,7 +74,7 @@ public class ControlNavegacion {
      * Muestra la pantalla para registrar un pago con tarjeta para el caso de uso de inscribir a un alumno.
      */
     public static void mostrarPagoTarjeta(ClaseDTO clase, AlumnoDTO alumno) {
-        FrmPagoTarjeta pagoTarjeta = new FrmPagoTarjeta(clase, alumno);
+        pagoTarjeta = new FrmPagoTarjeta(clase, alumno);
         pagoTarjeta.setVisible(true);
     }
 
@@ -79,6 +88,7 @@ public class ControlNavegacion {
         if (response == JOptionPane.OK_OPTION) {
             // Si el usuario hace clic en OK, cierra la ventana raiz
             parentComponent.dispose();
+            mostrarMenuPrincipal();
         }
     }
     
@@ -87,14 +97,14 @@ public class ControlNavegacion {
      * @param claseDTO el DTO que tendra los datos a mostrar.
      */
     public static void mostrarFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
-        FrmFinalizarInscripcion finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
+        finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
     }
     
     public static void mostrarAlumnosInscritos() {
         List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
-        FrmAlumnosInscritos frmAlumnosInscritos = new FrmAlumnosInscritos(alumnos);
-        frmAlumnosInscritos.setVisible(true);
+        alumnosInscritos = new FrmAlumnosInscritos(alumnos);
+        alumnosInscritos.setVisible(true);
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
@@ -191,9 +201,9 @@ public class ControlNavegacion {
      * Muestra pantalla de DatosClase
      */
     public static void mostrarDatosClase(ClaseDTO claseDTO) {
-        
-        FrmDatosClase frmDatosClase = new FrmDatosClase(claseDTO);
-        frmDatosClase.setVisible(true);
+        datosClase = new FrmDatosClase(claseDTO);
+        datosClase.setVisible(true);
+        clasesExistentes.dispose();
     }
     
     //MOSTRAR CLASES EXISTENTES
@@ -207,8 +217,8 @@ public class ControlNavegacion {
         }
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
         List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
-        FrmClasesExistentes frmClasesExistentes = new FrmClasesExistentes(clases);
-        frmClasesExistentes.setVisible(true);
+        clasesExistentes = new FrmClasesExistentes(clases);
+        clasesExistentes.setVisible(true);
     }
     
     private static List<ClaseDTO> obtenerClaseLista(String nombre){
