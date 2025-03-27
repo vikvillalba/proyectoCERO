@@ -7,7 +7,6 @@ package FRMs;
 import Utilerias.JpanelClaseLista;
 import Utilerias.RenderTabla;
 import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Dimension;
 import java.awt.Graphics;

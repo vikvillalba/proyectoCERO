@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -96,7 +98,7 @@ public class ControlNavegacion {
      * Muestra el JFrmae FrmFinalizarInscripcion.
      * @param claseDTO el DTO que tendra los datos a mostrar.
      */
-    public static void mostrarFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
+    public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
     }
@@ -213,13 +215,35 @@ public class ControlNavegacion {
     
     //MOSTRAR CLASES EXISTENTES
    
-    public static void mostrarClasesExistentes(String nombre) throws PresentacionException{
+    private static boolean validarErrorNombreClase(JFrame frame,String nombre){
         if(inscribirClase.validarNombreClaseVacio(nombre)== true){
-            throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
+            try {
+                throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+                frame.dispose();
+                return true;
+            }
         }
         if(inscribirClase.validarNombreClase(nombre) == false){
-            throw new PresentacionException("El nombre de clase no existe"); 
+            try { 
+                throw new PresentacionException("El nombre de clase no existe");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+               frame.dispose();
+               return true;
+            }
         }
+        frame.dispose();
+        return false;
+    }
+        
+    public static void mostrarClasesExistente(String nombre){
+        
+        if(validarErrorNombreClase(inscribir, nombre)== true){
+            return;
+        }
+        
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
         List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
         clasesExistentes = new FrmClasesExistentes(clases);
@@ -230,18 +254,41 @@ public class ControlNavegacion {
         return inscribirClase.buscarClasesPorNombre(nombre);
     }
     
+    
+    //DATOS CLASE METODOS
     public static AlumnoDTO obtenerAlumno(Integer codigo){
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigo);
         return inscribirClase.obtenerAlumno(alumnoBusqueda);
     }
     
-    public static boolean AgregarAlumno(AlumnoDTO alumnoDTO) {
-        AlumnoDTO alumnoRegistrado = inscribirClase.agregarAlumno(alumnoDTO);
-        if (alumnoRegistrado == null) {
-            return false;
-        } else {
-            return true;
+    //ValidarCampo
+    public static Integer mostrarErrorcampoIdAlumno(String campo){
+        if(!campo.matches("\\d+")){
+            try {
+                throw new PresentacionException("Ingrese solo números en el código de alumno.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(datosClase, ex);
+            }
+            return null;
         }
+        Integer codigoAlumno = Integer.valueOf(campo);
+        return codigoAlumno;
+    }
+    
+    public static void mostrarFinalizarInscripcion(ClaseDTO clase,String campo){
+        
+        Integer codigoAlumno = mostrarErrorcampoIdAlumno(campo);
+        AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
+        AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
+        if(alumnoEncontrado == null){
+            try {
+                throw new PresentacionException("El alumno no existe");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(datosClase, ex);
+            }
+            return;
+        }
+        mostrarFrmFinalizarInscripcion(clase, alumnoEncontrado);
     }
     
     public static boolean validarDatosAlumno(AlumnoDTO alumnoDTO) {
@@ -264,6 +311,16 @@ public class ControlNavegacion {
             return true;
         }
         return false;
-    } 
+    }
+    
+    public static boolean AgregarAlumno(AlumnoDTO alumnoDTO) {
+        AlumnoDTO alumnoRegistrado = inscribirClase.agregarAlumno(alumnoDTO);
+        if (alumnoRegistrado == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
 
 }

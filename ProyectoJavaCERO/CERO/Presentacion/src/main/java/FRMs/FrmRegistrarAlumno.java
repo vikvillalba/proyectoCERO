@@ -55,7 +55,7 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
         selectorFechas = new JDateChooser();
         panelFondo.add(selectorFechas);
 
-        selectorFechas.setBounds(510, 280, 280, 40); // (x, y, ancho, alto)
+        selectorFechas.setBounds(515, 280, 280, 40); // (x, y, ancho, alto)
 
         pack();
     }

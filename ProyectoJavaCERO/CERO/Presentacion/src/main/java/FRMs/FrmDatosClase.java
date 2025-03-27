@@ -5,6 +5,7 @@
 package FRMs;
 
 import Utilerias.RenderTabla;
+import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -35,7 +36,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
     private ClaseDTO clase;
-    private AlumnoDTO alumno;
+    private AlumnoBusquedaDTO alumnoBusqueda;
 
     /**
      * Creates new form FrmDatosClase
@@ -63,6 +64,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         lblIDClase.setText(Integer.toString(claseDTO.getCodigo()));
+        lblNombreClase.setText(claseDTO.getNombre());
         lblHorarioClase.setText(claseDTO.getNombre());
 
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -292,6 +294,11 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
         txtCodigoAlumno.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtCodigoAlumno.setBorder(null);
+        txtCodigoAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoAlumnoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -364,22 +371,24 @@ public class FrmDatosClase extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarAlumnoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        try {
-            ControlNavegacion.mostrarClasesExistentes(clase.getNombre());
-            this.dispose();
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-        }
+
+        ControlNavegacion.mostrarClasesExistente(clase.getNombre());
+        this.dispose();
+
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnInscribirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirAlumnoActionPerformed
 
-        Integer codigoAlumno = Integer.parseInt(txtCodigoAlumno.getText());
-        this.alumno = ControlNavegacion.obtenerAlumno(codigoAlumno);
-
-        ControlNavegacion.mostrarFinalizarInscripcion(clase, alumno);
+        // obtenerInfo de txt
+        String campo = txtCodigoAlumno.getText().trim();
+        ControlNavegacion.mostrarErrorcampoIdAlumno(campo);
         this.dispose();
+        ControlNavegacion.mostrarFinalizarInscripcion(this.clase, campo);
     }//GEN-LAST:event_btnInscribirAlumnoActionPerformed
+
+    private void txtCodigoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoAlumnoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoAlumnoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,7 +5,6 @@
 package Utilerias;
 
 import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -260,7 +259,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
 
     private void btnSeleccionarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClaseActionPerformed
         // TODO add your handling code here:
-        //UTILIZAR CONTROL NAV PARA ABRIR DATOS CLASE Y OBTIENE EL ID DE LA CLASE Y ESO SE LO PASA A DATOS CLASEs
+        
         ControlNavegacion.mostrarDatosClase(clase);
         
         // SI LA CLASE ESTA LLENA DESHABILITAR EL BTN
