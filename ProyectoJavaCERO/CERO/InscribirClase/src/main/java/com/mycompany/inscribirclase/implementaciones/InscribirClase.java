@@ -200,4 +200,68 @@ public class InscribirClase implements IInscribirClase {
         return null; // Retorna null si no se encuentra el alumno
     }
 
+    @Override
+    public boolean validarApellidoPaterno(String apellidoPaterno) {
+        if (apellidoPaterno != null) {
+            return apellidoPaterno.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñüÜ]+$");
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean validarApellidoMaterno(String apellidoMaterno) {
+        if (apellidoMaterno != null) {
+            return apellidoMaterno.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñüÜ]+$");
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean validarNombreAlumno(String nombre) {
+        if (nombre != null) {
+            return nombre.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñüÜ\\s]+$");
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean validarTelefonoAlumno(String telefono) {
+        if (telefono != null) {
+            return telefono.matches("^[0-9]{10}$");
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean validarFechaNacimientoAlumno(LocalDate fechaNacimiento) {
+        if (fechaNacimiento == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean validarCorreoElectronicoAlumno(String correo) {
+        if (correo != null) {
+            return correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public AlumnoDTO agregarAlumno(AlumnoDTO alumnoDTO) {
+        Random random = new Random();
+        int codigo = random.nextInt(1000) + 1;
+        
+        alumnoDTO.setCodigo(codigo);
+        alumnos.add(alumnoDTO);
+        return alumnoDTO;
+    }
+
 }

@@ -53,7 +53,42 @@ public interface IInscribirClase {
      * valida que el cvv sea de 4 dígitos, y que no esté vacío.
      */
     public abstract boolean validarCVV(int cvv);
+    
+    /**
+     * valida que el apellidoPaterno no tenga números y que no esté vacío.
+     */
+    public abstract boolean validarApellidoPaterno(String apellidoPaterno);
+    
+    /**
+     * valida que el apellidoMaterno no tenga números y que no esté vacío.
+     */
+    public abstract boolean validarApellidoMaterno(String apellidoMaterno);
+    
+    /**
+     * valida que el nombre no tenga números y que no esté vacío.
+     */
+    public abstract boolean validarNombreAlumno(String nombre);
+    
+    /**
+     * valida que el número tenga 10 dígitos y que no esté vacío.
+     */
+    public abstract boolean validarTelefonoAlumno(String telefono);
+    
+    /**
+     * valida que la fecha no sea mayor al día actual y que no esté vacía.
+     */
+    public abstract boolean validarFechaNacimientoAlumno(LocalDate fechaNacimiento);
+    
+    /**
+     * valida que el correo tenga un arroba, que el dominio tenga al menos 2 letras y que no esté vacío.
+     */
+    public abstract boolean validarCorreoElectronicoAlumno(String correo);
 
+    /**
+     * Agrega a un nuevo Alumno
+     */
+    public abstract AlumnoDTO agregarAlumno(AlumnoDTO alumnoDTO);
+    
     /**
      * Procesa una nueva Inscripción.
      */

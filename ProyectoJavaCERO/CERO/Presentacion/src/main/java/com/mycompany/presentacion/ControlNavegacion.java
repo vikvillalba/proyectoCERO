@@ -101,10 +101,15 @@ public class ControlNavegacion {
         finalizarInscripcion.setVisible(true);
     }
     
-    public static void mostrarAlumnosInscritos() {
+    public static void mostrarAlumnosInscritos(ClaseDTO clase) {
         List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
-        alumnosInscritos = new FrmAlumnosInscritos(alumnos);
+        alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
         alumnosInscritos.setVisible(true);
+    }
+    
+    public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException{
+        registrarAlumno = new FrmRegistrarAlumno(clase);
+        registrarAlumno.setVisible(true);
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
@@ -230,5 +235,35 @@ public class ControlNavegacion {
         return inscribirClase.obtenerAlumno(alumnoBusqueda);
     }
     
+    public static boolean AgregarAlumno(AlumnoDTO alumnoDTO) {
+        AlumnoDTO alumnoRegistrado = inscribirClase.agregarAlumno(alumnoDTO);
+        if (alumnoRegistrado == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    public static boolean validarDatosAlumno(AlumnoDTO alumnoDTO) {
+        if (inscribirClase.validarApellidoPaterno(alumnoDTO.getApellidoPaterno())) {
+            return true;
+        }
+        if (inscribirClase.validarApellidoMaterno(alumnoDTO.getApellidoMaterno())) {
+            return true;
+        }
+        if (inscribirClase.validarNombreAlumno(alumnoDTO.getNombre())) {
+            return true;
+        }
+        if (inscribirClase.validarFechaNacimientoAlumno(alumnoDTO.getFechaNacimiento())) {
+            return true;
+        }
+        if (inscribirClase.validarCorreoElectronicoAlumno(alumnoDTO.getCorreoElectronico())) {
+            return true;
+        }
+        if (inscribirClase.validarTelefonoAlumno(alumnoDTO.getTelefono())) {
+            return true;
+        }
+        return false;
+    } 
 
 }

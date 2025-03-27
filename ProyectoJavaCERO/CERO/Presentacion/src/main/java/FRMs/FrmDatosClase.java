@@ -351,12 +351,16 @@ public class FrmDatosClase extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerAlumnosInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAlumnosInscritosActionPerformed
-        ControlNavegacion.mostrarAlumnosInscritos();
+        ControlNavegacion.mostrarAlumnosInscritos(clase);
     }//GEN-LAST:event_btnVerAlumnosInscritosActionPerformed
 
     private void btnRegistrarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAlumnoActionPerformed
-        // llaman al metodo mostrar registrar alumno del controlnavegacion
-        // tampoco era esta mi chamba....
+        try {
+            ControlNavegacion.mostrarRegistrarAlumno(clase);
+            this.dispose();
+        } catch (PresentacionException ex) {
+            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
+        }
     }//GEN-LAST:event_btnRegistrarAlumnoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed

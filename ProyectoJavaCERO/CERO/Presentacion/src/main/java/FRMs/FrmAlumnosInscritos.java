@@ -2,6 +2,8 @@ package FRMs;
 
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.AlumnoListaDTO;
+import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;
@@ -18,11 +20,14 @@ import javax.swing.JTextField;
 public class FrmAlumnosInscritos extends javax.swing.JFrame {
 
     private Image imagenFondo;
+    private ClaseDTO clase;
 
     /**
      * Creates new form FrmAlumnosInscritos
      */
-    public FrmAlumnosInscritos(List<AlumnoDTO> alumnos) {
+    public FrmAlumnosInscritos(List<AlumnoDTO> alumnos, ClaseDTO clase) {
+        this.clase = clase;
+        
         initComponents();
         int totalInscripciones = 0;
         int numeroLista = 0;
@@ -79,7 +84,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
         txfTotalInscripciones = new javax.swing.JTextField();
         txfCapacidadGrupo = new javax.swing.JTextField();
         txfCuposDisponibles = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImages(null);
@@ -182,11 +187,16 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
         txfCuposDisponibles.setBorder(null);
         txfCuposDisponibles.setOpaque(false);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setOpaque(false);
-        jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
+        btnRegresar.setBorder(null);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.setOpaque(false);
+        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,7 +233,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(378, 378, 378)
-                        .addComponent(jButton4)))
+                        .addComponent(btnRegresar)))
                 .addContainerGap(344, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -244,12 +254,17 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
                     .addComponent(txfTotalInscripciones, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txfCuposDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jButton4)
+                .addComponent(btnRegresar)
                 .addContainerGap(424, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        ControlNavegacion.mostrarDatosClase(clase);
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void crearDatosClase(AlumnoDTO alumnoDTO, int numeroLista) {
         JPanel PanelNuevo = new javax.swing.JPanel();
@@ -340,7 +355,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelContenedor;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
