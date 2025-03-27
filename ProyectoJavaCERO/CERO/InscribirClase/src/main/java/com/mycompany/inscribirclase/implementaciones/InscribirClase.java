@@ -9,10 +9,8 @@ import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
 import com.mycompany.negocio.dtos.AlumnoDTO;
 import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.negocio.dtos.InscripcionDTO;
 import com.mycompany.negocio.dtos.MetodoPagoDTO;
-import com.mycompany.negocio.dtos.NombreClaseParam;
 import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.dtos.NuevoPagoDTO;
 import com.mycompany.negocio.dtos.PagoDTO;
@@ -45,9 +43,11 @@ public class InscribirClase implements IInscribirClase {
         
         // datos de prueba
         List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
-        ClaseDTO clase = new ClaseDTO(1, "Contemporaneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
+        ClaseDTO clase = new ClaseDTO(1, "Contemporanea principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
+        ClaseDTO clase1 = new ClaseDTO(2, "Contemporanea principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
         AlumnoDTO alumno = new AlumnoDTO(12345, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
         clases.add(clase);
+        clases.add(clase1);
         alumnos.add(alumno);
 
     }
@@ -140,21 +140,21 @@ public class InscribirClase implements IInscribirClase {
     @Override
     public boolean validarNombreClase(String nombre) {
         // TODO: cambiar validaciones 
-//        List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
-//        for (String clasesExistente : clasesExistentes) {
-//           if(clasesExistente.toLowerCase().contains(nombre.toLowerCase())){
-//               return true;
-//           }
-//           
-//        }
-        return true;
+        List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
+        for (String clasesExistente : clasesExistentes) {
+           if(clasesExistente.equalsIgnoreCase(nombre.trim())){
+               return true;
+           }
+           
+        }
+        return false;
     }
 
     //// METODOS DE SELECC<ION DE CLASES : BUSQUEDAS
     @Override
-    public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
+    public List<ClaseDTO> buscarClasesPorNombre(String nombre) { 
         List<ClaseDTO> clasesExistentes = new ArrayList<>();
-
+  
         for (ClaseDTO clase : clases) {
             if (clase.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
                 clasesExistentes.add(clase);
@@ -163,16 +163,7 @@ public class InscribirClase implements IInscribirClase {
         return clasesExistentes;
     }
 
-    private ClaseListaDTO convertirClaseListaDTO(ClaseDTO clase){
-        String id = String.valueOf(clase.getCodigo());
-        String nombreClase = clase.getNombre();
-        String horaInicio = String.valueOf(clase.getHoraInicio());
-        String horaFin = String.valueOf(clase.getHoraFin());
-        String dias = String.valueOf(clase.getDias());
-        String maestro = clase.getMaestro();
-        return new ClaseListaDTO(id, nombreClase, horaInicio, horaFin, dias, maestro); 
-    }
-
+ 
 
     @Override
     public boolean validarNombreClaseVacio (String nombre) {

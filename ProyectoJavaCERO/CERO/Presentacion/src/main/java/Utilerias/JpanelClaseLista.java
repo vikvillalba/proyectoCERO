@@ -5,7 +5,6 @@
 package Utilerias;
 
 import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.ClaseListaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;

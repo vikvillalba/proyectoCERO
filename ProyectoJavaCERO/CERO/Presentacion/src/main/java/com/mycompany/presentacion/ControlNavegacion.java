@@ -19,6 +19,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -208,12 +210,33 @@ public class ControlNavegacion {
     
     //MOSTRAR CLASES EXISTENTES
    
-    public static void mostrarClasesExistentes(String nombre) throws PresentacionException{
+    private static boolean validarErrorNombreClase(JFrame frame,String nombre){
         if(inscribirClase.validarNombreClaseVacio(nombre)== true){
-            throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
+            try {
+                throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+                frame.dispose();
+                return true;
+            }
         }
         if(inscribirClase.validarNombreClase(nombre) == false){
-            throw new PresentacionException("El nombre de clase no existe"); 
+            try { 
+                throw new PresentacionException("El nombre de clase no existe");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+               frame.dispose();
+               return true;
+            }
+        }
+        frame.dispose();
+        return false;
+    }
+        
+    public static void mostrarClasesExistente(String nombre){
+        if(validarErrorNombreClase(inscribir, nombre)== true){
+            mostrarInscribirClase();
+            return;
         }
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
         List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());

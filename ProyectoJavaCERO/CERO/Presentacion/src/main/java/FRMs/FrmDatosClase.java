@@ -360,12 +360,10 @@ public class FrmDatosClase extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistrarAlumnoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        try {
-            ControlNavegacion.mostrarClasesExistentes(clase.getNombre());
-            this.dispose();
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-        }
+
+        ControlNavegacion.mostrarClasesExistente(this.clase.getNombre());
+        this.dispose();
+
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnInscribirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirAlumnoActionPerformed

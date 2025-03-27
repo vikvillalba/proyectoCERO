@@ -130,16 +130,10 @@ public class FrmInscribirClase extends javax.swing.JFrame {
 
     //BUSCAR CLASE BTN
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
-        try {
-            String campo = txfNombreClase.getText();
-            ControlNavegacion.mostrarClasesExistentes(campo);
-            this.dispose();
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-            txfNombreClase.setText("");
-        }
-        
-        
+
+        String campo = txfNombreClase.getText();
+        ControlNavegacion.mostrarClasesExistente(campo);
+
     }//GEN-LAST:event_botonBuscarClaseActionPerformed
 
     private void txfNombreClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreClaseActionPerformed
