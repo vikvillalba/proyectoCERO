@@ -98,7 +98,7 @@ public class ControlNavegacion {
      * Muestra el JFrmae FrmFinalizarInscripcion.
      * @param claseDTO el DTO que tendra los datos a mostrar.
      */
-    public static void mostrarFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
+    public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
     }
@@ -234,10 +234,11 @@ public class ControlNavegacion {
     }
         
     public static void mostrarClasesExistente(String nombre){
+        
         if(validarErrorNombreClase(inscribir, nombre)== true){
-            mostrarInscribirClase();
             return;
         }
+        
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
         List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
         clasesExistentes = new FrmClasesExistentes(clases);
@@ -248,9 +249,42 @@ public class ControlNavegacion {
         return inscribirClase.buscarClasesPorNombre(nombre);
     }
     
+    
+    //DATOS CLASE METODOS
     public static AlumnoDTO obtenerAlumno(Integer codigo){
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigo);
         return inscribirClase.obtenerAlumno(alumnoBusqueda);
+    }
+    
+    //ValidarCampo
+    public static Integer mostrarErrorcampoIdAlumno(String campo){
+        if(!campo.matches("\\d+")){
+            try {
+                throw new PresentacionException("Ingrese solo números en el código de alumno.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(datosClase, ex);
+            }
+            return null;
+        }
+        Integer codigoAlumno = Integer.valueOf(campo);
+        return codigoAlumno;
+    }
+    
+    public static void mostrarFinalizarInscripcion(ClaseDTO clase,String campo){
+        
+        Integer codigoAlumno = mostrarErrorcampoIdAlumno(campo);
+        AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
+        AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
+        if(alumnoEncontrado == null){
+            try {
+                throw new PresentacionException("El alumno no existe");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(datosClase, ex);
+            }
+            return;
+        }
+        mostrarFrmFinalizarInscripcion(clase, alumnoEncontrado);
+        
     }
     
 

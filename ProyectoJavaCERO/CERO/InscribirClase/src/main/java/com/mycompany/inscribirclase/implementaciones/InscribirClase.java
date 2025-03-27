@@ -140,6 +140,7 @@ public class InscribirClase implements IInscribirClase {
     @Override
     public boolean validarNombreClase(String nombre) {
         // TODO: cambiar validaciones 
+        // QUE VALIDE NOMBRES POR EL NOMBRE DE CLASES QUE EXISTEN Y QUE TENGAN DE SEMEJANSA MINIMO UNA PALABRA COMPLETA MAS DE 5 LETRAS
         List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
         for (String clasesExistente : clasesExistentes) {
            if(clasesExistente.equalsIgnoreCase(nombre.trim())){
@@ -183,6 +184,7 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public AlumnoDTO obtenerAlumno(AlumnoBusquedaDTO alumnoBusqueda) {
+        
         for (AlumnoDTO alumno : alumnos) {
             if (alumno.getCodigo() == alumnoBusqueda.getCodigo()) {
                 return alumno;
