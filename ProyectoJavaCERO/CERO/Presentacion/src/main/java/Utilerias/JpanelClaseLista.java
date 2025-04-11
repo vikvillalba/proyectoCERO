@@ -1,25 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package Utilerias;
 
-import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 
 /**
@@ -133,32 +124,6 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
     }
     
-
-     //
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                JFrame frame = new JFrame("Lista de Clases");
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.setSize(1200, 500);
-//                // clase para probar. borrar después. 
-//                String id ="1" ;
-//                String nombre ="contemporanea" ;
-//                String horarioInicio = "7:00pm";
-//                String horarioFin="8:00pm";
-//                String dias = "LUN - MIE - VIE" ;
-//                String maestro = "Prof.Jose Luis";
-//                
-//                
-//                ClaseListaDTO clase = new ClaseListaDTO(id, nombre, horarioInicio, horarioFin, dias, maestro);
-//                frame.add(new JpanelClaseLista(clase));
-//                frame.setLocationRelativeTo(null);
-//                frame.setVisible(true);
-//            }
-//        });
-//    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

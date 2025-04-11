@@ -1,32 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package FRMs;
 
-import Utilerias.RenderTabla;
-import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.dtos.AlumnoBusquedaDTO;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import com.mycompany.presentacion.excepciones.PresentacionException;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.border.AbstractBorder;
 
 /**
  *

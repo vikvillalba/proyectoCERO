@@ -1,8 +1,8 @@
 package FRMs;
 
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import com.mycompany.presentacion.excepciones.PresentacionException;
 import com.toedter.calendar.JDateChooser;
@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;

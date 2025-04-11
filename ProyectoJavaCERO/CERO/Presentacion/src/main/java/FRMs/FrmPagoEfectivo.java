@@ -1,10 +1,10 @@
 
 package FRMs;
 
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.NuevoPagoDTO;
-import com.mycompany.negocio.dtos.PagoEfectivoDTO;
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.NuevoPagoDTO;
+import com.mycompany.dtos.PagoEfectivoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import com.mycompany.presentacion.excepciones.PresentacionException;
 import java.awt.Color;

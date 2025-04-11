@@ -1,15 +1,12 @@
 package FRMs;
 
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

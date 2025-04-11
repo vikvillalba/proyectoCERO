@@ -1,5 +1,4 @@
-
-package com.mycompany.negocio.dtos;
+package com.mycompany.dtos;
 
 import java.time.LocalDateTime;
 

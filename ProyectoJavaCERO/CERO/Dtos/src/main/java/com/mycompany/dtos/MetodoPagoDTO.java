@@ -1,5 +1,4 @@
-
-package com.mycompany.negocio.dtos;
+package com.mycompany.dtos;
 
 /**
  * Interfaz que engloba los posibles métodos de pago para realizar una inscripción. 

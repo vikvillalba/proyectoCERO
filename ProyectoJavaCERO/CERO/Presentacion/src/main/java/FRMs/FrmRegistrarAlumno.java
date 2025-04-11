@@ -1,9 +1,8 @@
 package FRMs;
 
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
-import com.mycompany.presentacion.excepciones.PresentacionException;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Graphics;
 import java.awt.Image;

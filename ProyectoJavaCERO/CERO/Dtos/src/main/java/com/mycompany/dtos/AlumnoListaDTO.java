@@ -1,4 +1,4 @@
-package com.mycompany.negocio.dtos;
+package com.mycompany.dtos;
 
 import java.util.ArrayList;
 import java.util.List;

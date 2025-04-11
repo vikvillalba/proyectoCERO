@@ -1,32 +1,31 @@
-
-package com.mycompany.negocio.dtos;
-
+package com.mycompany.dtos;
 import java.time.LocalDateTime;
 
 /**
- * Clase de transporte que representa una nueva inscripción de un alumno a una clase.
+ * Clase de transporte que representa a una inscripción en el sistema.
  * @author victoria
  */
-public class NuevaInscripcionDTO {
-    
-    private ClaseDTO clase;
+public class InscripcionDTO {
+    private int codigo;
     private AlumnoDTO alumno;
+    private ClaseDTO clase;
     private LocalDateTime fecha;
     private PagoDTO pago;
 
-    public NuevaInscripcionDTO(ClaseDTO clase, AlumnoDTO alumno, LocalDateTime fecha, PagoDTO pago) {
-        this.clase = clase;
+    public InscripcionDTO(int codigo, AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fecha, PagoDTO pago) {
+        this.codigo = codigo;
         this.alumno = alumno;
+        this.clase = clase;
         this.fecha = fecha;
         this.pago = pago;
     }
 
-    public ClaseDTO getClase() {
-        return clase;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setClase(ClaseDTO clase) {
-        this.clase = clase;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public AlumnoDTO getAlumno() {
@@ -35,6 +34,14 @@ public class NuevaInscripcionDTO {
 
     public void setAlumno(AlumnoDTO alumno) {
         this.alumno = alumno;
+    }
+
+    public ClaseDTO getClase() {
+        return clase;
+    }
+
+    public void setClase(ClaseDTO clase) {
+        this.clase = clase;
     }
 
     public LocalDateTime getFecha() {

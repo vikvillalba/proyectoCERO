@@ -1,20 +1,18 @@
 
 package com.mycompany.inscribirclase.implementaciones;
 
+import com.mycompany.dtos.AlumnoBusquedaDTO;
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.InscripcionDTO;
+import com.mycompany.dtos.MetodoPagoDTO;
+import com.mycompany.dtos.NuevaInscripcionDTO;
+import com.mycompany.dtos.NuevoPagoDTO;
+import com.mycompany.dtos.PagoDTO;
 import com.mycompany.infraestructura.sistemaPago.GestorPagosFachada;
-import com.mycompany.infraestructura.sistemaPago.IGestorPagos;
-import com.mycompany.infraestructura.sistemaPago.implementaciones.GestorPagos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
-import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.InscripcionDTO;
-import com.mycompany.negocio.dtos.MetodoPagoDTO;
-import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
-import com.mycompany.negocio.dtos.NuevoPagoDTO;
-import com.mycompany.negocio.dtos.PagoDTO;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -44,8 +42,8 @@ public class InscribirClase implements IInscribirClase {
         
         // datos de prueba
         List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
-        ClaseDTO clase = new ClaseDTO(1, "Contemporanea principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
-        ClaseDTO clase1 = new ClaseDTO(2, "Contemporanea principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
+        ClaseDTO clase = new ClaseDTO(1, "Contemporaneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
+        ClaseDTO clase1 = new ClaseDTO(2, "Contemporaneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
         AlumnoDTO alumno = new AlumnoDTO(1, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
         clases.add(clase);
         clases.add(clase1);
@@ -143,7 +141,7 @@ public class InscribirClase implements IInscribirClase {
     public boolean validarNombreClase(String nombre) {
         // TODO: cambiar validaciones 
         // QUE VALIDE NOMBRES POR EL NOMBRE DE CLASES QUE EXISTEN Y QUE TENGAN DE SEMEJANSA MINIMO UNA PALABRA COMPLETA MAS DE 5 LETRAS
-        List<String> clasesExistentes = Arrays.asList("Contemporanea", "danza","Folklore","ballet");
+        List<String> clasesExistentes = Arrays.asList("Contemporaneo", "danza","Folklore","ballet");
         for (String clasesExistente : clasesExistentes) {
            if(clasesExistente.equalsIgnoreCase(nombre.trim())){
                return true;

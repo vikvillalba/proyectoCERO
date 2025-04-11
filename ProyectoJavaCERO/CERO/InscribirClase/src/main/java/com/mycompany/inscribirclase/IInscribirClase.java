@@ -1,16 +1,15 @@
 
 package com.mycompany.inscribirclase;
 
+import com.mycompany.dtos.AlumnoBusquedaDTO;
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.InscripcionDTO;
+import com.mycompany.dtos.NuevaInscripcionDTO;
+import com.mycompany.dtos.NuevoPagoDTO;
+import com.mycompany.dtos.PagoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
-import com.mycompany.negocio.dtos.AlumnoBusquedaDTO;
-import com.mycompany.negocio.dtos.AlumnoDTO;
-import com.mycompany.negocio.dtos.ClaseDTO;
-import com.mycompany.negocio.dtos.InscripcionDTO;
-import com.mycompany.negocio.dtos.NombreClaseParam;
-import com.mycompany.negocio.dtos.NuevaInscripcionDTO;
-import com.mycompany.negocio.dtos.NuevoPagoDTO;
-import com.mycompany.negocio.dtos.PagoDTO;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
