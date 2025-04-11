@@ -19,8 +19,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -30,6 +28,7 @@ import javax.swing.JOptionPane;
  */
 public class ControlNavegacion {
 
+    private static ControlNavegacion controlNavegacion;
     private static IInscribirClase inscribirClase;
     
     // formularios
@@ -43,8 +42,16 @@ public class ControlNavegacion {
     private static FrmRegistrarAlumno registrarAlumno;
     private static FrmInscribirClase inscribir;
 
-    public ControlNavegacion() {
+    private ControlNavegacion() {
         inscribirClase = new InscribirClase();
+    }
+
+
+    public static ControlNavegacion obtenerControlNavegacion() {
+        if (controlNavegacion == null) {
+            controlNavegacion = new ControlNavegacion();
+        }
+        return controlNavegacion;
     }
 
     /**

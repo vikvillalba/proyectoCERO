@@ -1,6 +1,7 @@
 
 package com.mycompany.inscribirclase.implementaciones;
 
+import com.mycompany.infraestructura.sistemaPago.GestorPagosFachada;
 import com.mycompany.infraestructura.sistemaPago.IGestorPagos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.GestorPagos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
@@ -45,7 +46,7 @@ public class InscribirClase implements IInscribirClase {
         List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
         ClaseDTO clase = new ClaseDTO(1, "Contemporanea principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
         ClaseDTO clase1 = new ClaseDTO(2, "Contemporanea principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
-        AlumnoDTO alumno = new AlumnoDTO(12345, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
+        AlumnoDTO alumno = new AlumnoDTO(1, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
         clases.add(clase);
         clases.add(clase1);
         alumnos.add(alumno);
@@ -80,10 +81,11 @@ public class InscribirClase implements IInscribirClase {
         return efectivo.compareTo(costoClase) >= 0 && efectivo.compareTo(BigDecimal.ZERO) > 0;
     }
 
+    // Conexión con el subsistema de infraestructura
     @Override
     public PagoRealizadoDTO confirmarPagoTarjeta(NuevoPagoTarjetaDTO pagoTarjeta) {
-        IGestorPagos gestorPagosExterno = new GestorPagos();
-        return gestorPagosExterno.registrarPago(pagoTarjeta);
+        GestorPagosFachada gestorPagos = new GestorPagosFachada();
+        return gestorPagos.registrarPago(pagoTarjeta);
     }
 
     @Override
@@ -178,7 +180,6 @@ public class InscribirClase implements IInscribirClase {
     @Override
     public List<AlumnoDTO> obtenerAlumnosClase(){
         // hacer validaciones de que los alumnos si estén inscritos en la clase
-        // esta no era mi chamba plebes que onda :( ..... 
         return alumnos;
     }
 
