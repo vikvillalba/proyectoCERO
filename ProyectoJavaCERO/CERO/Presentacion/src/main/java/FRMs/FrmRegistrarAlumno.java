@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -30,10 +32,8 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
         
         initComponents();
         this.setTitle("Registrar Alumno");
-        // Cargar la imagen de fondo 
-        this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
-        // Crear un JPanel con la imagen de fondo y lo agrega al frame
+        this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel panelFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -43,18 +43,17 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
         };
         panelFondo.setLayout(null);
         
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(panelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
+        getContentPane().setLayout(new AbsoluteLayout());
+        getContentPane().add(panelFondo, new AbsoluteConstraints(0, 0, 1000, 700));
 
-        this.setSize(1000, 700); // Ajusta el tamaño del JFrame
-        this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        this.setSize(1000, 700); 
+        this.setLocationRelativeTo(null); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        // Agregar JDateChooser dentro del JPanel
         selectorFechas = new JDateChooser();
         panelFondo.add(selectorFechas);
 
-        selectorFechas.setBounds(515, 280, 280, 40); // (x, y, ancho, alto)
+        selectorFechas.setBounds(515, 280, 280, 40); 
 
         pack();
     }

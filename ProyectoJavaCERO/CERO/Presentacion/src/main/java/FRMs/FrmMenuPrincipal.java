@@ -2,11 +2,12 @@
 package FRMs;
 
 import com.mycompany.presentacion.ControlNavegacion;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -23,11 +24,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setTitle("CERO");
         
-        // Cargar la imagen de fondo 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
-        // Crear un JPanel con la imagen de fondo y lo agrega al frame
-        JPanel jPanel1 = new javax.swing.JPanel() {
+        JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -35,11 +34,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         };
 
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 700));
+        getContentPane().setLayout(new AbsoluteLayout());
+        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, 1000, 700));
         
-        this.setSize(1000, 700); // Ajusta el tamaño del JFrame
-        this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        this.setSize(1000, 700); 
+        this.setLocationRelativeTo(null); 
 
         pack(); 
     

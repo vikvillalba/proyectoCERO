@@ -11,6 +11,8 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -33,8 +35,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         this.setTitle("Clases Existentes");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
-        // Crear un JPanel con la imagen de fondo y agregarlo al frame
-        JPanel jPanel1 = new JPanel() {
+        JPanel pnlFondo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -42,8 +43,8 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
             }
         };
 
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1377, 600));
+        getContentPane().setLayout(new AbsoluteLayout());
+        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, 1377, 600));
         pack();
         //
         llenarClasesExistentes();

@@ -16,10 +16,12 @@ import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
- * @author Usuario
+ * @author victoria
  */
 public class FrmPagoTarjeta extends javax.swing.JFrame {
 
@@ -37,10 +39,8 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         this.alumno = alumno;
         this.setTitle("Pago con tarjeta");
 
-        // Cargar la imagen de fondo 
+        
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
-
-        // Crear un JPanel con la imagen de fondo y lo agrega al frame
         JPanel panelFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -49,19 +49,18 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
             }
         };
 
-        panelFondo.setLayout(null); // Permite posicionar manualmente los componentes
+        panelFondo.setLayout(null); 
         panelFondo.setBounds(0, 0, 800, 700);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(panelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 700));
+        getContentPane().setLayout(new AbsoluteLayout());
+        getContentPane().add(panelFondo, new AbsoluteConstraints(0, 0, 800, 700));
 
-        // Agregar JDateChooser dentro del JPanel
         selectorFechas = new JDateChooser();
         panelFondo.add(selectorFechas);
 
-        selectorFechas.setBounds(440, 330, 290, 30); // (x, y, ancho, alto)
+        selectorFechas.setBounds(440, 330, 290, 30); 
 
-        this.setSize(800, 700); // Ajusta el tamaño del JFrame
-        this.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        this.setSize(800, 700); 
+        this.setLocationRelativeTo(null); 
 
     }
     
