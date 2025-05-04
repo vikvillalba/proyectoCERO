@@ -2,7 +2,7 @@ package FRMs;
 
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
-import com.mycompany.presentacion.ControlNavegacion;
+import Presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.time.DayOfWeek;

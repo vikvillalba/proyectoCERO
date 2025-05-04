@@ -1,7 +1,7 @@
 package FRMs;
 
-import com.mycompany.presentacion.ControlNavegacion;
-import com.mycompany.presentacion.excepciones.PresentacionException;
+import Presentacion.ControlNavegacion;
+import Excepciones.PresentacionException;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;

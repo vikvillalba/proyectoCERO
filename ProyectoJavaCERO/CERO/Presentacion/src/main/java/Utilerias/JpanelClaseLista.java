@@ -1,7 +1,7 @@
 package Utilerias;
 
 import com.mycompany.dtos.ClaseDTO;
-import com.mycompany.presentacion.ControlNavegacion;
+import Presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
