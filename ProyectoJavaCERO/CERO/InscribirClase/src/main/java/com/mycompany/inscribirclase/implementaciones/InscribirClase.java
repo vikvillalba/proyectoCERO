@@ -66,6 +66,7 @@ public class InscribirClase implements IInscribirClase {
         LocalDateTime fecha = LocalDateTime.now();
         PagoDTO pago = new PagoDTO(codigo, total, metodoPago, fecha, true);
 
+        // llamar a la BO de pagos
         pagos.add(pago);
         return pago;
 
@@ -96,6 +97,7 @@ public class InscribirClase implements IInscribirClase {
         LocalDateTime fecha = LocalDateTime.now();
         PagoDTO pago = new PagoDTO(codigo, total, metodoPago, fecha, true);
 
+        // llamar a la BO de pagos
         pagos.add(pago);
         return pago;
     }
@@ -133,6 +135,7 @@ public class InscribirClase implements IInscribirClase {
         int codigo = random.nextInt(1000) + 1;
         InscripcionDTO nuevaInscripcion = new InscripcionDTO(codigo, alumno, clase, fechaHora, pago);
 
+        // llamar a la BO de inscripciones
         inscripciones.add(nuevaInscripcion);
         return nuevaInscripcion;
     }
@@ -140,7 +143,7 @@ public class InscribirClase implements IInscribirClase {
     @Override
     public boolean validarNombreClase(String nombre) {
         // TODO: cambiar validaciones 
-        // QUE VALIDE NOMBRES POR EL NOMBRE DE CLASES QUE EXISTEN Y QUE TENGAN DE SEMEJANSA MINIMO UNA PALABRA COMPLETA MAS DE 5 LETRAS
+        // QUE VALIDE NOMBRES POR EL NOMBRE DE CLASES QUE EXISTEN Y QUE TENGAN DE SEMEJANZA MINIMO UNA PALABRA COMPLETA MAS DE 5 LETRAS
         List<String> clasesExistentes = Arrays.asList("Contemporaneo", "danza","Folklore","ballet");
         for (String clasesExistente : clasesExistentes) {
            if(clasesExistente.equalsIgnoreCase(nombre.trim())){
@@ -252,6 +255,8 @@ public class InscribirClase implements IInscribirClase {
         int codigo = random.nextInt(1000) + 1;
         
         alumnoDTO.setCodigo(codigo);
+        
+        // llamar a la BO de alumnos
         alumnos.add(alumnoDTO);
         return alumnoDTO;
     }
