@@ -28,7 +28,6 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
     private Image imagenFondo;
     private ClaseDTO clase;
     private AlumnoDTO alumno;
-    private JDateChooser selectorFechas;
 
     /**
      * Creates new form FrmMenuPrincipal
@@ -54,11 +53,6 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         getContentPane().setLayout(new AbsoluteLayout());
         getContentPane().add(panelFondo, new AbsoluteConstraints(0, 0, 800, 700));
 
-        selectorFechas = new JDateChooser();
-        panelFondo.add(selectorFechas);
-
-        selectorFechas.setBounds(440, 330, 290, 30); 
-
         this.setSize(800, 700); 
         this.setLocationRelativeTo(null); 
 
@@ -68,7 +62,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         this.txtCvv.setText("");
         this.txtNumeroCuenta.setText("");
         this.txtPropietario.setText("");
-        this.selectorFechas.setDate(null);
+        this.selectorFecha.setDate(null);
     }
 
     /**
@@ -88,6 +82,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtNumeroCuenta = new javax.swing.JTextField();
         txtPropietario = new javax.swing.JTextField();
+        selectorFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -122,6 +117,11 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         btnRegresar.setBorder(null);
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, -1, -1));
 
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
@@ -166,6 +166,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 290, -1));
+        getContentPane().add(selectorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 290, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -190,7 +191,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
 
         String numeroCuenta = txtNumeroCuenta.getText();
         String propietario = txtPropietario.getText();
-        Date fechaSeleccionada = selectorFechas.getDate();
+        Date fechaSeleccionada = selectorFecha.getDate();
         String cvvTexto = txtCvv.getText();
         BigDecimal monto = clase.getPrecio();
 
@@ -228,6 +229,10 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRealizarPagoActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRealizarPago;
@@ -237,6 +242,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private com.toedter.calendar.JDateChooser selectorFecha;
     private javax.swing.JTextField txtCvv;
     private javax.swing.JTextField txtNumeroCuenta;
     private javax.swing.JTextField txtPropietario;

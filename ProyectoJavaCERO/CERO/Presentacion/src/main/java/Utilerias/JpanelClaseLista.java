@@ -143,10 +143,12 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         lblColumnDias = new javax.swing.JLabel();
         lblColumnMaestro = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(204, 204, 204));
+        setBackground(null);
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnSeleccionarClase.setBackground(null);
         btnSeleccionarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnSeleccionarClase.png"))); // NOI18N
+        btnSeleccionarClase.setBorder(null);
         btnSeleccionarClase.setContentAreaFilled(false);
         btnSeleccionarClase.setFocusPainted(false);
         btnSeleccionarClase.addActionListener(new java.awt.event.ActionListener() {
@@ -154,11 +156,12 @@ public class JpanelClaseLista extends javax.swing.JPanel {
                 btnSeleccionarClaseActionPerformed(evt);
             }
         });
-        add(btnSeleccionarClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 50, 221, 43));
+        add(btnSeleccionarClase, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 30, 240, 80));
 
         JpanelTabla.setLayout(new java.awt.BorderLayout());
 
         JpanelDatos.setBackground(new java.awt.Color(30, 47, 86));
+        JpanelDatos.setPreferredSize(new java.awt.Dimension(1230, 0));
         JpanelDatos.setLayout(new java.awt.GridLayout(1, 5));
 
         lblIdClase.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
@@ -166,7 +169,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         lblIdClase.setToolTipText("");
         JpanelDatos.add(lblIdClase);
 
-        lblNombreClase.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblNombreClase.setFont(new java.awt.Font("Menlo", 1, 12)); // NOI18N
         lblNombreClase.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreClase.setToolTipText("");
         JpanelDatos.add(lblNombreClase);

@@ -35,9 +35,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         };
 
         getContentPane().setLayout(new AbsoluteLayout());
-        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, 1000, 700));
+        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         
-        this.setSize(1000, 700); 
         this.setLocationRelativeTo(null); 
 
         pack(); 
@@ -60,26 +59,30 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnInscribir4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1280, 832));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(30, 47, 86));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/logoAzul.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, -1, 180));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 530, 180));
 
+        btnGaleriaProyectos.setBackground(null);
         btnGaleriaProyectos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/galeriaProyectos.png"))); // NOI18N
         btnGaleriaProyectos.setBorder(null);
         btnGaleriaProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGaleriaProyectos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
         btnGaleriaProyectos.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
-        getContentPane().add(btnGaleriaProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, -1, -1));
+        getContentPane().add(btnGaleriaProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 560, -1, -1));
 
+        btnGestionarClases.setBackground(null);
         btnGestionarClases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/GestionarClase.png"))); // NOI18N
         btnGestionarClases.setBorder(null);
         btnGestionarClases.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarClases.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarClasesHovered.png"))); // NOI18N
-        getContentPane().add(btnGestionarClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, -1, -1));
+        getContentPane().add(btnGestionarClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
 
+        btnInscribir.setBackground(null);
         btnInscribir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClase.png"))); // NOI18N
         btnInscribir.setBorder(null);
         btnInscribir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -89,25 +92,28 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
                 btnInscribirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnInscribir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, -1, -1));
+        getContentPane().add(btnInscribir, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, -1, -1));
 
+        btnGestionarAlumnos.setBackground(null);
         btnGestionarAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnos.png"))); // NOI18N
         btnGestionarAlumnos.setBorder(null);
         btnGestionarAlumnos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarAlumnos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnosHovered.png"))); // NOI18N
-        getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 340, -1, -1));
+        getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
 
+        btnControlAsistencias.setBackground(null);
         btnControlAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/controlAsistencias.png"))); // NOI18N
         btnControlAsistencias.setBorder(null);
         btnControlAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnControlAsistencias.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/asistenciasHovered.png"))); // NOI18N
-        getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, -1, -1));
+        getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, -1, -1));
 
+        btnInscribir4.setBackground(null);
         btnInscribir4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesion.png"))); // NOI18N
         btnInscribir4.setBorder(null);
         btnInscribir4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInscribir4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesionHovered.png"))); // NOI18N
-        getContentPane().add(btnInscribir4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 600, -1, -1));
+        getContentPane().add(btnInscribir4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 670, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

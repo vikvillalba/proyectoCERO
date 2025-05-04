@@ -40,7 +40,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         
       
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
-        JPanel panelFondo = new javax.swing.JPanel() {
+       JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -49,12 +49,9 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         };
 
         getContentPane().setLayout(new AbsoluteLayout());
-        getContentPane().add(panelFondo, new AbsoluteConstraints(0, 0, 800, 700));
-        
-        this.setSize(800, 700);
-        this.setLocationRelativeTo(null); 
-
-        pack();  
+        pack();
+        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
+        this.setLocationRelativeTo(null);
     
     }
     
@@ -82,32 +79,33 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         btnRealizarPago = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1080, 832));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblCambio.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         lblCambio.setForeground(new java.awt.Color(255, 255, 255));
         lblCambio.setText("0.00");
-        getContentPane().add(lblCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, 230, -1));
+        getContentPane().add(lblCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 356, 230, 40));
 
-        jLabel3.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(30, 47, 86));
         jLabel3.setText("PAGO EN EFECTIVO");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 115, -1, 60));
 
         jLabel4.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Cantidad recibida: ");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 286, -1, 40));
 
         jLabel5.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Total a pagar: ");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 216, -1, 40));
 
         jLabel6.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cambio: ");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 356, -1, 40));
 
         txtEfectivoRecibido.setFont(new java.awt.Font("Helvetica Neue", 1, 30)); // NOI18N
         txtEfectivoRecibido.setForeground(new java.awt.Color(153, 153, 153));
@@ -119,19 +117,26 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
                 txtEfectivoRecibidoMousePressed(evt);
             }
         });
-        getContentPane().add(txtEfectivoRecibido, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 140, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 140, 10));
+        getContentPane().add(txtEfectivoRecibido, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 290, 140, 40));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 140, 10));
 
         lblTotalPago.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         lblTotalPago.setForeground(new java.awt.Color(255, 255, 255));
         lblTotalPago.setText("0.00");
-        getContentPane().add(lblTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
+        getContentPane().add(lblTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 216, -1, 40));
 
+        btnRegresar.setBackground(null);
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
         btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
-        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 590, -1, -1));
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 640, -1, 70));
 
+        btnCalcularCambio.setBackground(null);
         btnCalcularCambio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambio.png"))); // NOI18N
         btnCalcularCambio.setBorder(null);
         btnCalcularCambio.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambioHovered.png"))); // NOI18N
@@ -140,8 +145,9 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
                 btnCalcularCambioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCalcularCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, -1, -1));
+        getContentPane().add(btnCalcularCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 458, -1, 70));
 
+        btnRealizarPago.setBackground(null);
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
         btnRealizarPago.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPagoHovered.png"))); // NOI18N
@@ -150,7 +156,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
                 btnRealizarPagoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 500, -1, -1));
+        getContentPane().add(btnRealizarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 547, -1, 70));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -191,6 +197,10 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnRealizarPagoActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     
 

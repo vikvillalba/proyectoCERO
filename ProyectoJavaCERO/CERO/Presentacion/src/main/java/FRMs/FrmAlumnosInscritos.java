@@ -95,15 +95,15 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
         jPanel9.setName(""); // NOI18N
         jPanel9.setPreferredSize(new java.awt.Dimension(526, 50));
 
-        jLabel18.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Kohinoor Bangla", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(148, 197, 227));
         jLabel18.setText("ID ALUMNO");
 
-        jLabel19.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("Kohinoor Bangla", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(148, 197, 227));
         jLabel19.setText("NUMERO DE LISTA");
 
-        jLabel20.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Kohinoor Bangla", 1, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(148, 197, 227));
         jLabel20.setText("NOMBRE");
 
@@ -112,13 +112,13 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(17, 17, 17)
                 .addComponent(jLabel19)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                 .addComponent(jLabel18)
-                .addGap(31, 31, 31)
+                .addGap(105, 105, 105)
                 .addComponent(jLabel20)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +135,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(PanelContenedor);
 
-        jLabel9.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Kohinoor Telugu", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(30, 47, 86));
         jLabel9.setText("ALUMNOS INSCRITOS");
 
@@ -202,45 +202,43 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(258, 258, 258)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(237, 237, 237)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(164, 164, 164)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(52, 52, 52))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(txfCapacidadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(90, 90, 90)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(197, 197, 197)
+                                .addComponent(txfCapacidadGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
+                                .addGap(137, 137, 137)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
                                 .addComponent(txfTotalInscripciones, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(129, 129, 129)
-                                .addComponent(txfCuposDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(71, 71, 71)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txfCuposDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(378, 378, 378)
-                        .addComponent(btnRegresar)))
+                        .addComponent(btnRegresar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(258, 258, 258)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(344, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,7 +250,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
                     .addComponent(txfCuposDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(btnRegresar)
-                .addContainerGap(424, Short.MAX_VALUE))
+                .addContainerGap(408, Short.MAX_VALUE))
         );
 
         pack();

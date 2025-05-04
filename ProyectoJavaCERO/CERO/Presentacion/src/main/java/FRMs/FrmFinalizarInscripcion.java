@@ -44,14 +44,13 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         };
 
         getContentPane().setLayout(new AbsoluteLayout());
-        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, 1000, 700));
-
-        this.setSize(1000, 700); 
-        this.setLocationRelativeTo(null); 
+        pack();
+        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        txfIDClase.setText(Integer.toString(claseDTO.getCodigo()));
-        txfNombreClase.setText(claseDTO.getNombre());
+        lblIDClase.setText(Integer.toString(claseDTO.getCodigo()));
+        lblNombreClase.setText(claseDTO.getNombre());
 
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
@@ -68,11 +67,12 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
                 claseDTO.getHoraInicio().format(formatoHora),
                 claseDTO.getHoraFin().format(formatoHora));
 
-        txfHorarioClase.setText(horario);
+        lblHorarioClase.setText(horario);
 
-        System.out.println(txfHorarioClase.getText());
-        txfMaestro.setText(claseDTO.getMaestro());
-        txfPrecio.setText(claseDTO.getPrecio().toString());
+        System.out.println(lblHorarioClase.getText());
+        lblMaestro.setText(claseDTO.getMaestro());
+        lblPrecio.setText(claseDTO.getPrecio().toString());
+        txtPrecio.setText(claseDTO.getPrecio().toString());
 
         pack();
     }
@@ -85,31 +85,105 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        txfIDClase = new javax.swing.JTextField();
-        txfNombreClase = new javax.swing.JTextField();
-        txfHorarioClase = new javax.swing.JTextField();
-        txfMaestro = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txfPrecio = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
         btnPagoTarjeta = new javax.swing.JButton();
         btnPagoEfectivo = new javax.swing.JButton();
+        PanelDatosClase = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lblIDClase = new javax.swing.JTextField();
+        lblPrecio = new javax.swing.JTextField();
+        lblHorarioClase = new javax.swing.JTextField();
+        lblMaestro = new javax.swing.JTextField();
+        lblNombreClase = new javax.swing.JTextField();
 
+        setPreferredSize(new java.awt.Dimension(1280, 832));
         getContentPane().setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(30, 47, 86));
-        jPanel1.setForeground(new java.awt.Color(30, 47, 86));
+        jLabel4.setBackground(new java.awt.Color(30, 47, 86));
+        jLabel4.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Total a pagar:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(340, 450, 360, 62);
+        jLabel4.getAccessibleContext().setAccessibleDescription("");
+
+        jLabel9.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(30, 47, 86));
+        jLabel9.setText("FINALIZAR INSCRIPCIÓN");
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(310, 60, 710, 57);
+
+        jLabel10.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(30, 47, 86));
+        jLabel10.setText("REALIZAR PAGO");
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(430, 370, 400, 57);
+
+        txtPrecio.setEditable(false);
+        txtPrecio.setBackground(new java.awt.Color(30, 47, 86));
+        txtPrecio.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        txtPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPrecio.setText("jTextField1");
+        txtPrecio.setBorder(null);
+        txtPrecio.setOpaque(false);
+        getContentPane().add(txtPrecio);
+        txtPrecio.setBounds(710, 460, 340, 50);
+
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
+        btnRegresar.setBorder(null);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.setOpaque(false);
+        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegresar);
+        btnRegresar.setBounds(510, 660, 250, 70);
+
+        btnPagoTarjeta.setBackground(null);
+        btnPagoTarjeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnPagoTarjeta.png"))); // NOI18N
+        btnPagoTarjeta.setBorder(null);
+        btnPagoTarjeta.setPreferredSize(new java.awt.Dimension(1280, 832));
+        btnPagoTarjeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagoTarjetaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPagoTarjeta);
+        btnPagoTarjeta.setBounds(680, 560, 380, 70);
+
+        btnPagoEfectivo.setBackground(null);
+        btnPagoEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnPagoEfectivo.png"))); // NOI18N
+        btnPagoEfectivo.setBorder(null);
+        btnPagoEfectivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagoEfectivoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPagoEfectivo);
+        btnPagoEfectivo.setBounds(160, 560, 450, 70);
+
+        PanelDatosClase.setBackground(new java.awt.Color(30, 47, 86));
+        PanelDatosClase.setForeground(new java.awt.Color(30, 47, 86));
 
         jLabel3.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(148, 197, 227));
         jLabel3.setText("ID CLASE");
+
+        jLabel5.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(148, 197, 227));
+        jLabel5.setText("PRECIO");
 
         jLabel6.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(148, 197, 227));
@@ -123,164 +197,114 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(148, 197, 227));
         jLabel8.setText("MAESTRO");
 
-        txfIDClase.setEditable(false);
-        txfIDClase.setBackground(new java.awt.Color(30, 47, 86));
-        txfIDClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txfIDClase.setForeground(new java.awt.Color(255, 255, 255));
-        txfIDClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfIDClase.setText("ID");
-        txfIDClase.setToolTipText("");
-        txfIDClase.setBorder(null);
-        txfIDClase.setOpaque(false);
+        lblIDClase.setEditable(false);
+        lblIDClase.setBackground(new java.awt.Color(30, 47, 86));
+        lblIDClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblIDClase.setForeground(new java.awt.Color(255, 255, 255));
+        lblIDClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblIDClase.setText("ID");
+        lblIDClase.setBorder(null);
 
-        txfNombreClase.setEditable(false);
-        txfNombreClase.setBackground(new java.awt.Color(30, 47, 86));
-        txfNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txfNombreClase.setForeground(new java.awt.Color(255, 255, 255));
-        txfNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfNombreClase.setText("NOMBRE");
-        txfNombreClase.setBorder(null);
-        txfNombreClase.setOpaque(false);
+        lblPrecio.setEditable(false);
+        lblPrecio.setBackground(new java.awt.Color(30, 47, 86));
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        lblPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblPrecio.setText("PRECIO");
+        lblPrecio.setBorder(null);
 
-        txfHorarioClase.setEditable(false);
-        txfHorarioClase.setBackground(new java.awt.Color(30, 47, 86));
-        txfHorarioClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txfHorarioClase.setForeground(new java.awt.Color(255, 255, 255));
-        txfHorarioClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfHorarioClase.setText("NOMBRE");
-        txfHorarioClase.setBorder(null);
-        txfHorarioClase.setOpaque(false);
+        lblHorarioClase.setEditable(false);
+        lblHorarioClase.setBackground(new java.awt.Color(30, 47, 86));
+        lblHorarioClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblHorarioClase.setForeground(new java.awt.Color(255, 255, 255));
+        lblHorarioClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblHorarioClase.setText("NOMBRE");
+        lblHorarioClase.setBorder(null);
 
-        txfMaestro.setEditable(false);
-        txfMaestro.setBackground(new java.awt.Color(30, 47, 86));
-        txfMaestro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txfMaestro.setForeground(new java.awt.Color(255, 255, 255));
-        txfMaestro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfMaestro.setText("NOMBRE");
-        txfMaestro.setBorder(null);
-        txfMaestro.setOpaque(false);
+        lblMaestro.setEditable(false);
+        lblMaestro.setBackground(new java.awt.Color(30, 47, 86));
+        lblMaestro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblMaestro.setForeground(new java.awt.Color(255, 255, 255));
+        lblMaestro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblMaestro.setText("MAESTRO");
+        lblMaestro.setBorder(null);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txfIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(txfNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        lblNombreClase.setEditable(false);
+        lblNombreClase.setBackground(new java.awt.Color(30, 47, 86));
+        lblNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNombreClase.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lblNombreClase.setText("NOMBRE");
+        lblNombreClase.setBorder(null);
+
+        javax.swing.GroupLayout PanelDatosClaseLayout = new javax.swing.GroupLayout(PanelDatosClase);
+        PanelDatosClase.setLayout(PanelDatosClaseLayout);
+        PanelDatosClaseLayout.setHorizontalGroup(
+            PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(txfHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(txfMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosClaseLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)))
+                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreClase)
+                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
                         .addGap(73, 73, 73)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 36, Short.MAX_VALUE))))
+                        .addGap(106, 106, 106)
+                        .addComponent(jLabel5))
+                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(61, 61, 61))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        PanelDatosClaseLayout.setVerticalGroup(
+            PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txfMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(200, 110, 620, 160);
-
-        jLabel4.setBackground(new java.awt.Color(30, 47, 86));
-        jLabel4.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Total a pagar:");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(320, 340, 250, 62);
-        jLabel4.getAccessibleContext().setAccessibleDescription("");
-
-        jLabel9.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel9.setText("FINALIZAR INSCRIPCIÓN");
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(220, 40, 580, 57);
-
-        jLabel10.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel10.setText("REALIZAR PAGO");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(300, 280, 400, 57);
-
-        txfPrecio.setEditable(false);
-        txfPrecio.setBackground(new java.awt.Color(30, 47, 86));
-        txfPrecio.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        txfPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        txfPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfPrecio.setText("jTextField1");
-        txfPrecio.setBorder(null);
-        txfPrecio.setOpaque(false);
-        getContentPane().add(txfPrecio);
-        txfPrecio.setBounds(580, 350, 120, 50);
-
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
-        btnRegresar.setBorder(null);
-        btnRegresar.setContentAreaFilled(false);
-        btnRegresar.setOpaque(false);
-        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnRegresar);
-        btnRegresar.setBounds(380, 510, 250, 70);
-
-        btnPagoTarjeta.setText("Pago Tarjeta");
-        btnPagoTarjeta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagoTarjetaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnPagoTarjeta);
-        btnPagoTarjeta.setBounds(750, 420, 150, 40);
-
-        btnPagoEfectivo.setText("Pago Efectivo");
-        btnPagoEfectivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPagoEfectivoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnPagoEfectivo);
-        btnPagoEfectivo.setBounds(110, 420, 150, 40);
+        getContentPane().add(PanelDatosClase);
+        PanelDatosClase.setBounds(160, 190, 985, 127);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoTarjetaActionPerformed
         ControlNavegacion.mostrarPagoTarjeta(clase, alumno);
-        this.dispose();
+       
     }//GEN-LAST:event_btnPagoTarjetaActionPerformed
 
     private void btnPagoEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoEfectivoActionPerformed
        ControlNavegacion.mostrarPagoEfectivo(clase, alumno);
-       this.dispose();
+      
     }//GEN-LAST:event_btnPagoEfectivoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -289,21 +313,23 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelDatosClase;
     private javax.swing.JButton btnPagoEfectivo;
     private javax.swing.JButton btnPagoTarjeta;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txfHorarioClase;
-    private javax.swing.JTextField txfIDClase;
-    private javax.swing.JTextField txfMaestro;
-    private javax.swing.JTextField txfNombreClase;
-    private javax.swing.JTextField txfPrecio;
+    private javax.swing.JTextField lblHorarioClase;
+    private javax.swing.JTextField lblIDClase;
+    private javax.swing.JTextField lblMaestro;
+    private javax.swing.JTextField lblNombreClase;
+    private javax.swing.JTextField lblPrecio;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

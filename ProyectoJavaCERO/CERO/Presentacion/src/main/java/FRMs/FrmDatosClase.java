@@ -34,8 +34,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
         this.setTitle("Datos Clase");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
-        // Crear un JPanel con la imagen de fondo y agregarlo al frame
-        JPanel pnlFondo = new JPanel() {
+        JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -44,11 +43,9 @@ public class FrmDatosClase extends javax.swing.JFrame {
         };
 
         getContentPane().setLayout(new AbsoluteLayout());
-        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, 1000, 700));
-
-        this.setSize(1000, 700); 
-        this.setLocationRelativeTo(null); 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
+        this.setLocationRelativeTo(null);
 
         lblIDClase.setText(Integer.toString(claseDTO.getCodigo()));
         lblNombreClase.setText(claseDTO.getNombre());
@@ -108,6 +105,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(865, 654));
+        setPreferredSize(new java.awt.Dimension(1280, 832));
         setSize(new java.awt.Dimension(865, 654));
 
         PanelDatosClase.setBackground(new java.awt.Color(30, 47, 86));
@@ -186,26 +184,28 @@ public class FrmDatosClase extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosClaseLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)))
+                        .addGap(28, 28, 28)))
+                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombreClase)
+                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
+                        .addGap(73, 73, 73)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
+                        .addGap(115, 115, 115)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addGap(56, 56, 56))))
+                        .addGap(106, 106, 106)
+                        .addComponent(jLabel5))
+                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(61, 61, 61))
         );
         PanelDatosClaseLayout.setVerticalGroup(
             PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +227,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(30, 47, 86));
         jLabel4.setText("DATOS DE LA CLASE");
 
@@ -242,7 +242,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
             }
         });
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setOpaque(false);
@@ -291,54 +291,54 @@ public class FrmDatosClase extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVerAlumnosInscritos)
+                .addGap(458, 458, 458))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(261, 261, 261)
+                        .addGap(322, 322, 322)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegistrarAlumno))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(btnInscribirAlumno))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(371, 371, 371)
                         .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(306, 306, 306)
-                        .addComponent(btnVerAlumnosInscritos))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnRegresar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnRegistrarAlumno))
-                            .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(31, 31, 31)
-                                .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnInscribirAlumno)))))
-                .addContainerGap(379, Short.MAX_VALUE))
+                        .addGap(150, 150, 150)
+                        .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(53, 53, 53)
                 .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(46, 46, 46)
                 .addComponent(btnVerAlumnosInscritos)
+                .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInscribirAlumno))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegistrarAlumno)
-                    .addComponent(btnRegresar))
-                .addContainerGap(215, Short.MAX_VALUE))
+                            .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(82, 82, 82)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRegresar)
+                            .addComponent(btnRegistrarAlumno)))
+                    .addComponent(btnInscribirAlumno))
+                .addGap(48, 48, 48))
         );
 
         pack();
@@ -357,13 +357,6 @@ public class FrmDatosClase extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRegistrarAlumnoActionPerformed
 
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-
-        ControlNavegacion.mostrarClasesExistente(clase.getNombre());
-        this.dispose();
-
-    }//GEN-LAST:event_btnRegresarActionPerformed
-
     private void btnInscribirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirAlumnoActionPerformed
 
         // obtenerInfo de txt
@@ -376,6 +369,12 @@ public class FrmDatosClase extends javax.swing.JFrame {
     private void txtCodigoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoAlumnoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoAlumnoActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+
+        ControlNavegacion.mostrarClasesExistente(clase.getNombre());
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments

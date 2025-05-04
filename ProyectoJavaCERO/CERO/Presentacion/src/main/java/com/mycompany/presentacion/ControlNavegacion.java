@@ -248,6 +248,7 @@ public class ControlNavegacion {
     public static void mostrarClasesExistente(String nombre){
         
         if(validarErrorNombreClase(inscribir, nombre)== true){
+            mostrarInscribirClase();
             return;
         }
         
