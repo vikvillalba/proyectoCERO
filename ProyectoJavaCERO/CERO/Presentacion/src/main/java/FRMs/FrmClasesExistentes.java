@@ -2,7 +2,7 @@ package FRMs;
 
 import Utilerias.JpanelClaseLista;
 import com.mycompany.dtos.ClaseDTO;
-import Presentacion.ControlNavegacion;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;

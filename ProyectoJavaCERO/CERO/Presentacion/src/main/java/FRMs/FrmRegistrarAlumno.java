@@ -2,7 +2,7 @@ package FRMs;
 
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
-import Presentacion.ControlNavegacion;
+import com.mycompany.presentacion.ControlNavegacion;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Graphics;
 import java.awt.Image;

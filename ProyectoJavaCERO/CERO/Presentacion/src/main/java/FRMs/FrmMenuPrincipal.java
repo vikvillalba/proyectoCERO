@@ -1,7 +1,7 @@
 
 package FRMs;
 
-import Presentacion.ControlNavegacion;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
