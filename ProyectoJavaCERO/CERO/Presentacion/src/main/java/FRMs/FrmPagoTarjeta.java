@@ -218,13 +218,8 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         // armar nuevopagoTarjetaDTo
         NuevoPagoTarjetaDTO nuevoPago = new NuevoPagoTarjetaDTO(numeroCuenta, propietario, fechaVencimiento, cvv, monto);
 
-        try {
-            ControlNavegacion.realizarPagoTarjeta(nuevoPago, clase, alumno, this);
-            ControlNavegacion.mostrarMensajePagoExitoso(this);
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-            limpiarCampos();
-        }
+        ControlNavegacion.realizarPagoTarjeta(nuevoPago, clase, alumno, this);
+        ControlNavegacion.mostrarMensajePagoExitoso(this);
 
 
     }//GEN-LAST:event_btnRealizarPagoActionPerformed

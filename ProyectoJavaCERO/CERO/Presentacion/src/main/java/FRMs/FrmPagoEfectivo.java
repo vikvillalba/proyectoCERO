@@ -125,7 +125,6 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         lblTotalPago.setText("0.00");
         getContentPane().add(lblTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 216, -1, 40));
 
-        btnRegresar.setBackground(null);
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
         btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
@@ -136,7 +135,6 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 640, -1, 70));
 
-        btnCalcularCambio.setBackground(null);
         btnCalcularCambio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambio.png"))); // NOI18N
         btnCalcularCambio.setBorder(null);
         btnCalcularCambio.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/calcularCambioHovered.png"))); // NOI18N
@@ -147,7 +145,6 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         });
         getContentPane().add(btnCalcularCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 458, -1, 70));
 
-        btnRealizarPago.setBackground(null);
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
         btnRealizarPago.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPagoHovered.png"))); // NOI18N
@@ -174,13 +171,8 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         }
         BigDecimal cambio;
 
-        try {
-            cambio = ControlNavegacion.calcularCambio(clase.getPrecio(), new BigDecimal(textoEfectivo), this);
-            lblCambio.setText(cambio.toString());
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-            limpiarCampos();
-        }
+        cambio = ControlNavegacion.calcularCambio(clase.getPrecio(), new BigDecimal(textoEfectivo), this);
+        lblCambio.setText(cambio.toString());
 
     }//GEN-LAST:event_btnCalcularCambioActionPerformed
 
@@ -189,12 +181,8 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         PagoEfectivoDTO pagoEfectivo = new PagoEfectivoDTO(new BigDecimal(txtEfectivoRecibido.getText()), new BigDecimal(lblCambio.getText()));
         // armar nuevopagodto
         NuevoPagoDTO nuevoPago = new NuevoPagoDTO(clase.getPrecio(), pagoEfectivo);
-        try {
-            ControlNavegacion.realizarPagoEfectivo(nuevoPago, clase, alumno, this);
-            ControlNavegacion.mostrarMensajePagoExitoso(this);
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-        }
+        ControlNavegacion.realizarPagoEfectivo(nuevoPago, clase, alumno, this);
+        ControlNavegacion.mostrarMensajePagoExitoso(this);
         
     }//GEN-LAST:event_btnRealizarPagoActionPerformed
 

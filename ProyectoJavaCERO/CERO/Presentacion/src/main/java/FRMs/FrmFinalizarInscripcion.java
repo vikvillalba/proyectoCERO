@@ -151,7 +151,6 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         getContentPane().add(btnRegresar);
         btnRegresar.setBounds(510, 660, 250, 70);
 
-        btnPagoTarjeta.setBackground(null);
         btnPagoTarjeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnPagoTarjeta.png"))); // NOI18N
         btnPagoTarjeta.setBorder(null);
         btnPagoTarjeta.setPreferredSize(new java.awt.Dimension(1280, 832));
@@ -163,7 +162,6 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         getContentPane().add(btnPagoTarjeta);
         btnPagoTarjeta.setBounds(680, 560, 380, 70);
 
-        btnPagoEfectivo.setBackground(null);
         btnPagoEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnPagoEfectivo.png"))); // NOI18N
         btnPagoEfectivo.setBorder(null);
         btnPagoEfectivo.addActionListener(new java.awt.event.ActionListener() {

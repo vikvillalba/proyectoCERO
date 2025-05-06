@@ -1,5 +1,6 @@
-package FRMs;
+package FRMs.registroAsistencia;
 
+import FRMs.*;
 import Utilerias.JpanelClaseLista;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -18,21 +19,20 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  *
  * @author Jack Murrieta
  */
-public class FrmClasesExistentes extends javax.swing.JFrame {
+public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private List<ClaseDTO> clases;
+    // agregar diaclasedto
 
     /**
      * Creates new form FrmClasesExistentes
      *
      * @param clases
      */
-    public FrmClasesExistentes(List<ClaseDTO> clases) {
+    public FrmAsistenciasClaseAnterior(List<ClaseDTO> clases) {
         initComponents();
-        this.clases = clases;
-        jScrollClases.setOpaque(true);
-        this.setTitle("Clases Existentes");
+        jScrollAsistencias.setOpaque(true);
+        this.setTitle("Clases anteriores");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
@@ -46,33 +46,34 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         pack();
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
-        llenarClasesExistentes();
+        llenarDiasClase();
 
     }
 
-    private void llenarClasesExistentes() {
+    private void llenarDiasClase() {
         // Crear un JPanel contenedor para la tabla
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
         // Agregar margen para que los elementos no se vean pegados
         contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // Recorrer la lista de clases y agregar filas a la tabla
-        for (ClaseDTO clase : clases) {
-            // Crear el panel para la clase
-            JpanelClaseLista panelClase = new JpanelClaseLista(clase);
-
-            // Agregar espacio entre los paneles
-            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-            // Agregar el panel al contenedor
-            contenedorTabla.add(panelClase);
-        }
+        
+//        // Recorrer la lista de clases y agregar filas a la tabla
+//        for (ClaseDTO clase : clases) {
+//            // Crear el panel para la clase
+//            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
+//
+//            // Agregar espacio entre los paneles
+//            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+//
+//            // Agregar el panel al contenedor
+//            contenedorTabla.add(panelClase);
+//        }
 
         // Configurar JScrollPane
-        jScrollClases.setViewportView(contenedorTabla);
-        jScrollClases.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollClases.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollAsistencias.setViewportView(contenedorTabla);
+        jScrollAsistencias.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollAsistencias.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         // Asegurar que la tabla se muestre correctamente
         contenedorTabla.revalidate();
@@ -86,18 +87,18 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jScrollClases = new javax.swing.JScrollPane();
+        lblFecha = new javax.swing.JLabel();
+        jScrollAsistencias = new javax.swing.JScrollPane();
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1280, 832));
 
-        jLabel1.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel1.setText("CLASES EXISTENTES");
+        lblFecha.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
+        lblFecha.setForeground(new java.awt.Color(30, 47, 86));
+        lblFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFecha.setText("MIERCOLES 00 SEPTIEMBRE");
 
-        jScrollClases.setPreferredSize(new java.awt.Dimension(1270, 2));
+        jScrollAsistencias.setPreferredSize(new java.awt.Dimension(1270, 2));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -114,25 +115,26 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
+                .addGap(437, 437, 437)
+                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))
+                        .addComponent(jScrollAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(94, 94, 94))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(378, 378, 378))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(454, 454, 454))))
+                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(155, 155, 155))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollClases, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addComponent(jScrollAsistencias, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegresar)
                 .addGap(19, 19, 19))
@@ -143,14 +145,14 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarInscribirClase();
+        ControlNavegacion.mostrarBuscarClase();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollClases;
+    private javax.swing.JScrollPane jScrollAsistencias;
+    private javax.swing.JLabel lblFecha;
     // End of variables declaration//GEN-END:variables
 }

@@ -87,6 +87,7 @@ public class InscribirClase implements IInscribirClase {
         return gestorPagos.registrarPago(pagoTarjeta);
     }
 
+    // guarda el pago ya que el sistema externo lo valido
     @Override
     public PagoDTO realizarPagoTarjeta(NuevoPagoDTO nuevoPago) {
         Random random = new Random();

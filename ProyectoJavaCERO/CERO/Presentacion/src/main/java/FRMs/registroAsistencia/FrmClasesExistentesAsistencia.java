@@ -1,5 +1,6 @@
-package FRMs;
+package FRMs.registroAsistencia;
 
+import FRMs.*;
 import Utilerias.JpanelClaseLista;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -18,7 +19,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  *
  * @author Jack Murrieta
  */
-public class FrmClasesExistentes extends javax.swing.JFrame {
+public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
 
     private Image imagenFondo;
     private List<ClaseDTO> clases;
@@ -28,7 +29,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
      *
      * @param clases
      */
-    public FrmClasesExistentes(List<ClaseDTO> clases) {
+    public FrmClasesExistentesAsistencia(List<ClaseDTO> clases) {
         initComponents();
         this.clases = clases;
         jScrollClases.setOpaque(true);
@@ -60,7 +61,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         // Recorrer la lista de clases y agregar filas a la tabla
         for (ClaseDTO clase : clases) {
             // Crear el panel para la clase
-            JpanelClaseLista panelClase = new JpanelClaseLista(clase);
+            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
 
             // Agregar espacio entre los paneles
             panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -91,7 +92,6 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1280, 832));
 
         jLabel1.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
@@ -114,17 +114,17 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1289, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(378, 378, 378))
+                        .addGap(418, 418, 418))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(454, 454, 454))))
+                        .addGap(516, 516, 516))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +143,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarInscribirClase();
+        ControlNavegacion.mostrarBuscarClase();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

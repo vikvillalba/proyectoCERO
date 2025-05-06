@@ -10,7 +10,7 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
- *
+ * Pantalla que representa al menú principal del sistema
  * @author Usuario
  */
 public class FrmMenuPrincipal extends javax.swing.JFrame {
@@ -99,14 +99,19 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnGestionarAlumnos.setBorder(null);
         btnGestionarAlumnos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarAlumnos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnosHovered.png"))); // NOI18N
-        getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
+        getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, -1, -1));
 
         btnControlAsistencias.setBackground(null);
         btnControlAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/controlAsistencias.png"))); // NOI18N
         btnControlAsistencias.setBorder(null);
         btnControlAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnControlAsistencias.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/asistenciasHovered.png"))); // NOI18N
-        getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, -1, -1));
+        btnControlAsistencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnControlAsistenciasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
 
         btnInscribir4.setBackground(null);
         btnInscribir4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesion.png"))); // NOI18N
@@ -122,6 +127,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         ControlNavegacion.mostrarInscribirClase();
         this.dispose();
     }//GEN-LAST:event_btnInscribirActionPerformed
+
+    private void btnControlAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlAsistenciasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnControlAsistenciasActionPerformed
 
     
 

@@ -1,6 +1,10 @@
 package com.mycompany.presentacion;
 
 import FRMs.*;
+import FRMs.registroAsistencia.FrmBuscarClase;
+import FRMs.registroAsistencia.FrmClasesExistentesAsistencia;
+import FRMs.registroAsistencia.FrmRegistrarAsistenciaActualAlumno;
+import FRMs.registroAsistencia.FrmSeleccionarOpcion;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -19,6 +23,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -30,22 +36,22 @@ public class ControlNavegacion {
 
     private static ControlNavegacion controlNavegacion;
     private static IInscribirClase inscribirClase;
-    
-    // formularios
-    private static FrmAlumnosInscritos alumnosInscritos;
-    private static FrmClasesExistentes clasesExistentes;
-    private static FrmDatosClase datosClase;
-    private static FrmFinalizarInscripcion finalizarInscripcion;
+
     private static FrmMenuPrincipal menuPrincipal;
+
+    // formularios CU inscribir 
     private static FrmPagoEfectivo pagoEfectivo;
     private static FrmPagoTarjeta pagoTarjeta;
     private static FrmRegistrarAlumno registrarAlumno;
     private static FrmInscribirClase inscribir;
+    private static FrmAlumnosInscritos alumnosInscritos;
+    private static FrmClasesExistentes clasesExistentes;
+    private static FrmDatosClase datosClase;
+    private static FrmFinalizarInscripcion finalizarInscripcion;
 
     private ControlNavegacion() {
         inscribirClase = new InscribirClase();
     }
-
 
     public static ControlNavegacion obtenerControlNavegacion() {
         if (controlNavegacion == null) {
@@ -65,7 +71,6 @@ public class ControlNavegacion {
     /**
      * Muestra la pantalla que inicia el caso de uso para inscribir a un alumno.
      */
-
     public static void mostrarInscribirClase() {
         inscribir = new FrmInscribirClase();
         inscribir.setVisible(true);
@@ -100,84 +105,130 @@ public class ControlNavegacion {
             mostrarMenuPrincipal();
         }
     }
-    
+
     /**
      * Muestra el JFrmae FrmFinalizarInscripcion.
+     *
      * @param claseDTO el DTO que tendra los datos a mostrar.
      */
     public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
     }
-    
+
     public static void mostrarAlumnosInscritos(ClaseDTO clase) {
         List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
         alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
         alumnosInscritos.setVisible(true);
     }
-    
-    public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException{
+
+    public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException {
         registrarAlumno = new FrmRegistrarAlumno(clase);
         registrarAlumno.setVisible(true);
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
         JOptionPane.showMessageDialog(parentComponent, exc.getMessage(),
-                "Error :(",JOptionPane.ERROR_MESSAGE);
+                "Error :(", JOptionPane.ERROR_MESSAGE);
 
     }
- 
+
     // metodos que ven los formularios
-    public static boolean validarEfectivoRecibido(BigDecimal costoClase, BigDecimal efectivo, JFrame parentComponent) {
-       return inscribirClase.validarEfectivoRecibido(costoClase, efectivo);
+    /**
+     * Validación para el efectivo recibido al pagar una inscripción.
+     */
+    public static boolean validarEfectivoRecibido(BigDecimal costoClase, BigDecimal efectivo, JFrame frame) {
+        return inscribirClase.validarEfectivoRecibido(costoClase, efectivo);
 
     }
 
-    public static boolean validarNumeroCuenta(String numeroCuenta, JFrame parentComponent) {
+    /**
+     * Validación para el número de cuenta recibido al pagar una inscripción con tarjeta. Regresa la validación del SS del caso de uso
+     */
+    public static boolean validarNumeroCuenta(String numeroCuenta, JFrame frame) {
         return inscribirClase.validarNumeroCuenta(numeroCuenta);
 
     }
 
-    public static boolean validarPropietarioTarjeta(String propietario, JFrame parentComponent) {
+    /**
+     * Validación para el propietario de cuenta recibido al pagar una inscripción con tarjeta. Regresa la validación del SS del caso de uso
+     */
+    public static boolean validarPropietarioTarjeta(String propietario, JFrame frame) {
         return inscribirClase.validarPropietarioTarjeta(propietario);
 
     }
 
-    public static boolean validarFechaExpiracion(LocalDate fecha, JFrame parentComponent) {
+    /**
+     * Validación para la fecha de expiración de la tarjeta. Regresa la validación del SS del caso de uso
+     */
+    public static boolean validarFechaExpiracion(LocalDate fecha, JFrame frame) {
         return inscribirClase.validarFechaExpiracion(fecha);
 
     }
 
-    public static boolean validarCVV(int cvv, JFrame parentComponent) {
+    /**
+     * Validación del formato de CVV. Regresa la validación del SS del caso de uso
+     */
+    public static boolean validarCVV(int cvv, JFrame frame) {
         return inscribirClase.validarCVV(cvv);
 
     }
 
+    /**
+     * Llamada al SS del caso de uso para realizar una inscripción.
+     *
+     * @param inscripcion la DTO con los datos validados
+     * @return los datos de la inscripción ya que se guardaron
+     */
     public static InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion) {
         return inscribirClase.realizarInscripcion(inscripcion);
     }
 
+    /**
+     * Llamada al SS del CU de inscripciones para realizar un pago con tarjeta. realiza la conexión con el SS de insfraestructura, que es el que maneja los datos de las tarjetas.
+     */
     private static PagoRealizadoDTO confirmarPagoTarjeta(NuevoPagoTarjetaDTO pagoTarjeta) {
         // conexion con el sistema externo
         return inscribirClase.confirmarPagoTarjeta(pagoTarjeta);
     }
 
-    public static void realizarPagoTarjeta(NuevoPagoTarjetaDTO pago, ClaseDTO clase, AlumnoDTO alumno, JFrame parentComponent) throws PresentacionException {
+    /**
+     * LLamada al SS del CU de inscripciones para guardar los datos ya validados del pago con tarjeta. el sistema solo guarda datos no sensibles de la cuenta bancaria.
+     */
+    public static void realizarPagoTarjeta(NuevoPagoTarjetaDTO pago, ClaseDTO clase, AlumnoDTO alumno, JFrame frame) {
         // validar datos 
-        if(!validarNumeroCuenta(pago.getNumeroCuenta(), parentComponent)){
-            throw new PresentacionException("El numero de cuenta es inválido. Verifique e intente nuevamente.");
+        if (!validarNumeroCuenta(pago.getNumeroCuenta(), frame)) {
+            try {
+                throw new PresentacionException("El numero de cuenta es inválido. Verifique e intente nuevamente.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
-        if(!validarPropietarioTarjeta(pago.getPropietario(), parentComponent)) {
-            throw new PresentacionException("El propietario es inválido. Verifique e intente nuevamente.");
+        if (!validarPropietarioTarjeta(pago.getPropietario(), frame)) {
+            try {
+                throw new PresentacionException("El propietario es inválido. Verifique e intente nuevamente.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
-        if(!validarFechaExpiracion(pago.getFechaExpiracion(), parentComponent)){
-            throw new PresentacionException("La fecha de vencimiento es inválida. Verifique e intente nuevamente.");
+        if (!validarFechaExpiracion(pago.getFechaExpiracion(), frame)) {
+            try {
+                throw new PresentacionException("La fecha de vencimiento es inválida. Verifique e intente nuevamente.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
-        if(!validarCVV(pago.getCvv(), parentComponent)){
-            throw new PresentacionException("El CVV no puede estar vacío, ser menor a 3 dígitos o mayor a 4.  Verifique e intente nuevamente.");
+        if (!validarCVV(pago.getCvv(), frame)) {
+            try {
+                throw new PresentacionException("El CVV no puede estar vacío, ser menor a 3 dígitos o mayor a 4.  Verifique e intente nuevamente.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
 
+        // obtiene el pago de infraesttuctura
         PagoRealizadoDTO pagoRealizadoSistemaPagos = confirmarPagoTarjeta(pago);
+        // arma la dto
         PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizadoSistemaPagos.getCodigoConfirmacion(), pagoRealizadoSistemaPagos.getFechaHora());
         NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(pago.getMonto(), pagoTarjeta);
 
@@ -187,12 +238,19 @@ public class ControlNavegacion {
 
         InscripcionDTO inscripcion = realizarInscripcion(inscripcionDTO);
         if (inscripcion == null) {
-            throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
+            try {
+                throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
 
     }
 
-    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseDTO clase, AlumnoDTO alumno, JFrame parentComponent) throws PresentacionException {
+    /**
+     * LLamada al SS del CU de inscripciones para guardar los datos ya validados del pago en efectivo.
+     */
+    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseDTO clase, AlumnoDTO alumno, JFrame frame) {
 
         PagoDTO pago = inscribirClase.realizarPagoEfectivo(nuevoPago);
         LocalDateTime fechaActual = LocalDateTime.now();
@@ -200,13 +258,24 @@ public class ControlNavegacion {
 
         InscripcionDTO inscripcion = realizarInscripcion(inscripcionDTO);
         if (inscripcion == null) {
-            throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
+            try {
+                throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
     }
 
-    public static BigDecimal calcularCambio(BigDecimal precioClase, BigDecimal efectivoRecibido, JFrame parentComponent) throws PresentacionException {
-        if (!validarEfectivoRecibido(precioClase, efectivoRecibido, parentComponent)) {
-            throw new PresentacionException("El efectivo ingresado no es suficiente para realizar el pago. Verifique e intente nuevamente.");
+    /**
+     * Calcula el cambio para el efectivo recibido.
+     */
+    public static BigDecimal calcularCambio(BigDecimal precioClase, BigDecimal efectivoRecibido, JFrame frame) {
+        if (!validarEfectivoRecibido(precioClase, efectivoRecibido, frame)) {
+            try {
+                throw new PresentacionException("El efectivo ingresado no es suficiente para realizar el pago. Verifique e intente nuevamente.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
         }
         return inscribirClase.calcularCambio(precioClase, efectivoRecibido);
     }
@@ -219,11 +288,10 @@ public class ControlNavegacion {
         datosClase.setVisible(true);
         clasesExistentes.dispose();
     }
-    
+
     //MOSTRAR CLASES EXISTENTES
-   
-    private static boolean validarErrorNombreClase(JFrame frame,String nombre){
-        if(inscribirClase.validarNombreClaseVacio(nombre)== true){
+    private static boolean validarErrorNombreClase(JFrame frame, String nombre) {
+        if (inscribirClase.validarNombreClaseVacio(nombre) == true) {
             try {
                 throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
             } catch (PresentacionException ex) {
@@ -232,46 +300,45 @@ public class ControlNavegacion {
                 return true;
             }
         }
-        if(inscribirClase.validarNombreClase(nombre) == false){
-            try { 
+        if (inscribirClase.validarNombreClase(nombre) == false) {
+            try {
                 throw new PresentacionException("El nombre de clase no existe");
             } catch (PresentacionException ex) {
                 mostrarMensajeErrorConExcepcion(frame, ex);
-               frame.dispose();
-               return true;
+                frame.dispose();
+                return true;
             }
         }
         frame.dispose();
         return false;
     }
-        
-    public static void mostrarClasesExistente(String nombre){
-        
-        if(validarErrorNombreClase(inscribir, nombre)== true){
+
+    public static void mostrarClasesExistente(String nombre) {
+
+        if (validarErrorNombreClase(inscribir, nombre) == true) {
             mostrarInscribirClase();
             return;
         }
-        
+
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
         List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
         clasesExistentes = new FrmClasesExistentes(clases);
         clasesExistentes.setVisible(true);
     }
-    
-    private static List<ClaseDTO> obtenerClaseLista(String nombre){
+
+    private static List<ClaseDTO> obtenerClaseLista(String nombre) {
         return inscribirClase.buscarClasesPorNombre(nombre);
     }
-    
-    
+
     //DATOS CLASE METODOS
-    public static AlumnoDTO obtenerAlumno(Integer codigo){
+    public static AlumnoDTO obtenerAlumno(Integer codigo) {
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigo);
         return inscribirClase.obtenerAlumno(alumnoBusqueda);
     }
-    
+
     //ValidarCampo
-    public static Integer mostrarErrorcampoIdAlumno(String campo){
-        if(!campo.matches("\\d+")){
+    public static Integer mostrarErrorcampoIdAlumno(String campo) {
+        if (!campo.matches("\\d+")) {
             try {
                 throw new PresentacionException("Ingrese solo números en el código de alumno.");
             } catch (PresentacionException ex) {
@@ -282,13 +349,13 @@ public class ControlNavegacion {
         Integer codigoAlumno = Integer.valueOf(campo);
         return codigoAlumno;
     }
-    
-    public static void mostrarFinalizarInscripcion(ClaseDTO clase,String campo){
-        
+
+    public static void mostrarFinalizarInscripcion(ClaseDTO clase, String campo) {
+
         Integer codigoAlumno = mostrarErrorcampoIdAlumno(campo);
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
         AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
-        if(alumnoEncontrado == null){
+        if (alumnoEncontrado == null) {
             try {
                 throw new PresentacionException("El alumno no existe");
             } catch (PresentacionException ex) {
@@ -298,7 +365,7 @@ public class ControlNavegacion {
         }
         mostrarFrmFinalizarInscripcion(clase, alumnoEncontrado);
     }
-    
+
     public static boolean validarDatosAlumno(AlumnoDTO alumnoDTO) {
         if (inscribirClase.validarApellidoPaterno(alumnoDTO.getApellidoPaterno())) {
             return true;
@@ -320,7 +387,7 @@ public class ControlNavegacion {
         }
         return false;
     }
-    
+
     public static boolean AgregarAlumno(AlumnoDTO alumnoDTO) {
         AlumnoDTO alumnoRegistrado = inscribirClase.agregarAlumno(alumnoDTO);
         if (alumnoRegistrado == null) {
@@ -329,6 +396,51 @@ public class ControlNavegacion {
             return true;
         }
     }
-    
 
+    // formularios para el CU de registro de asistencias
+    /**
+     * Muestra el formulario que contiene las opciones de registro de asistencia.
+     */
+    public static void mostrarSeleccionarOpcion() {
+        FrmSeleccionarOpcion seleccionOpcionAsistencia = new FrmSeleccionarOpcion();
+        seleccionOpcionAsistencia.setVisible(true);
+    }
+
+    /**
+     * Muestra el formulario que permite registrar una asistencia individual.
+     */
+    public static void mostrarRegistrarAsistenciaAlumno() {
+        FrmRegistrarAsistenciaActualAlumno asistenciaActual = new FrmRegistrarAsistenciaActualAlumno();
+        asistenciaActual.setVisible(true);
+    }
+
+    /**
+     * Muestra el formulario que permite buscar una clase por nombre.
+     */
+    public static void mostrarBuscarClase() {
+        FrmBuscarClase buscarClase = new FrmBuscarClase();
+        buscarClase.setVisible(true);
+    }
+
+    /**
+     * Muestra las clases resultantes de la búsqueda.
+     */
+    public static void mostrarClasesExistentes(String nombre) {
+        if (validarErrorNombreClase(inscribir, nombre) == true) {
+            mostrarInscribirClase();
+            return;
+        }
+
+        NombreClaseParam nombreClase = new NombreClaseParam(nombre);
+        List<ClaseDTO> clases = obtenerClases(nombreClase.getNombreClase());
+        FrmClasesExistentesAsistencia clasesResultado = new FrmClasesExistentesAsistencia(clases);
+        clasesResultado.setVisible(true);
+    }
+
+    /**
+     * Obtiene las clases existentes que coinciden con el nombre de búsqueda.
+     */
+    private static List<ClaseDTO> obtenerClases(String nombre) {
+        return inscribirClase.buscarClasesPorNombre(nombre); // llamar al metodo del cu de asistencias
+    }
 }
