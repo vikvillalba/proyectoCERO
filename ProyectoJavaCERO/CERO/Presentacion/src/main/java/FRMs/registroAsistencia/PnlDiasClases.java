@@ -6,9 +6,6 @@ package FRMs.registroAsistencia;
  */
 public class PnlDiasClases extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnlDiasClases
-     */
     public PnlDiasClases() {
         initComponents();
     }

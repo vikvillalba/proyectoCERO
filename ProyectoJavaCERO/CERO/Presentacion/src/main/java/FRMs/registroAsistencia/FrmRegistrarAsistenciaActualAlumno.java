@@ -1,7 +1,6 @@
 
 package FRMs.registroAsistencia;
 
-import FRMs.*;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,15 +11,13 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
- * @author Usuario
+ * @author victoria
  */
 public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
     private Image imagenFondo;
     private ControlNavegacion controlNav;
 
-    /**
-     * Creates new form FrmMenuPrincipal
-     */
+
     public FrmRegistrarAsistenciaActualAlumno() {
         initComponents();
         this.setTitle("Registrar asistencia individual");

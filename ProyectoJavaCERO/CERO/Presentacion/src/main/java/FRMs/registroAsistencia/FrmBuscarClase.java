@@ -1,14 +1,10 @@
 package FRMs.registroAsistencia;
 
-import FRMs.*;
 import com.mycompany.presentacion.ControlNavegacion;
-import com.mycompany.presentacion.excepciones.PresentacionException;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -21,10 +17,6 @@ public class FrmBuscarClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
 
-    /**
-     *
-     *
-     */
     public FrmBuscarClase() {
         initComponents();
         this.txfNombreClase.setForeground(Color.GRAY);
@@ -87,11 +79,6 @@ public class FrmBuscarClase extends javax.swing.JFrame {
                 txfNombreClaseMouseClicked(evt);
             }
         });
-        txfNombreClase.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfNombreClaseActionPerformed(evt);
-            }
-        });
         getContentPane().add(txfNombreClase);
         txfNombreClase.setBounds(500, 380, 580, 50);
 
@@ -128,25 +115,18 @@ public class FrmBuscarClase extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarMenuPrincipal();
+        ControlNavegacion.mostrarSeleccionarOpcion();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    //BUSCAR CLASE BTN
+
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
 
-        String campo = txfNombreClase.getText();
-        ControlNavegacion.mostrarClasesExistente(campo);
 
     }//GEN-LAST:event_botonBuscarClaseActionPerformed
 
-    private void txfNombreClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfNombreClaseActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_txfNombreClaseActionPerformed
-
     private void txfNombreClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfNombreClaseMouseClicked
-        // TODO add your handling code here:
+
         txfNombreClase.setText("");
         txfNombreClase.setForeground(Color.BLACK);
 

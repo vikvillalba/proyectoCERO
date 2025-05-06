@@ -1,6 +1,5 @@
 package FRMs.registroAsistencia;
 
-import Utilerias.*;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
@@ -27,19 +26,15 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
         this.clase = clase;
         setOpaque(false);
 
-        // Eliminar todos los componentes previos de los paneles
         JpanelDatos.removeAll();
         JpanelHeader.removeAll();
 
-        // Asegurar que no haya espacio entre los paneles
-        JpanelHeader.setLayout(new GridLayout(1, 5, 0, 0)); // Sin espacio entre columnas
-        JpanelDatos.setLayout(new GridLayout(1, 5, 0, 0));  // Sin espacio entre columnas
+        JpanelHeader.setLayout(new GridLayout(1, 5, 0, 0)); 
+        JpanelDatos.setLayout(new GridLayout(1, 5, 0, 0)); 
 
-        // Configurar los paneles correctamente
+
         configurarHeader();
         configurarDatos();
-
-        // Forzar actualización de la interfaz gráfica
         JpanelDatos.revalidate();
         JpanelDatos.repaint();
         JpanelHeader.revalidate();
@@ -99,30 +94,21 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
         JpanelDatos.add(lblMaestro);
     }
 
-    private void configurarBoton() {
-        btnVerAsistenciasActual.setText("Seleccionar clase");
-        btnVerAsistenciasActual.setFont(new Font("Menlo", Font.BOLD, 14));
-        btnVerAsistenciasActual.setForeground(Color.WHITE);
-        btnVerAsistenciasActual.setBackground(new Color(30, 47, 86));
-        btnVerAsistenciasActual.setFocusPainted(false);
-    }
-    
-    //Configura los Labels del Header
     private void configurarLabel(JLabel label) {
         label.setFont(new Font("Menlo", Font.BOLD, 14));
         label.setForeground(new Color(148, 197, 227));
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));
-        label.setPreferredSize(new Dimension(150, 40)); // Espacio suficiente para que no se encimen
+        label.setPreferredSize(new Dimension(150, 40)); 
     }
 
-    // configura los labels de los datos
+
     private void configurarLabelDatos(JLabel label) {
         label.setFont(new Font("Menlo", Font.PLAIN, 14));
         label.setForeground(Color.WHITE);
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));
-        label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
+        label.setPreferredSize(new Dimension(150, 40)); 
     }
     
     @SuppressWarnings("unchecked")
@@ -241,11 +227,7 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerAsistenciasActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAsistenciasActualActionPerformed
-        // TODO add your handling code here:
-        
-        ControlNavegacion.mostrarDatosClase(clase);
-        
-        // SI LA CLASE ESTA LLENA DESHABILITAR EL BTN
+
         
     }//GEN-LAST:event_btnVerAsistenciasActualActionPerformed
 

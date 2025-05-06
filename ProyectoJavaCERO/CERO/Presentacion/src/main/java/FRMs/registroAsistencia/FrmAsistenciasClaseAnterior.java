@@ -1,7 +1,5 @@
 package FRMs.registroAsistencia;
 
-import FRMs.*;
-import Utilerias.JpanelClaseLista;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
@@ -17,22 +15,17 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
- * @author Jack Murrieta
+ * @author victoria
  */
 public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
     private Image imagenFondo;
     // agregar diaclasedto
 
-    /**
-     * Creates new form FrmClasesExistentes
-     *
-     * @param clases
-     */
     public FrmAsistenciasClaseAnterior(List<ClaseDTO> clases) {
         initComponents();
         jScrollAsistencias.setOpaque(true);
-        this.setTitle("Clases anteriores");
+        this.setTitle("Asistencias anteriores");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
@@ -47,15 +40,14 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
         llenarDiasClase();
+        
+        
 
     }
 
     private void llenarDiasClase() {
-        // Crear un JPanel contenedor para la tabla
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-
-        // Agregar margen para que los elementos no se vean pegados
         contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
 //        // Recorrer la lista de clases y agregar filas a la tabla
@@ -70,12 +62,10 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 //            contenedorTabla.add(panelClase);
 //        }
 
-        // Configurar JScrollPane
+
         jScrollAsistencias.setViewportView(contenedorTabla);
         jScrollAsistencias.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollAsistencias.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        // Asegurar que la tabla se muestre correctamente
         contenedorTabla.revalidate();
         contenedorTabla.repaint();
     }

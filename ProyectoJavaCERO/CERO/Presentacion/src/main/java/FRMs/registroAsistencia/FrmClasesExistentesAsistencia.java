@@ -1,7 +1,5 @@
 package FRMs.registroAsistencia;
 
-import FRMs.*;
-import Utilerias.JpanelClaseLista;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
@@ -17,18 +15,14 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
- * @author Jack Murrieta
+ * @author victoria
  */
 public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
 
     private Image imagenFondo;
     private List<ClaseDTO> clases;
 
-    /**
-     * Creates new form FrmClasesExistentes
-     *
-     * @param clases
-     */
+
     public FrmClasesExistentesAsistencia(List<ClaseDTO> clases) {
         initComponents();
         this.clases = clases;
@@ -52,30 +46,23 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
     }
 
     private void llenarClasesExistentes() {
-        // Crear un JPanel contenedor para la tabla
+
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-
-        // Agregar margen para que los elementos no se vean pegados
         contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        // Recorrer la lista de clases y agregar filas a la tabla
+
+        
         for (ClaseDTO clase : clases) {
             // Crear el panel para la clase
             PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-
-            // Agregar espacio entre los paneles
             panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-            // Agregar el panel al contenedor
             contenedorTabla.add(panelClase);
         }
 
-        // Configurar JScrollPane
+
         jScrollClases.setViewportView(contenedorTabla);
         jScrollClases.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollClases.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        // Asegurar que la tabla se muestre correctamente
         contenedorTabla.revalidate();
         contenedorTabla.repaint();
     }

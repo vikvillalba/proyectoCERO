@@ -6,9 +6,9 @@ package FRMs.registroAsistencia;
  */
 public class PnlAsistencia extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnlDiasClases
-     */
+    // private AsistenciaDTO asistenciaDTO
+    
+
     public PnlAsistencia() {
         initComponents();
     }
@@ -20,60 +20,108 @@ public class PnlAsistencia extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFecha = new javax.swing.JLabel();
-        btnVerAsistencias = new javax.swing.JButton();
+        btnJustificar = new javax.swing.JButton();
+        lblFecha1 = new javax.swing.JLabel();
+        lblFecha2 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
+        lblAsistencia = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(30, 47, 86));
         setPreferredSize(new java.awt.Dimension(1270, 131));
 
-        lblFecha.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
-        lblFecha.setForeground(new java.awt.Color(255, 255, 255));
-        lblFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFecha.setText("MIERCOLES 00 SEPTIEMBRE");
-
-        btnVerAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/verAsistencias.png"))); // NOI18N
-        btnVerAsistencias.setBorder(null);
-        btnVerAsistencias.setContentAreaFilled(false);
-        btnVerAsistencias.setFocusPainted(false);
-        btnVerAsistencias.addActionListener(new java.awt.event.ActionListener() {
+        btnJustificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnJustificarFalta.png"))); // NOI18N
+        btnJustificar.setBorder(null);
+        btnJustificar.setContentAreaFilled(false);
+        btnJustificar.setFocusPainted(false);
+        btnJustificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerAsistenciasActionPerformed(evt);
+                btnJustificarActionPerformed(evt);
             }
         });
+
+        lblFecha1.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        lblFecha1.setForeground(new java.awt.Color(148, 197, 227));
+        lblFecha1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFecha1.setText("ID ALUMNO");
+
+        lblFecha2.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        lblFecha2.setForeground(new java.awt.Color(148, 197, 227));
+        lblFecha2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFecha2.setText("NOMBRE");
+
+        lblNombre.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombre.setText("NOMBRE EJEMPLO");
+
+        lblCodigo.setFont(new java.awt.Font("Menlo", 1, 18)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCodigo.setText("00");
+
+        lblAsistencia.setFont(new java.awt.Font("Menlo", 1, 20)); // NOI18N
+        lblAsistencia.setForeground(new java.awt.Color(148, 197, 227));
+        lblAsistencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAsistencia.setText("ASISTENCIA");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVerAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(lblFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(lblAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addComponent(btnJustificar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnJustificar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(btnVerAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFecha2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVerAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAsistenciasActionPerformed
+    private void btnJustificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJustificarActionPerformed
 
 
-    }//GEN-LAST:event_btnVerAsistenciasActionPerformed
+    }//GEN-LAST:event_btnJustificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnVerAsistencias;
-    private javax.swing.JLabel lblFecha;
+    private javax.swing.JButton btnJustificar;
+    private javax.swing.JLabel lblAsistencia;
+    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblFecha1;
+    private javax.swing.JLabel lblFecha2;
+    private javax.swing.JLabel lblNombre;
     // End of variables declaration//GEN-END:variables
 }
