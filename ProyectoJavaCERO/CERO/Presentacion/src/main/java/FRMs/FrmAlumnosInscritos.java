@@ -55,7 +55,6 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
 
         this.setSize(1000, 700); 
         this.setLocationRelativeTo(null); 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 

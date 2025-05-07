@@ -46,17 +46,29 @@ public class ClasesDAO implements IClasesDAO {
     @Override
     public List<Clase> obtenerClasesPorNombre(String nombreClase) {
         List<Clase> clasesEncontradas = new ArrayList<>();
-        String[] palabras = nombreClase.trim().split("\\s+");
+        String[] palabras = nombreClase.trim().toLowerCase().split("\\s+");
 
         for (Clase clase : this.clases) {
             String nombreExistente = clase.getNombre().toLowerCase();
-            for (String palabra : palabras) {
-                if (nombreExistente.contains(palabra.toLowerCase())) {
+
+            if (palabras.length == 1) {
+                if (nombreExistente.contains(palabras[0])) {
                     clasesEncontradas.add(clase);
-                    break;
+                }
+            } else {
+                boolean contieneTodas = true;
+                for (String palabra : palabras) {
+                    if (!nombreExistente.contains(palabra)) {
+                        contieneTodas = false;
+                        break;
+                    }
+                }
+                if (contieneTodas) {
+                    clasesEncontradas.add(clase);
                 }
             }
         }
+
         return clasesEncontradas;
     }
 

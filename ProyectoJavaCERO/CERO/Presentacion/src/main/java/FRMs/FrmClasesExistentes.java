@@ -31,7 +31,8 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
     public FrmClasesExistentes(List<ClaseDTO> clases) {
         initComponents();
         this.clases = clases;
-        jScrollClases.setOpaque(true);
+        jScrollClases.setOpaque(false);
+        jScrollClases.getViewport().setOpaque(false);
         this.setTitle("Clases Existentes");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -53,17 +54,13 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
     private void llenarClasesExistentes() {
         // Crear un JPanel contenedor para la tabla
         JPanel contenedorTabla = new JPanel();
+        contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
-        // Agregar margen para que los elementos no se vean pegados
-        contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         // Recorrer la lista de clases y agregar filas a la tabla
         for (ClaseDTO clase : clases) {
             // Crear el panel para la clase
             JpanelClaseLista panelClase = new JpanelClaseLista(clase);
-
-            // Agregar espacio entre los paneles
-            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
             // Agregar el panel al contenedor
             contenedorTabla.add(panelClase);
@@ -97,6 +94,8 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("CLASES EXISTENTES");
 
+        jScrollClases.setBackground(null);
+        jScrollClases.setBorder(null);
         jScrollClases.setPreferredSize(new java.awt.Dimension(1270, 2));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
@@ -117,11 +116,11 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
                 .addContainerGap(120, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(378, 378, 378))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(454, 454, 454))))
