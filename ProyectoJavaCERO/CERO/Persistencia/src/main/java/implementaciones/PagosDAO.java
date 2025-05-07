@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAOs;
+package implementaciones;
 
 import Entidades.MetodoPagoTarjeta;
 import Entidades.Pago;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import InterfazDAOs.IPagosDAO;
+import DAOs.IPagosDAO;
 
 /**
  *

@@ -11,6 +11,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -38,12 +39,12 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmReporteAsistencias extends javax.swing.JFrame {
 
     private Image imagenFondo;
+    //private ClaseDTO claseDTO;
 
     public FrmReporteAsistencias() {
         initComponents();
-        this.txtIdAlumno.setForeground(Color.GRAY);
-        this.txtIdAlumno.setText("ingresa nombre clase...");
         this.setTitle("Reporte de asistencias");
+        //this.claseDTO = claseDTO;
 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
@@ -62,7 +63,7 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
-    
+
 //    private void llenarTabla(List<ClienteReporteDTO> clientes) {
 //        if (clientes == null) {
 //            return;
@@ -85,7 +86,6 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
 //            modeloTabla.addRow(fila);
 //        });
 //    }
-
 //    private void cargarDatos() {
 //        String nombre = this.txtNombre.getText();
 //        int visitas = (int) numeroVisitas.getValue();
@@ -97,8 +97,7 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
 //        }
 //        llenarTabla(clientes);
 //    }
-    
-        private String convertirFecha(Calendar fecha) {
+    private String convertirFecha(Calendar fecha) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(fecha.getTime());
     }
@@ -275,7 +274,8 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdAlumnoMouseClicked
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        
+        ControlNavegacion.mostrarBuscarClaseReporte();
+        this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGuardarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarReporteActionPerformed
@@ -315,7 +315,6 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
 //            );
 //            valores.setAlignment(Element.ALIGN_CENTER);
 //            doc.add(valores);
-
             doc.add(Chunk.NEWLINE);
 
             PdfPTable tbl = new PdfPTable(5);

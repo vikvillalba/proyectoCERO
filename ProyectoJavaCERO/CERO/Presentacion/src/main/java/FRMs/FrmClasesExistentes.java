@@ -94,7 +94,6 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("CLASES EXISTENTES");
 
-        jScrollClases.setBackground(null);
         jScrollClases.setBorder(null);
         jScrollClases.setPreferredSize(new java.awt.Dimension(1270, 2));
 

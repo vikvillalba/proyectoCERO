@@ -1,6 +1,6 @@
 package com.mycompany.BOs;
 
-import InterfazDAOs.IPagosTarjetaDAO;
+import DAOs.IPagosTarjetaDAO;
 import com.mycompany.InterfazBO.IPagosTarjetaBO;
 
 /**

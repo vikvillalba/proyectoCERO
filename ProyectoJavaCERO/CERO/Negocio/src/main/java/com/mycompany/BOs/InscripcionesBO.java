@@ -1,7 +1,7 @@
 package com.mycompany.BOs;
 
 import com.mycompany.InterfazBO.IInscripcionesBO;
-import InterfazDAOs.IInscripcionesDAO;
+import DAOs.IInscripcionesDAO;
 
 /**
  *

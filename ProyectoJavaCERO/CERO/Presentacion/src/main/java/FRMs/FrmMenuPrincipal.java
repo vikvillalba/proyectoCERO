@@ -15,11 +15,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  */
 public class FrmMenuPrincipal extends javax.swing.JFrame {
     private Image imagenFondo;
-    private ControlNavegacion controlNav;
 
-    /**
-     * Creates new form FrmMenuPrincipal
-     */
     public FrmMenuPrincipal() {
         initComponents();
         this.setTitle("CERO");
@@ -118,6 +114,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnInscribir4.setBorder(null);
         btnInscribir4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInscribir4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesionHovered.png"))); // NOI18N
+        btnInscribir4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInscribir4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnInscribir4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 670, -1, -1));
 
         pack();
@@ -129,8 +130,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInscribirActionPerformed
 
     private void btnControlAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControlAsistenciasActionPerformed
-        // TODO add your handling code here:
+        ControlNavegacion.mostrarSeleccionarOpcionAsistencia();
+        this.dispose();
     }//GEN-LAST:event_btnControlAsistenciasActionPerformed
+
+    private void btnInscribir4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribir4ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnInscribir4ActionPerformed
 
     
 

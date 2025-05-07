@@ -1,7 +1,7 @@
 package com.mycompany.BOs;
 
 import Entidades.Clase;
-import InterfazDAOs.IClasesDAO;
+import DAOs.IClasesDAO;
 import com.mycompany.InterfazBO.IClasesBO;
 import com.mycompany.dtos.ClaseDTO;
 import java.math.BigDecimal;

@@ -1,8 +1,8 @@
 
-package DAOs;
+package implementaciones;
 
 import Entidades.MetodoPagoTarjeta;
-import InterfazDAOs.IPagosTarjetaDAO;
+import DAOs.IPagosTarjetaDAO;
 import java.util.List;
 
 /**

@@ -29,7 +29,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
 
     public FrmAsistenciasClaseDiaActual(ClaseDTO claseDTO) {
         initComponents();
-        jScrollAsistencias.setOpaque(true);
+        jScrollAsistencias.setOpaque(false);
         this.claseDTO = claseDTO;
         
         
@@ -78,18 +78,14 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     private void llenarAlumnos() {
         // Crear un JPanel contenedor para la tabla
         JPanel contenedorTabla = new JPanel();
+        contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
-        // Agregar margen para que los elementos no se vean pegados
-        contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
 //        // Recorrer la lista de clases y agregar filas a la tabla
 //        for (ClaseDTO clase : clases) {
 //            // Crear el panel para la clase
 //            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-//
-//            // Agregar espacio entre los paneles
-//            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 //
 //            // Agregar el panel al contenedor
 //            contenedorTabla.add(panelClase);

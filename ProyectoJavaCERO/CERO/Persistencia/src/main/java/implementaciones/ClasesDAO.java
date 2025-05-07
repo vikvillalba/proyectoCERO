@@ -1,4 +1,4 @@
-package DAOs;
+package implementaciones;
 
 import Entidades.Clase;
 import java.math.BigDecimal;
@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import InterfazDAOs.IClasesDAO;
+import DAOs.IClasesDAO;
 
 /**
  *

@@ -24,7 +24,7 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
     public FrmAsistenciasClaseAnterior(List<ClaseDTO> clases) {
         initComponents();
-        jScrollAsistencias.setOpaque(true);
+        jScrollAsistencias.setOpaque(false);
         this.setTitle("Asistencias anteriores");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -47,16 +47,13 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
     private void llenarDiasClase() {
         JPanel contenedorTabla = new JPanel();
+        contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-        contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
 //        // Recorrer la lista de clases y agregar filas a la tabla
 //        for (ClaseDTO clase : clases) {
 //            // Crear el panel para la clase
 //            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-//
-//            // Agregar espacio entre los paneles
-//            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 //
 //            // Agregar el panel al contenedor
 //            contenedorTabla.add(panelClase);

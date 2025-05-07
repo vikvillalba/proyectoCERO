@@ -2,8 +2,10 @@ package com.mycompany.presentacion;
 
 import FRMs.*;
 import FRMs.registroAsistencia.FrmBuscarClase;
+import FRMs.registroAsistencia.FrmBuscarClaseReporte;
 import FRMs.registroAsistencia.FrmClasesExistentesAsistencia;
 import FRMs.registroAsistencia.FrmRegistrarAsistenciaActualAlumno;
+import FRMs.registroAsistencia.FrmReporteAsistencias;
 import FRMs.registroAsistencia.FrmSeleccionarOpcion;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
@@ -318,12 +320,12 @@ public class ControlNavegacion {
         }
 
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
-        List<ClaseDTO> clases = obtenerClaseLista(nombreClase.getNombreClase());
+        List<ClaseDTO> clases = obtenerClases(nombreClase.getNombreClase());
         clasesExistentes = new FrmClasesExistentes(clases);
         clasesExistentes.setVisible(true);
     }
 
-    private static List<ClaseDTO> obtenerClaseLista(String nombre) {
+    private static List<ClaseDTO> obtenerClases(String nombre) {
         return inscribirClase.buscarClasesPorNombre(nombre);
     }
 
@@ -398,7 +400,7 @@ public class ControlNavegacion {
     /**
      * Muestra el formulario que contiene las opciones de registro de asistencia.
      */
-    public static void mostrarSeleccionarOpcion() {
+    public static void mostrarSeleccionarOpcionAsistencia() {
         FrmSeleccionarOpcion seleccionOpcionAsistencia = new FrmSeleccionarOpcion();
         seleccionOpcionAsistencia.setVisible(true);
     }
@@ -421,6 +423,7 @@ public class ControlNavegacion {
 
     /**
      * Muestra las clases resultantes de la búsqueda.
+     * @param nombre nombre de la clase que el usuario ingresó
      */
     public static void mostrarClasesExistentes(String nombre) {
         if (validarErrorNombreClase(inscribir, nombre) == true) {
@@ -435,9 +438,20 @@ public class ControlNavegacion {
     }
 
     /**
-     * Obtiene las clases existentes que coinciden con el nombre de búsqueda.
+     * Muestra la pantalla para seleccionar una clase a la que se le generarán reportes.
      */
-    private static List<ClaseDTO> obtenerClases(String nombre) {
-        return inscribirClase.buscarClasesPorNombre(nombre); // llamar al metodo del cu de asistencias
+    public static void mostrarBuscarClaseReporte() {
+        FrmBuscarClaseReporte seleccionClaseReporte = new FrmBuscarClaseReporte();
+        seleccionClaseReporte.setVisible(true);
     }
+
+    /**
+     * Muestra la pantalla para generar reportes de asistencias de una clase en específico.
+     * @param clase clase que el usuario seleccionó
+     */
+    public static void mostrarReportesAsistencias() {
+        FrmReporteAsistencias reporteAsistencias = new FrmReporteAsistencias();
+        reporteAsistencias.setVisible(true);
+    }
+
 }

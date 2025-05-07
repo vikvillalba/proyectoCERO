@@ -1,5 +1,6 @@
 package com.mycompany.inscribirclase.implementaciones;
 
+
 import com.mycompany.InterfazBO.IClasesBO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;

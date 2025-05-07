@@ -1,5 +1,4 @@
-
-package InterfazDAOs;
+package DAOs;
 
 import Entidades.MetodoPagoTarjeta;
 

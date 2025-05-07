@@ -23,7 +23,7 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
 
     public FrmDiasAnterioresClase(List<ClaseDTO> clases) {
         initComponents();
-        jsAsistenciasAnteriores.setOpaque(true);
+        jsAsistenciasAnteriores.setOpaque(false);
         this.setTitle("Clases anteriores");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -45,14 +45,14 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
     private void llenarDiasClase() {
 
         JPanel contenedorTabla = new JPanel();
+        contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-        contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         
 
 //        for (ClaseDTO clase : clases) {
 //            // Crear el panel para la clase
 //            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-//            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 //            contenedorTabla.add(panelClase);
 //        }
 

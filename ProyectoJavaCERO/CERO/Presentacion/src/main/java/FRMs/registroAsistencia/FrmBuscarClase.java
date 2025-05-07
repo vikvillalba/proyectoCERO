@@ -114,7 +114,7 @@ public class FrmBuscarClase extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarSeleccionarOpcion();
+        ControlNavegacion.mostrarSeleccionarOpcionAsistencia();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

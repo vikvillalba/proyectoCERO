@@ -26,7 +26,7 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
     public FrmClasesExistentesAsistencia(List<ClaseDTO> clases) {
         initComponents();
         this.clases = clases;
-        jScrollClases.setOpaque(true);
+        jScrollClases.setOpaque(false);
         this.setTitle("Clases Existentes");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -48,14 +48,11 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
     private void llenarClasesExistentes() {
 
         JPanel contenedorTabla = new JPanel();
-        contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-        contenedorTabla.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contenedorTabla.setOpaque(false);
 
         
         for (ClaseDTO clase : clases) {
-            // Crear el panel para la clase
             PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-            panelClase.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             contenedorTabla.add(panelClase);
         }
 

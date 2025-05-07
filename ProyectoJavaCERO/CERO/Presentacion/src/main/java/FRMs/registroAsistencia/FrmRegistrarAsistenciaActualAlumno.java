@@ -15,7 +15,6 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  */
 public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
     private Image imagenFondo;
-    private ControlNavegacion controlNav;
 
 
     public FrmRegistrarAsistenciaActualAlumno() {
@@ -63,13 +62,18 @@ public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
         btnRegistrarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnConfirmarAsistencia.png"))); // NOI18N
         btnRegistrarAsistencia.setBorder(null);
         btnRegistrarAsistencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        getContentPane().add(btnRegistrarAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 610, -1, -1));
+        getContentPane().add(btnRegistrarAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 599, -1, 70));
 
         btnVolverMenuPrincipal.setBackground(null);
-        btnVolverMenuPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnVolverMenu.png"))); // NOI18N
+        btnVolverMenuPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarGrande.png"))); // NOI18N
         btnVolverMenuPrincipal.setBorder(null);
         btnVolverMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        getContentPane().add(btnVolverMenuPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 610, -1, -1));
+        btnVolverMenuPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverMenuPrincipalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVolverMenuPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 601, -1, 70));
 
         jLabel3.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(30, 47, 86));
@@ -88,6 +92,11 @@ public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnVolverMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverMenuPrincipalActionPerformed
+        ControlNavegacion.mostrarSeleccionarOpcionAsistencia();
+        this.dispose();
+    }//GEN-LAST:event_btnVolverMenuPrincipalActionPerformed
 
     
 

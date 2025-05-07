@@ -1,6 +1,6 @@
 package com.mycompany.BOs;
 
-import InterfazDAOs.IPagosEfectivoDAO;
+import DAOs.IPagosEfectivoDAO;
 import com.mycompany.InterfazBO.IPagosEfectivoBO;
 
 /**
