@@ -58,11 +58,13 @@ public class FrmSeleccionarOpcion extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1280, 832));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnAsistenciaIndividual.setBackground(null);
         btnAsistenciaIndividual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnAsistenciaIndividual.png"))); // NOI18N
         btnAsistenciaIndividual.setBorder(null);
         btnAsistenciaIndividual.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(btnAsistenciaIndividual, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, -1, -1));
 
+        btnVisualizarAsistencias.setBackground(null);
         btnVisualizarAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnAsistencias.png"))); // NOI18N
         btnVisualizarAsistencias.setBorder(null);
         btnVisualizarAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -73,11 +75,13 @@ public class FrmSeleccionarOpcion extends javax.swing.JFrame {
         });
         getContentPane().add(btnVisualizarAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 380, -1, -1));
 
+        btnGenerarReportes.setBackground(null);
         btnGenerarReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnReportes.png"))); // NOI18N
         btnGenerarReportes.setBorder(null);
         btnGenerarReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         getContentPane().add(btnGenerarReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, -1, -1));
 
+        btnVolverMenuPrincipal.setBackground(null);
         btnVolverMenuPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnVolverMenu.png"))); // NOI18N
         btnVolverMenuPrincipal.setBorder(null);
         btnVolverMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

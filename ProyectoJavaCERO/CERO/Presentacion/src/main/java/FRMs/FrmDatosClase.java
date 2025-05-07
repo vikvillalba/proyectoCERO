@@ -73,6 +73,8 @@ public class FrmDatosClase extends javax.swing.JFrame {
         lblPrecio.setText(claseDTO.getPrecio().toString());
 
         pack();
+        
+        System.out.println(clase.getNombre());
     }
 
     /**
@@ -246,7 +248,6 @@ public class FrmDatosClase extends javax.swing.JFrame {
         btnRegresar.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setOpaque(false);
-        btnRegresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -333,7 +334,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(82, 82, 82)
+                        .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRegresar)
                             .addComponent(btnRegistrarAlumno)))
@@ -372,7 +373,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
 
-        ControlNavegacion.mostrarClasesExistente(clase.getNombre());
+        ControlNavegacion.mostrarClasesExistente(this.clase.getNombre());
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

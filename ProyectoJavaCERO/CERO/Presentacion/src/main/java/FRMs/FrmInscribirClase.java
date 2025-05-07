@@ -66,9 +66,9 @@ public class FrmInscribirClase extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel9.setText("Nombre de la clase:");
+        jLabel9.setText("Nombre de la clase");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(200, 370, 280, 62);
+        jLabel9.setBounds(490, 330, 280, 62);
 
         jLabel10.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
@@ -78,7 +78,6 @@ public class FrmInscribirClase extends javax.swing.JFrame {
 
         txfNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txfNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfNombreClase.setText("ingresa nombre clase...");
         txfNombreClase.setBorder(null);
         txfNombreClase.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -91,7 +90,7 @@ public class FrmInscribirClase extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txfNombreClase);
-        txfNombreClase.setBounds(500, 380, 580, 50);
+        txfNombreClase.setBounds(330, 390, 580, 50);
 
         botonBuscarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarClase.png"))); // NOI18N
         botonBuscarClase.setBorderPainted(false);

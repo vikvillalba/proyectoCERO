@@ -30,6 +30,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnAsistenciaIndividual">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color type="null"/>
+        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/btnAsistenciaIndividual.png"/>
         </Property>
@@ -48,6 +51,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVisualizarAsistencias">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color type="null"/>
+        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/btnAsistencias.png"/>
         </Property>
@@ -69,6 +75,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnGenerarReportes">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color type="null"/>
+        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/btnReportes.png"/>
         </Property>
@@ -87,6 +96,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnVolverMenuPrincipal">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color type="null"/>
+        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/btnVolverMenu.png"/>
         </Property>

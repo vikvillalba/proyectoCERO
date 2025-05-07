@@ -50,7 +50,7 @@ public class FrmBuscarClase extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txfNombreClase = new javax.swing.JTextField();
-        botonBuscarClase = new javax.swing.JButton();
+        btnBuscarClase = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
@@ -60,19 +60,18 @@ public class FrmBuscarClase extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel9.setText("Nombre de la clase:");
+        jLabel9.setText("Nombre de la clase");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(200, 370, 280, 62);
+        jLabel9.setBounds(490, 350, 280, 62);
 
         jLabel10.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
         jLabel10.setText("CONTROL DE ASISTENCIAS");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(250, 140, 750, 65);
+        jLabel10.setBounds(260, 140, 750, 65);
 
         txfNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txfNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfNombreClase.setText("ingresa nombre clase...");
         txfNombreClase.setBorder(null);
         txfNombreClase.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -80,19 +79,19 @@ public class FrmBuscarClase extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txfNombreClase);
-        txfNombreClase.setBounds(500, 380, 580, 50);
+        txfNombreClase.setBounds(330, 420, 580, 50);
 
-        botonBuscarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarClase.png"))); // NOI18N
-        botonBuscarClase.setBorderPainted(false);
-        botonBuscarClase.setContentAreaFilled(false);
-        botonBuscarClase.setFocusPainted(false);
-        botonBuscarClase.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarClase.png"))); // NOI18N
+        btnBuscarClase.setBorderPainted(false);
+        btnBuscarClase.setContentAreaFilled(false);
+        btnBuscarClase.setFocusPainted(false);
+        btnBuscarClase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonBuscarClaseActionPerformed(evt);
+                btnBuscarClaseActionPerformed(evt);
             }
         });
-        getContentPane().add(botonBuscarClase);
-        botonBuscarClase.setBounds(390, 540, 470, 90);
+        getContentPane().add(btnBuscarClase);
+        btnBuscarClase.setBounds(390, 540, 470, 90);
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnVolverMenu.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -120,10 +119,10 @@ public class FrmBuscarClase extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
 
-    private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
+    private void btnBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClaseActionPerformed
 
 
-    }//GEN-LAST:event_botonBuscarClaseActionPerformed
+    }//GEN-LAST:event_btnBuscarClaseActionPerformed
 
     private void txfNombreClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfNombreClaseMouseClicked
 
@@ -134,7 +133,7 @@ public class FrmBuscarClase extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonBuscarClase;
+    private javax.swing.JButton btnBuscarClase;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;

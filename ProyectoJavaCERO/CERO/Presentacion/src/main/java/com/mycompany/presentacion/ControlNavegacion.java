@@ -296,7 +296,6 @@ public class ControlNavegacion {
                 throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
             } catch (PresentacionException ex) {
                 mostrarMensajeErrorConExcepcion(frame, ex);
-                frame.dispose();
                 return true;
             }
         }
@@ -305,11 +304,9 @@ public class ControlNavegacion {
                 throw new PresentacionException("El nombre de clase no existe");
             } catch (PresentacionException ex) {
                 mostrarMensajeErrorConExcepcion(frame, ex);
-                frame.dispose();
                 return true;
             }
         }
-        frame.dispose();
         return false;
     }
 
