@@ -15,6 +15,8 @@ public interface IClasesDAO {
     
     public List<Clase> obtenerClasesPorNombre(String nombreClase);
     
-    public Clase buscarClase(Long id);
+    public Clase buscarClase(Integer id);
+    
+    public List<Clase> obtenerClases();
     
 }

@@ -1,6 +1,6 @@
-
 package com.mycompany.inscribirclase.implementaciones;
 
+import com.mycompany.InterfazBO.IClasesBO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -13,6 +13,7 @@ import com.mycompany.infraestructura.sistemaPago.GestorPagosFachada;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
+import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -29,24 +30,22 @@ import java.util.Random;
  */
 public class InscribirClase implements IInscribirClase {
 
+    private IClasesBO clasesBO;
     private List<PagoDTO> pagos;
     private List<InscripcionDTO> inscripciones;
-    private List<ClaseDTO> clases;
+
     private List<AlumnoDTO> alumnos;
 
     public InscribirClase() {
         this.pagos = new ArrayList<>();
         this.inscripciones = new ArrayList<>();
-        this.clases = new ArrayList<>();
         this.alumnos = new ArrayList<>();
-        
+        this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
+
         // datos de prueba
         List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
-        ClaseDTO clase = new ClaseDTO(1, "Contemporaneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
-        ClaseDTO clase1 = new ClaseDTO(2, "Contemporaneo principiante", dias, LocalTime.of(18, 00), LocalTime.of(19, 15), "César Díaz", new BigDecimal(500.00));
         AlumnoDTO alumno = new AlumnoDTO(1, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
-        clases.add(clase);
-        clases.add(clase1);
+
         alumnos.add(alumno);
 
     }
@@ -143,35 +142,31 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public boolean validarNombreClase(String nombre) {
-        // TODO: cambiar validaciones 
-        // QUE VALIDE NOMBRES POR EL NOMBRE DE CLASES QUE EXISTEN Y QUE TENGAN DE SEMEJANZA MINIMO UNA PALABRA COMPLETA MAS DE 5 LETRAS
-        List<String> clasesExistentes = Arrays.asList("Contemporaneo", "danza","Folklore","ballet");
-        for (String clasesExistente : clasesExistentes) {
-           if(clasesExistente.equalsIgnoreCase(nombre.trim())){
-               return true;
-           }
-           
+        List<ClaseDTO> clasesExistentes = clasesBO.obtenerClases();
+
+        // Separar el nombre ingresado en palabras
+        String[] palabras = nombre.trim().split("\\s+");
+
+        for (String palabra : palabras) {
+            for (ClaseDTO claseExistente : clasesExistentes) {
+                // Comparación LIKE "%palabra%", ignorando mayúsculas y minúsculas
+                if (claseExistente.getNombre().toLowerCase().contains(palabra.toLowerCase())) {
+                    return true;
+                }
+            }
         }
+
         return false;
     }
 
     //// METODOS DE SELECC<ION DE CLASES : BUSQUEDAS
     @Override
-    public List<ClaseDTO> buscarClasesPorNombre(String nombre) { 
-        List<ClaseDTO> clasesExistentes = new ArrayList<>();
-  
-        for (ClaseDTO clase : clases) {
-            if (clase.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                clasesExistentes.add(clase);
-            }
-        }
-        return clasesExistentes;
+    public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
+        return clasesBO.obtenerClasesNombre(nombre);
     }
 
- 
-
     @Override
-    public boolean validarNombreClaseVacio (String nombre) {
+    public boolean validarNombreClaseVacio(String nombre) {
         //Poner REGLAS DE NEGOCIO PARA LA BUSQUEDA DE NOMBRES CLASE
         if (nombre == null || nombre.trim().isEmpty() || nombre.equalsIgnoreCase("ingresa nombre clase...")) {
             return true;
@@ -180,14 +175,14 @@ public class InscribirClase implements IInscribirClase {
     }
 
     @Override
-    public List<AlumnoDTO> obtenerAlumnosClase(){
+    public List<AlumnoDTO> obtenerAlumnosClase() {
         // hacer validaciones de que los alumnos si estén inscritos en la clase
         return alumnos;
     }
 
     @Override
     public AlumnoDTO obtenerAlumno(AlumnoBusquedaDTO alumnoBusqueda) {
-        
+
         for (AlumnoDTO alumno : alumnos) {
             if (alumno.getCodigo() == alumnoBusqueda.getCodigo()) {
                 return alumno;
@@ -254,9 +249,9 @@ public class InscribirClase implements IInscribirClase {
     public AlumnoDTO agregarAlumno(AlumnoDTO alumnoDTO) {
         Random random = new Random();
         int codigo = random.nextInt(1000) + 1;
-        
+
         alumnoDTO.setCodigo(codigo);
-        
+
         // llamar a la BO de alumnos
         alumnos.add(alumnoDTO);
         return alumnoDTO;

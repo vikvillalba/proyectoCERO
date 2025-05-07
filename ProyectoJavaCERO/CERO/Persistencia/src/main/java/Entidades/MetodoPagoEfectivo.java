@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 import java.math.BigDecimal;
@@ -19,6 +15,30 @@ public class MetodoPagoEfectivo extends MetodoPago {
     public MetodoPagoEfectivo(Long id,BigDecimal cantidadRecibida, BigDecimal cambio) {
         super(id);
         this.cantidadRecibida = cantidadRecibida;
+        this.cambio = cambio;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public BigDecimal getCantidadRecibida() {
+        return cantidadRecibida;
+    }
+
+    public void setCantidadRecibida(BigDecimal cantidadRecibida) {
+        this.cantidadRecibida = cantidadRecibida;
+    }
+
+    public BigDecimal getCambio() {
+        return cambio;
+    }
+
+    public void setCambio(BigDecimal cambio) {
         this.cambio = cambio;
     }
     

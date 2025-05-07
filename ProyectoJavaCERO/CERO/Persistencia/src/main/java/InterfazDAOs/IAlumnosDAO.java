@@ -12,7 +12,7 @@ import Entidades.Alumno;
  */
 public interface IAlumnosDAO {
     
-    public Alumno obtenerAlumno(Long idAlumno);
+    public Alumno obtenerAlumno(Integer idAlumno);
     public Alumno registrarAlumnoNuevo(Alumno alumno);
 
 }

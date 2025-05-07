@@ -15,9 +15,9 @@ import InterfazDAOs.IAlumnosDAO;
 public class AlumnosDAO implements IAlumnosDAO {
 
     @Override
-    public Alumno obtenerAlumno(Long idAlumno) {
+    public Alumno obtenerAlumno(Integer idAlumno) {
         Alumno alumnoMock = new Alumno(
-                1L,
+                1,
                 "Torres",
                 "Murrieta",
                 "Jack Tadeo",

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 import java.math.BigDecimal;
@@ -15,7 +11,7 @@ import java.util.List;
  */
 public class Clase {
 
-    private Long codigo;
+    private Integer codigo;
     private String nombre;
     private List<DayOfWeek> dias;
     private LocalTime horaInicio;
@@ -23,13 +19,69 @@ public class Clase {
     private String maestro;
     private BigDecimal precio;
 
-    public Clase(Long codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
+    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.maestro = maestro;
+        this.precio = precio;
+    }
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<DayOfWeek> getDias() {
+        return dias;
+    }
+
+    public void setDias(List<DayOfWeek> dias) {
+        this.dias = dias;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public String getMaestro() {
+        return maestro;
+    }
+
+    public void setMaestro(String maestro) {
+        this.maestro = maestro;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
     

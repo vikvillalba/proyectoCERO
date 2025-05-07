@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 import java.time.LocalDateTime;
@@ -19,6 +15,30 @@ public class MetodoPagoTarjeta extends MetodoPago {
         super(id);
         this.id = id;
         this.codigoCondfirmacion = codigoCondfirmacion;
+        this.fechayHoraPago = fechayHoraPago;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCodigoCondfirmacion() {
+        return codigoCondfirmacion;
+    }
+
+    public void setCodigoCondfirmacion(String codigoCondfirmacion) {
+        this.codigoCondfirmacion = codigoCondfirmacion;
+    }
+
+    public LocalDateTime getFechayHoraPago() {
+        return fechayHoraPago;
+    }
+
+    public void setFechayHoraPago(LocalDateTime fechayHoraPago) {
         this.fechayHoraPago = fechayHoraPago;
     }
 

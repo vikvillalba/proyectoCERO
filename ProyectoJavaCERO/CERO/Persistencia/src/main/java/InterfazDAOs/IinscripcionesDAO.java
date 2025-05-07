@@ -12,8 +12,8 @@ import java.util.List;
  * @author Usuario
  */
 public interface IInscripcionesDAO {
-    public List<Inscripcion> obtenerInscripcionesClase(Long idClase);
+    public List<Inscripcion> obtenerInscripcionesClase(Integer idClase);
     
-    public Inscripcion generarInscripcion(Long idAlumno, Long idClase);
+    public Inscripcion generarInscripcion(Integer idAlumno, Integer idClase);
     
 }

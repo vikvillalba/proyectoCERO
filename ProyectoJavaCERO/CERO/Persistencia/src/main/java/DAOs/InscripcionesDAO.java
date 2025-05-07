@@ -25,10 +25,10 @@ import InterfazDAOs.IInscripcionesDAO;
 public class InscripcionesDAO implements IInscripcionesDAO{
 
     @Override
-    public List<Inscripcion> obtenerInscripcionesClase(Long idClase) {
+    public List<Inscripcion> obtenerInscripcionesClase(Integer idClase) {
         // Mocks de las entidades necesarias
         Clase claseMock = new Clase(
-                1L,
+                1,
                 "Contemporaneo Avanzado",
                 Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
                 LocalTime.of(9, 0),
@@ -37,7 +37,7 @@ public class InscripcionesDAO implements IInscripcionesDAO{
                 new BigDecimal("2500.00")
         );
         Alumno alumnoMock = new Alumno(
-                1L,
+                1,
                 "Torres",
                 "Murrieta",
                 "Jack Tadeo",
@@ -66,7 +66,7 @@ public class InscripcionesDAO implements IInscripcionesDAO{
     }
 
     @Override
-    public Inscripcion generarInscripcion(Long idAlumno, Long idClase) {
+    public Inscripcion generarInscripcion(Integer idAlumno, Integer idClase) {
         Clase claseMock = new Clase(
                 idClase,
                 "Contemporaneo Avanzado",
