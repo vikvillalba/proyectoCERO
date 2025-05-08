@@ -7,22 +7,22 @@ import java.time.LocalDateTime;
  * @author Usuario
  */
 public class MetodoPagoTarjeta extends MetodoPago {
-    private Long id;
+    private Integer id;
     private String codigoCondfirmacion;
     private LocalDateTime fechayHoraPago;
 
-    public MetodoPagoTarjeta(Long id, String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
+    public MetodoPagoTarjeta(Integer id, String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
         super(id);
         this.id = id;
         this.codigoCondfirmacion = codigoCondfirmacion;
         this.fechayHoraPago = fechayHoraPago;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

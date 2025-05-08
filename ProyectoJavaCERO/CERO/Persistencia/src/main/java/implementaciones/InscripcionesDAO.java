@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package implementaciones;
 
 import Entidades.Alumno;
@@ -17,12 +13,22 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import DAOs.IInscripcionesDAO;
+import java.util.ArrayList;
 
 /**
  *
  * @author Usuario
  */
 public class InscripcionesDAO implements IInscripcionesDAO{
+    
+    private List<Inscripcion> inscripciones;
+    private Integer codigoInscripcion = 1;
+
+    public InscripcionesDAO() {
+        this.inscripciones = new ArrayList<>();
+    }
+    
+    
 
     @Override
     public List<Inscripcion> obtenerInscripcionesClase(Integer idClase) {
@@ -46,7 +52,7 @@ public class InscripcionesDAO implements IInscripcionesDAO{
                 "jackmurrieta@gmail.com"
         );
         MetodoPagoTarjeta metodoPagoTarjetaMock = new MetodoPagoTarjeta(
-                2L,
+                2,
                 "CONFIRM123456", 
                 LocalDateTime.now() 
         );
@@ -54,10 +60,10 @@ public class InscripcionesDAO implements IInscripcionesDAO{
 
         // Crear una inscripción mock
         Inscripcion inscripcionMock = new Inscripcion(
-                1L,
+                1,
                 claseMock,
                 alumnoMock,
-                LocalDate.now(),
+                LocalDateTime.now(),
                 pagoMock
         );
 
@@ -66,35 +72,12 @@ public class InscripcionesDAO implements IInscripcionesDAO{
     }
 
     @Override
-    public Inscripcion generarInscripcion(Integer idAlumno, Integer idClase) {
-        Clase claseMock = new Clase(
-                idClase,
-                "Contemporaneo Avanzado",
-                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
-                LocalTime.of(9, 0),
-                LocalTime.of(10, 30),
-                "Cesar Gomez",
-                new BigDecimal("2500.00")
-        );
-        Alumno alumnoMock = new Alumno(
-                idAlumno,
-                "Torres",
-                "Murrieta",
-                "Jack Tadeo",
-                "5551234567",
-                LocalDate.of(2002, 8, 15),
-                "jackmurrieta@gmail.com"
-        );
-        Pago pagoMock = new Pago(1, new BigDecimal("500.00"), LocalDateTime.now(), true, null);
+    public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
+        inscripcion.setId(codigoInscripcion);
+        codigoInscripcion++;
+        inscripciones.add(inscripcion);
+        return inscripcion;
         
-                Inscripcion inscripcionMock = new Inscripcion(
-                1L,
-                claseMock,
-                alumnoMock,
-                LocalDate.now(),
-                pagoMock
-        );
-        return inscripcionMock;
     }
     
 }

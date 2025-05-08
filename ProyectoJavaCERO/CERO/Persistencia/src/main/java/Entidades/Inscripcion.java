@@ -1,20 +1,20 @@
 
 package Entidades;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
  * @author Usuario
  */
 public class Inscripcion {
-    private Long id;
+    private Integer id;
     private Clase clase;
     private Alumno alumno;
-    private LocalDate fechaInscripcion;
+    private LocalDateTime fechaInscripcion;
     private Pago pago;
 
-    public Inscripcion(Long id, Clase clase, Alumno alumno, LocalDate fechaInscripcion, Pago pago) {
+    public Inscripcion(Integer id, Clase clase, Alumno alumno, LocalDateTime fechaInscripcion, Pago pago) {
         this.id = id;
         this.clase = clase;
         this.alumno = alumno;
@@ -22,11 +22,11 @@ public class Inscripcion {
         this.pago = pago;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,11 +46,11 @@ public class Inscripcion {
         this.alumno = alumno;
     }
 
-    public LocalDate getFechaInscripcion() {
+    public LocalDateTime getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+    public void setFechaInscripcion(LocalDateTime fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 

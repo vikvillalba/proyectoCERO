@@ -107,13 +107,11 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion) {
-        Random random = new Random();
         AlumnoDTO alumno = inscripcion.getAlumno();
         PagoDTO pago = inscripcion.getPago();
         ClaseDTO clase = inscripcion.getClase();
         LocalDateTime fechaHora = inscripcion.getFecha();
-        int codigo = random.nextInt(1000) + 1;
-        InscripcionDTO nuevaInscripcion = new InscripcionDTO(codigo, alumno, clase, fechaHora, pago);
+        InscripcionDTO nuevaInscripcion = new InscripcionDTO(0, alumno, clase, fechaHora, pago);
 
         // llamar a la BO de inscripciones
         inscripciones.add(nuevaInscripcion);

@@ -8,21 +8,21 @@ import java.math.BigDecimal;
  */
 public class MetodoPagoEfectivo extends MetodoPago {
     
-    private Long id;
+    private Integer id;
     private BigDecimal cantidadRecibida;
     private BigDecimal cambio;
     
-    public MetodoPagoEfectivo(Long id,BigDecimal cantidadRecibida, BigDecimal cambio) {
+    public MetodoPagoEfectivo(Integer id,BigDecimal cantidadRecibida, BigDecimal cambio) {
         super(id);
         this.cantidadRecibida = cantidadRecibida;
         this.cambio = cambio;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
