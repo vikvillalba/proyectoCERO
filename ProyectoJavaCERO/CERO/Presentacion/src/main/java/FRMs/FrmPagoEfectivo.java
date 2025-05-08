@@ -123,7 +123,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         lblTotalPago.setFont(new java.awt.Font("Menlo", 1, 30)); // NOI18N
         lblTotalPago.setForeground(new java.awt.Color(255, 255, 255));
         lblTotalPago.setText("0.00");
-        getContentPane().add(lblTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 216, -1, 40));
+        getContentPane().add(lblTotalPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 216, 200, 40));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
