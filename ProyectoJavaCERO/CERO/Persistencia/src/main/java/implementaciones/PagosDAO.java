@@ -10,23 +10,31 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import DAOs.IPagosDAO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Usuario
  */
 public class PagosDAO implements IPagosDAO {
+    private List<Pago> pagos;
+    private Integer codigoPago = 1;
+
+    public PagosDAO() {
+        this.pagos = new ArrayList<>();
+    }
+    
+    
 
     @Override
     public Pago registrarPago(Pago pago) {
+        pago.setId(codigoPago);
+        codigoPago++;
+        pagos.add(pago);
+        pago.setRealizado(true);
+        return pago;
 
-        MetodoPagoTarjeta metodoPagoTarjetaMock = new MetodoPagoTarjeta(
-                2L,
-                "CONFIRM123456",
-                LocalDateTime.now()
-        );
-        Pago pagoMock = new Pago(1L, new BigDecimal("500.00"), LocalDate.now(), true, metodoPagoTarjetaMock); 
-        return pagoMock;
     }
     
 }

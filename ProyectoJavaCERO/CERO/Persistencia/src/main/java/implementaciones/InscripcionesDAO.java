@@ -50,7 +50,7 @@ public class InscripcionesDAO implements IInscripcionesDAO{
                 "CONFIRM123456", 
                 LocalDateTime.now() 
         );
-        Pago pagoMock = new Pago(1L, new BigDecimal("500.00"), LocalDate.now(), true, metodoPagoTarjetaMock); 
+        Pago pagoMock = new Pago(1L, new BigDecimal("500.00"), LocalDateTime.now(), true, metodoPagoTarjetaMock); 
 
         // Crear una inscripción mock
         Inscripcion inscripcionMock = new Inscripcion(
@@ -85,7 +85,7 @@ public class InscripcionesDAO implements IInscripcionesDAO{
                 LocalDate.of(2002, 8, 15),
                 "jackmurrieta@gmail.com"
         );
-        Pago pagoMock = new Pago(1L, new BigDecimal("500.00"), LocalDate.now(), true, null);
+        Pago pagoMock = new Pago(1L, new BigDecimal("500.00"), LocalDateTime.now(), true, null);
         
                 Inscripcion inscripcionMock = new Inscripcion(
                 1L,

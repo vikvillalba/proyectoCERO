@@ -2,11 +2,11 @@ package com.mycompany.inscribirclase.implementaciones;
 
 
 import com.mycompany.InterfazBO.IClasesBO;
+import com.mycompany.InterfazBO.IPagosBO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
-import com.mycompany.dtos.MetodoPagoDTO;
 import com.mycompany.dtos.NuevaInscripcionDTO;
 import com.mycompany.dtos.NuevoPagoDTO;
 import com.mycompany.dtos.PagoDTO;
@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,13 +31,13 @@ import java.util.Random;
 public class InscribirClase implements IInscribirClase {
 
     private IClasesBO clasesBO;
-    private List<PagoDTO> pagos;
+    private IPagosBO pagosBO;
     private List<InscripcionDTO> inscripciones;
 
     private List<AlumnoDTO> alumnos;
 
     public InscribirClase() {
-        this.pagos = new ArrayList<>();
+        this.pagosBO = FabricaObjetosNegocio.obtenerPagosBO();
         this.inscripciones = new ArrayList<>();
         this.alumnos = new ArrayList<>();
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
@@ -58,17 +57,7 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public PagoDTO realizarPagoEfectivo(NuevoPagoDTO nuevoPago) {
-        Random random = new Random();
-
-        BigDecimal total = nuevoPago.getTotal();
-        MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
-        int codigo = random.nextInt(1000) + 1;
-        LocalDateTime fecha = LocalDateTime.now();
-        PagoDTO pago = new PagoDTO(codigo, total, metodoPago, fecha, true);
-
-        // llamar a la BO de pagos
-        pagos.add(pago);
-        return pago;
+        return pagosBO.realizarPagoEfectivo(nuevoPago);
 
     }
 
@@ -90,17 +79,7 @@ public class InscribirClase implements IInscribirClase {
     // guarda el pago ya que el sistema externo lo valido
     @Override
     public PagoDTO realizarPagoTarjeta(NuevoPagoDTO nuevoPago) {
-        Random random = new Random();
-
-        BigDecimal total = nuevoPago.getTotal();
-        MetodoPagoDTO metodoPago = nuevoPago.getMetodoPago();
-        int codigo = random.nextInt(1000) + 1;
-        LocalDateTime fecha = LocalDateTime.now();
-        PagoDTO pago = new PagoDTO(codigo, total, metodoPago, fecha, true);
-
-        // llamar a la BO de pagos
-        pagos.add(pago);
-        return pago;
+        return pagosBO.realizarPagoTarjeta(nuevoPago);
     }
 
     @Override
