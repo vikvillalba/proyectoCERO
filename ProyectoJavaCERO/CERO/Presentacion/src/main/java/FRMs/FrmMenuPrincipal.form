@@ -48,9 +48,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnGaleriaProyectos">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color type="null"/>
-        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/galeriaProyectos.png"/>
         </Property>
@@ -75,9 +72,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnGestionarClases">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color type="null"/>
-        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/GestionarClase.png"/>
         </Property>
@@ -99,9 +93,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnInscribir">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color type="null"/>
-        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/inscribirClase.png"/>
         </Property>
@@ -126,9 +117,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnGestionarAlumnos">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color type="null"/>
-        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/gestionarAlumnos.png"/>
         </Property>
@@ -150,9 +138,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnControlAsistencias">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color type="null"/>
-        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/controlAsistencias.png"/>
         </Property>
@@ -177,9 +162,6 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnInscribir4">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color type="null"/>
-        </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Utilerias/botones/cerrarSesion.png"/>
         </Property>

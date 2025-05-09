@@ -26,6 +26,18 @@ public class Alumno {
         this.correoElectronico = correoElectronico;
     }
 
+    public Alumno() {
+    }
+
+    public Alumno(String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico) {
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correoElectronico = correoElectronico;
+    }
+
     public Integer getCodigo() {
         return codigo;
     }

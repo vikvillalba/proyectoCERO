@@ -9,5 +9,6 @@ import com.mycompany.dtos.NuevaInscripcionDTO;
  */
 public interface IInscripcionesBO {
     public InscripcionDTO registrarInscripcionPagoEfectivo(NuevaInscripcionDTO nuevaInscripcionDTO);
+    public InscripcionDTO registrarInscripcionPagoTarjeta(NuevaInscripcionDTO nuevaInscripcionDTO);
     
 }

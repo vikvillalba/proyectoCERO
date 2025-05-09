@@ -7,6 +7,9 @@ package Entidades;
 public abstract class MetodoPago {
     private Integer id;
 
+    public MetodoPago() {
+    }
+
     public MetodoPago(Integer id) {
         this.id = id;
     }

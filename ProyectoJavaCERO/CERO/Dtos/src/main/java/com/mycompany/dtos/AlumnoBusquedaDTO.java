@@ -7,6 +7,10 @@ package com.mycompany.dtos;
 public class AlumnoBusquedaDTO {
     private Integer codigo;
 
+    public AlumnoBusquedaDTO() {
+    }
+    
+
     public AlumnoBusquedaDTO(Integer codigo) {
         this.codigo = codigo;
     }

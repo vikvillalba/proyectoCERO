@@ -18,6 +18,14 @@ public class MetodoPagoTarjeta extends MetodoPago {
         this.fechayHoraPago = fechayHoraPago;
     }
 
+    public MetodoPagoTarjeta() {
+    }
+
+    public MetodoPagoTarjeta(String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
+        this.codigoCondfirmacion = codigoCondfirmacion;
+        this.fechayHoraPago = fechayHoraPago;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -22,6 +22,16 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
+    public Pago() {
+    }
+
+    public Pago(BigDecimal total, LocalDateTime fechaPago, boolean realizado, MetodoPago metodoPago) {
+        this.total = total;
+        this.fechaPago = fechaPago;
+        this.realizado = realizado;
+        this.metodoPago = metodoPago;
+    }
+
     public Integer getId() {
         return id;
     }

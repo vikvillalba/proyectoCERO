@@ -20,6 +20,13 @@ public class InscripcionDTO {
         this.pago = pago;
     }
 
+    public InscripcionDTO(AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fecha, PagoDTO pago) {
+        this.alumno = alumno;
+        this.clase = clase;
+        this.fecha = fecha;
+        this.pago = pago;
+    }
+
     public int getCodigo() {
         return codigo;
     }

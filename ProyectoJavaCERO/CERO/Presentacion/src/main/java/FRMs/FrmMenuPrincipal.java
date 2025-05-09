@@ -63,7 +63,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/logoAzul.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 530, 180));
 
-        btnGaleriaProyectos.setBackground(null);
         btnGaleriaProyectos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/galeriaProyectos.png"))); // NOI18N
         btnGaleriaProyectos.setBorder(null);
         btnGaleriaProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -71,14 +70,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnGaleriaProyectos.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
         getContentPane().add(btnGaleriaProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 560, -1, -1));
 
-        btnGestionarClases.setBackground(null);
         btnGestionarClases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/GestionarClase.png"))); // NOI18N
         btnGestionarClases.setBorder(null);
         btnGestionarClases.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarClases.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarClasesHovered.png"))); // NOI18N
         getContentPane().add(btnGestionarClases, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, -1, -1));
 
-        btnInscribir.setBackground(null);
         btnInscribir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirClase.png"))); // NOI18N
         btnInscribir.setBorder(null);
         btnInscribir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -90,14 +87,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(btnInscribir, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, -1, -1));
 
-        btnGestionarAlumnos.setBackground(null);
         btnGestionarAlumnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnos.png"))); // NOI18N
         btnGestionarAlumnos.setBorder(null);
         btnGestionarAlumnos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarAlumnos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnosHovered.png"))); // NOI18N
         getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, -1, -1));
 
-        btnControlAsistencias.setBackground(null);
         btnControlAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/controlAsistencias.png"))); // NOI18N
         btnControlAsistencias.setBorder(null);
         btnControlAsistencias.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -109,7 +104,6 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(btnControlAsistencias, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
 
-        btnInscribir4.setBackground(null);
         btnInscribir4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/cerrarSesion.png"))); // NOI18N
         btnInscribir4.setBorder(null);
         btnInscribir4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

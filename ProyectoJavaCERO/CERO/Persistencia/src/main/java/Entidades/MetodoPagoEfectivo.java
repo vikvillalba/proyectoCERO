@@ -18,6 +18,14 @@ public class MetodoPagoEfectivo extends MetodoPago {
         this.cambio = cambio;
     }
 
+    public MetodoPagoEfectivo() {
+    }
+
+    public MetodoPagoEfectivo(BigDecimal cantidadRecibida, BigDecimal cambio) {
+        this.cantidadRecibida = cantidadRecibida;
+        this.cambio = cambio;
+    }
+
     public Integer getId() {
         return id;
     }

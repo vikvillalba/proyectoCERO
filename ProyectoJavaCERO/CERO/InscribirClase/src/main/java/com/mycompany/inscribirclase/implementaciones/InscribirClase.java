@@ -1,7 +1,9 @@
 package com.mycompany.inscribirclase.implementaciones;
 
 
+import com.mycompany.InterfazBO.IAlumnosBO;
 import com.mycompany.InterfazBO.IClasesBO;
+import com.mycompany.InterfazBO.IInscripcionesBO;
 import com.mycompany.InterfazBO.IPagosBO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
@@ -16,13 +18,9 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarje
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -32,22 +30,18 @@ public class InscribirClase implements IInscribirClase {
 
     private IClasesBO clasesBO;
     private IPagosBO pagosBO;
-    private List<InscripcionDTO> inscripciones;
+    private IInscripcionesBO inscripcionesBO;
+    private IAlumnosBO alumnosBO;
 
-    private List<AlumnoDTO> alumnos;
 
     public InscribirClase() {
         this.pagosBO = FabricaObjetosNegocio.obtenerPagosBO();
-        this.inscripciones = new ArrayList<>();
-        this.alumnos = new ArrayList<>();
+        this.inscripcionesBO = FabricaObjetosNegocio.obtenerInscripcionesBO();
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
+        this.alumnosBO = FabricaObjetosNegocio.obtenerAlumnosBO();
+        
 
-        // datos de prueba
-        List<DayOfWeek> dias = Arrays.asList(DayOfWeek.TUESDAY, DayOfWeek.THURSDAY);
-        AlumnoDTO alumno = new AlumnoDTO(1, "Gómez", "Pérez", "Juan", "123-456-7890", LocalDate.of(1995, 5, 20), "juan.gomez@example.com");
-
-        alumnos.add(alumno);
-
+      
     }
 
     @Override
@@ -106,18 +100,28 @@ public class InscribirClase implements IInscribirClase {
     }
 
     @Override
-    public InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion) {
+    public InscripcionDTO realizarInscripcionEfectivo(NuevaInscripcionDTO inscripcion) {
         AlumnoDTO alumno = inscripcion.getAlumno();
         PagoDTO pago = inscripcion.getPago();
         ClaseDTO clase = inscripcion.getClase();
         LocalDateTime fechaHora = inscripcion.getFecha();
-        InscripcionDTO nuevaInscripcion = new InscripcionDTO(0, alumno, clase, fechaHora, pago);
+        InscripcionDTO nuevaInscripcion = new InscripcionDTO(alumno, clase, fechaHora, pago);
 
-        // llamar a la BO de inscripciones
-        inscripciones.add(nuevaInscripcion);
-        return nuevaInscripcion;
+        InscripcionDTO inscripcionRealizada = inscripcionesBO.registrarInscripcionPagoEfectivo(inscripcion);
+        return inscripcionRealizada;
     }
+    @Override
+    public InscripcionDTO realizarInscripcionTarjeta(NuevaInscripcionDTO inscripcion) {
+        AlumnoDTO alumno = inscripcion.getAlumno();
+        PagoDTO pago = inscripcion.getPago();
+        ClaseDTO clase = inscripcion.getClase();
+        LocalDateTime fechaHora = inscripcion.getFecha();
+        InscripcionDTO nuevaInscripcion = new InscripcionDTO(alumno, clase, fechaHora, pago);
 
+        InscripcionDTO inscripcionRealizada = inscripcionesBO.registrarInscripcionPagoTarjeta(inscripcion);
+        return inscripcionRealizada;
+    }
+    
     @Override
     public boolean validarNombreClase(String nombre) {
         List<ClaseDTO> clasesExistentes = clasesBO.obtenerClases();
@@ -155,11 +159,13 @@ public class InscribirClase implements IInscribirClase {
     @Override
     public List<AlumnoDTO> obtenerAlumnosClase() {
         // hacer validaciones de que los alumnos si estén inscritos en la clase
+        List<AlumnoDTO> alumnos = alumnosBO.obtenerAlumnos();
         return alumnos;
     }
 
     @Override
     public AlumnoDTO obtenerAlumno(AlumnoBusquedaDTO alumnoBusqueda) {
+        List<AlumnoDTO> alumnos = alumnosBO.obtenerAlumnos();
 
         for (AlumnoDTO alumno : alumnos) {
             if (alumno.getCodigo() == alumnoBusqueda.getCodigo()) {
@@ -225,14 +231,11 @@ public class InscribirClase implements IInscribirClase {
 
     @Override
     public AlumnoDTO agregarAlumno(AlumnoDTO alumnoDTO) {
-        Random random = new Random();
-        int codigo = random.nextInt(1000) + 1;
 
-        alumnoDTO.setCodigo(codigo);
-
-        // llamar a la BO de alumnos
-        alumnos.add(alumnoDTO);
-        return alumnoDTO;
+        AlumnoDTO alumnoAgregado = alumnosBO.agregarAlumno(alumnoDTO);
+        return alumnoAgregado;
     }
+
+
 
 }

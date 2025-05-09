@@ -22,6 +22,16 @@ public class Inscripcion {
         this.pago = pago;
     }
 
+    public Inscripcion() {
+    }
+
+    public Inscripcion(Clase clase, Alumno alumno, LocalDateTime fechaInscripcion, Pago pago) {
+        this.clase = clase;
+        this.alumno = alumno;
+        this.fechaInscripcion = fechaInscripcion;
+        this.pago = pago;
+    }
+
     public Integer getId() {
         return id;
     }

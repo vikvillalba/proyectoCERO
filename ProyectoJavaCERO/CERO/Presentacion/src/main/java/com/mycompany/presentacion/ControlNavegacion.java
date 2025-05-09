@@ -25,8 +25,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -98,7 +96,7 @@ public class ControlNavegacion {
      * Muestra mensaje de pago exitoso para el caso de uso de inscribir a un alumno.
      */
     public static void mostrarMensajePagoExitoso(JFrame parentComponent) {
-        int response = JOptionPane.showConfirmDialog(parentComponent, "El pago se ha realizado exitosamente :)",
+        int response = JOptionPane.showConfirmDialog(parentComponent, "El pago se ha realizado exitosamente. La inscripción se ha registrado. :)",
                 "Pago exitoso", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
         if (response == JOptionPane.OK_OPTION) {
@@ -177,13 +175,23 @@ public class ControlNavegacion {
     }
 
     /**
-     * Llamada al SS del caso de uso para realizar una inscripción.
+     * Llamada al SS del caso de uso para realizar una inscripción cuando el pago fue en efectivo.
      *
      * @param inscripcion la DTO con los datos validados
      * @return los datos de la inscripción ya que se guardaron
      */
-    public static InscripcionDTO realizarInscripcion(NuevaInscripcionDTO inscripcion) {
-        return inscribirClase.realizarInscripcion(inscripcion);
+    public static InscripcionDTO realizarInscripcionPagoEfectivo(NuevaInscripcionDTO inscripcion) {
+        return inscribirClase.realizarInscripcionEfectivo(inscripcion);
+    }
+
+    /**
+     * Llamada al SS del caso de uso para realizar una inscripción cuando el pago fue en línea.
+     *
+     * @param inscripcion la DTO con los datos validados
+     * @return los datos de la inscripción ya que se guardaron
+     */
+    public static InscripcionDTO realizarInscripcionPagoTarjeta(NuevaInscripcionDTO inscripcion) {
+        return inscribirClase.realizarInscripcionTarjeta(inscripcion);
     }
 
     /**
@@ -238,7 +246,7 @@ public class ControlNavegacion {
         LocalDateTime fechaActual = LocalDateTime.now();
         NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pagoDTO);
 
-        InscripcionDTO inscripcion = realizarInscripcion(inscripcionDTO);
+        InscripcionDTO inscripcion = realizarInscripcionPagoTarjeta(inscripcionDTO);
         if (inscripcion == null) {
             try {
                 throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
@@ -258,7 +266,7 @@ public class ControlNavegacion {
         LocalDateTime fechaActual = LocalDateTime.now();
         NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pago);
 
-        InscripcionDTO inscripcion = realizarInscripcion(inscripcionDTO);
+        InscripcionDTO inscripcion = realizarInscripcionPagoEfectivo(inscripcionDTO);
         if (inscripcion == null) {
             try {
                 throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
@@ -423,6 +431,7 @@ public class ControlNavegacion {
 
     /**
      * Muestra las clases resultantes de la búsqueda.
+     *
      * @param nombre nombre de la clase que el usuario ingresó
      */
     public static void mostrarClasesExistentes(String nombre) {
@@ -447,6 +456,7 @@ public class ControlNavegacion {
 
     /**
      * Muestra la pantalla para generar reportes de asistencias de una clase en específico.
+     *
      * @param clase clase que el usuario seleccionó
      */
     public static void mostrarReportesAsistencias() {

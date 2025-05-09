@@ -29,6 +29,18 @@ public class Clase {
         this.precio = precio;
     }
 
+    public Clase() {
+    }
+
+    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.maestro = maestro;
+        this.precio = precio;
+    }
+
     public Integer getCodigo() {
         return codigo;
     }

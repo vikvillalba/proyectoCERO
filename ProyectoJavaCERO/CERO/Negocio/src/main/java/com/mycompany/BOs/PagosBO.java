@@ -35,9 +35,9 @@ public class PagosBO implements IPagosBO{
         BigDecimal total = nuevoPagoDTO.getTotal();
         BigDecimal cambio = metodoPagoDTO.getCambio();
         
-        MetodoPago metodoPago = new MetodoPagoEfectivo(1, total,cambio);
+        MetodoPago metodoPago = new MetodoPagoEfectivo(total,cambio);
         LocalDateTime fecha = LocalDateTime.now();
-        Pago pago = new Pago(0, total, fecha, false, metodoPago);
+        Pago pago = new Pago(total, fecha, false, metodoPago);
         
         Pago pagoRealizado = this.pagosDAO.registrarPago(pago);
         MetodoPago metodoPagoRealizado = new MetodoPagoEfectivo(pago.getMetodoPago().getId(), pago.getTotal(), cambio);
@@ -53,9 +53,9 @@ public class PagosBO implements IPagosBO{
        
         BigDecimal total = nuevoPagoDTO.getTotal();
         
-        MetodoPago metodoPago = new MetodoPagoTarjeta(2, metodoPagoDTO.getCodigoConfirmacion(), metodoPagoDTO.getFechaHora());
+        MetodoPago metodoPago = new MetodoPagoTarjeta(metodoPagoDTO.getCodigoConfirmacion(), metodoPagoDTO.getFechaHora());
         LocalDateTime fecha = LocalDateTime.now();
-        Pago pago = new Pago(0, total, fecha, false, metodoPago);
+        Pago pago = new Pago(total, fecha, false, metodoPago);
         
         Pago pagoRealizado = this.pagosDAO.registrarPago(pago);
         MetodoPago metodoPagoRealizado = new MetodoPagoTarjeta(pago.getMetodoPago().getId(), metodoPagoDTO.getCodigoConfirmacion(), fecha);

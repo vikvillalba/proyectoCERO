@@ -19,6 +19,9 @@ public class NuevaInscripcionDTO {
         this.pago = pago;
     }
 
+    public NuevaInscripcionDTO() {
+    }
+
     public ClaseDTO getClase() {
         return clase;
     }
