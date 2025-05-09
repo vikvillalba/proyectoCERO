@@ -12,6 +12,7 @@
         <module>InscribirClase</module>
         <module>Infraestructura</module>
         <module>Dtos</module>
+        <module>RegistroAsistencias</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

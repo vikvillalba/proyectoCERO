@@ -26,6 +26,41 @@ public class InscripcionesDAO implements IInscripcionesDAO{
 
     public InscripcionesDAO() {
         this.inscripciones = new ArrayList<>();
+        Clase claseMock = new Clase(
+                1,
+                "Contemporaneo Avanzado",
+                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
+                LocalTime.of(9, 0),
+                LocalTime.of(10, 30),
+                "Cesar Gomez",
+                new BigDecimal("2500.00")
+        );
+        Alumno alumnoMock = new Alumno(
+                1,
+                "Torres",
+                "Murrieta",
+                "Jack Tadeo",
+                "5551234567",
+                LocalDate.of(2002, 8, 15),
+                "jackmurrieta@gmail.com"
+        );
+        MetodoPagoTarjeta metodoPagoTarjetaMock = new MetodoPagoTarjeta(
+                2,
+                "CONFIRM123456", 
+                LocalDateTime.now() 
+        );
+        Pago pagoMock = new Pago(1, new BigDecimal("500.00"), LocalDateTime.now(), true, metodoPagoTarjetaMock); 
+
+        // Crear una inscripción mock
+        Inscripcion inscripcionMock = new Inscripcion(
+                1,
+                claseMock,
+                alumnoMock,
+                LocalDateTime.now(),
+                pagoMock
+        );
+        
+        inscripciones.add(inscripcionMock);
     }
     
     
@@ -75,9 +110,22 @@ public class InscripcionesDAO implements IInscripcionesDAO{
     public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
         inscripcion.setId(codigoInscripcion);
         codigoInscripcion++;
-        inscripciones.add(inscripcion);
+        this.inscripciones.add(inscripcion);
         return inscripcion;
         
+    }
+
+    @Override
+    public List<Inscripcion> obtenerInscripcionesAlumno(Alumno alumno) {
+        List<Inscripcion> inscripcionesAlumno = new ArrayList<>();
+        for (Inscripcion inscripcion : this.inscripciones) {
+            System.out.println(inscripcion.getAlumno().getCodigo());
+            if (inscripcion.getAlumno().getCodigo().equals(alumno.getCodigo())) {
+                inscripcionesAlumno.add(inscripcion);
+            }
+        }
+        
+        return inscripcionesAlumno;
     }
     
 }

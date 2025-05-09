@@ -4,6 +4,7 @@ import FRMs.*;
 import FRMs.registroAsistencia.FrmBuscarClase;
 import FRMs.registroAsistencia.FrmBuscarClaseReporte;
 import FRMs.registroAsistencia.FrmClasesExistentesAsistencia;
+import FRMs.registroAsistencia.FrmInscripcionesAlumno;
 import FRMs.registroAsistencia.FrmRegistrarAsistenciaActualAlumno;
 import FRMs.registroAsistencia.FrmReporteAsistencias;
 import FRMs.registroAsistencia.FrmSeleccionarOpcion;
@@ -19,12 +20,17 @@ import com.mycompany.dtos.PagoTarjetaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
-import com.mycompany.inscribirclase.implementaciones.InscribirClase;
+import com.mycompany.inscribirclase.InscribirClase;
 import com.mycompany.presentacion.excepciones.PresentacionException;
+import com.mycompany.registroasistencias.IRegistroAsistencias;
+import com.mycompany.registroasistencias.RegistroAsistencias;
+import com.mycompany.registroasistencias.excepciones.AsistenciaException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -36,6 +42,7 @@ public class ControlNavegacion {
 
     private static ControlNavegacion controlNavegacion;
     private static IInscribirClase inscribirClase;
+    private static IRegistroAsistencias registroAsistencias;
 
     private static FrmMenuPrincipal menuPrincipal;
 
@@ -51,6 +58,7 @@ public class ControlNavegacion {
 
     private ControlNavegacion() {
         inscribirClase = new InscribirClase();
+        registroAsistencias = new RegistroAsistencias();
     }
 
     public static ControlNavegacion obtenerControlNavegacion() {
@@ -127,7 +135,7 @@ public class ControlNavegacion {
         registrarAlumno.setVisible(true);
     }
 
-    public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, PresentacionException exc) {
+    public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, Exception exc) {
         JOptionPane.showMessageDialog(parentComponent, exc.getMessage(),
                 "Error :(", JOptionPane.ERROR_MESSAGE);
 
@@ -414,13 +422,44 @@ public class ControlNavegacion {
     }
 
     /**
-     * Muestra el formulario que permite registrar una asistencia individual.
+     * Muestra el formulario que permite iniciar el registro una asistencia individual.
      */
     public static void mostrarRegistrarAsistenciaAlumno() {
         FrmRegistrarAsistenciaActualAlumno asistenciaActual = new FrmRegistrarAsistenciaActualAlumno();
         asistenciaActual.setVisible(true);
     }
 
+    /**
+     * Muestra el formulario que muestra las inscripciones del alumno (dependiendo del día del sistema). 
+     * permite seleccionar una y registrar la asistencia del alumno.
+     * @param codigo codigo del alumno que el usuario ingresó en la pantalla anterior.
+     */
+    public static void mostrarInscripcionesAlumno(String codigo, JFrame frame) {
+        
+        Integer codigoAlumno = mostrarErrorcampoIdAlumno(codigo);
+        AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
+        AlumnoDTO alumno = registroAsistencias.obtenerAlumno(alumnoBusqueda);
+        
+        if (alumno == null) {
+            try {
+                throw new PresentacionException("El alumno no existe");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frame, ex);
+            }
+            return;
+        }
+                
+        try {
+            List<InscripcionDTO> inscripcionesAlumno = registroAsistencias.obtenerInscripcionesAlumno(alumno);
+            FrmInscripcionesAlumno inscripciones = new FrmInscripcionesAlumno(inscripcionesAlumno);
+            inscripciones.setVisible(true);
+            
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(frame, ex);
+            mostrarRegistrarAsistenciaAlumno();
+        }
+        
+    }
     /**
      * Muestra el formulario que permite buscar una clase por nombre.
      */

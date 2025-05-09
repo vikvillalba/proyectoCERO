@@ -8,14 +8,15 @@ import DAOs.IAlumnosDAO;
 import DAOs.IClasesDAO;
 import DAOs.IInscripcionesDAO;
 import DAOs.IPagosDAO;
-import com.mycompany.BOs.AlumnosBO;
-import com.mycompany.BOs.ClasesBO;
-import com.mycompany.BOs.InscripcionesBO;
-import com.mycompany.BOs.PagosBO;
-import com.mycompany.InterfazBO.IAlumnosBO;
-import com.mycompany.InterfazBO.IClasesBO;
-import com.mycompany.InterfazBO.IInscripcionesBO;
-import com.mycompany.InterfazBO.IPagosBO;
+import com.mycompany.negocio.BOs.AlumnosBO;
+import com.mycompany.negocio.BOs.ClasesBO;
+import com.mycompany.negocio.BOs.InscripcionesBO;
+import com.mycompany.negocio.BOs.PagosBO;
+import com.mycompany.negocio.InterfazBO.IAlumnosBO;
+import com.mycompany.negocio.InterfazBO.IClasesBO;
+import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
+import com.mycompany.negocio.InterfazBO.IPagosBO;
+
 
 /**
  * Fábrica para objetos de negocio.
