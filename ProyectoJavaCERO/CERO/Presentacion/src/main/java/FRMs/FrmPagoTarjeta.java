@@ -113,6 +113,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         });
         getContentPane().add(txtCvv, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, 290, -1));
 
+        btnRegresar.setBackground(null);
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -124,6 +125,7 @@ public class FrmPagoTarjeta extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, -1, -1));
 
+        btnRealizarPago.setBackground(null);
         btnRealizarPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/realizarPago.png"))); // NOI18N
         btnRealizarPago.setBorder(null);
         btnRealizarPago.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
