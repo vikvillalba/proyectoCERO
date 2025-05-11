@@ -9,6 +9,7 @@ import com.mycompany.dtos.NuevoPagoDTO;
 import com.mycompany.dtos.PagoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.inscribirclase.excepciones.InscripcionException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -113,10 +114,10 @@ public interface IInscribirClase {
     /**
      * Validar Clase por su nombre.
      */
-    public abstract boolean validarNombreClase(String nombre);
+    public abstract boolean validarNombreClase(String nombre)throws InscripcionException;
 
     //METODOS DE SELECCION DE CLASES :BUSQUEDAS
-    public abstract List<ClaseDTO> buscarClasesPorNombre(String nombre);
+    public abstract List<ClaseDTO> buscarClasesPorNombre(String nombre) throws InscripcionException;
 
     public abstract boolean validarNombreClaseVacio(String nombre);
 

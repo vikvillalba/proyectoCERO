@@ -5,7 +5,6 @@ import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -27,6 +26,7 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
         initComponents();
         this.clases = clases;
         jScrollClases.setOpaque(false);
+        jScrollClases.getViewport().setOpaque(false);
         this.setTitle("Clases Existentes");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -39,8 +39,10 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
 
         getContentPane().setLayout(new AbsoluteLayout());
         pack();
+        this.setSize(1376, 731);
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
+        
         llenarClasesExistentes();
 
     }
@@ -49,6 +51,7 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
 
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setOpaque(false);
+        contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
         
         for (ClaseDTO clase : clases) {
@@ -75,13 +78,14 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
         jScrollClases = new javax.swing.JScrollPane();
         btnRegresar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("CLASES EXISTENTES");
 
-        jScrollClases.setPreferredSize(new java.awt.Dimension(1270, 2));
+        jScrollClases.setBorder(null);
+        jScrollClases.setPreferredSize(new java.awt.Dimension(1376, 731));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -116,10 +120,10 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollClases, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 457, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(btnRegresar)
-                .addGap(19, 19, 19))
+                .addGap(40, 40, 40))
         );
 
         pack();

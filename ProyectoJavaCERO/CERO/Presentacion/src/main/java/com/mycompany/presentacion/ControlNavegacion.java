@@ -23,6 +23,7 @@ import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarje
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
 import com.mycompany.inscribirclase.InscribirClase;
+import com.mycompany.inscribirclase.excepciones.InscripcionException;
 import com.mycompany.presentacion.excepciones.PresentacionException;
 import com.mycompany.registroasistencias.IRegistroAsistencias;
 import com.mycompany.registroasistencias.RegistroAsistencias;
@@ -30,9 +31,8 @@ import com.mycompany.registroasistencias.excepciones.AsistenciaException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -311,40 +311,53 @@ public class ControlNavegacion {
 
     //MOSTRAR CLASES EXISTENTES
     private static boolean validarErrorNombreClase(JFrame frame, String nombre) {
-        if (inscribirClase.validarNombreClaseVacio(nombre) == true) {
-            try {
-                throw new PresentacionException("El campo esta vacio, porfavor ingrese el nombre de la clase a buscar");
-            } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(frame, ex);
+        try {
+            if (inscribirClase.validarNombreClaseVacio(nombre)) {
+                mostrarMensajeErrorConExcepcion(frame, new PresentacionException(
+                        "El campo está vacío, por favor ingrese el nombre de la clase a buscar"
+                ));
                 return true;
             }
-        }
-        if (inscribirClase.validarNombreClase(nombre) == false) {
-            try {
-                throw new PresentacionException("El nombre de clase no existe");
-            } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(frame, ex);
+
+            if (!inscribirClase.validarNombreClase(nombre)) {
+                mostrarMensajeErrorConExcepcion(frame, new PresentacionException(
+                        "El nombre de clase no existe"
+                ));
                 return true;
             }
+
+            return false;
+        } catch (InscripcionException ex) {
+            mostrarMensajeErrorConExcepcion(frame, ex);
+            return true;
         }
-        return false;
     }
 
-    public static void mostrarClasesExistente(String nombre) {
-
-        if (validarErrorNombreClase(inscribir, nombre) == true) {
+    public static void mostrarClasesExistentes(String nombre) {
+        if (validarErrorNombreClase(inscribir, nombre)) {
             mostrarInscribirClase();
             return;
         }
 
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
         List<ClaseDTO> clases = obtenerClases(nombreClase.getNombreClase());
+
+        if (clases == null || clases.isEmpty()) {
+            mostrarMensajeErrorClaseNoExiste();
+            return;
+        }
+
         clasesExistentes = new FrmClasesExistentes(clases);
         clasesExistentes.setVisible(true);
     }
 
     private static List<ClaseDTO> obtenerClases(String nombre) {
-        return inscribirClase.buscarClasesPorNombre(nombre);
+        try {
+            return inscribirClase.buscarClasesPorNombre(nombre);
+        } catch (InscripcionException ex) {
+            mostrarMensajeErrorClaseNoExiste();
+            return Collections.emptyList();
+        }
     }
 
     //DATOS CLASE METODOS
@@ -443,7 +456,7 @@ public class ControlNavegacion {
         AlumnoDTO alumno = registroAsistencias.obtenerAlumno(alumnoBusqueda);
 
         if (alumno == null) {
-            mostrarMensajeErrorAlumnoNoExiste(frame);
+            mostrarMensajeErrorAlumnoNoExiste();
         }
 
         try {
@@ -458,8 +471,8 @@ public class ControlNavegacion {
 
     }
 
-    public static void mostrarMensajeErrorAlumnoNoExiste(JFrame parentComponent) {
-        JOptionPane.showMessageDialog(parentComponent, "El id ingresado no corresponde a ningún alumno existente.",
+    public static void mostrarMensajeErrorAlumnoNoExiste() {
+        JOptionPane.showMessageDialog(null, "El id ingresado no corresponde a ningún alumno existente.",
                 "Error :(", JOptionPane.ERROR_MESSAGE);
 
     }
@@ -473,20 +486,73 @@ public class ControlNavegacion {
     }
 
     /**
-     * Muestra las clases resultantes de la búsqueda.
+     * Muestra las clases resultantes de la búsqueda para registro de asistencias.
      *
      * @param nombre nombre de la clase que el usuario ingresó
      */
-    public static void mostrarClasesExistentes(String nombre) {
-        if (validarErrorNombreClase(inscribir, nombre) == true) {
+    public static void mostrarClasesExistentes(String nombre, JFrame frame) {
+        if (validarErrorNombreClaseAsistencia(frame, nombre)) {
             mostrarInscribirClase();
             return;
         }
 
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
-        List<ClaseDTO> clases = obtenerClases(nombreClase.getNombreClase());
+        List<ClaseDTO> clases = obtenerClasesAsistencia(nombreClase.getNombreClase());
+
+        if (clases == null || clases.isEmpty()) {
+            mostrarMensajeErrorClaseNoExiste();
+            return;
+        }
+
         FrmClasesExistentesAsistencia clasesResultado = new FrmClasesExistentesAsistencia(clases);
         clasesResultado.setVisible(true);
+    }
+
+    /**
+     * Obtiene las clases existentes en el sistema para el registro de asistencias.
+     */
+    private static List<ClaseDTO> obtenerClasesAsistencia(String nombre) {
+        try {
+            return registroAsistencias.obtenerClasesNombre(nombre);
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorClaseNoExiste();
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Mensaje que se muestra cuando no existen clases que coincidan con el parámetro de búsqueda.
+     */
+    public static void mostrarMensajeErrorClaseNoExiste() {
+        JOptionPane.showMessageDialog(null, "El nombre ingresado no corresponde a ninguna clase existente.",
+                "Error :(", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    /**
+     * Valida que el nombre de clase ingresado por el usuario sea correcto para buscarlo en los registros.
+     */
+    private static boolean validarErrorNombreClaseAsistencia(JFrame frame, String nombre) {
+        try {
+            if (registroAsistencias.validarNombreClaseVacio(nombre)) {
+                mostrarMensajeErrorConExcepcion(frame, new PresentacionException(
+                        "El campo está vacío, por favor ingrese el nombre de la clase a buscar"
+                ));
+                return true;
+            }
+
+            if (!registroAsistencias.validarNombreClase(nombre)) {
+                mostrarMensajeErrorConExcepcion(frame, new PresentacionException(
+                        "El nombre de clase no existe"
+                ));
+                return true;
+            }
+
+            return false;
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(frame, ex);
+            return true;
+        }
     }
 
     /**
@@ -513,16 +579,16 @@ public class ControlNavegacion {
      * @param nuevaAsistencia Los datos empaquetados de la asistencia que se quiere registrar.
      */
     public static void registrarAsistenciaAlumno(NuevaAsistenciaDTO nuevaAsistencia, JFrame frame) {
-        AsistenciaDTO asistenciaAlumno = registroAsistencias.obtenerAsistenciasAlumnoClase(nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
+        AsistenciaDTO asistenciaAlumno = registroAsistencias.obtenerAsistenciaAlumnoClase(nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
 
         if (asistenciaAlumno != null) {
-            mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(frame, nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
+            mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
             return;
         }
 
         try {
             registroAsistencias.registrarAsistenciaIndividual(nuevaAsistencia);
-            mostrarMensajeAsistenciaAgregadaCorrectamente(frame, nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
+            mostrarMensajeAsistenciaAgregadaCorrectamente(nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorConExcepcion(frame, ex);
         }
@@ -531,16 +597,16 @@ public class ControlNavegacion {
     /**
      * Mensaje de confirmación que se muestra cuando una asistencia se registró correctamente.
      */
-    public static void mostrarMensajeAsistenciaAgregadaCorrectamente(JFrame frame, AlumnoDTO alumno, ClaseDTO clase) {
-        JOptionPane.showMessageDialog(frame, "Asistencia registrada para el alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " para la clase: " + clase.getNombre(),
+    public static void mostrarMensajeAsistenciaAgregadaCorrectamente(AlumnoDTO alumno, ClaseDTO clase) {
+        JOptionPane.showMessageDialog(null, "Asistencia registrada para el alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " para la clase: " + clase.getNombre(),
                 "Asistencia registrada :)", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
      * Mensaje de error que se muestra cuando el alumno ya tiene una asistencia registrada para una clase en el día actual.
      */
-    public static void mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(JFrame parentComponent, AlumnoDTO alumno, ClaseDTO clase) {
-        JOptionPane.showMessageDialog(parentComponent, "El alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " ya tiene la asistencia correspondiente registrada para la clase: " + clase.getNombre(),
+    public static void mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(AlumnoDTO alumno, ClaseDTO clase) {
+        JOptionPane.showMessageDialog(null, "El alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " ya tiene la asistencia correspondiente registrada para la clase: " + clase.getNombre(),
                 "Error :(", JOptionPane.ERROR_MESSAGE);
 
     }

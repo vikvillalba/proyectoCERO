@@ -10,7 +10,6 @@ import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -373,7 +372,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
 
-        ControlNavegacion.mostrarClasesExistente(this.clase.getNombre());
+        ControlNavegacion.mostrarClasesExistentes(this.clase.getNombre());
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

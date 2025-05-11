@@ -104,7 +104,7 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
 
 
     private void configurarLabelDatos(JLabel label) {
-        label.setFont(new Font("Menlo", Font.PLAIN, 14));
+        label.setFont(new Font("Menlo", Font.PLAIN, 12));
         label.setForeground(Color.WHITE);
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));

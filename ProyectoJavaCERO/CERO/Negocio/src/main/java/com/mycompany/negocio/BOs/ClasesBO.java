@@ -4,8 +4,7 @@ import Entidades.Clase;
 import DAOs.IClasesDAO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
-import java.math.BigDecimal;
-import java.time.LocalTime;
+import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +21,20 @@ public class ClasesBO implements IClasesBO {
     }
 
     @Override
-    public List<ClaseDTO> obtenerClasesNombre(String nombreClase) {
+    public List<ClaseDTO> obtenerClasesNombre(String nombreClase) throws NegocioException {
         List<Clase> clases = this.clasesDAO.obtenerClasesPorNombre(nombreClase);
+        if (clases == null || clases.isEmpty()) {
+            throw new NegocioException("No se encontraron clases relacionadas.");
+        }
         List<ClaseDTO> clasesObtenidas = new ArrayList<>();
         for (Clase clase : clases) {
             ClaseDTO claseDTO = new ClaseDTO(
-                    clase.getCodigo(), 
-                    clase.getNombre(), 
-                    clase.getDias(), 
-                    clase.getHoraInicio(), 
-                    clase.getHoraFin(), 
-                    clase.getMaestro(), 
+                    clase.getCodigo(),
+                    clase.getNombre(),
+                    clase.getDias(),
+                    clase.getHoraInicio(),
+                    clase.getHoraFin(),
+                    clase.getMaestro(),
                     clase.getPrecio());
             clasesObtenidas.add(claseDTO);
         }
@@ -40,17 +42,20 @@ public class ClasesBO implements IClasesBO {
     }
 
     @Override
-    public List<ClaseDTO> obtenerClases() {
+    public List<ClaseDTO> obtenerClases() throws NegocioException {
         List<Clase> clases = this.clasesDAO.obtenerClases();
+        if (clases == null || clases.isEmpty()) {
+            throw new NegocioException("No se encontraron clases relacionadas.");
+        }
         List<ClaseDTO> clasesObtenidas = new ArrayList<>();
         for (Clase clase : clases) {
             ClaseDTO claseDTO = new ClaseDTO(
-                    clase.getCodigo(), 
-                    clase.getNombre(), 
-                    clase.getDias(), 
-                    clase.getHoraInicio(), 
-                    clase.getHoraFin(), 
-                    clase.getMaestro(), 
+                    clase.getCodigo(),
+                    clase.getNombre(),
+                    clase.getDias(),
+                    clase.getHoraInicio(),
+                    clase.getHoraFin(),
+                    clase.getMaestro(),
                     clase.getPrecio());
             clasesObtenidas.add(claseDTO);
         }

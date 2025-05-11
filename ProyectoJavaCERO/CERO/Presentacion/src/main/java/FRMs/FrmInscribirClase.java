@@ -1,13 +1,10 @@
 package FRMs;
 
 import com.mycompany.presentacion.ControlNavegacion;
-import com.mycompany.presentacion.excepciones.PresentacionException;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -127,7 +124,7 @@ public class FrmInscribirClase extends javax.swing.JFrame {
     private void botonBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarClaseActionPerformed
 
         String campo = txfNombreClase.getText();
-        ControlNavegacion.mostrarClasesExistente(campo);
+        ControlNavegacion.mostrarClasesExistentes(campo);
         this.dispose();
 
     }//GEN-LAST:event_botonBuscarClaseActionPerformed

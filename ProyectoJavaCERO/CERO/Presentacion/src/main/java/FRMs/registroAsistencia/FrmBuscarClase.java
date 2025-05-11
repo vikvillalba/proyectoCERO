@@ -19,8 +19,8 @@ public class FrmBuscarClase extends javax.swing.JFrame {
 
     public FrmBuscarClase() {
         initComponents();
-        this.txfNombreClase.setForeground(Color.GRAY);
-        this.txfNombreClase.setText("ingresa nombre clase...");
+        this.txtNombreClase.setForeground(Color.GRAY);
+        this.txtNombreClase.setText("ingresa nombre clase...");
         this.setTitle("Buscar Clase");
 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -37,7 +37,6 @@ public class FrmBuscarClase extends javax.swing.JFrame {
         pack();
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
 
@@ -49,7 +48,7 @@ public class FrmBuscarClase extends javax.swing.JFrame {
 
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txfNombreClase = new javax.swing.JTextField();
+        txtNombreClase = new javax.swing.JTextField();
         btnBuscarClase = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -70,16 +69,16 @@ public class FrmBuscarClase extends javax.swing.JFrame {
         getContentPane().add(jLabel10);
         jLabel10.setBounds(260, 140, 750, 65);
 
-        txfNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        txfNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txfNombreClase.setBorder(null);
-        txfNombreClase.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNombreClase.setBorder(null);
+        txtNombreClase.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txfNombreClaseMouseClicked(evt);
+                txtNombreClaseMouseClicked(evt);
             }
         });
-        getContentPane().add(txfNombreClase);
-        txfNombreClase.setBounds(330, 420, 580, 50);
+        getContentPane().add(txtNombreClase);
+        txtNombreClase.setBounds(330, 420, 580, 50);
 
         btnBuscarClase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarClase.png"))); // NOI18N
         btnBuscarClase.setBorderPainted(false);
@@ -93,7 +92,7 @@ public class FrmBuscarClase extends javax.swing.JFrame {
         getContentPane().add(btnBuscarClase);
         btnBuscarClase.setBounds(390, 540, 470, 90);
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnVolverMenu.png"))); // NOI18N
+        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarGrande.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
         btnRegresar.setContentAreaFilled(false);
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -120,16 +119,16 @@ public class FrmBuscarClase extends javax.swing.JFrame {
 
 
     private void btnBuscarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClaseActionPerformed
-
+        ControlNavegacion.mostrarClasesExistentes(txtNombreClase.getText(), this);
+        this.dispose();
 
     }//GEN-LAST:event_btnBuscarClaseActionPerformed
 
-    private void txfNombreClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txfNombreClaseMouseClicked
+    private void txtNombreClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreClaseMouseClicked
+        txtNombreClase.setText("");
+        txtNombreClase.setForeground(Color.BLACK);
 
-        txfNombreClase.setText("");
-        txfNombreClase.setForeground(Color.BLACK);
-
-    }//GEN-LAST:event_txfNombreClaseMouseClicked
+    }//GEN-LAST:event_txtNombreClaseMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -138,6 +137,6 @@ public class FrmBuscarClase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txfNombreClase;
+    private javax.swing.JTextField txtNombreClase;
     // End of variables declaration//GEN-END:variables
 }

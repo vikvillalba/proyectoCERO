@@ -112,16 +112,16 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         label.setForeground(new Color(148, 197, 227));
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));
-        label.setPreferredSize(new Dimension(150, 40)); // Espacio suficiente para que no se encimen
+        label.setPreferredSize(new Dimension(150, 40));
     }
 
     // configura los labels de los datos
     private void configurarLabelDatos(JLabel label) {
-        label.setFont(new Font("Menlo", Font.PLAIN, 14));
+        label.setFont(new Font("Menlo", Font.PLAIN, 12));
         label.setForeground(Color.WHITE);
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));
-        label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
+        label.setPreferredSize(new Dimension(150, 40)); 
     }
     
     @SuppressWarnings("unchecked")

@@ -12,15 +12,19 @@ import com.mycompany.dtos.PagoDTO;
 import com.mycompany.infraestructura.sistemaPago.GestorPagosFachada;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
+import com.mycompany.inscribirclase.excepciones.InscripcionException;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import com.mycompany.negocio.InterfazBO.IAlumnosBO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.InterfazBO.IPagosBO;
+import com.mycompany.negocio.excepciones.NegocioException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -121,28 +125,35 @@ public class InscribirClase implements IInscribirClase {
     }
     
     @Override
-    public boolean validarNombreClase(String nombre) {
-        List<ClaseDTO> clasesExistentes = clasesBO.obtenerClases();
-
-        // Separar el nombre ingresado en palabras
-        String[] palabras = nombre.trim().split("\\s+");
-
-        for (String palabra : palabras) {
-            for (ClaseDTO claseExistente : clasesExistentes) {
-                // Comparación LIKE "%palabra%", ignorando mayúsculas y minúsculas
-                if (claseExistente.getNombre().toLowerCase().contains(palabra.toLowerCase())) {
-                    return true;
+    public boolean validarNombreClase(String nombre) throws InscripcionException {
+        try {
+            List<ClaseDTO> clasesExistentes = clasesBO.obtenerClases();
+            
+            // Separar el nombre ingresado en palabras
+            String[] palabras = nombre.trim().split("\\s+");
+            
+            for (String palabra : palabras) {
+                for (ClaseDTO claseExistente : clasesExistentes) {
+                    // Comparación LIKE "%palabra%", ignorando mayúsculas y minúsculas
+                    if (claseExistente.getNombre().toLowerCase().contains(palabra.toLowerCase())) {
+                        return true;
+                    }
                 }
             }
+            
+            return false;
+        } catch (NegocioException ex) {
+            throw new InscripcionException(ex.getMessage());
         }
-
-        return false;
     }
 
-    //// METODOS DE SELECC<ION DE CLASES : BUSQUEDAS
     @Override
-    public List<ClaseDTO> buscarClasesPorNombre(String nombre) {
-        return clasesBO.obtenerClasesNombre(nombre);
+    public List<ClaseDTO> buscarClasesPorNombre(String nombre) throws InscripcionException {
+        try {
+            return clasesBO.obtenerClasesNombre(nombre);
+        } catch (NegocioException ex) {
+            throw new InscripcionException(ex.getMessage());
+        }
     }
 
     @Override
