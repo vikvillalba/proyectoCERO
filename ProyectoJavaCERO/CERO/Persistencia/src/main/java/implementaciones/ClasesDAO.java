@@ -74,16 +74,12 @@ public class ClasesDAO implements IClasesDAO {
 
     @Override
     public Clase buscarClase(Integer id) {
-        Clase claseEntidad = new Clase(
-                id,
-                "Contemporaneo avanzado",
-                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
-                LocalTime.of(9, 0),
-                LocalTime.of(10, 30),
-                "Cesar Gomez",
-                new BigDecimal("2500.00")
-        );
-        return claseEntidad;
+        for (Clase clase : clases) {
+            if(clase.getCodigo().equals(id)){
+                return clase;
+            }
+        }
+        return null;
     }
 
     @Override

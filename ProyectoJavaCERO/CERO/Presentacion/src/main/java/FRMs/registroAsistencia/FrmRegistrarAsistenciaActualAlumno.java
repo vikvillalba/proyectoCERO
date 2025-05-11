@@ -57,7 +57,6 @@ public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1280, 832));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnRegistrarAsistencia.setBackground(null);
         btnRegistrarAsistencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnConfirmarAsistencia.png"))); // NOI18N
         btnRegistrarAsistencia.setBorder(null);
         btnRegistrarAsistencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -68,7 +67,6 @@ public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegistrarAsistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 609, -1, 60));
 
-        btnVolverMenuPrincipal.setBackground(null);
         btnVolverMenuPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarGrande.png"))); // NOI18N
         btnVolverMenuPrincipal.setBorder(null);
         btnVolverMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

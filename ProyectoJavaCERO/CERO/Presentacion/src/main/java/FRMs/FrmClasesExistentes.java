@@ -6,7 +6,6 @@ import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -23,11 +22,6 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
     private Image imagenFondo;
     private List<ClaseDTO> clases;
 
-    /**
-     * Creates new form FrmClasesExistentes
-     *
-     * @param clases
-     */
     public FrmClasesExistentes(List<ClaseDTO> clases) {
         initComponents();
         this.clases = clases;
@@ -52,26 +46,19 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
     }
 
     private void llenarClasesExistentes() {
-        // Crear un JPanel contenedor para la tabla
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
-        // Recorrer la lista de clases y agregar filas a la tabla
         for (ClaseDTO clase : clases) {
-            // Crear el panel para la clase
             JpanelClaseLista panelClase = new JpanelClaseLista(clase);
-
-            // Agregar el panel al contenedor
             contenedorTabla.add(panelClase);
         }
 
-        // Configurar JScrollPane
         jScrollClases.setViewportView(contenedorTabla);
         jScrollClases.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollClases.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        // Asegurar que la tabla se muestre correctamente
         contenedorTabla.revalidate();
         contenedorTabla.repaint();
     }

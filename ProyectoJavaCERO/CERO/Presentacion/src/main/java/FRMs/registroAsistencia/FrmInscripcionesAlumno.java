@@ -1,5 +1,6 @@
 package FRMs.registroAsistencia;
 
+import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -19,13 +20,16 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmInscripcionesAlumno extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private List<InscripcionDTO> inscripciones; 
+    private List<InscripcionDTO> inscripciones;
+    private AlumnoDTO alumnoDTO;
 
-
-    public FrmInscripcionesAlumno(List<InscripcionDTO> inscripciones) {
+    public FrmInscripcionesAlumno(List<InscripcionDTO> inscripciones, AlumnoDTO alumnoDTO) {
         initComponents();
         this.inscripciones = inscripciones;
+        this.alumnoDTO = alumnoDTO;
+
         jScrollClases.setOpaque(false);
+        jScrollClases.getViewport().setOpaque(false);
         this.setTitle("Clases Existentes");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -38,9 +42,13 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
 
         getContentPane().setLayout(new AbsoluteLayout());
         pack();
+        this.setSize(1301, 700);
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
         llenarClasesExistentes();
+
+        String nombreAlumno = alumnoDTO.getNombre() + " " + alumnoDTO.getApellidoPaterno();
+        this.lblNombreAlumno.setText(nombreAlumno);
 
     }
 
@@ -49,13 +57,11 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setOpaque(false);
 
-        
         for (InscripcionDTO inscripcion : inscripciones) {
             ClaseDTO clase = inscripcion.getClase();
-            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
+            PnlClaseInscrita panelClase = new PnlClaseInscrita(clase, alumnoDTO, this);
             contenedorTabla.add(panelClase);
         }
-
 
         jScrollClases.setViewportView(contenedorTabla);
         jScrollClases.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -74,7 +80,7 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollClases = new javax.swing.JScrollPane();
         btnRegresar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblNombreAlumno = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,6 +89,7 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("ALUMNO:");
 
+        jScrollClases.setBorder(null);
         jScrollClases.setPreferredSize(new java.awt.Dimension(1225, 2));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
@@ -95,9 +102,9 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel2.setText("nombre del alumno");
+        lblNombreAlumno.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
+        lblNombreAlumno.setForeground(new java.awt.Color(30, 47, 86));
+        lblNombreAlumno.setText("nombre del alumno");
 
         jLabel3.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(30, 47, 86));
@@ -111,35 +118,34 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
                 .addGap(410, 410, 410)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(lblNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1289, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(516, 516, 516))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 1289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(433, 433, 433))))
+                        .addGap(433, 433, 433))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(485, 485, 485))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNombreAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollClases, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegresar)
-                .addGap(19, 19, 19))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,8 +161,8 @@ public class FrmInscripcionesAlumno extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollClases;
+    private javax.swing.JLabel lblNombreAlumno;
     // End of variables declaration//GEN-END:variables
 }

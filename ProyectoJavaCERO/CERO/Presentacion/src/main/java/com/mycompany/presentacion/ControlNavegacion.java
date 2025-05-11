@@ -10,9 +10,11 @@ import FRMs.registroAsistencia.FrmReporteAsistencias;
 import FRMs.registroAsistencia.FrmSeleccionarOpcion;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.dtos.NombreClaseParam;
+import com.mycompany.dtos.NuevaAsistenciaDTO;
 import com.mycompany.dtos.NuevaInscripcionDTO;
 import com.mycompany.dtos.NuevoPagoDTO;
 import com.mycompany.dtos.PagoDTO;
@@ -430,36 +432,38 @@ public class ControlNavegacion {
     }
 
     /**
-     * Muestra el formulario que muestra las inscripciones del alumno (dependiendo del día del sistema). 
-     * permite seleccionar una y registrar la asistencia del alumno.
+     * Muestra las inscripciones del alumno (dependiendo del día del sistema). permite seleccionar una y registrar la asistencia del alumno.
+     *
      * @param codigo codigo del alumno que el usuario ingresó en la pantalla anterior.
      */
     public static void mostrarInscripcionesAlumno(String codigo, JFrame frame) {
-        
+
         Integer codigoAlumno = mostrarErrorcampoIdAlumno(codigo);
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
         AlumnoDTO alumno = registroAsistencias.obtenerAlumno(alumnoBusqueda);
-        
+
         if (alumno == null) {
-            try {
-                throw new PresentacionException("El alumno no existe");
-            } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(frame, ex);
-            }
-            return;
+            mostrarMensajeErrorAlumnoNoExiste(frame);
         }
-                
+
         try {
             List<InscripcionDTO> inscripcionesAlumno = registroAsistencias.obtenerInscripcionesAlumno(alumno);
-            FrmInscripcionesAlumno inscripciones = new FrmInscripcionesAlumno(inscripcionesAlumno);
+            FrmInscripcionesAlumno inscripciones = new FrmInscripcionesAlumno(inscripcionesAlumno, alumno);
             inscripciones.setVisible(true);
-            
+
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorConExcepcion(frame, ex);
             mostrarRegistrarAsistenciaAlumno();
         }
-        
+
     }
+
+    public static void mostrarMensajeErrorAlumnoNoExiste(JFrame parentComponent) {
+        JOptionPane.showMessageDialog(parentComponent, "El id ingresado no corresponde a ningún alumno existente.",
+                "Error :(", JOptionPane.ERROR_MESSAGE);
+
+    }
+
     /**
      * Muestra el formulario que permite buscar una clase por nombre.
      */
@@ -501,6 +505,44 @@ public class ControlNavegacion {
     public static void mostrarReportesAsistencias() {
         FrmReporteAsistencias reporteAsistencias = new FrmReporteAsistencias();
         reporteAsistencias.setVisible(true);
+    }
+
+    /**
+     * Registra la asistencia de un alumno en una clase con la fecha actual del sistema.
+     *
+     * @param nuevaAsistencia Los datos empaquetados de la asistencia que se quiere registrar.
+     */
+    public static void registrarAsistenciaAlumno(NuevaAsistenciaDTO nuevaAsistencia, JFrame frame) {
+        AsistenciaDTO asistenciaAlumno = registroAsistencias.obtenerAsistenciasAlumnoClase(nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
+
+        if (asistenciaAlumno != null) {
+            mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(frame, nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
+            return;
+        }
+
+        try {
+            registroAsistencias.registrarAsistenciaIndividual(nuevaAsistencia);
+            mostrarMensajeAsistenciaAgregadaCorrectamente(frame, nuevaAsistencia.getAlumno(), nuevaAsistencia.getClase());
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(frame, ex);
+        }
+    }
+
+    /**
+     * Mensaje de confirmación que se muestra cuando una asistencia se registró correctamente.
+     */
+    public static void mostrarMensajeAsistenciaAgregadaCorrectamente(JFrame frame, AlumnoDTO alumno, ClaseDTO clase) {
+        JOptionPane.showMessageDialog(frame, "Asistencia registrada para el alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " para la clase: " + clase.getNombre(),
+                "Asistencia registrada :)", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Mensaje de error que se muestra cuando el alumno ya tiene una asistencia registrada para una clase en el día actual.
+     */
+    public static void mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(JFrame parentComponent, AlumnoDTO alumno, ClaseDTO clase) {
+        JOptionPane.showMessageDialog(parentComponent, "El alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " ya tiene la asistencia correspondiente registrada para la clase: " + clase.getNombre(),
+                "Error :(", JOptionPane.ERROR_MESSAGE);
+
     }
 
 }

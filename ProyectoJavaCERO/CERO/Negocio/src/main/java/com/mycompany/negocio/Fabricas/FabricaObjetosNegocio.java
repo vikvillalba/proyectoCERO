@@ -5,17 +5,21 @@ import implementaciones.ClasesDAO;
 import implementaciones.InscripcionesDAO;
 import implementaciones.PagosDAO;
 import DAOs.IAlumnosDAO;
+import DAOs.IAsistenciasDAO;
 import DAOs.IClasesDAO;
 import DAOs.IInscripcionesDAO;
 import DAOs.IPagosDAO;
 import com.mycompany.negocio.BOs.AlumnosBO;
+import com.mycompany.negocio.BOs.AsistenciasBO;
 import com.mycompany.negocio.BOs.ClasesBO;
 import com.mycompany.negocio.BOs.InscripcionesBO;
 import com.mycompany.negocio.BOs.PagosBO;
 import com.mycompany.negocio.InterfazBO.IAlumnosBO;
+import com.mycompany.negocio.InterfazBO.IAsistenciasBO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.InterfazBO.IPagosBO;
+import implementaciones.AsistenciasDAO;
 
 
 /**
@@ -48,5 +52,10 @@ public class FabricaObjetosNegocio {
         IPagosBO bo = new PagosBO(pagosDAO);
         return bo;
     }
-
+    
+    public static IAsistenciasBO obtenerAsistenciasBO(){
+        IAsistenciasDAO asistenciasDAO = new AsistenciasDAO();
+        IAsistenciasBO bo = new AsistenciasBO(asistenciasDAO);
+        return bo;
+    }
 }

@@ -18,6 +18,7 @@ public class Clase {
     private LocalTime horaFin;
     private String maestro;
     private BigDecimal precio;
+    private final Integer LIMITE_FALTAS = 3;
 
     public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
         this.codigo = codigo;
@@ -95,6 +96,10 @@ public class Clase {
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
+    }
+
+    public Integer getLIMITE_FALTAS() {
+        return LIMITE_FALTAS;
     }
     
     

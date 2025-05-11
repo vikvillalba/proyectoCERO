@@ -19,8 +19,8 @@ import java.util.ArrayList;
  *
  * @author Usuario
  */
-public class InscripcionesDAO implements IInscripcionesDAO{
-    
+public class InscripcionesDAO implements IInscripcionesDAO {
+
     private List<Inscripcion> inscripciones;
     private Integer codigoInscripcion = 1;
 
@@ -46,10 +46,10 @@ public class InscripcionesDAO implements IInscripcionesDAO{
         );
         MetodoPagoTarjeta metodoPagoTarjetaMock = new MetodoPagoTarjeta(
                 2,
-                "CONFIRM123456", 
-                LocalDateTime.now() 
+                "CONFIRM123456",
+                LocalDateTime.now()
         );
-        Pago pagoMock = new Pago(1, new BigDecimal("500.00"), LocalDateTime.now(), true, metodoPagoTarjetaMock); 
+        Pago pagoMock = new Pago(1, new BigDecimal("500.00"), LocalDateTime.now(), true, metodoPagoTarjetaMock);
 
         // Crear una inscripción mock
         Inscripcion inscripcionMock = new Inscripcion(
@@ -59,51 +59,13 @@ public class InscripcionesDAO implements IInscripcionesDAO{
                 LocalDateTime.now(),
                 pagoMock
         );
-        
+
         inscripciones.add(inscripcionMock);
     }
-    
-    
 
     @Override
     public List<Inscripcion> obtenerInscripcionesClase(Integer idClase) {
-        // Mocks de las entidades necesarias
-        Clase claseMock = new Clase(
-                1,
-                "Contemporaneo Avanzado",
-                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
-                LocalTime.of(9, 0),
-                LocalTime.of(10, 30),
-                "Cesar Gomez",
-                new BigDecimal("2500.00")
-        );
-        Alumno alumnoMock = new Alumno(
-                1,
-                "Torres",
-                "Murrieta",
-                "Jack Tadeo",
-                "5551234567",
-                LocalDate.of(2002, 8, 15),
-                "jackmurrieta@gmail.com"
-        );
-        MetodoPagoTarjeta metodoPagoTarjetaMock = new MetodoPagoTarjeta(
-                2,
-                "CONFIRM123456", 
-                LocalDateTime.now() 
-        );
-        Pago pagoMock = new Pago(1, new BigDecimal("500.00"), LocalDateTime.now(), true, metodoPagoTarjetaMock); 
-
-        // Crear una inscripción mock
-        Inscripcion inscripcionMock = new Inscripcion(
-                1,
-                claseMock,
-                alumnoMock,
-                LocalDateTime.now(),
-                pagoMock
-        );
-
-        // Retornar lista con un solo mock
-        return List.of(inscripcionMock);
+        return inscripciones;
     }
 
     @Override
@@ -112,20 +74,32 @@ public class InscripcionesDAO implements IInscripcionesDAO{
         codigoInscripcion++;
         this.inscripciones.add(inscripcion);
         return inscripcion;
-        
+
     }
 
     @Override
     public List<Inscripcion> obtenerInscripcionesAlumno(Alumno alumno) {
         List<Inscripcion> inscripcionesAlumno = new ArrayList<>();
         for (Inscripcion inscripcion : this.inscripciones) {
-            System.out.println(inscripcion.getAlumno().getCodigo());
             if (inscripcion.getAlumno().getCodigo().equals(alumno.getCodigo())) {
                 inscripcionesAlumno.add(inscripcion);
             }
         }
-        
+
         return inscripcionesAlumno;
     }
-    
+
+    @Override
+    public List<Inscripcion> obtenerInscripcionesAlumnoDiaActual(Alumno alumno) {
+        DayOfWeek diaActual = LocalDate.now().getDayOfWeek();
+        List<Inscripcion> inscripcionesAlumno = new ArrayList<>();
+        for (Inscripcion inscripcion : this.inscripciones) {
+            if (inscripcion.getAlumno().getCodigo().equals(alumno.getCodigo()) && inscripcion.getClase().getDias().contains(diaActual)) {
+                inscripcionesAlumno.add(inscripcion);
+            }
+        }
+
+        return inscripcionesAlumno;
+    }
+
 }
