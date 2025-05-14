@@ -8,10 +8,13 @@ import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
-import com.mycompany.dtos.TipoAsistencia;
+import com.mycompany.dtos.TipoAsistenciaDTO;
 import com.mycompany.negocio.InterfazBO.IAsistenciasBO;
 import com.mycompany.negocio.excepciones.NegocioException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementación de la interfaz IAsistenciasBO
@@ -95,6 +98,45 @@ public class AsistenciasBO implements IAsistenciasBO {
             return asistenciaDTO;
         }
         return null;
+    }
+
+    @Override
+    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO claseDTO, LocalDate diaClase) throws NegocioException {
+        Clase clase = new Clase(
+                claseDTO.getCodigo(),
+                claseDTO.getNombre(),
+                claseDTO.getDias(),
+                claseDTO.getHoraInicio(),
+                claseDTO.getHoraFin(),
+                claseDTO.getMaestro(),
+                claseDTO.getPrecio(),
+                claseDTO.getFechaInicio(),
+                claseDTO.getFechaFin()
+        );
+
+        List<Asistencia> asistencias = this.asistenciasDAO.obtenerAsistenciasAlumnos(clase, diaClase);
+        if (asistencias.isEmpty() || asistencias == null) {
+            throw new NegocioException("No se registraron asistencias para la clase: " + clase.getNombre() + " en la fecha: " + diaClase.toString());
+        }
+        List<AsistenciaDTO> asistenciasDTO = new ArrayList<>();
+
+        for (Asistencia asistencia : asistencias) {
+            AlumnoDTO alumno = new AlumnoDTO(
+                    asistencia.getAlumno().getCodigo(),
+                    asistencia.getAlumno().getApellidoPaterno(),
+                    asistencia.getAlumno().getApellidoMaterno(),
+                    asistencia.getAlumno().getNombre(),
+                    asistencia.getAlumno().getTelefono(),
+                    asistencia.getAlumno().getFechaNacimiento(),
+                    asistencia.getAlumno().getCorreoElectronico()
+            );
+
+            TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia().name());
+            AsistenciaDTO asistenciaDTO = new AsistenciaDTO(alumno, claseDTO, tipo, asistencia.getFechaHora());
+            asistenciasDTO.add(asistenciaDTO);
+        }
+
+        return asistenciasDTO;
     }
 
 }

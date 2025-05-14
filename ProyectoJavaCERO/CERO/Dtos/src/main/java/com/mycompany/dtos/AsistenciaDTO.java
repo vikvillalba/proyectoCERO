@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 public class AsistenciaDTO {
     private AlumnoDTO alumno;
     private ClaseDTO clase;
-    private TipoAsistencia tipoAsistencia;
+    private TipoAsistenciaDTO tipoAsistencia;
     private LocalDateTime fechaHora;
 
-    public AsistenciaDTO(AlumnoDTO alumno, ClaseDTO clase, TipoAsistencia tipoAsistencia, LocalDateTime fechaHora) {
+    public AsistenciaDTO(AlumnoDTO alumno, ClaseDTO clase, TipoAsistenciaDTO tipoAsistencia, LocalDateTime fechaHora) {
         this.alumno = alumno;
         this.clase = clase;
         this.tipoAsistencia = tipoAsistencia;
@@ -35,7 +35,7 @@ public class AsistenciaDTO {
         return clase;
     }
 
-    public TipoAsistencia getTipoAsistencia() {
+    public TipoAsistenciaDTO getTipoAsistencia() {
         return tipoAsistencia;
     }
 

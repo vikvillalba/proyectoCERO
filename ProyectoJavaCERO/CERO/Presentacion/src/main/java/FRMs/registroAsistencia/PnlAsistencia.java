@@ -1,7 +1,7 @@
 package FRMs.registroAsistencia;
 
 import com.mycompany.dtos.AsistenciaDTO;
-import com.mycompany.dtos.TipoAsistencia;
+import com.mycompany.dtos.TipoAsistenciaDTO;
 
 /**
  *
@@ -23,7 +23,7 @@ public class PnlAsistencia extends javax.swing.JPanel {
         this.lblNombre.setText(nombreAlumno);
         this.lblAsistencia.setText(asistenciaDTO.getTipoAsistencia().toString());
         
-        if(asistenciaDTO.getTipoAsistencia() != TipoAsistencia.FALTA){
+        if(asistenciaDTO.getTipoAsistencia() != TipoAsistenciaDTO.FALTA){
             this.btnJustificar.setEnabled(false);
         }
     }

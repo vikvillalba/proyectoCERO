@@ -3,7 +3,7 @@ package FRMs.registroAsistencia;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
-import com.mycompany.dtos.TipoAsistencia;
+import com.mycompany.dtos.TipoAsistenciaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -223,7 +223,7 @@ public class PnlClaseInscrita extends javax.swing.JPanel {
 
     private void btnRegistrarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciaActionPerformed
        // armar DTO para nueva asistencia
-        NuevaAsistenciaDTO nuevaAsistencia = new NuevaAsistenciaDTO(this.alumno, this.clase, TipoAsistencia.ASISTENCIA);
+        NuevaAsistenciaDTO nuevaAsistencia = new NuevaAsistenciaDTO(this.alumno, this.clase, TipoAsistenciaDTO.ASISTENCIA);
         ControlNavegacion.registrarAsistenciaAlumno(nuevaAsistencia, this.frame);
     }//GEN-LAST:event_btnRegistrarAsistenciaActionPerformed
 

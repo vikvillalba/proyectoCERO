@@ -84,4 +84,6 @@ public interface IRegistroAsistencias {
      * @return una lista con las fechas de cada sesión de clase.
      */
     public List<LocalDate> obtenerDiasClase(ClaseDTO clase);
+    
+    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase)throws AsistenciaException;
 }
