@@ -35,7 +35,10 @@ public class ClasesBO implements IClasesBO {
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
                     clase.getMaestro(),
-                    clase.getPrecio());
+                    clase.getPrecio(),
+                    clase.getFechaInicio(),
+                    clase.getFechaFin()
+            );
             clasesObtenidas.add(claseDTO);
         }
         return clasesObtenidas;
@@ -56,7 +59,10 @@ public class ClasesBO implements IClasesBO {
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
                     clase.getMaestro(),
-                    clase.getPrecio());
+                    clase.getPrecio(),
+                    clase.getFechaInicio(),
+                    clase.getFechaFin()
+            );
             clasesObtenidas.add(claseDTO);
         }
         return clasesObtenidas;

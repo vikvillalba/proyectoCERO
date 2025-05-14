@@ -38,7 +38,9 @@ public class AsistenciasBO implements IAsistenciasBO {
                 claseDTO.getHoraInicio(),
                 claseDTO.getHoraFin(),
                 claseDTO.getMaestro(),
-                claseDTO.getPrecio()
+                claseDTO.getPrecio(),
+                claseDTO.getFechaInicio(),
+                claseDTO.getFechaFin()
         );
 
         Alumno alumno = new Alumno(
@@ -72,7 +74,9 @@ public class AsistenciasBO implements IAsistenciasBO {
                 claseDTO.getHoraInicio(),
                 claseDTO.getHoraFin(),
                 claseDTO.getMaestro(),
-                claseDTO.getPrecio()
+                claseDTO.getPrecio(),
+                claseDTO.getFechaInicio(),
+                claseDTO.getFechaFin()
         );
 
         Alumno alumno = new Alumno(

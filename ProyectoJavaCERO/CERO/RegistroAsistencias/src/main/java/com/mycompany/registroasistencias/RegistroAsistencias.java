@@ -13,6 +13,9 @@ import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import com.mycompany.registroasistencias.excepciones.AsistenciaException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -69,15 +72,14 @@ public class RegistroAsistencias implements IRegistroAsistencias {
         return this.asistenciasBO.obtenerAsistenciaAlumnoClase(alumno, clase);
     }
 
-
     @Override
     public boolean validarNombreClase(String nombre) throws AsistenciaException {
         try {
             List<ClaseDTO> clasesExistentes = clasesBO.obtenerClases();
-            
+
             // Separar el nombre ingresado en palabras
             String[] palabras = nombre.trim().split("\\s+");
-            
+
             for (String palabra : palabras) {
                 for (ClaseDTO claseExistente : clasesExistentes) {
                     // Comparación LIKE "%palabra%", ignorando mayúsculas y minúsculas
@@ -86,13 +88,12 @@ public class RegistroAsistencias implements IRegistroAsistencias {
                     }
                 }
             }
-            
+
             return false;
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }
     }
-
 
     @Override
     public boolean validarNombreClaseVacio(String nombre) {
@@ -109,6 +110,24 @@ public class RegistroAsistencias implements IRegistroAsistencias {
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }
+    }
+
+    @Override
+    public List<LocalDate> obtenerDiasClase(ClaseDTO clase) {
+        List<LocalDate> fechasClase = new ArrayList<>();
+
+        LocalDate fechaInicio = clase.getFechaInicio();
+        LocalDate fechaFin = LocalDate.now();
+
+        while (!fechaInicio.isAfter(fechaFin)) {
+            if (clase.getDias().contains(fechaInicio.getDayOfWeek())) {
+                fechasClase.add(fechaInicio);
+            }
+            fechaInicio = fechaInicio.plusDays(1);
+        }
+
+        Collections.reverse(fechasClase);
+        return fechasClase;
     }
 
 }

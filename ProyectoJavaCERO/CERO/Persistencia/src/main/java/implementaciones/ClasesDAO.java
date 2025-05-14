@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import DAOs.IClasesDAO;
+import java.time.LocalDate;
+import java.time.Month;
 
 /**
  *
@@ -26,7 +28,9 @@ public class ClasesDAO implements IClasesDAO {
                 LocalTime.of(9, 0),
                 LocalTime.of(10, 30),
                 "Cesar Gomez",
-                new BigDecimal("250.00")
+                new BigDecimal("250.00"),
+                LocalDate.of(2025, Month.JANUARY, 12),
+                LocalDate.of(2025, Month.JUNE, 15)
         );
 
         Clase clase2 = new Clase(
@@ -36,7 +40,9 @@ public class ClasesDAO implements IClasesDAO {
                 LocalTime.of(11, 0),
                 LocalTime.of(12, 30),
                 "Juan Martinez",
-                new BigDecimal("300.00")
+                new BigDecimal("300.00"),
+                LocalDate.of(2025, Month.JANUARY, 12),
+                LocalDate.of(2025, Month.JUNE, 15)
         );
 
         clases.add(clase1);

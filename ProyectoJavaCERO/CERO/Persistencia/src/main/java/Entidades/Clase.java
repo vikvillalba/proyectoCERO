@@ -2,6 +2,7 @@ package Entidades;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -18,9 +19,15 @@ public class Clase {
     private LocalTime horaFin;
     private String maestro;
     private BigDecimal precio;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     private final Integer LIMITE_FALTAS = 3;
 
-    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
+
+    public Clase() {
+    }
+
+    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.dias = dias;
@@ -28,19 +35,21 @@ public class Clase {
         this.horaFin = horaFin;
         this.maestro = maestro;
         this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
-    public Clase() {
-    }
-
-    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
+    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
         this.nombre = nombre;
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.maestro = maestro;
         this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
+
 
     public Integer getCodigo() {
         return codigo;
@@ -100,6 +109,22 @@ public class Clase {
 
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
     }
     
     

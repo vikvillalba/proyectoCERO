@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import DAOs.IInscripcionesDAO;
+import java.time.Month;
 import java.util.ArrayList;
 
 /**
@@ -33,8 +34,11 @@ public class InscripcionesDAO implements IInscripcionesDAO {
                 LocalTime.of(9, 0),
                 LocalTime.of(10, 30),
                 "Cesar Gomez",
-                new BigDecimal("2500.00")
+                new BigDecimal("250.00"),
+                LocalDate.of(2025, Month.JANUARY, 12),
+                LocalDate.of(2025, Month.JUNE, 15)
         );
+
         Alumno alumnoMock = new Alumno(
                 1,
                 "Torres",

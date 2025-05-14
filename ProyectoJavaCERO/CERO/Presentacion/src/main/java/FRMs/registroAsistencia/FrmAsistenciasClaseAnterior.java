@@ -1,11 +1,13 @@
 package FRMs.registroAsistencia;
 
+import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.LocalDate;
 import java.util.List;
-import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -20,12 +22,18 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    // agregar diaclasedto
+    private LocalDate fecha;
+    private ClaseDTO clase;
+    private List<AsistenciaDTO> asistencias;
 
-    public FrmAsistenciasClaseAnterior(List<ClaseDTO> clases) {
+    public FrmAsistenciasClaseAnterior(LocalDate fecha, ClaseDTO clase, List<AsistenciaDTO> asistencias) {
         initComponents();
         jScrollAsistencias.setOpaque(false);
+        this.clase = clase;
+        this.fecha = fecha;
+        this.asistencias = asistencias;
         this.setTitle("Asistencias anteriores");
+
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
@@ -40,8 +48,6 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
         llenarDiasClase();
-        
-        
 
     }
 
@@ -49,16 +55,13 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
         JPanel contenedorTabla = new JPanel();
         contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-        
-//        // Recorrer la lista de clases y agregar filas a la tabla
-//        for (ClaseDTO clase : clases) {
-//            // Crear el panel para la clase
-//            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-//
-//            // Agregar el panel al contenedor
-//            contenedorTabla.add(panelClase);
-//        }
 
+
+        for (AsistenciaDTO asistenciaDTO : asistencias) {
+            PnlAsistencia asistencia = new PnlAsistencia(asistenciaDTO);
+            contenedorTabla.add(Box.createVerticalStrut(10));
+            contenedorTabla.add(asistencia);
+        }
 
         jScrollAsistencias.setViewportView(contenedorTabla);
         jScrollAsistencias.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

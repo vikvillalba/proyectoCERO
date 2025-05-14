@@ -55,7 +55,7 @@ public class FrmClasesExistentesAsistencia extends javax.swing.JFrame {
 
         
         for (ClaseDTO clase : clases) {
-            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
+            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase, this);
             contenedorTabla.add(panelClase);
         }
 

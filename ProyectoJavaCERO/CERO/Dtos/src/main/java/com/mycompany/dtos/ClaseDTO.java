@@ -2,6 +2,7 @@ package com.mycompany.dtos;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -17,11 +18,13 @@ public class ClaseDTO {
     private LocalTime horaFin;
     private String maestro;
     private BigDecimal precio;
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
 
     public ClaseDTO() {
     }
 
-    public ClaseDTO(int codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
+    public ClaseDTO(int codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.dias = dias;
@@ -29,16 +32,22 @@ public class ClaseDTO {
         this.horaFin = horaFin;
         this.maestro = maestro;
         this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
-    public ClaseDTO(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio) {
+    public ClaseDTO(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
         this.nombre = nombre;
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.maestro = maestro;
         this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
+
+
 
     public int getCodigo() {
         return codigo;
@@ -68,9 +77,22 @@ public class ClaseDTO {
         return precio;
     }
 
-    @Override
-    public String toString() {
-        return "ClaseDTO{" + "codigo=" + codigo + ", nombre=" + nombre + ", dias=" + dias + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", maestro=" + maestro + ", precio=" + precio + '}';
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
     }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDate fechaFin) {
+        this.fechaFin = fechaFin;
+    }
+
+   
  
 }

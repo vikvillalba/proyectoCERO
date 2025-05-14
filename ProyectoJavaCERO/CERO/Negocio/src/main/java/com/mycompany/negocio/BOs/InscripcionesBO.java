@@ -44,7 +44,9 @@ public class InscripcionesBO implements IInscripcionesBO {
                 claseDTO.getHoraInicio(), 
                 claseDTO.getHoraFin(), 
                 claseDTO.getMaestro(), 
-                claseDTO.getPrecio()
+                claseDTO.getPrecio(),
+                claseDTO.getFechaInicio(),
+                claseDTO.getFechaFin()
         );
         
         AlumnoDTO alumnoDTO = nuevaInscripcionDTO.getAlumno();
@@ -82,7 +84,10 @@ public class InscripcionesBO implements IInscripcionesBO {
                 claseDTO.getHoraInicio(), 
                 claseDTO.getHoraFin(), 
                 claseDTO.getMaestro(), 
-                claseDTO.getPrecio());
+                claseDTO.getPrecio(),
+                claseDTO.getFechaInicio(),
+                claseDTO.getFechaFin()
+        );
         
         AlumnoDTO alumnoDTO = nuevaInscripcionDTO.getAlumno();
         Alumno alumno = new Alumno(
@@ -136,7 +141,7 @@ public class InscripcionesBO implements IInscripcionesBO {
 
         for (Inscripcion inscripcion : inscripcionesHoy) {
             Clase clase = inscripcion.getClase();
-            ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(), clase.getNombre(), clase.getDias(), clase.getHoraInicio(), clase.getHoraFin(), clase.getMaestro(), clase.getPrecio()); 
+            ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(), clase.getNombre(), clase.getDias(), clase.getHoraInicio(), clase.getHoraFin(), clase.getMaestro(), clase.getPrecio(), clase.getFechaInicio(), clase.getFechaFin()); 
             InscripcionDTO inscripcionDTO = new InscripcionDTO(inscripcion.getId(), alumnoDTO, claseDTO, inscripcion.getFechaInscripcion());
             inscripcionesDTO.add(inscripcionDTO);
         }

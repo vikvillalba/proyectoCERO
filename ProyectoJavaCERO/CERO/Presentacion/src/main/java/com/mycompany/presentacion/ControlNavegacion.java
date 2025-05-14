@@ -1,9 +1,11 @@
 package com.mycompany.presentacion;
 
 import FRMs.*;
+import FRMs.registroAsistencia.FrmAsistenciasClaseAnterior;
 import FRMs.registroAsistencia.FrmBuscarClase;
 import FRMs.registroAsistencia.FrmBuscarClaseReporte;
 import FRMs.registroAsistencia.FrmClasesExistentesAsistencia;
+import FRMs.registroAsistencia.FrmDiasAnterioresClase;
 import FRMs.registroAsistencia.FrmInscripcionesAlumno;
 import FRMs.registroAsistencia.FrmRegistrarAsistenciaActualAlumno;
 import FRMs.registroAsistencia.FrmReporteAsistencias;
@@ -42,9 +44,8 @@ import javax.swing.JOptionPane;
  */
 public class ControlNavegacion {
 
-    private static ControlNavegacion controlNavegacion;
-    private static IInscribirClase inscribirClase;
-    private static IRegistroAsistencias registroAsistencias;
+    private static IInscribirClase inscribirClase = new InscribirClase();
+    private static IRegistroAsistencias registroAsistencias = new RegistroAsistencias();
 
     private static FrmMenuPrincipal menuPrincipal;
 
@@ -59,15 +60,6 @@ public class ControlNavegacion {
     private static FrmFinalizarInscripcion finalizarInscripcion;
 
     private ControlNavegacion() {
-        inscribirClase = new InscribirClase();
-        registroAsistencias = new RegistroAsistencias();
-    }
-
-    public static ControlNavegacion obtenerControlNavegacion() {
-        if (controlNavegacion == null) {
-            controlNavegacion = new ControlNavegacion();
-        }
-        return controlNavegacion;
     }
 
     /**
@@ -608,6 +600,28 @@ public class ControlNavegacion {
     public static void mostrarMensajeErrorAlumnoAsistenciaYaRegistrada(AlumnoDTO alumno, ClaseDTO clase) {
         JOptionPane.showMessageDialog(null, "El alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " ya tiene la asistencia correspondiente registrada para la clase: " + clase.getNombre(),
                 "Error :(", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    /**
+     * Muestra la pantalla con las fechas que se ha impartido una clase hasta la fecha actual
+     *
+     * @param clase sobre la que se está trabajando.
+     */
+    public static void mostrarDiasAnterioresClase(ClaseDTO clase) {
+        List<LocalDate> dias = registroAsistencias.obtenerDiasClase(clase);
+        FrmDiasAnterioresClase diasClase = new FrmDiasAnterioresClase(dias, clase);
+        diasClase.setVisible(true);
+    }
+
+    /**
+     * Muestra la pantalla con las asistencias anteriores de los alumnos inscritos en una clase.
+     * @param clase sobre la que se está trabajando.
+     * @param diaClase día en el que se impartió la clase.
+     */
+    public static void mostrarAsistenciasAnterioresClase(ClaseDTO clase, LocalDate diaClase) {
+        // llamar registroAsistencias y obtener las asistencias de esa clase en ese dia (llamar a la dao?? idk)
+        // FrmAsistenciasClaseAnterior pantallaAsistencias = new FrmAsistenciasClaseAnterior(diaClase, clase, asistencias);
 
     }
 

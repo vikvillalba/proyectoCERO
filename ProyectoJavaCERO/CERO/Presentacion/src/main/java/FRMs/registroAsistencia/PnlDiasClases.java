@@ -1,13 +1,34 @@
 package FRMs.registroAsistencia;
 
+import com.mycompany.dtos.ClaseDTO;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 /**
  *
  * @author victoria
  */
 public class PnlDiasClases extends javax.swing.JPanel {
 
-    public PnlDiasClases() {
+    private LocalDate dia;
+    private ClaseDTO clase;
+
+    public PnlDiasClases(LocalDate dia, ClaseDTO clase) {
         initComponents();
+        this.dia = dia;
+        this.clase = clase;
+        cargarDatos();
+    }
+
+    private void cargarDatos() {
+        DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("EEEE", Locale.forLanguageTag("es-ES"));
+        DateTimeFormatter formatoMes = DateTimeFormatter.ofPattern("MMMM", Locale.forLanguageTag("es-ES"));
+
+        this.lblDiaTexto.setText(this.dia.format(formatoDia));
+        this.lblDiaNumero.setText(String.valueOf(this.dia.getDayOfMonth()));
+        this.lblMes.setText(this.dia.format(formatoMes));
+
     }
 
     /**
@@ -19,6 +40,10 @@ public class PnlDiasClases extends javax.swing.JPanel {
 
         lblFecha = new javax.swing.JLabel();
         btnVerAsistencias = new javax.swing.JButton();
+        lblMes = new javax.swing.JLabel();
+        lblDiaTexto = new javax.swing.JLabel();
+        lblDiaNumero = new javax.swing.JLabel();
+        lblFecha4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(30, 47, 86));
         setPreferredSize(new java.awt.Dimension(883, 131));
@@ -26,7 +51,7 @@ public class PnlDiasClases extends javax.swing.JPanel {
         lblFecha.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(255, 255, 255));
         lblFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFecha.setText("MIERCOLES 00 SEPTIEMBRE");
+        lblFecha.setText("/");
 
         btnVerAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/verAsistencias.png"))); // NOI18N
         btnVerAsistencias.setBorder(null);
@@ -38,28 +63,61 @@ public class PnlDiasClases extends javax.swing.JPanel {
             }
         });
 
+        lblMes.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
+        lblMes.setForeground(new java.awt.Color(255, 255, 255));
+        lblMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMes.setText("SEPTIEMBRE");
+
+        lblDiaTexto.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
+        lblDiaTexto.setForeground(new java.awt.Color(255, 255, 255));
+        lblDiaTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDiaTexto.setText("MIERCOLES");
+
+        lblDiaNumero.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
+        lblDiaNumero.setForeground(new java.awt.Color(255, 255, 255));
+        lblDiaNumero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDiaNumero.setText("00");
+
+        lblFecha4.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
+        lblFecha4.setForeground(new java.awt.Color(255, 255, 255));
+        lblFecha4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFecha4.setText("/");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDiaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFecha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDiaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFecha4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMes, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addComponent(btnVerAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(122, 122, 122))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(btnVerAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDiaTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDiaNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFecha4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnVerAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -71,6 +129,10 @@ public class PnlDiasClases extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnVerAsistencias;
+    private javax.swing.JLabel lblDiaNumero;
+    private javax.swing.JLabel lblDiaTexto;
     private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblFecha4;
+    private javax.swing.JLabel lblMes;
     // End of variables declaration//GEN-END:variables
 }

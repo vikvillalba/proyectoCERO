@@ -4,8 +4,9 @@ import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.LocalDate;
 import java.util.List;
-import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -20,11 +21,18 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmDiasAnterioresClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
+    private List<LocalDate> diasClase;
+    private ClaseDTO clase;
 
-    public FrmDiasAnterioresClase(List<ClaseDTO> clases) {
+    public FrmDiasAnterioresClase(List<LocalDate> diasClase, ClaseDTO clase) {
         initComponents();
+        this.diasClase = diasClase;
+        this.clase = clase;
+
         jsAsistenciasAnteriores.setOpaque(false);
         this.setTitle("Clases anteriores");
+        this.lblNombreClase.setText(this.clase.getNombre());
+        
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
@@ -36,10 +44,12 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
 
         getContentPane().setLayout(new AbsoluteLayout());
         pack();
+        this.setSize(1178, 710);
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
-        llenarDiasClase();
 
+        llenarDiasClase();
+        
     }
 
     private void llenarDiasClase() {
@@ -48,14 +58,12 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
         contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
-        
+        for (LocalDate diaClase : diasClase) {
+            PnlDiasClases dia = new PnlDiasClases(diaClase, clase);
+            contenedorTabla.add(Box.createVerticalStrut(10));
+            contenedorTabla.add(dia);
 
-//        for (ClaseDTO clase : clases) {
-//            // Crear el panel para la clase
-//            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-//            contenedorTabla.add(panelClase);
-//        }
-
+        }
 
         jsAsistenciasAnteriores.setViewportView(contenedorTabla);
         jsAsistenciasAnteriores.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -75,12 +83,13 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jsAsistenciasAnteriores = new javax.swing.JScrollPane();
         btnRegresar = new javax.swing.JButton();
+        lblNombreClase = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel1.setText("ASISTENCIAS ANTERIORES");
+        jLabel1.setText("CLASES ANTERIORES");
 
         jsAsistenciasAnteriores.setPreferredSize(new java.awt.Dimension(1270, 2));
 
@@ -94,34 +103,46 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
             }
         });
 
+        lblNombreClase.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
+        lblNombreClase.setForeground(new java.awt.Color(30, 47, 86));
+        lblNombreClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreClase.setText("NOMBRE CLASE");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jsAsistenciasAnteriores, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(94, 94, 94))
+                        .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(235, 235, 235))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(259, 259, 259))))
+                        .addGap(310, 310, 310))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(437, 437, 437)
-                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(437, 437, 437)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addComponent(jsAsistenciasAnteriores, javax.swing.GroupLayout.PREFERRED_SIZE, 952, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 79, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jsAsistenciasAnteriores, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(1, 1, 1)
+                .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jsAsistenciasAnteriores, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegresar)
-                .addGap(19, 19, 19))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,7 +150,7 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarBuscarClase();
+        ControlNavegacion.mostrarClasesExistentes(this.clase.getNombre(), this);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
@@ -138,5 +159,6 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jsAsistenciasAnteriores;
+    private javax.swing.JLabel lblNombreClase;
     // End of variables declaration//GEN-END:variables
 }

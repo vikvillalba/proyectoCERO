@@ -7,6 +7,7 @@ import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
 import com.mycompany.registroasistencias.excepciones.AsistenciaException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -76,4 +77,11 @@ public interface IRegistroAsistencias {
      * @throws com.mycompany.registroasistencias.excepciones.AsistenciaException
      */
     public boolean validarNombreClase(String nombre) throws AsistenciaException;
+
+    /**
+     * Obtiene todos los días en los que se imparte una clase, desde la fecha de inicio hasta la fecha actual.
+     * @param clase sobre la que se está trabajando.
+     * @return una lista con las fechas de cada sesión de clase.
+     */
+    public List<LocalDate> obtenerDiasClase(ClaseDTO clase);
 }

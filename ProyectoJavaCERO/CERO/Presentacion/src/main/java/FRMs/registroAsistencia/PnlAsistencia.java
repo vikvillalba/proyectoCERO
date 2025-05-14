@@ -1,16 +1,31 @@
 package FRMs.registroAsistencia;
 
+import com.mycompany.dtos.AsistenciaDTO;
+import com.mycompany.dtos.TipoAsistencia;
+
 /**
  *
  * @author victoria
  */
 public class PnlAsistencia extends javax.swing.JPanel {
 
-    // private AsistenciaDTO asistenciaDTO
-    
+    private AsistenciaDTO asistenciaDTO;
 
-    public PnlAsistencia() {
+    public PnlAsistencia(AsistenciaDTO asistenciaDTO) {
         initComponents();
+        this.asistenciaDTO = asistenciaDTO;
+        cargarDatos();
+    }
+    
+    private void cargarDatos(){
+        String nombreAlumno = asistenciaDTO.getAlumno().getNombre() + " " + asistenciaDTO.getAlumno().getApellidoPaterno();
+        this.lblCodigo.setText(String.valueOf(asistenciaDTO.getAlumno().getCodigo()));
+        this.lblNombre.setText(nombreAlumno);
+        this.lblAsistencia.setText(asistenciaDTO.getTipoAsistencia().toString());
+        
+        if(asistenciaDTO.getTipoAsistencia() != TipoAsistencia.FALTA){
+            this.btnJustificar.setEnabled(false);
+        }
     }
 
     /**

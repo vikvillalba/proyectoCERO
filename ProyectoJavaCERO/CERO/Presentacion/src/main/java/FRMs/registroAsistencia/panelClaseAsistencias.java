@@ -9,29 +9,30 @@ import java.awt.GridLayout;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 
 /**
  *
  * @author Jack Murrieta
  */
 public class PanelClaseAsistencias extends javax.swing.JPanel {
-    
-    private ClaseDTO clase;
 
-    public PanelClaseAsistencias(ClaseDTO clase) {
+    private ClaseDTO clase;
+    private JFrame frame;
+
+    public PanelClaseAsistencias(ClaseDTO clase, JFrame frame) {
         initComponents();
         this.clase = clase;
+        this.frame = frame;
         setOpaque(false);
 
         JpanelDatos.removeAll();
         JpanelHeader.removeAll();
 
-        JpanelHeader.setLayout(new GridLayout(1, 5, 0, 0)); 
-        JpanelDatos.setLayout(new GridLayout(1, 5, 0, 0)); 
-
+        JpanelHeader.setLayout(new GridLayout(1, 5, 0, 0));
+        JpanelDatos.setLayout(new GridLayout(1, 5, 0, 0));
 
         configurarHeader();
         configurarDatos();
@@ -40,7 +41,6 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
         JpanelHeader.revalidate();
         JpanelHeader.repaint();
     }
-
 
     private void configurarHeader() {
         JpanelHeader.setBackground(new Color(30, 47, 86));
@@ -64,22 +64,22 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
         JpanelHeader.add(lblColumnDias);
         JpanelHeader.add(lblColumnMaestro);
     }
-    
-   private void configurarDatos() {
+
+    private void configurarDatos() {
         JpanelDatos.setBackground(new Color(30, 47, 86));
         JpanelDatos.setLayout(new GridLayout(1, 5, 10, 0));
 
-       lblIdClase = new JLabel(String.valueOf(clase.getCodigo()), SwingConstants.CENTER);
-       lblNombreClase = new JLabel(clase.getNombre(), SwingConstants.CENTER);
-       //JUNTAR HORA INICIO Y HORA FIN
-       lblHorario = new JLabel(clase.getHoraInicio() + "-" + clase.getHoraFin(), SwingConstants.CENTER);
-       List<DayOfWeek> diasSemana = clase.getDias();
-       String diasTexto = (diasSemana != null) ? diasSemana.stream()
-               .map(DayOfWeek::toString)
-               .collect(Collectors.joining(", ")) : "Sin días";
+        lblIdClase = new JLabel(String.valueOf(clase.getCodigo()), SwingConstants.CENTER);
+        lblNombreClase = new JLabel(clase.getNombre(), SwingConstants.CENTER);
+        //JUNTAR HORA INICIO Y HORA FIN
+        lblHorario = new JLabel(clase.getHoraInicio() + "-" + clase.getHoraFin(), SwingConstants.CENTER);
+        List<DayOfWeek> diasSemana = clase.getDias();
+        String diasTexto = (diasSemana != null) ? diasSemana.stream()
+                .map(DayOfWeek::toString)
+                .collect(Collectors.joining(", ")) : "Sin días";
 
-       lblDias = new JLabel(diasTexto, SwingConstants.CENTER);
-       lblMaestro = new JLabel(clase.getMaestro(), SwingConstants.CENTER);
+        lblDias = new JLabel(diasTexto, SwingConstants.CENTER);
+        lblMaestro = new JLabel(clase.getMaestro(), SwingConstants.CENTER);
 
         configurarLabelDatos(lblIdClase);
         configurarLabelDatos(lblNombreClase);
@@ -99,18 +99,17 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
         label.setForeground(new Color(148, 197, 227));
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));
-        label.setPreferredSize(new Dimension(150, 40)); 
+        label.setPreferredSize(new Dimension(150, 40));
     }
-
 
     private void configurarLabelDatos(JLabel label) {
         label.setFont(new Font("Menlo", Font.PLAIN, 12));
         label.setForeground(Color.WHITE);
         label.setOpaque(true);
         label.setBackground(new Color(30, 47, 86));
-        label.setPreferredSize(new Dimension(150, 40)); 
+        label.setPreferredSize(new Dimension(150, 40));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -228,11 +227,12 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
 
     private void btnVerAsistenciasActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAsistenciasActualActionPerformed
 
-        
+
     }//GEN-LAST:event_btnVerAsistenciasActualActionPerformed
 
     private void btnVerAsistenciasAnterioresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAsistenciasAnterioresActionPerformed
-        // TODO add your handling code here:
+        ControlNavegacion.mostrarDiasAnterioresClase(this.clase);
+        this.frame.dispose();
     }//GEN-LAST:event_btnVerAsistenciasAnterioresActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
