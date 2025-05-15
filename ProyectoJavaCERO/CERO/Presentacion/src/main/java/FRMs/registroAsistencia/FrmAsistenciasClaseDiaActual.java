@@ -1,13 +1,22 @@
 package FRMs.registroAsistencia;
 
+import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.InscripcionDTO;
+import com.mycompany.dtos.TipoAsistenciaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -22,17 +31,19 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ClaseDTO claseDTO;
-    // agregar alumnosdto
-    
+    private LocalDate fecha;
+    private ClaseDTO clase;
+    private List<AsistenciaDTO> asistencias;
+    private List<InscripcionDTO> inscripciones;
 
-
-    public FrmAsistenciasClaseDiaActual(ClaseDTO claseDTO) {
+    public FrmAsistenciasClaseDiaActual(ClaseDTO clase, LocalDate fecha, List<AsistenciaDTO> asistencias, List<InscripcionDTO> inscripciones) {
         initComponents();
         jScrollAsistencias.setOpaque(false);
-        this.claseDTO = claseDTO;
-        
-        
+        this.clase = clase;
+        this.fecha = fecha;
+        this.asistencias = asistencias;
+        this.inscripciones = inscripciones;
+
         this.setTitle("Asistencias de clase actual");
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         JPanel pnlFondo = new javax.swing.JPanel() {
@@ -45,60 +56,76 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
 
         getContentPane().setLayout(new AbsoluteLayout());
         pack();
+        this.setSize(1100, 661);
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
-        
-        lblIDClase.setText(Integer.toString(claseDTO.getCodigo()));
-        lblNombreClase.setText(claseDTO.getNombre());
+
+        pack();
+
+        this.setLocationRelativeTo(null);
+        llenarAlumnos();
+        mostrarDatos();
+
+    }
+
+    private void mostrarDatos() {
+        DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("EEEE", Locale.forLanguageTag("es-ES"));
+        DateTimeFormatter formatoMes = DateTimeFormatter.ofPattern("MMMM", Locale.forLanguageTag("es-ES"));
+        String fechaTexto = this.fecha.format(formatoDia) + " " + String.valueOf(this.fecha.getDayOfMonth()) + " de " + this.fecha.format(formatoMes);
+        this.lblFecha.setText(fechaTexto.toUpperCase());
+
+        lblIDClase.setText(Integer.toString(clase.getCodigo()));
+        lblNombreClase.setText(clase.getNombre());
 
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-        List<DayOfWeek> diasSemana = claseDTO.getDias();
+        List<DayOfWeek> diasSemana = clase.getDias();
         StringBuilder diasAbreviados = new StringBuilder();
 
         for (DayOfWeek dia : diasSemana) {
-            diasAbreviados.append(dia.getDisplayName(java.time.format.TextStyle.SHORT, new java.util.Locale("es")).substring(0, 2));
+            diasAbreviados.append(
+                    dia.getDisplayName(TextStyle.SHORT, Locale.of("es"))
+            );
         }
 
         String horario = String.format("%s %s %s",
                 diasAbreviados.toString(),
-                claseDTO.getHoraInicio().format(formatoHora),
-                claseDTO.getHoraFin().format(formatoHora));
+                clase.getHoraInicio().format(formatoHora),
+                clase.getHoraFin().format(formatoHora));
 
         lblHorarioClase.setText(horario);
-        lblMaestro.setText(claseDTO.getMaestro());
-       
-
-        pack();
-        
-        this.setLocationRelativeTo(null);
-        llenarAlumnos();
-
+        lblMaestro.setText(clase.getMaestro());
     }
 
     private void llenarAlumnos() {
-        // Crear un JPanel contenedor para la tabla
-        JPanel contenedorTabla = new JPanel();
-        contenedorTabla.setOpaque(false);
-        contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
-
+        JPanel contenedorAsistencias = new JPanel();
+        contenedorAsistencias.setOpaque(false);
+        jScrollAsistencias.getViewport().setOpaque(false);
+        contenedorAsistencias.setLayout(new BoxLayout(contenedorAsistencias, BoxLayout.Y_AXIS));
         
-//        // Recorrer la lista de clases y agregar filas a la tabla
-//        for (ClaseDTO clase : clases) {
-//            // Crear el panel para la clase
-//            PanelClaseAsistencias panelClase = new PanelClaseAsistencias(clase);
-//
-//            // Agregar el panel al contenedor
-//            contenedorTabla.add(panelClase);
-//        }
+        for (InscripcionDTO inscripcion : inscripciones) {
+            AlumnoDTO alumno = inscripcion.getAlumno();
+            AsistenciaDTO asistenciaAlumno = null;
 
-        // Configurar JScrollPane
-        jScrollAsistencias.setViewportView(contenedorTabla);
+            for (AsistenciaDTO asistencia : asistencias) {
+                if (asistencia.getAlumno().getCodigo().equals(alumno.getCodigo())) {
+                    asistenciaAlumno = asistencia;
+                    break;
+                }
+            }
+            if (asistenciaAlumno == null) {
+                asistenciaAlumno = new AsistenciaDTO(alumno, clase, TipoAsistenciaDTO.ASISTENCIA, LocalDateTime.now());
+            }
+
+            PnlAsistenciaEditable pnl = new PnlAsistenciaEditable(asistenciaAlumno);
+            contenedorAsistencias.add(Box.createVerticalStrut(10));
+            contenedorAsistencias.add(pnl);
+        }
+        jScrollAsistencias.setViewportView(contenedorAsistencias);
         jScrollAsistencias.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollAsistencias.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        // Asegurar que la tabla se muestre correctamente
-        contenedorTabla.revalidate();
-        contenedorTabla.repaint();
+        contenedorAsistencias.revalidate();
+        contenedorAsistencias.repaint();
     }
 
     /**
@@ -122,13 +149,14 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
         lblNombreClase = new javax.swing.JTextField();
         btnRegistrarAsistencias = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblFecha.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(30, 47, 86));
         lblFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFecha.setText("MIERCOLES 00 SEPTIEMBRE");
 
+        jScrollAsistencias.setBorder(null);
         jScrollAsistencias.setPreferredSize(new java.awt.Dimension(1041, 2));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
@@ -204,28 +232,27 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
                     .addGroup(PanelDatosClaseLayout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
+                        .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosClaseLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreClase)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(96, 96, 96)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(187, 187, 187)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(114, 114, 114))
                     .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 33, 33))
+                        .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
         PanelDatosClaseLayout.setVerticalGroup(
             PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,17 +309,17 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRegresar)
-                    .addComponent(btnRegistrarAsistencias))
-                .addGap(19, 19, 19))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRegistrarAsistencias)
+                    .addComponent(btnRegresar))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -300,7 +327,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarBuscarClase();
+
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

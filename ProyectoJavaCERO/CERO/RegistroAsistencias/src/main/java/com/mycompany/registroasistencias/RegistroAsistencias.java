@@ -156,4 +156,13 @@ public class RegistroAsistencias implements IRegistroAsistencias {
         return asistencia;
     }
 
+    @Override
+    public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws AsistenciaException {
+        try {
+            return this.inscripcionesBO.obtenerInscripcionesClase(clase);
+        } catch (NegocioException ex) {
+            throw new AsistenciaException(ex.getMessage());
+        }
+    }
+
 }

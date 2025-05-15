@@ -80,14 +80,17 @@ public interface IRegistroAsistencias {
 
     /**
      * Obtiene todos los días en los que se imparte una clase, desde la fecha de inicio hasta la fecha actual.
+     *
      * @param clase sobre la que se está trabajando.
      * @return una lista con las fechas de cada sesión de clase.
      */
     public List<LocalDate> obtenerDiasClase(ClaseDTO clase);
-    
-    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase)throws AsistenciaException;
-    
-    public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada)throws AsistenciaException;
-    
-    public AsistenciaDTO validarFaltasJustificadasAlumno(AsistenciaDTO asistencia)throws AsistenciaException;
+
+    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase) throws AsistenciaException;
+
+    public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada) throws AsistenciaException;
+
+    public AsistenciaDTO validarFaltasJustificadasAlumno(AsistenciaDTO asistencia) throws AsistenciaException;
+
+    public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws AsistenciaException;
 }

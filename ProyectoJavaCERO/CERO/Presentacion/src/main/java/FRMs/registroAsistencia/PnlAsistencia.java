@@ -26,7 +26,7 @@ public class PnlAsistencia extends javax.swing.JPanel {
     }
     
     private void cargarDatos(){
-        String nombreAlumno = asistenciaDTO.getAlumno().getNombre() + " " + asistenciaDTO.getAlumno().getApellidoPaterno();
+        String nombreAlumno = asistenciaDTO.getAlumno().getNombreCompleto();
         this.lblCodigo.setText(String.valueOf(asistenciaDTO.getAlumno().getCodigo()));
         this.lblNombre.setText(nombreAlumno);
         this.lblAsistencia.setText(asistenciaDTO.getTipoAsistencia().toString());

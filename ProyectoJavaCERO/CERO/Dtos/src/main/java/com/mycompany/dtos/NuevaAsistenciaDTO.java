@@ -1,7 +1,5 @@
 package com.mycompany.dtos;
 
-import java.time.LocalDateTime;
-
 /**
  * Clase de transporte que representa una nueva asistencia de un alumno en una clase.
  * @author victoria

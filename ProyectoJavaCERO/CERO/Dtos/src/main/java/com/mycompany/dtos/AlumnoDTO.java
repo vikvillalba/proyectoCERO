@@ -17,7 +17,7 @@ public class AlumnoDTO {
     public AlumnoDTO() {
     }
 
-    public AlumnoDTO(int codigo, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico) {
+    public AlumnoDTO(Integer codigo, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico) {
         this.codigo = codigo;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -36,11 +36,11 @@ public class AlumnoDTO {
         this.correoElectronico = correoElectronico;
     }
 
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

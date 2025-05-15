@@ -2,6 +2,7 @@ package com.mycompany.presentacion;
 
 import FRMs.*;
 import FRMs.registroAsistencia.FrmAsistenciasClaseAnterior;
+import FRMs.registroAsistencia.FrmAsistenciasClaseDiaActual;
 import FRMs.registroAsistencia.FrmBuscarClase;
 import FRMs.registroAsistencia.FrmBuscarClaseReporte;
 import FRMs.registroAsistencia.FrmClasesExistentesAsistencia;
@@ -633,30 +634,52 @@ public class ControlNavegacion {
             mostrarMensajeErrorConExcepcion(null, ex);
         }
     }
-    
-    public static void mostrarJustificarFalta(AsistenciaDTO asistencia){
+
+    public static void mostrarJustificarFalta(AsistenciaDTO asistencia) {
         FrmJustificarFalta justificarFalta = new FrmJustificarFalta(asistencia);
         justificarFalta.setVisible(true);
     }
 
-    public static void justificarFalta(AsistenciaDTO faltaJustificada){
+    public static void justificarFalta(AsistenciaDTO faltaJustificada) {
         try {
-            AsistenciaDTO faltaValidada =  registroAsistencias.justificarFalta(faltaJustificada);
+            AsistenciaDTO faltaValidada = registroAsistencias.justificarFalta(faltaJustificada);
             mostrarMensajeFaltaJustificadaCorrectamente(faltaValidada.getAlumno(), faltaValidada.getClase());
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorLimiteFaltasJustificadas(ex.getMessage());
         }
-        
+
     }
-    
+
     public static void mostrarMensajeErrorLimiteFaltasJustificadas(String mensaje) {
         JOptionPane.showMessageDialog(null, mensaje,
                 "Error :(", JOptionPane.ERROR_MESSAGE);
 
     }
-    
+
     public static void mostrarMensajeFaltaJustificadaCorrectamente(AlumnoDTO alumno, ClaseDTO clase) {
         JOptionPane.showMessageDialog(null, "Falta justificada para el alumno: " + alumno.getNombreCompleto() + " para la clase: " + clase.getNombre(),
                 "Falta justificada :)", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    public static void mostrarAsistenciasClaseDiaActual(ClaseDTO clase, LocalDate dia) {
+        List<LocalDate> diasClase = registroAsistencias.obtenerDiasClase(clase);
+        if(!diasClase.contains(dia)){
+            mostrarMensajeErrorClaseDiaNoValido(clase);
+            return;
+        }
+        try {
+            List<AsistenciaDTO> asistenciasActuales = registroAsistencias.obtenerAsistenciasClase(clase, dia);
+            List<InscripcionDTO> inscripciones = registroAsistencias.obtenerInscripcionesClase(clase);
+            FrmAsistenciasClaseDiaActual asistenciasActual = new FrmAsistenciasClaseDiaActual(clase, dia, asistenciasActuales, inscripciones);
+            asistenciasActual.setVisible(true);
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(null, ex);
+        }
+    }
+    
+    public static void mostrarMensajeErrorClaseDiaNoValido(ClaseDTO clase){
+    JOptionPane.showMessageDialog(null, "No se pueden registrar asistencias para la clase: " + clase.getNombre() + " porque hoy no hay sesión programada.",
+                "Sin asistencias para registrar", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
 }

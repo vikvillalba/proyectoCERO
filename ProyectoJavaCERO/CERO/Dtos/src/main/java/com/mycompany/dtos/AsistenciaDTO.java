@@ -29,6 +29,14 @@ public class AsistenciaDTO {
         this.fechaHora = fechaHora;
         this.id = id;
     }
+
+    public AsistenciaDTO(AlumnoDTO alumno, ClaseDTO clase, TipoAsistenciaDTO tipoAsistencia, LocalDateTime fechaHora) {
+        this.alumno = alumno;
+        this.clase = clase;
+        this.tipoAsistencia = tipoAsistencia;
+        this.fechaHora = fechaHora;
+        this.justificante = justificante;
+    }
     
 
     public AlumnoDTO getAlumno() {
