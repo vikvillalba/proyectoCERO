@@ -68,4 +68,10 @@ public class ClasesBO implements IClasesBO {
         return clasesObtenidas;
     }
 
+    @Override
+    public Integer obtenerLimiteFaltas(ClaseDTO clase) {
+        Clase claseReal = this.clasesDAO.buscarClase(clase.getCodigo());
+        return claseReal.getLIMITE_FALTAS();
+    }
+
 }

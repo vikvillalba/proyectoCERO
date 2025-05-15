@@ -17,8 +17,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * clase que implementa los métodos de la interfaz IRegistroAsistencias
@@ -133,12 +131,29 @@ public class RegistroAsistencias implements IRegistroAsistencias {
     }
 
     @Override
-    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase) throws AsistenciaException{
+    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase) throws AsistenciaException {
         try {
             return this.asistenciasBO.obtenerAsistenciasClase(clase, diaClase);
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }
+    }
+
+    @Override
+    public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada) throws AsistenciaException {
+        validarFaltasJustificadasAlumno(faltaJustificada);
+        return this.asistenciasBO.justificarFalta(faltaJustificada);
+
+    }
+
+    @Override
+    public AsistenciaDTO validarFaltasJustificadasAlumno(AsistenciaDTO asistencia) throws AsistenciaException {
+        List<AsistenciaDTO> faltasJustificadas = this.asistenciasBO.obtenerFaltasJustificadas(asistencia);
+        Integer limiteFaltas = this.clasesBO.obtenerLimiteFaltas(asistencia.getClase());
+        if (faltasJustificadas.size() >= limiteFaltas) {
+            throw new AsistenciaException("El alumno " + asistencia.getAlumno().getNombreCompleto() + " ya alcanzó el límite de " + limiteFaltas + " faltas justificadas.");
+        }
+        return asistencia;
     }
 
 }

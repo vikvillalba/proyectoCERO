@@ -92,5 +92,8 @@ public class AlumnoDTO {
         this.correoElectronico = correoElectronico;
     }
     
+    public String getNombreCompleto() {
+        return this.nombre + " " + this.apellidoPaterno;
+    }
     
 }

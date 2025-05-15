@@ -1,6 +1,7 @@
 package FRMs.registroAsistencia;
 
 import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -122,7 +123,7 @@ public class PnlDiasClases extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAsistenciasActionPerformed
-
+        ControlNavegacion.mostrarAsistenciasAnterioresClase(clase, dia);
 
     }//GEN-LAST:event_btnVerAsistenciasActionPerformed
 

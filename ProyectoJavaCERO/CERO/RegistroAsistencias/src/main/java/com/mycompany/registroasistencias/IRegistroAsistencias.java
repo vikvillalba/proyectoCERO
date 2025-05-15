@@ -86,4 +86,8 @@ public interface IRegistroAsistencias {
     public List<LocalDate> obtenerDiasClase(ClaseDTO clase);
     
     public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase)throws AsistenciaException;
+    
+    public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada)throws AsistenciaException;
+    
+    public AsistenciaDTO validarFaltasJustificadasAlumno(AsistenciaDTO asistencia)throws AsistenciaException;
 }
