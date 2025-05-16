@@ -13,7 +13,7 @@
         <module>Infraestructura</module>
         <module>Dtos</module>
         <module>RegistroAsistencias</module>
-        <module>../../../GaleriaContenidos</module>
+        <module>GaleriaContenidos</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
