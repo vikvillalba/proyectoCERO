@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * clase que implementa los métodos de la interfaz IRegistroAsistencias
@@ -132,11 +134,7 @@ public class RegistroAsistencias implements IRegistroAsistencias {
 
     @Override
     public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase) throws AsistenciaException {
-        try {
-            return this.asistenciasBO.obtenerAsistenciasClase(clase, diaClase);
-        } catch (NegocioException ex) {
-            throw new AsistenciaException(ex.getMessage());
-        }
+        return this.asistenciasBO.obtenerAsistenciasClase(clase, diaClase);
     }
 
     @Override
@@ -160,6 +158,15 @@ public class RegistroAsistencias implements IRegistroAsistencias {
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws AsistenciaException {
         try {
             return this.inscripcionesBO.obtenerInscripcionesClase(clase);
+        } catch (NegocioException ex) {
+            throw new AsistenciaException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias) throws AsistenciaException {
+        try {
+            return this.asistenciasBO.actualizarAsistencias(asistencias);
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }

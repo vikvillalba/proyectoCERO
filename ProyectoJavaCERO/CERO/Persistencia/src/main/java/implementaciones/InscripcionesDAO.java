@@ -30,7 +30,7 @@ public class InscripcionesDAO implements IInscripcionesDAO {
         Clase claseMock = new Clase(
                 1,
                 "Contemporaneo Avanzado",
-                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
+                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.FRIDAY),
                 LocalTime.of(9, 0),
                 LocalTime.of(10, 30),
                 "Cesar Gomez",

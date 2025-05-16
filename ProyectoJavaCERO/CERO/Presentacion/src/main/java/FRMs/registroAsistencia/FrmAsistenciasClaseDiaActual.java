@@ -13,9 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -35,6 +35,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     private ClaseDTO clase;
     private List<AsistenciaDTO> asistencias;
     private List<InscripcionDTO> inscripciones;
+    private List<AsistenciaDTO> asistenciasActualizadas;
 
     public FrmAsistenciasClaseDiaActual(ClaseDTO clase, LocalDate fecha, List<AsistenciaDTO> asistencias, List<InscripcionDTO> inscripciones) {
         initComponents();
@@ -97,6 +98,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     }
 
     private void llenarAlumnos() {
+        this.asistenciasActualizadas = new ArrayList<>();
         JPanel contenedorAsistencias = new JPanel();
         contenedorAsistencias.setOpaque(false);
         jScrollAsistencias.getViewport().setOpaque(false);
@@ -117,6 +119,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
             }
 
             PnlAsistenciaEditable pnl = new PnlAsistenciaEditable(asistenciaAlumno);
+            this.asistenciasActualizadas.add(asistenciaAlumno);
             contenedorAsistencias.add(Box.createVerticalStrut(10));
             contenedorAsistencias.add(pnl);
         }
@@ -332,7 +335,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciasActionPerformed
-        // TODO add your handling code here:
+       ControlNavegacion.actualizarAsistencias(asistencias, clase);
     }//GEN-LAST:event_btnRegistrarAsistenciasActionPerformed
 
 

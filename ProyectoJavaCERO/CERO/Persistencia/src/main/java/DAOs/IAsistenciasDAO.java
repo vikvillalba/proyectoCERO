@@ -16,4 +16,5 @@ public interface IAsistenciasDAO {
     public List<Asistencia>obtenerAsistenciasAlumnos(Clase clase, LocalDate fechaClase);
     public Asistencia justificarFalta(Asistencia faltaJustificada);
     public List<Asistencia> obtenerFaltasJustificadasAlumnoClase(Alumno alumno, Clase clase);
+    public List<Asistencia> actualizarAsistencias(List<Asistencia> asistencia);
 }

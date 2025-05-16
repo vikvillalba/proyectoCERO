@@ -24,7 +24,7 @@ public class ClasesDAO implements IClasesDAO {
         Clase clase1 = new Clase(
                 1,
                 "Contemporaneo Avanzado",
-                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
+                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.FRIDAY),
                 LocalTime.of(9, 0),
                 LocalTime.of(10, 30),
                 "Cesar Gomez",

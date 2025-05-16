@@ -109,7 +109,7 @@ public class AsistenciasBO implements IAsistenciasBO {
     }
 
     @Override
-    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO claseDTO, LocalDate diaClase) throws NegocioException {
+    public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO claseDTO, LocalDate diaClase) {
         Clase clase = new Clase(
                 claseDTO.getCodigo(),
                 claseDTO.getNombre(),
@@ -123,11 +123,11 @@ public class AsistenciasBO implements IAsistenciasBO {
         );
 
         List<Asistencia> asistencias = this.asistenciasDAO.obtenerAsistenciasAlumnos(clase, diaClase);
-        if (asistencias.isEmpty() || asistencias == null) {
-            throw new NegocioException("No se registraron asistencias para la clase: " + clase.getNombre() + " en la fecha: " + diaClase.toString());
+        if (asistencias == null || asistencias.isEmpty()) {
+            return new ArrayList<>();
         }
-        List<AsistenciaDTO> asistenciasDTO = new ArrayList<>();
 
+        List<AsistenciaDTO> asistenciasDTO = new ArrayList<>();
         for (Asistencia asistencia : asistencias) {
             AlumnoDTO alumno = new AlumnoDTO(
                     asistencia.getAlumno().getCodigo(),
@@ -192,6 +192,73 @@ public class AsistenciasBO implements IAsistenciasBO {
 
         return asistenciasDTO;
 
+    }
+
+    @Override
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistenciasDTO) throws NegocioException {
+        List<Asistencia> asistenciasEntidad = new ArrayList<>();
+
+        for (AsistenciaDTO dto : asistenciasDTO) {
+            Alumno alumno = alumnosDAO.obtenerAlumno(dto.getAlumno().getCodigo());
+            Clase clase = clasesDAO.buscarClase(dto.getClase().getCodigo());
+
+            if (alumno == null || clase == null) {
+                throw new NegocioException("No se pudo encontrar el alumno o la clase para una de las asistencias.");
+            }
+
+            TipoAsistencia tipo = TipoAsistencia.valueOf(dto.getTipoAsistencia().name());
+
+            Asistencia asistencia = new Asistencia(
+                    dto.getId(),
+                    tipo,
+                    dto.getFechaHora(),
+                    alumno,
+                    clase
+            );
+
+            asistenciasEntidad.add(asistencia);
+        }
+
+        List<Asistencia> asistenciasActualizadas = asistenciasDAO.actualizarAsistencias(asistenciasEntidad);
+
+        List<AsistenciaDTO> asistenciasActualizadasDTO = new ArrayList<>();
+        for (Asistencia asistencia : asistenciasActualizadas) {
+            AlumnoDTO alumnoDTO = new AlumnoDTO(
+                    asistencia.getAlumno().getCodigo(),
+                    asistencia.getAlumno().getApellidoPaterno(),
+                    asistencia.getAlumno().getApellidoMaterno(),
+                    asistencia.getAlumno().getNombre(),
+                    asistencia.getAlumno().getTelefono(),
+                    asistencia.getAlumno().getFechaNacimiento(),
+                    asistencia.getAlumno().getCorreoElectronico()
+            );
+
+            ClaseDTO claseDTO = new ClaseDTO(
+                    asistencia.getClase().getCodigo(),
+                    asistencia.getClase().getNombre(),
+                    asistencia.getClase().getDias(),
+                    asistencia.getClase().getHoraInicio(),
+                    asistencia.getClase().getHoraFin(),
+                    asistencia.getClase().getMaestro(),
+                    asistencia.getClase().getPrecio(),
+                    asistencia.getClase().getFechaInicio(),
+                    asistencia.getClase().getFechaFin()
+            );
+
+            TipoAsistenciaDTO tipoDTO = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia().name());
+
+            AsistenciaDTO dtoActualizado = new AsistenciaDTO(
+                    asistencia.getId(),
+                    alumnoDTO,
+                    claseDTO,
+                    tipoDTO,
+                    asistencia.getFechaHora()
+            );
+
+            asistenciasActualizadasDTO.add(dtoActualizado);
+        }
+
+        return asistenciasActualizadasDTO;
     }
 
 }

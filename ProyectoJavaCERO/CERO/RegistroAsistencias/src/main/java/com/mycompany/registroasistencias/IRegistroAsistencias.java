@@ -93,4 +93,6 @@ public interface IRegistroAsistencias {
     public AsistenciaDTO validarFaltasJustificadasAlumno(AsistenciaDTO asistencia) throws AsistenciaException;
 
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws AsistenciaException;
+
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias) throws AsistenciaException;
 }

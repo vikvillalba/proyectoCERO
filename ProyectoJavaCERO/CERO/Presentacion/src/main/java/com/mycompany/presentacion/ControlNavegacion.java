@@ -37,8 +37,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -663,7 +661,7 @@ public class ControlNavegacion {
 
     public static void mostrarAsistenciasClaseDiaActual(ClaseDTO clase, LocalDate dia) {
         List<LocalDate> diasClase = registroAsistencias.obtenerDiasClase(clase);
-        if(!diasClase.contains(dia)){
+        if (!diasClase.contains(dia)) {
             mostrarMensajeErrorClaseDiaNoValido(clase);
             return;
         }
@@ -676,10 +674,25 @@ public class ControlNavegacion {
             mostrarMensajeErrorConExcepcion(null, ex);
         }
     }
-    
-    public static void mostrarMensajeErrorClaseDiaNoValido(ClaseDTO clase){
-    JOptionPane.showMessageDialog(null, "No se pueden registrar asistencias para la clase: " + clase.getNombre() + " porque hoy no hay sesión programada.",
+
+    public static void mostrarMensajeErrorClaseDiaNoValido(ClaseDTO clase) {
+        JOptionPane.showMessageDialog(null, "No se pueden registrar asistencias para la clase: " + clase.getNombre() + " porque hoy no hay sesión programada.",
                 "Sin asistencias para registrar", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
+    public static void actualizarAsistencias(List<AsistenciaDTO> asistencias, ClaseDTO clase) {
+        try {
+            registroAsistencias.actualizarAsistencias(asistencias);
+            mostrarAsistenciasAlumnosClaseRegistradasCorrectamente(clase);
+            
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(null, ex);
+        }
+    }
+
+    public static void mostrarAsistenciasAlumnosClaseRegistradasCorrectamente(ClaseDTO clase) {
+        JOptionPane.showMessageDialog(null, "Se han registrado las asistencias de hoy para la clase: " + clase.getNombre(),
+                "Asistencias registradas :)", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

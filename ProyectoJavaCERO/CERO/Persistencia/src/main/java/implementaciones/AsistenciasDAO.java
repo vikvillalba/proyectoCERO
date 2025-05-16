@@ -14,7 +14,6 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Implementación de la interfaz IAsistenciasDAO
@@ -30,7 +29,7 @@ public class AsistenciasDAO implements IAsistenciasDAO {
         Clase claseMock = new Clase(
                 1,
                 "Contemporaneo Avanzado",
-                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY),
+                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.FRIDAY),
                 LocalTime.of(9, 0),
                 LocalTime.of(10, 30),
                 "Cesar Gomez",
@@ -148,6 +147,26 @@ public class AsistenciasDAO implements IAsistenciasDAO {
 
         }
         return faltasJustificadas;
+    }
+
+    @Override
+    public List<Asistencia> actualizarAsistencias(List<Asistencia> nuevasAsistencias) {
+        for (Asistencia nueva : nuevasAsistencias) {
+            boolean encontrada = false;
+
+            for (int i = 0; i < asistencias.size(); i++) {
+                if (asistencias.get(i).getId().equals(nueva.getId())) {
+                    asistencias.set(i, nueva);
+                    encontrada = true;
+                    break;
+                }
+            }
+
+            if (!encontrada) {
+                asistencias.add(nueva);
+            }
+        }
+        return nuevasAsistencias;
     }
 
 }

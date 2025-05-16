@@ -15,7 +15,8 @@ import java.util.List;
 public interface IAsistenciasBO {
     public AsistenciaDTO registrarAsistencia(NuevaAsistenciaDTO nuevaAsistencia)throws NegocioException;
     public AsistenciaDTO obtenerAsistenciaAlumnoClase(AlumnoDTO alumno, ClaseDTO clase);
-    public List<AsistenciaDTO>obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase) throws NegocioException;
+    public List<AsistenciaDTO>obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase);
     public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada);
     public List<AsistenciaDTO> obtenerFaltasJustificadas(AsistenciaDTO asistencia);
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias)throws NegocioException;
 }
