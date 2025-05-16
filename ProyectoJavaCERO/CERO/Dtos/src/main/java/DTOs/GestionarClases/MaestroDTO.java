@@ -8,7 +8,7 @@ package DTOs.GestionarClases;
  *
  * @author Jack Murrieta
  */
-class MaestroDTO {
+public class MaestroDTO {
     private String id;
     private String nombreCompleto;
 
@@ -36,5 +36,9 @@ class MaestroDTO {
         this.nombreCompleto = nombreCompleto;
     }
     
-    
+    @Override
+    public String toString() {
+        return getNombreCompleto();
+    }
+
 }
