@@ -93,4 +93,14 @@ public class ClasesDAO implements IClasesDAO {
         return this.clases;
     }
 
+    @Override
+    public Integer obtenerLimiteFaltas(Clase clase) {
+        for (Clase clase1 : clases) {
+            if (clase1.getCodigo().equals(clase.getCodigo())) {
+                return clase1.getLIMITE_FALTAS();
+            }
+        }
+        return 0;
+    }
+
 }

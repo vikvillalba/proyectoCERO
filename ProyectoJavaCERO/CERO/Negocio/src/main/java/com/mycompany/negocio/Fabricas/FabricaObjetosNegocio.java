@@ -59,7 +59,9 @@ public class FabricaObjetosNegocio {
     
     public static IAsistenciasBO obtenerAsistenciasBO(){
         IAsistenciasDAO asistenciasDAO = new AsistenciasDAO();
-        IAsistenciasBO bo = new AsistenciasBO(asistenciasDAO);
+        IClasesDAO clasesDAO = new ClasesDAO();
+        IAlumnosDAO alumnosDAO = new AlumnosDAO();
+        IAsistenciasBO bo = new AsistenciasBO(asistenciasDAO, clasesDAO, alumnosDAO);
         return bo;
     }
     

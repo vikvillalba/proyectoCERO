@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
@@ -226,7 +227,8 @@ public class PanelClaseAsistencias extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerAsistenciasActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAsistenciasActualActionPerformed
-
+        LocalDate diaActual = LocalDate.now();
+        ControlNavegacion.mostrarAsistenciasClaseDiaActual(clase, diaActual);
 
     }//GEN-LAST:event_btnVerAsistenciasActualActionPerformed
 

@@ -1,9 +1,13 @@
 package com.mycompany.negocio.BOs;
 
+import DAOs.IAlumnosDAO;
 import DAOs.IAsistenciasDAO;
+import DAOs.IClasesDAO;
 import Entidades.Alumno;
 import Entidades.Asistencia;
 import Entidades.Clase;
+import Entidades.Justificante;
+import Entidades.TipoAsistencia;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -24,9 +28,13 @@ import java.util.List;
 public class AsistenciasBO implements IAsistenciasBO {
 
     private IAsistenciasDAO asistenciasDAO;
+    private IClasesDAO clasesDAO;
+    private IAlumnosDAO alumnosDAO;
 
-    public AsistenciasBO(IAsistenciasDAO asistenciasDAO) {
+    public AsistenciasBO(IAsistenciasDAO asistenciasDAO, IClasesDAO clasesDAO, IAlumnosDAO alumnosDAO) {
         this.asistenciasDAO = asistenciasDAO;
+        this.clasesDAO = clasesDAO;
+        this.alumnosDAO = alumnosDAO;
     }
 
     @Override
@@ -63,7 +71,7 @@ public class AsistenciasBO implements IAsistenciasBO {
             throw new NegocioException("Ocurrió un error al registrar la asistencia del alumno: " + alumno.getNombre() + " " + alumno.getApellidoPaterno() + " en la clase: " + clase.getNombre());
         }
 
-        AsistenciaDTO asistenciaDTO = new AsistenciaDTO(alumnoDTO, claseDTO, nuevaAsistencia.getTipoAsistencia(), asistencia.getFechaHora());
+        AsistenciaDTO asistenciaDTO = new AsistenciaDTO(asistenciaRegistrada.getId(), alumnoDTO, claseDTO, nuevaAsistencia.getTipoAsistencia(), asistencia.getFechaHora());
         return asistenciaDTO;
 
     }
@@ -94,7 +102,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
         Asistencia asistencia = this.asistenciasDAO.obtenerAsistenciaAlumnoClase(alumno, clase);
         if (asistencia != null) {
-            AsistenciaDTO asistenciaDTO = new AsistenciaDTO(alumnoDTO, claseDTO, asistencia.getFechaHora());
+            AsistenciaDTO asistenciaDTO = new AsistenciaDTO(asistencia.getId(), alumnoDTO, claseDTO, asistencia.getFechaHora());
             return asistenciaDTO;
         }
         return null;
@@ -132,11 +140,58 @@ public class AsistenciasBO implements IAsistenciasBO {
             );
 
             TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia().name());
-            AsistenciaDTO asistenciaDTO = new AsistenciaDTO(alumno, claseDTO, tipo, asistencia.getFechaHora());
+            AsistenciaDTO asistenciaDTO = new AsistenciaDTO(asistencia.getId(), alumno, claseDTO, tipo, asistencia.getFechaHora());
             asistenciasDTO.add(asistenciaDTO);
         }
 
         return asistenciasDTO;
+    }
+
+    @Override
+    public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada) {
+        Justificante justificante = new Justificante(faltaJustificada.getJustificante().getMotivo(), faltaJustificada.getJustificante().getFechaHora());
+        Alumno alumno = this.alumnosDAO.obtenerAlumno(faltaJustificada.getAlumno().getCodigo());
+
+        Clase clase = this.clasesDAO.buscarClase(faltaJustificada.getClase().getCodigo());
+
+        Asistencia asistenciaJustificada = new Asistencia(
+                faltaJustificada.getId(),
+                TipoAsistencia.JUSTIFICADO,
+                faltaJustificada.getFechaHora(),
+                alumno,
+                clase
+        );
+
+        Asistencia justificanteRegistrado = this.asistenciasDAO.justificarFalta(asistenciaJustificada);
+        faltaJustificada.setTipoAsistencia(TipoAsistenciaDTO.JUSTIFICADO);
+        return faltaJustificada;
+
+    }
+
+    @Override
+    public List<AsistenciaDTO> obtenerFaltasJustificadas(AsistenciaDTO asistencia) {
+        List<AsistenciaDTO> asistenciasDTO = new ArrayList<>();
+        Alumno alumno = this.alumnosDAO.obtenerAlumno(asistencia.getAlumno().getCodigo());
+        Clase clase = this.clasesDAO.buscarClase(asistencia.getClase().getCodigo());
+
+        List<Asistencia> faltasJustificadas = this.asistenciasDAO.obtenerFaltasJustificadasAlumnoClase(alumno, clase);
+
+        for (Asistencia falta : faltasJustificadas) {
+            TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(falta.getTipoAsistencia().name());
+            AlumnoDTO alumnoDTO = asistencia.getAlumno();
+            ClaseDTO claseDTO = asistencia.getClase();
+            AsistenciaDTO dto = new AsistenciaDTO(
+                    falta.getId(),
+                    alumnoDTO,
+                    claseDTO,
+                    tipo,
+                    falta.getFechaHora()
+            );
+            asistenciasDTO.add(dto);
+        }
+
+        return asistenciasDTO;
+
     }
 
 }

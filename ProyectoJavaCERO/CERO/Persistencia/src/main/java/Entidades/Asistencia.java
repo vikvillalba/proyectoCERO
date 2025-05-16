@@ -12,6 +12,7 @@ public class Asistencia {
     private LocalDateTime fechaHora;
     private Alumno alumno;
     private Clase clase;
+    private Justificante justificante;
 
     public Asistencia() {
     }
@@ -69,6 +70,14 @@ public class Asistencia {
 
     public void setClase(Clase clase) {
         this.clase = clase;
+    }
+
+    public Justificante getJustificante() {
+        return justificante;
+    }
+
+    public void setJustificante(Justificante justificante) {
+        this.justificante = justificante;
     }
     
     

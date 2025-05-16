@@ -69,7 +69,13 @@ public class InscripcionesDAO implements IInscripcionesDAO {
 
     @Override
     public List<Inscripcion> obtenerInscripcionesClase(Integer idClase) {
-        return inscripciones;
+        List<Inscripcion> inscripcionesClase = new ArrayList<>();
+        for (Inscripcion inscripcion : inscripciones) {
+            if(inscripcion.getClase().getCodigo().equals(idClase)){
+                inscripcionesClase.add(inscripcion);
+            }
+        }
+        return inscripcionesClase;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
         this.clase = clase;
 
         jsAsistenciasAnteriores.setOpaque(false);
+        jsAsistenciasAnteriores.getViewport().setOpaque(false);
         this.setTitle("Clases anteriores");
         this.lblNombreClase.setText(this.clase.getNombre());
         
@@ -44,7 +45,7 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
 
         getContentPane().setLayout(new AbsoluteLayout());
         pack();
-        this.setSize(1178, 710);
+        this.setSize(1120, 710);
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
 
@@ -91,6 +92,8 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("CLASES ANTERIORES");
 
+        jsAsistenciasAnteriores.setBorder(null);
+        jsAsistenciasAnteriores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jsAsistenciasAnteriores.setPreferredSize(new java.awt.Dimension(1270, 2));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
@@ -112,24 +115,23 @@ public class FrmDiasAnterioresClase extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(235, 235, 235))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(310, 310, 310))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(437, 437, 437)
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addGap(84, 84, 84)
                         .addComponent(jsAsistenciasAnteriores, javax.swing.GroupLayout.PREFERRED_SIZE, 952, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 79, Short.MAX_VALUE))
+                .addGap(0, 84, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(296, 296, 296))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(236, 236, 236)
+                .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

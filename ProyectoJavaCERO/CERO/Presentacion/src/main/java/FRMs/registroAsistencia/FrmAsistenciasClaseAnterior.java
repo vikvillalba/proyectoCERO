@@ -2,11 +2,12 @@ package FRMs.registroAsistencia;
 
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
-import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
     public FrmAsistenciasClaseAnterior(LocalDate fecha, ClaseDTO clase, List<AsistenciaDTO> asistencias) {
         initComponents();
         jScrollAsistencias.setOpaque(false);
+        jScrollAsistencias.getViewport().setOpaque(false);
         this.clase = clase;
         this.fecha = fecha;
         this.asistencias = asistencias;
@@ -45,9 +47,15 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
         getContentPane().setLayout(new AbsoluteLayout());
         pack();
+        this.setSize(1178, 662);
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
         llenarDiasClase();
+
+        DateTimeFormatter formatoDia = DateTimeFormatter.ofPattern("EEEE", Locale.forLanguageTag("es-ES"));
+        DateTimeFormatter formatoMes = DateTimeFormatter.ofPattern("MMMM", Locale.forLanguageTag("es-ES"));
+        String fechaTexto = this.fecha.format(formatoDia) + " " + String.valueOf(this.fecha.getDayOfMonth()) + " de " + this.fecha.format(formatoMes);
+        this.lblFecha.setText(fechaTexto.toUpperCase());
 
     }
 
@@ -56,9 +64,8 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
         contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
-
         for (AsistenciaDTO asistenciaDTO : asistencias) {
-            PnlAsistencia asistencia = new PnlAsistencia(asistenciaDTO);
+            PnlAsistencia asistencia = new PnlAsistencia(asistenciaDTO, this);
             contenedorTabla.add(Box.createVerticalStrut(10));
             contenedorTabla.add(asistencia);
         }
@@ -81,14 +88,15 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
         jScrollAsistencias = new javax.swing.JScrollPane();
         btnRegresar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblFecha.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(30, 47, 86));
         lblFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFecha.setText("MIERCOLES 00 SEPTIEMBRE");
 
-        jScrollAsistencias.setPreferredSize(new java.awt.Dimension(1270, 2));
+        jScrollAsistencias.setBorder(null);
+        jScrollAsistencias.setPreferredSize(new java.awt.Dimension(1089, 2));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -105,29 +113,29 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(437, 437, 437)
+                .addGap(432, 432, 432)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+                .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(94, 94, 94))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(155, 155, 155))))
+                        .addGap(162, 162, 162))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 1117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(25, 25, 25)
                 .addComponent(lblFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollAsistencias, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
+                .addComponent(jScrollAsistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRegresar)
-                .addGap(19, 19, 19))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,7 +143,6 @@ public class FrmAsistenciasClaseAnterior extends javax.swing.JFrame {
 
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarBuscarClase();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

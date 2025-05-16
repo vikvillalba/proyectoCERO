@@ -14,6 +14,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Implementación de la interfaz IAsistenciasDAO
@@ -48,15 +49,39 @@ public class AsistenciasDAO implements IAsistenciasDAO {
                 "jackmurrieta@gmail.com"
         );
         // asistencia de lunes 12
-        Asistencia asistenciaAnterior = new Asistencia(
+        Asistencia asistenciaAnterior1 = new Asistencia(
                 1,
-                TipoAsistencia.ASISTENCIA,
+                TipoAsistencia.FALTA,
                 LocalDateTime.of(2025, Month.MAY, 12, 0, 0),
                 alumnoMock,
                 claseMock
         );
-        this.asistencias.add(asistenciaAnterior);
-        codigoAsistencia++;
+        Asistencia asistenciaAnterior2 = new Asistencia(
+                2,
+                TipoAsistencia.JUSTIFICADO,
+                LocalDateTime.of(2025, Month.MAY, 14, 0, 0),
+                alumnoMock,
+                claseMock
+        );
+        Asistencia asistenciaAnterior3 = new Asistencia(
+                3,
+                TipoAsistencia.JUSTIFICADO,
+                LocalDateTime.of(2025, Month.MAY, 7, 0, 0),
+                alumnoMock,
+                claseMock
+        );
+        Asistencia asistenciaAnterior4 = new Asistencia(
+                4,
+                TipoAsistencia.JUSTIFICADO,
+                LocalDateTime.of(2025, Month.APRIL, 16, 0, 0),
+                alumnoMock,
+                claseMock
+        );
+        this.asistencias.add(asistenciaAnterior1);
+        this.asistencias.add(asistenciaAnterior2);
+        this.asistencias.add(asistenciaAnterior3);
+        this.asistencias.add(asistenciaAnterior4);
+        codigoAsistencia = 5;
     }
 
     @Override
@@ -87,7 +112,7 @@ public class AsistenciasDAO implements IAsistenciasDAO {
 
         for (Asistencia asistencia : asistencias) {
             if (asistencia.getClase() != null && asistencia.getFechaHora() != null) {
-                
+
                 if (asistencia.getClase().getCodigo().equals(clase.getCodigo())
                         && asistencia.getFechaHora().toLocalDate().equals(fechaClase)) {
                     asistenciasClase.add(asistencia);
@@ -97,4 +122,32 @@ public class AsistenciasDAO implements IAsistenciasDAO {
         return asistenciasClase;
 
     }
+
+    @Override
+    public Asistencia justificarFalta(Asistencia faltaJustificada) {
+        for (int i = 0; i < asistencias.size(); i++) {
+            Asistencia asistencia = asistencias.get(i);
+
+            if (asistencia.getId().equals(faltaJustificada.getId())) {
+                asistencias.set(i, faltaJustificada);
+                return faltaJustificada;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Asistencia> obtenerFaltasJustificadasAlumnoClase(Alumno alumno, Clase clase) {
+        List<Asistencia> faltasJustificadas = new ArrayList<>();
+        for (Asistencia asistencia : asistencias) {
+            if (asistencia.getAlumno().getCodigo().equals(alumno.getCodigo())
+                    && asistencia.getClase().getCodigo().equals(clase.getCodigo())
+                    && asistencia.getTipoAsistencia().equals(TipoAsistencia.JUSTIFICADO)) {
+                faltasJustificadas.add(asistencia);
+            }
+
+        }
+        return faltasJustificadas;
+    }
+
 }

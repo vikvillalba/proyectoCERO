@@ -17,6 +17,7 @@ import com.mycompany.dtos.PagoEfectivoDTO;
 import com.mycompany.dtos.PagoTarjetaDTO;
 import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.excepciones.NegocioException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +148,32 @@ public class InscripcionesBO implements IInscripcionesBO {
         }
 
         return inscripcionesDTO;
+    }
+
+    @Override
+    public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws NegocioException {
+       List<Inscripcion> inscripciones = this.inscripcionesDAO.obtenerInscripcionesClase(clase.getCodigo());
+       List<InscripcionDTO> inscripcionesClase = new ArrayList<>();
+       if(inscripciones.isEmpty() || inscripciones == null){
+           throw new NegocioException("No se encontraron inscripciones para la clase: " + clase.getNombre());
+       }
+       
+        for (Inscripcion inscripcion : inscripciones) {
+            AlumnoDTO alumno = new AlumnoDTO(
+                    inscripcion.getAlumno().getCodigo(), 
+                    inscripcion.getAlumno().getApellidoPaterno(), 
+                    inscripcion.getAlumno().getApellidoMaterno(), 
+                    inscripcion.getAlumno().getNombre(), 
+                    inscripcion.getAlumno().getTelefono(), 
+                    inscripcion.getAlumno().getFechaNacimiento(), 
+                    inscripcion.getAlumno().getCorreoElectronico()
+            );
+            
+            InscripcionDTO inscripcionDTO = new InscripcionDTO(inscripcion.getId(), alumno, clase, inscripcion.getFechaInscripcion());
+            inscripcionesClase.add(inscripcionDTO);
+            
+        }
+        return inscripcionesClase;
     }
 
 }

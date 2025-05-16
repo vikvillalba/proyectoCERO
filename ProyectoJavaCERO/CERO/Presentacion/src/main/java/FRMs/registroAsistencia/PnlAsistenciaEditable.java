@@ -1,16 +1,38 @@
 package FRMs.registroAsistencia;
 
+import com.mycompany.dtos.AsistenciaDTO;
+import com.mycompany.dtos.TipoAsistenciaDTO;
+import java.awt.Dimension;
+
 /**
  *
  * @author victoria
  */
 public class PnlAsistenciaEditable extends javax.swing.JPanel {
 
-    // private AsistenciaDTO asistenciaDTO
-    
+    private AsistenciaDTO asistencia;
 
-    public PnlAsistenciaEditable() {
+    public PnlAsistenciaEditable(AsistenciaDTO asistencia) {
         initComponents();
+        this.asistencia = asistencia;
+        Dimension preferredSize = new Dimension(1041, 131);
+        setPreferredSize(preferredSize);
+        setMaximumSize(preferredSize);
+        cargarDatos();
+    }
+
+    private void cargarDatos() {
+        String nombreAlumno = asistencia.getAlumno().getNombreCompleto();
+        this.lblCodigo.setText(String.valueOf(asistencia.getAlumno().getCodigo()));
+        this.lblNombre.setText(nombreAlumno);
+
+        TipoAsistenciaDTO[] tipos = TipoAsistenciaDTO.values();
+
+        for (int i = 0; i < 2; i++) { 
+            cbxAsistencia.addItem(tipos[i].toString());
+        }
+        cbxAsistencia.setSelectedIndex(0);
+
     }
 
     /**

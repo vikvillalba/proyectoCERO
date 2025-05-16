@@ -15,4 +15,6 @@ public interface IClasesDAO {
     
     public List<Clase> obtenerClases();
     
+    public Integer obtenerLimiteFaltas(Clase clase);
+    
 }
