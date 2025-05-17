@@ -8,35 +8,43 @@ import java.util.List;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public class Clase {
 
     private Integer codigo;
     private String nombre;
+    private Maestro maestro;
+    private String modalidad;
     private List<DayOfWeek> dias;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    private String maestro;
     private BigDecimal precio;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private int capacidadAlumnos;
+    private AulaClase aula;
+    private boolean activa;
     private final Integer LIMITE_FALTAS = 3;
 
 
     public Clase() {
     }
 
-    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+    public Clase(Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, boolean activa) {
         this.codigo = codigo;
         this.nombre = nombre;
+        this.maestro = maestro;
+        this.modalidad = modalidad;
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.maestro = maestro;
         this.precio = precio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.capacidadAlumnos = capacidadAlumnos;
+        this.aula = aula;
+        this.activa = activa;
     }
 
     public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
@@ -44,13 +52,12 @@ public class Clase {
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.maestro = maestro;
         this.precio = precio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
     }
 
-
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -65,6 +72,22 @@ public class Clase {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Maestro getMaestro() {
+        return maestro;
+    }
+
+    public void setMaestro(Maestro maestro) {
+        this.maestro = maestro;
+    }
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
     }
 
     public List<DayOfWeek> getDias() {
@@ -91,24 +114,12 @@ public class Clase {
         this.horaFin = horaFin;
     }
 
-    public String getMaestro() {
-        return maestro;
-    }
-
-    public void setMaestro(String maestro) {
-        this.maestro = maestro;
-    }
-
     public BigDecimal getPrecio() {
         return precio;
     }
 
     public void setPrecio(BigDecimal precio) {
         this.precio = precio;
-    }
-
-    public Integer getLIMITE_FALTAS() {
-        return LIMITE_FALTAS;
     }
 
     public LocalDate getFechaInicio() {
@@ -126,7 +137,34 @@ public class Clase {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
-    
-    
 
+    public int getCapacidadAlumnos() {
+        return capacidadAlumnos;
+    }
+
+    public void setCapacidadAlumnos(int capacidadAlumnos) {
+        this.capacidadAlumnos = capacidadAlumnos;
+    }
+
+    public AulaClase getAula() {
+        return aula;
+    }
+
+    public void setAula(AulaClase aula) {
+        this.aula = aula;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    public Integer getLIMITE_FALTAS() {
+        return LIMITE_FALTAS;
+    }
+    
+    
 }

@@ -8,7 +8,7 @@ package DTOs.GestionarClases;
  *
  * @author Jack Murrieta
  */
-class AulaClaseDTO {
+public class AulaClaseDTO {
     private String idAula;
     private String nombreAula;
 
@@ -36,5 +36,10 @@ class AulaClaseDTO {
         this.nombreAula = nombreAula;
     }
     
+    @Override
+    public String toString() {
+        return getNombreAula();
+    }
+
     
 }

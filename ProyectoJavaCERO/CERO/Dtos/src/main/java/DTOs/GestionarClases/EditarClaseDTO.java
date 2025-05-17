@@ -13,6 +13,7 @@ import java.time.LocalTime;
  */
 public class EditarClaseDTO {
     private String id;
+    private String nombreClase;
     private String nombreMaestro;
     private String modalidad;
     private String aulaNombre;
@@ -28,8 +29,9 @@ public class EditarClaseDTO {
     public EditarClaseDTO() {
     }
 
-    public EditarClaseDTO(String id, String nombreMaestro, String modalidad, String aulaNombre, String diasClase, String fechaInicio, String horaInicio, LocalDate fechaFin, LocalTime horaFin, int capacidad, String precio, boolean activa) {
+    public EditarClaseDTO(String id, String nombreClase, String nombreMaestro, String modalidad, String aulaNombre, String diasClase, String fechaInicio, String horaInicio, LocalDate fechaFin, LocalTime horaFin, int capacidad, String precio, boolean activa) {
         this.id = id;
+        this.nombreClase = nombreClase;
         this.nombreMaestro = nombreMaestro;
         this.modalidad = modalidad;
         this.aulaNombre = aulaNombre;
@@ -42,6 +44,31 @@ public class EditarClaseDTO {
         this.precio = precio;
         this.activa = activa;
     }
+
+    public EditarClaseDTO(String nombreClase, String nombreMaestro, String modalidad, String aulaNombre, String diasClase, String fechaInicio, String horaInicio, LocalDate fechaFin, LocalTime horaFin, int capacidad, String precio, boolean activa) {
+        this.nombreClase = nombreClase;
+        this.nombreMaestro = nombreMaestro;
+        this.modalidad = modalidad;
+        this.aulaNombre = aulaNombre;
+        this.diasClase = diasClase;
+        this.fechaInicio = fechaInicio;
+        this.horaInicio = horaInicio;
+        this.fechaFin = fechaFin;
+        this.horaFin = horaFin;
+        this.capacidad = capacidad;
+        this.precio = precio;
+        this.activa = activa;
+    }
+
+    public String getNombreClase() {
+        return nombreClase;
+    }
+
+    public void setNombreClase(String nombreClase) {
+        this.nombreClase = nombreClase;
+    }
+    
+    
 
     public String getId() {
         return id;

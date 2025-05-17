@@ -111,7 +111,7 @@ public class ContenidoBO implements IContenidoBO {
                                              c.getClase().getDias(),
                                              c.getClase().getHoraInicio(),
                                              c.getClase().getHoraFin(), 
-                                             c.getClase().getMaestro(),
+                                             c.getClase().getMaestro().getNombre(),
                                              c.getClase().getPrecio(),
                                              c.getClase().getFechaInicio(),
                                              c.getClase().getFechaFin())
