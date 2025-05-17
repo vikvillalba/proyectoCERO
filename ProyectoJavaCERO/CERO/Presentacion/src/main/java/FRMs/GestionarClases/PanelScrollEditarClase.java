@@ -46,7 +46,7 @@ public class PanelScrollEditarClase extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Registrar Clase");
+        jLabel1.setText("Editar Clase");
         add(jLabel1, java.awt.BorderLayout.PAGE_START);
         add(jScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
