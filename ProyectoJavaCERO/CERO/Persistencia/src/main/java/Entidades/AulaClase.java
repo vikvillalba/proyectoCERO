@@ -5,30 +5,31 @@
 package Entidades;
 
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Jack Murrieta
  */
 public class AulaClase {
-    private String id;
+    private ObjectId id;
     private String nombreAula;
     private List<Clase> clasesPresenciales;
 
-    public AulaClase(String id, String nombreAula, List<Clase> clasesPresenciales) {
+    public AulaClase() {
+    }
+
+    public AulaClase(ObjectId id, String nombreAula, List<Clase> clasesPresenciales) {
         this.id = id;
         this.nombreAula = nombreAula;
         this.clasesPresenciales = clasesPresenciales;
     }
 
-    public AulaClase() {
-    }
-
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -47,7 +48,6 @@ public class AulaClase {
     public void setClasesPresenciales(List<Clase> clasesPresenciales) {
         this.clasesPresenciales = clasesPresenciales;
     }
-    
-    
+
     
 }

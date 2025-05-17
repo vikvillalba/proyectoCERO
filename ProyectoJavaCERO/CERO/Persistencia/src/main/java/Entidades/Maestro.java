@@ -6,14 +6,15 @@ package Entidades;
 
 import java.time.LocalDate;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Jack Murrieta
  */
 public class Maestro {
-    private List<Clase> clasesImpartidad;
-    private Integer codigo;
+    
+    private ObjectId id;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String nombre;
@@ -21,10 +22,10 @@ public class Maestro {
     private LocalDate fechaNacimiento;
     private String correoElectronico;
     private String contrasena;
+    private List<Clase> clasesImpartidad;
 
-    public Maestro(List<Clase> clasesImpartidad, Integer codigo, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico, String contrasena) {
-        this.clasesImpartidad = clasesImpartidad;
-        this.codigo = codigo;
+    public Maestro(ObjectId id, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico, String contrasena, List<Clase> clasesImpartidad) {
+        this.id = id;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.nombre = nombre;
@@ -32,25 +33,18 @@ public class Maestro {
         this.fechaNacimiento = fechaNacimiento;
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
+        this.clasesImpartidad = clasesImpartidad;
     }
 
     public Maestro() {
     }
 
-    public List<Clase> getClasesImpartidad() {
-        return clasesImpartidad;
+    public ObjectId getId() {
+        return id;
     }
 
-    public void setClasesImpartidad(List<Clase> clasesImpartidad) {
-        this.clasesImpartidad = clasesImpartidad;
-    }
-
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getApellidoPaterno() {
@@ -107,6 +101,14 @@ public class Maestro {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public List<Clase> getClasesImpartidad() {
+        return clasesImpartidad;
+    }
+
+    public void setClasesImpartidad(List<Clase> clasesImpartidad) {
+        this.clasesImpartidad = clasesImpartidad;
     }
     
     

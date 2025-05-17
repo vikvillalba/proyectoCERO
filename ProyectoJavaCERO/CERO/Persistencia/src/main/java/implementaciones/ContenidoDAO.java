@@ -50,7 +50,7 @@ public class ContenidoDAO implements IContenidoDAO {
                                                         .filter(c -> c.getNombre() == nombre &&
                                                                      c.getAutor() == autor &&
                                                                      c.getFechaHora() == fechaHora &&
-                                                                     c.getClase().getCodigo() == clase.getCodigo())
+                                                                     c.getClase().getId()== clase.getId())
                                                         .collect(Collectors.toList());
             
             return contenidos;

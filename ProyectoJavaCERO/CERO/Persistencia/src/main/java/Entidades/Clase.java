@@ -5,6 +5,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class Clase {
 
-    private Integer codigo;
+    private ObjectId id;
     private String nombre;
     private Maestro maestro;
     private String modalidad;
@@ -27,12 +28,11 @@ public class Clase {
     private boolean activa;
     private final Integer LIMITE_FALTAS = 3;
 
-
     public Clase() {
     }
 
-    public Clase(Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, boolean activa) {
-        this.codigo = codigo;
+    public Clase(ObjectId id, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, boolean activa) {
+        this.id = id;
         this.nombre = nombre;
         this.maestro = maestro;
         this.modalidad = modalidad;
@@ -57,15 +57,15 @@ public class Clase {
         this.fechaFin = fechaFin;
     }
 
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
     
-    public Integer getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -165,6 +165,5 @@ public class Clase {
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
     }
-    
-    
+
 }
