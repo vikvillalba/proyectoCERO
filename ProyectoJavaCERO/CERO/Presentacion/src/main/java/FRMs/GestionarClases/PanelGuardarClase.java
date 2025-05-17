@@ -4,6 +4,7 @@
  */
 package FRMs.GestionarClases;
 
+import DTOs.GestionarClases.AulaClaseDTO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -17,7 +18,6 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import DTOs.GestionarClases.MaestroDTO;
-import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import java.time.ZoneId;
 import java.util.Date;

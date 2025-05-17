@@ -60,16 +60,6 @@ public class EditarClaseDTO {
         this.activa = activa;
     }
 
-    public String getNombreClase() {
-        return nombreClase;
-    }
-
-    public void setNombreClase(String nombreClase) {
-        this.nombreClase = nombreClase;
-    }
-    
-    
-
     public String getId() {
         return id;
     }
@@ -164,6 +154,14 @@ public class EditarClaseDTO {
 
     public void setActiva(boolean activa) {
         this.activa = activa;
+    }
+
+    public String getNombreClase() {
+        return nombreClase;
+    }
+
+    public void setNombreClase(String nombreClase) {
+        this.nombreClase = nombreClase;
     }
     
     

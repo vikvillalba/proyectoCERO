@@ -109,6 +109,9 @@ public class Maestro {
         this.contrasena = contrasena;
     }
     
+    public String getNombreCompleto(){
+        return nombre + " " + apellidoPaterno;
+    }
     
     
 }

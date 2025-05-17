@@ -26,6 +26,7 @@ public class Clase {
     private AulaClase aula;
     private boolean activa;
     private final Integer LIMITE_FALTAS = 3;
+    private String nombreMaestro;  // PROVISIONAL !!!!!!!
 
 
     public Clase() {
@@ -57,6 +58,31 @@ public class Clase {
         this.fechaFin = fechaFin;
     }
 
+    public Clase(Integer codigo, String nombre, Maestro maestro, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.maestro = maestro;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+
+    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, String nombreMaestro) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.nombreMaestro = nombreMaestro;
+    }
+
+    
     
     public Integer getCodigo() {
         return codigo;
@@ -165,6 +191,5 @@ public class Clase {
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
     }
-    
     
 }
