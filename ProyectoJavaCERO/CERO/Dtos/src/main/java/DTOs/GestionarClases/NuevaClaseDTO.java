@@ -18,11 +18,13 @@ public class NuevaClaseDTO {
     private MaestroDTO maestro;
     private String modalidad;
     private AulaClaseDTO aula;
+    
     private List<DayOfWeek> diasClase;
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    
     private int capacidadAlumnos;
     private double precio;
     private boolean activa;
@@ -140,6 +142,12 @@ public class NuevaClaseDTO {
     public void setActiva(boolean activa) {
         this.activa = activa;
     }
+
+    @Override
+    public String toString() {
+        return "NuevaClaseDTO{" + "nombreClase=" + nombreClase + ", maestro=" + maestro + ", modalidad=" + modalidad + ", aula=" + aula + ", diasClase=" + diasClase + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", capacidadAlumnos=" + capacidadAlumnos + ", precio=" + precio + ", activa=" + activa + '}';
+    }
+    
     
     
 }

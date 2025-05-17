@@ -18,8 +18,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.AulaClaseDTO;
+import DTOs.GestionarClases.NuevaClaseDTO;
 import java.time.ZoneId;
 import java.util.Date;
+import FRMs.GestionarClases.CustomHoraMinutoSpinner.Tipo;
+import java.time.LocalTime;
 
 /**
  *
@@ -65,24 +68,27 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         mapaDias.put(checkBoxDom, DayOfWeek.SUNDAY);
         
         //Configurar la lista con el chechBox
+        configurarComboxAulas(aulas);
+        configurarComboxMaestro(maestros);
+        configurarComboxModalidades();
         
     }
     
-    public void configurarComboxMaestro(List<MaestroDTO> maestros) {
+    private void configurarComboxMaestro(List<MaestroDTO> maestros) {
         comboxMaestro.removeAllItems();
         for (MaestroDTO maestro : maestros) {
-            comboxMaestro.addItem(maestro.toString()); // Agrega el objeto, no solo el nombre
+            comboxMaestro.addItem(maestro); // Agrega el objeto, no solo el nombre
         }
     }
     
-    public void configurarComboxAulas(List<AulaClaseDTO> aulas) {
+    private void configurarComboxAulas(List<AulaClaseDTO> aulas) {
         comboxAulas.removeAllItems();
         for (AulaClaseDTO aula : aulas) {
-            comboxAulas.addItem(aula.toString()); // Igual aquí
+            comboxAulas.addItem(aula); // Igual aquí
         }
     }
     
-    public void configurarComboxModalidades() {
+    private void configurarComboxModalidades() {
         comboxModalidad.removeAllItems();
         comboxModalidad.addItem("Presencial");
         comboxModalidad.addItem("Virtual");
@@ -137,20 +143,21 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblIP15 = new javax.swing.JLabel();
         lblIP16 = new javax.swing.JLabel();
         panelHoraInicio = new javax.swing.JPanel();
-        inicioHora = new CustomSpinner(CustomSpinner.Tipo.HORA);
+        spinnerHoraInicio = new FRMs.GestionarClases.CustomHoraMinutoSpinner(Tipo.HORA)
+        ;
         lblHora = new javax.swing.JLabel();
-        inicioMin = new CustomSpinner(CustomSpinner.Tipo.MINUTO);
+        spinnerMinutosInicio = new FRMs.GestionarClases.CustomHoraMinutoSpinner(FRMs.GestionarClases.CustomHoraMinutoSpinner.Tipo.MINUTO);
         panelHoraFin = new javax.swing.JPanel();
-        finHora = new CustomSpinner(CustomSpinner.Tipo.HORA);
+        spinnerHoraFin = new FRMs.GestionarClases.CustomHoraMinutoSpinner(Tipo.HORA);
         lblHora1 = new javax.swing.JLabel();
-        finMin = new CustomSpinner(CustomSpinner.Tipo.MINUTO);
+        spinnerMinutosFin = new FRMs.GestionarClases.CustomHoraMinutoSpinner(Tipo.MINUTO);
         lblIP17 = new javax.swing.JLabel();
         lblIP18 = new javax.swing.JLabel();
         panelCantidadPrecio = new javax.swing.JPanel();
         lblIP14 = new javax.swing.JLabel();
-        capacidad = new CustomSpinner(CustomSpinner.Tipo.HORA);
+        capacidad = new CustomCapacidadSpinner();
         lblIP19 = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JTextField();
+        spinnerPrecio = new CustomPrecioSpinner();
         btnGuardar = new javax.swing.JButton();
         btnRegresar2 = new javax.swing.JButton();
         panelAula = new javax.swing.JPanel();
@@ -169,9 +176,9 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblIP3.setText("Maestro:");
         panelDatosMaestro.add(lblIP3);
 
-        comboxMaestro.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        comboxMaestro.setFont(new java.awt.Font("Dialog", 1, 18));
         comboxMaestro.setForeground(new java.awt.Color(30, 47, 86));
-        comboxMaestro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboxMaestro.setModel(new javax.swing.DefaultComboBoxModel<>());
         comboxMaestro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboxMaestroActionPerformed(evt);
@@ -446,13 +453,13 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         panelHoraInicio.setOpaque(false);
         panelHoraInicio.setLayout(new java.awt.GridLayout(1, 2, 0, 30));
 
-        inicioHora.setFont(new java.awt.Font("Dialog", 1, 24));
-        inicioHora.addChangeListener(new javax.swing.event.ChangeListener() {
+        spinnerHoraInicio.setFont(new java.awt.Font("Dialog", 1, 24));
+        spinnerHoraInicio.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                inicioHoraStateChanged(evt);
+                spinnerHoraInicioStateChanged(evt);
             }
         });
-        panelHoraInicio.add(inicioHora);
+        panelHoraInicio.add(spinnerHoraInicio);
 
         lblHora.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         lblHora.setForeground(new java.awt.Color(30, 47, 86));
@@ -460,13 +467,13 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblHora.setText(":");
         panelHoraInicio.add(lblHora);
 
-        inicioMin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        inicioMin.addChangeListener(new javax.swing.event.ChangeListener() {
+        spinnerMinutosInicio.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        spinnerMinutosInicio.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                inicioMinStateChanged(evt);
+                spinnerMinutosInicioStateChanged(evt);
             }
         });
-        panelHoraInicio.add(inicioMin);
+        panelHoraInicio.add(spinnerMinutosInicio);
 
         add(panelHoraInicio);
         panelHoraInicio.setBounds(560, 450, 370, 50);
@@ -475,13 +482,13 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         panelHoraFin.setOpaque(false);
         panelHoraFin.setLayout(new java.awt.GridLayout(1, 2, 0, 30));
 
-        finHora.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        finHora.addChangeListener(new javax.swing.event.ChangeListener() {
+        spinnerHoraFin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        spinnerHoraFin.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                finHoraStateChanged(evt);
+                spinnerHoraFinStateChanged(evt);
             }
         });
-        panelHoraFin.add(finHora);
+        panelHoraFin.add(spinnerHoraFin);
 
         lblHora1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         lblHora1.setForeground(new java.awt.Color(30, 47, 86));
@@ -489,13 +496,13 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblHora1.setText(":");
         panelHoraFin.add(lblHora1);
 
-        finMin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        finMin.addChangeListener(new javax.swing.event.ChangeListener() {
+        spinnerMinutosFin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        spinnerMinutosFin.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                finMinStateChanged(evt);
+                spinnerMinutosFinStateChanged(evt);
             }
         });
-        panelHoraFin.add(finMin);
+        panelHoraFin.add(spinnerMinutosFin);
 
         add(panelHoraFin);
         panelHoraFin.setBounds(560, 730, 380, 50);
@@ -521,7 +528,7 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblIP14.setText("MAX.Alumnos:");
         panelCantidadPrecio.add(lblIP14);
 
-        capacidad.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        capacidad.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         capacidad.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 capacidadStateChanged(evt);
@@ -534,36 +541,38 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblIP19.setText("Precio:              $");
         panelCantidadPrecio.add(lblIP19);
 
-        txtPrecio.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        txtPrecio.setForeground(new java.awt.Color(30, 47, 86));
-        txtPrecio.setText("$$$");
-        txtPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtPrecioMouseClicked(evt);
+        spinnerPrecio.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        spinnerPrecio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinnerPrecioStateChanged(evt);
             }
         });
-        txtPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecioActionPerformed(evt);
-            }
-        });
-        panelCantidadPrecio.add(txtPrecio);
+        panelCantidadPrecio.add(spinnerPrecio);
 
         add(panelCantidadPrecio);
         panelCantidadPrecio.setBounds(40, 980, 300, 110);
 
-        btnGuardar.setText("Guardar Clase");
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnGuardar.png"))); // NOI18N
+        btnGuardar.setBorderPainted(false);
+        btnGuardar.setContentAreaFilled(false);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
         add(btnGuardar);
-        btnGuardar.setBounds(830, 1210, 220, 50);
+        btnGuardar.setBounds(860, 1190, 270, 70);
 
-        btnRegresar2.setText("Regresar");
+        btnRegresar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarClase.png"))); // NOI18N
+        btnRegresar2.setBorderPainted(false);
+        btnRegresar2.setContentAreaFilled(false);
+        btnRegresar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresar2ActionPerformed(evt);
+            }
+        });
         add(btnRegresar2);
-        btnRegresar2.setBounds(60, 1200, 220, 50);
+        btnRegresar2.setBounds(60, 1180, 270, 80);
 
         panelAula.setBackground(new Color(0, 0, 0, 0));
         panelAula.setOpaque(false);
@@ -575,9 +584,9 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         lblIP20.setText("Aula:");
         panelAula.add(lblIP20);
 
-        comboxAulas.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        comboxAulas.setFont(new java.awt.Font("Dialog", 1, 18));
         comboxAulas.setForeground(new java.awt.Color(30, 47, 86));
-        comboxAulas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboxAulas.setModel(new javax.swing.DefaultComboBoxModel<>());
         comboxAulas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboxAulasActionPerformed(evt);
@@ -642,35 +651,31 @@ public class PanelGuardarClase extends javax.swing.JPanel {
                 LocalDate fechaFin = fechaSeleccionada.toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate();
-                System.out.println("Fecha inicio: " + fechaInicio);
+                System.out.println("Fecha Fin: " + fechaFin);
                 this.fechaFin = fechaFin;
             }
         }
     }//GEN-LAST:event_jCalendarFechaFinPropertyChange
 
-    private void inicioHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inicioHoraStateChanged
+    private void spinnerHoraInicioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerHoraInicioStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_inicioHoraStateChanged
+    }//GEN-LAST:event_spinnerHoraInicioStateChanged
 
-    private void inicioMinStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_inicioMinStateChanged
+    private void spinnerMinutosInicioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerMinutosInicioStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_inicioMinStateChanged
+    }//GEN-LAST:event_spinnerMinutosInicioStateChanged
 
-    private void finHoraStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_finHoraStateChanged
+    private void spinnerHoraFinStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerHoraFinStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_finHoraStateChanged
+    }//GEN-LAST:event_spinnerHoraFinStateChanged
 
-    private void finMinStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_finMinStateChanged
+    private void spinnerMinutosFinStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerMinutosFinStateChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_finMinStateChanged
+    }//GEN-LAST:event_spinnerMinutosFinStateChanged
 
     private void capacidadStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_capacidadStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_capacidadStateChanged
-
-    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
@@ -684,42 +689,46 @@ public class PanelGuardarClase extends javax.swing.JPanel {
                 
 //Datos
         //Nombre clase 
-        String clase = txtNomClase.getText().trim();
+        String nombreClase = txtNomClase.getText().trim();
         //Maestro
         MaestroDTO maestroSeleccionado = (MaestroDTO) comboxMaestro.getSelectedItem();
         //Modalidad 
         String modalidadSeleccionada = (String) comboxModalidad.getSelectedItem();
         //Aula
         AulaClaseDTO aulaSeleccionada = (AulaClaseDTO) comboxAulas.getSelectedItem();
+
+        //Horas
+        // Obtener hora y minuto desde los spinners personalizados
+        int horaInicio = (int) spinnerHoraInicio.getValue();
+        int minutoInicio = (int) spinnerMinutosInicio.getValue();
+
+// Crear un objeto LocalTime
+        LocalTime horaInicioCompleta = LocalTime.of(horaInicio, minutoInicio);
         
-        //Fecha y Hora Inicio
-        String txtFechaInicio = this.txtFechaInicio.getText(); // Obtienes el texto del campo
-        String txtHoraInicio = this.txtHoraInicio.getText();
-        //Fecha y Hora Fin
-        String txtFechaFin = this.txtFechaFin.getText(); // Obtienes el texto del campo
-        String txtHoraFin = this.txtHoraFin.getText();
+        //Hora FIN
+        int horaFin = (int) spinnerHoraFin.getValue();
+        int minutoFin = (int) spinnerMinutosFin.getValue();
+
+        LocalTime horaFinCompleta = LocalTime.of(horaFin, minutoFin);
         
         //capacidad y Precio
         int capacidad = (int) this.capacidad.getValue();
-        String precio = txtPrecio.getText().trim();
+        double precio = (double) spinnerPrecio.getValue();
         
-        ClaseGuardarDTO claseDto = new ClaseGuardarDTO(clase, maestro, modalidad, diasSeleccionados, txtFechaInicio, txtHoraInicio, txtFechaFin, txtHoraFin, capacidad, precio);
+        //crear objeto dto
+        NuevaClaseDTO nuevaClase = new NuevaClaseDTO(
+                nombreClase, maestroSeleccionado, modalidadSeleccionada, 
+                aulaSeleccionada, diasSeleccionados, 
+                horaInicioCompleta, horaFinCompleta, 
+                fechaInicio, fechaFin, capacidad, precio, true);
         
-        System.out.println("GUARDAR CLASE");
-        System.out.println(claseDto.toString());
-        
-        
+        System.out.println(nuevaClase.toString());
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtNomClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNomClaseMouseClicked
         // TODO add your handling code here:
         txtNomClase.setText("");
     }//GEN-LAST:event_txtNomClaseMouseClicked
-
-    private void txtPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPrecioMouseClicked
-        // TODO add your handling code here:
-        txtPrecio.setText("");
-    }//GEN-LAST:event_txtPrecioMouseClicked
 
     private void comboxModalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxModalidadActionPerformed
         // TODO add your handling code here:
@@ -728,6 +737,15 @@ public class PanelGuardarClase extends javax.swing.JPanel {
     private void comboxAulasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxAulasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboxAulasActionPerformed
+
+    private void spinnerPrecioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerPrecioStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_spinnerPrecioStateChanged
+
+    private void btnRegresar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar2ActionPerformed
+        // TODO add your handling code here:
+        //Regresar a administracion Clases
+    }//GEN-LAST:event_btnRegresar2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -742,14 +760,10 @@ public class PanelGuardarClase extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkBoxMie;
     private javax.swing.JCheckBox checkBoxSab;
     private javax.swing.JCheckBox checkBoxVie;
-    private javax.swing.JComboBox<String> comboxAulas;
-    private javax.swing.JComboBox<String> comboxMaestro;
+    private javax.swing.JComboBox<AulaClaseDTO> comboxAulas;
+    private javax.swing.JComboBox<MaestroDTO> comboxMaestro;
     private javax.swing.JComboBox<String> comboxModalidad;
     private javax.swing.JPanel diasClasesPanel;
-    private javax.swing.JSpinner finHora;
-    private javax.swing.JSpinner finMin;
-    private javax.swing.JSpinner inicioHora;
-    private javax.swing.JSpinner inicioMin;
     private com.toedter.calendar.JCalendar jCalendarFechaFin;
     private com.toedter.calendar.JCalendar jCalendarFechaInicio;
     private javax.swing.JLabel lblHora;
@@ -782,7 +796,11 @@ public class PanelGuardarClase extends javax.swing.JPanel {
     private javax.swing.JPanel panelHoraFin;
     private javax.swing.JPanel panelHoraInicio;
     private javax.swing.JPanel panelModalidad;
+    private javax.swing.JSpinner spinnerHoraFin;
+    private javax.swing.JSpinner spinnerHoraInicio;
+    private javax.swing.JSpinner spinnerMinutosFin;
+    private javax.swing.JSpinner spinnerMinutosInicio;
+    private javax.swing.JSpinner spinnerPrecio;
     private javax.swing.JTextField txtNomClase;
-    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }
