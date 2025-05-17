@@ -47,6 +47,17 @@ public class Clase {
         this.activa = activa;
     }
 
+    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.precio = precio;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -149,6 +160,10 @@ public class Clase {
 
     public void setActiva(boolean activa) {
         this.activa = activa;
+    }
+
+    public Integer getLIMITE_FALTAS() {
+        return LIMITE_FALTAS;
     }
     
     

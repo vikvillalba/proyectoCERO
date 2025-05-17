@@ -34,7 +34,7 @@ public class ClasesBO implements IClasesBO {
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getMaestro(),
+                    clase.getMaestro().getNombre(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()
@@ -58,7 +58,7 @@ public class ClasesBO implements IClasesBO {
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getMaestro(),
+                    clase.getMaestro().getNombre(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()
