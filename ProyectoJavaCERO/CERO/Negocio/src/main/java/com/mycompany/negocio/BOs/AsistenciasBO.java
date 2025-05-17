@@ -42,17 +42,7 @@ public class AsistenciasBO implements IAsistenciasBO {
         ClaseDTO claseDTO = nuevaAsistencia.getClase();
         AlumnoDTO alumnoDTO = nuevaAsistencia.getAlumno();
 
-        Clase clase = new Clase(
-                claseDTO.getCodigo(),
-                claseDTO.getNombre(),
-                claseDTO.getDias(),
-                claseDTO.getHoraInicio(),
-                claseDTO.getHoraFin(),
-                claseDTO.getMaestro(),
-                claseDTO.getPrecio(),
-                claseDTO.getFechaInicio(),
-                claseDTO.getFechaFin()
-        );
+        Clase clase = clasesDAO.buscarClase(claseDTO.getCodigo());
 
         Alumno alumno = new Alumno(
                 alumnoDTO.getCodigo(),
@@ -78,17 +68,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public AsistenciaDTO obtenerAsistenciaAlumnoClase(AlumnoDTO alumnoDTO, ClaseDTO claseDTO) {
-        Clase clase = new Clase(
-                claseDTO.getCodigo(),
-                claseDTO.getNombre(),
-                claseDTO.getDias(),
-                claseDTO.getHoraInicio(),
-                claseDTO.getHoraFin(),
-                claseDTO.getMaestro(),
-                claseDTO.getPrecio(),
-                claseDTO.getFechaInicio(),
-                claseDTO.getFechaFin()
-        );
+        Clase clase = clasesDAO.buscarClase(claseDTO.getCodigo());
 
         Alumno alumno = new Alumno(
                 alumnoDTO.getCodigo(),
@@ -110,17 +90,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO claseDTO, LocalDate diaClase) {
-        Clase clase = new Clase(
-                claseDTO.getCodigo(),
-                claseDTO.getNombre(),
-                claseDTO.getDias(),
-                claseDTO.getHoraInicio(),
-                claseDTO.getHoraFin(),
-                claseDTO.getMaestro(),
-                claseDTO.getPrecio(),
-                claseDTO.getFechaInicio(),
-                claseDTO.getFechaFin()
-        );
+        Clase clase = this.clasesDAO.buscarClase(claseDTO.getCodigo());
 
         List<Asistencia> asistencias = this.asistenciasDAO.obtenerAsistenciasAlumnos(clase, diaClase);
         if (asistencias == null || asistencias.isEmpty()) {
@@ -239,7 +209,7 @@ public class AsistenciasBO implements IAsistenciasBO {
                     asistencia.getClase().getDias(),
                     asistencia.getClase().getHoraInicio(),
                     asistencia.getClase().getHoraFin(),
-                    asistencia.getClase().getMaestro(),
+                    asistencia.getClase().getMaestro().getNombreCompleto(),
                     asistencia.getClase().getPrecio(),
                     asistencia.getClase().getFechaInicio(),
                     asistencia.getClase().getFechaFin()

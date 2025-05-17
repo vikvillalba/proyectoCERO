@@ -17,7 +17,6 @@ import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import DTOs.GestionarClases.MaestroDTO;
-import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import java.time.ZoneId;

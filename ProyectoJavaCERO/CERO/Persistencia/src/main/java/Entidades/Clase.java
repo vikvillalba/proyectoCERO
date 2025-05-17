@@ -27,6 +27,7 @@ public class Clase {
     private AulaClase aula;
     private boolean activa;
     private final Integer LIMITE_FALTAS = 3;
+    private String nombreMaestro;  // PROVISIONAL !!!!!!!
 
     public Clase() {
     }
@@ -64,7 +65,6 @@ public class Clase {
     public void setId(ObjectId id) {
         this.id = id;
     }
-
     
     public String getNombre() {
         return nombre;
@@ -165,5 +165,4 @@ public class Clase {
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
     }
-
 }

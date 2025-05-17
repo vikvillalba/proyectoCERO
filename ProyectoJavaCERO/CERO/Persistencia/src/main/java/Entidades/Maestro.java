@@ -111,6 +111,9 @@ public class Maestro {
         this.clasesImpartidad = clasesImpartidad;
     }
     
+    public String getNombreCompleto(){
+        return nombre + " " + apellidoPaterno;
+    }
     
     
 }

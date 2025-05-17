@@ -132,10 +132,10 @@ public class ContenidoBO implements IContenidoBO {
                  new Clase(
                          contenido.getClase().getCodigo(),
                          contenido.getClase().getNombre(),
+                         contenido.getClase().getMaestro(),
                          contenido.getClase().getDias(),
                          contenido.getClase().getHoraInicio(),
                          contenido.getClase().getHoraFin(), 
-                         contenido.getClase().getMaestro(),
                          contenido.getClase().getPrecio(),
                          contenido.getClase().getFechaInicio(),
                          contenido.getClase().getFechaFin())
