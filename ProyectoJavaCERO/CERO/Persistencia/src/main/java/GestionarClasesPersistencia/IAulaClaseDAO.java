@@ -6,6 +6,7 @@ package GestionarClasesPersistencia;
 
 import Entidades.AulaClase;
 import Entidades.Clase;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public interface IAulaClaseDAO {
     public List<Clase> obtenerAulaClases(AulaClase aula);
-    public void agregarClasePresencial(Clase clase);
+    public void agregarClasePresencial(Clase clase)throws PersistenciaException;
     //buscar espacio Horario Metodo
+    public List<AulaClase> obtenerAulas();
 }

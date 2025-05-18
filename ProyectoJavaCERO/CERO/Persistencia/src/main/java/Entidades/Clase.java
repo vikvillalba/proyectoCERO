@@ -14,48 +14,59 @@ import org.bson.types.ObjectId;
 public class Clase {
 
     private ObjectId id;
+    private Integer codigo;
     private String nombre;
     private Maestro maestro;
     private String modalidad;
     private List<DayOfWeek> dias;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    private BigDecimal precio;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int capacidadAlumnos;
     private AulaClase aula;
-    private boolean activa;
     private final Integer LIMITE_FALTAS = 3;
     private String nombreMaestro;  // PROVISIONAL !!!!!!!
+    private BigDecimal precio;
+    private boolean activa;
 
     public Clase() {
     }
 
-    public Clase(ObjectId id, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, boolean activa) {
-        this.id = id;
+    //nueva clase
+    public Clase(Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, String nombreMaestro, BigDecimal precio, boolean activa) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.maestro = maestro;
         this.modalidad = modalidad;
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.precio = precio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.capacidadAlumnos = capacidadAlumnos;
         this.aula = aula;
+        this.nombreMaestro = nombreMaestro;
+        this.precio = precio;
         this.activa = activa;
     }
 
-    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+    //obtener clase
+    public Clase(ObjectId id, Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, BigDecimal precio, boolean activa) {
+        this.id = id;
+        this.codigo = codigo;
         this.nombre = nombre;
+        this.maestro = maestro;
+        this.modalidad = modalidad;
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
-        this.precio = precio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.capacidadAlumnos = capacidadAlumnos;
+        this.aula = aula;
+        this.precio = precio;
+        this.activa = activa;
     }
 
     public ObjectId getId() {
@@ -65,7 +76,15 @@ public class Clase {
     public void setId(ObjectId id) {
         this.id = id;
     }
-    
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -114,14 +133,6 @@ public class Clase {
         this.horaFin = horaFin;
     }
 
-    public BigDecimal getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
-    }
-
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
@@ -154,6 +165,22 @@ public class Clase {
         this.aula = aula;
     }
 
+    public String getNombreMaestro() {
+        return nombreMaestro;
+    }
+
+    public void setNombreMaestro(String nombreMaestro) {
+        this.nombreMaestro = nombreMaestro;
+    }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
     public boolean isActiva() {
         return activa;
     }
@@ -165,4 +192,5 @@ public class Clase {
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
     }
+
 }

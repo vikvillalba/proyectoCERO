@@ -22,9 +22,9 @@ public class Maestro {
     private LocalDate fechaNacimiento;
     private String correoElectronico;
     private String contrasena;
-    private List<Clase> clasesImpartidad;
+    private List<ObjectId> clasesImpartidad;
 
-    public Maestro(ObjectId id, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico, String contrasena, List<Clase> clasesImpartidad) {
+    public Maestro(ObjectId id, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico, String contrasena, List<ObjectId> clasesImpartidad) {
         this.id = id;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -36,6 +36,8 @@ public class Maestro {
         this.clasesImpartidad = clasesImpartidad;
     }
 
+    
+    
     public Maestro() {
     }
 
@@ -103,16 +105,12 @@ public class Maestro {
         this.contrasena = contrasena;
     }
 
-    public List<Clase> getClasesImpartidad() {
+    public List<ObjectId> getClasesImpartidad() {
         return clasesImpartidad;
     }
 
-    public void setClasesImpartidad(List<Clase> clasesImpartidad) {
+    public void setClasesImpartidad(List<ObjectId> clasesImpartidad) {
         this.clasesImpartidad = clasesImpartidad;
-    }
-    
-    public String getNombreCompleto(){
-        return nombre + " " + apellidoPaterno;
     }
     
     

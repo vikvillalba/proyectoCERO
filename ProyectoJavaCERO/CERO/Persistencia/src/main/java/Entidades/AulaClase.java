@@ -14,12 +14,12 @@ import org.bson.types.ObjectId;
 public class AulaClase {
     private ObjectId id;
     private String nombreAula;
-    private List<Clase> clasesPresenciales;
+    private List<ObjectId> clasesPresenciales;
 
     public AulaClase() {
     }
 
-    public AulaClase(ObjectId id, String nombreAula, List<Clase> clasesPresenciales) {
+    public AulaClase(ObjectId id, String nombreAula, List<ObjectId> clasesPresenciales) {
         this.id = id;
         this.nombreAula = nombreAula;
         this.clasesPresenciales = clasesPresenciales;
@@ -41,11 +41,11 @@ public class AulaClase {
         this.nombreAula = nombreAula;
     }
 
-    public List<Clase> getClasesPresenciales() {
+    public List<ObjectId> getClasesPresenciales() {
         return clasesPresenciales;
     }
 
-    public void setClasesPresenciales(List<Clase> clasesPresenciales) {
+    public void setClasesPresenciales(List<ObjectId> clasesPresenciales) {
         this.clasesPresenciales = clasesPresenciales;
     }
 
