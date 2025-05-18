@@ -70,8 +70,8 @@ public class ClaseDAO implements IClaseDAO {
     }
 
     @Override
-    public Clase buscarClase(ObjectId id) {
-        return coleccion.find(eq("_id", id)).first();
+    public Clase buscarClase(Integer codigo) {
+        return coleccion.find(eq("codigo", codigo)).first();
     }
 
     @Override

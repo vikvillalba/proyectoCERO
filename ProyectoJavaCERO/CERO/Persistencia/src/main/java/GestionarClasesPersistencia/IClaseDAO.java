@@ -33,7 +33,7 @@ public interface IClaseDAO {
     //Metodos para CU_INscribirClase
     public List<Clase> obtenerClasesPorNombre(String nombreClase);
 
-    public Clase buscarClase(ObjectId id);
+    public Clase buscarClase(Integer codigo);
 
     public Integer obtenerLimiteFaltas(Clase clase);
 

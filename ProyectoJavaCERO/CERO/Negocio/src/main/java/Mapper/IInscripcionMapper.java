@@ -2,17 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package GestionarClasesBO;
+package Mapper;
 
-import Entidades.Clase;
+import DTOs.GestionarClases.AlumnoInscritoDTO;
 import Entidades.Inscripcion;
-import java.util.List;
 
 /**
  *
  * @author Jack Murrieta
  */
-public interface IInscripcionBO {
-    public List<Inscripcion> obtenerListaInscritosClase(Clase clase);
+public interface IInscripcionMapper {
+    public AlumnoInscritoDTO convertirAlumnoInscritoDTO(Inscripcion inscripcion);
     
 }

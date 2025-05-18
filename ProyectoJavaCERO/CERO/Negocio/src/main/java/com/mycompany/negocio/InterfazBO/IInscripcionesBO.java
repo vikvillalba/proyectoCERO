@@ -1,5 +1,7 @@
 package com.mycompany.negocio.InterfazBO;
 
+import Entidades.Clase;
+import Entidades.Inscripcion;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
@@ -17,4 +19,6 @@ public interface IInscripcionesBO {
     public List<InscripcionDTO> obtenerInscripcionesAlumno(AlumnoDTO alumnoDTO) throws NegocioException;
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase)throws NegocioException;
     
+    //Posible metodo 
+    //public List<Inscripcion> obtenerListaInscritosClase(Clase clase);
 }

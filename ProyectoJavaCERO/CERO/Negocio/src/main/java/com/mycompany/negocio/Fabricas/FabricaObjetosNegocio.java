@@ -1,15 +1,15 @@
 package com.mycompany.negocio.Fabricas;
 
 import implementaciones.AlumnosDAO;
-import implementaciones.ClasesDAO;
 import implementaciones.InscripcionesDAO;
 import implementaciones.PagosDAO;
 import DAOs.IAlumnosDAO;
 import DAOs.IAsistenciasDAO;
-import DAOs.IClasesDAO;
 import DAOs.IContenidoDAO;
 import DAOs.IInscripcionesDAO;
 import DAOs.IPagosDAO;
+import GestionarClasesPersistencia.ClaseDAO;
+import GestionarClasesPersistencia.IClaseDAO;
 import com.mycompany.negocio.BOs.AlumnosBO;
 import com.mycompany.negocio.BOs.AsistenciasBO;
 import com.mycompany.negocio.BOs.ClasesBO;
@@ -40,7 +40,7 @@ public class FabricaObjetosNegocio {
     }
 
     public static IClasesBO obtenerClasesBO() {
-        IClasesDAO dao = new ClasesDAO();
+        IClaseDAO dao =new ClaseDAO();
         IClasesBO bo = new ClasesBO(dao);
         return bo;
     }
@@ -59,7 +59,7 @@ public class FabricaObjetosNegocio {
     
     public static IAsistenciasBO obtenerAsistenciasBO(){
         IAsistenciasDAO asistenciasDAO = new AsistenciasDAO();
-        IClasesDAO clasesDAO = new ClasesDAO();
+        IClaseDAO clasesDAO = new ClaseDAO();
         IAlumnosDAO alumnosDAO = new AlumnosDAO();
         IAsistenciasBO bo = new AsistenciasBO(asistenciasDAO, clasesDAO, alumnosDAO);
         return bo;

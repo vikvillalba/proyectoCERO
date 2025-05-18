@@ -14,6 +14,7 @@ import java.util.List;
  * @author Jack Murrieta
  */
 public class NuevaClaseDTO {
+    private Integer codigo;
     private String nombreClase;
     private MaestroDTO maestro;
     private String modalidad;
@@ -29,7 +30,8 @@ public class NuevaClaseDTO {
     private double precio;
     private boolean activa;
 
-    public NuevaClaseDTO(String nombreClase, MaestroDTO maestro, String modalidad, AulaClaseDTO aula, List<DayOfWeek> diasClase, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, double precio, boolean activa) {
+    public NuevaClaseDTO(Integer codigo,String nombreClase, MaestroDTO maestro, String modalidad, AulaClaseDTO aula, List<DayOfWeek> diasClase, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, double precio, boolean activa) {
+        this.codigo = codigo;
         this.nombreClase = nombreClase;
         this.maestro = maestro;
         this.modalidad = modalidad;
@@ -47,6 +49,15 @@ public class NuevaClaseDTO {
     public NuevaClaseDTO() {
     }
 
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    
     public String getNombreClase() {
         return nombreClase;
     }

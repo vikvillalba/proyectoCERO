@@ -2,12 +2,12 @@ package com.mycompany.negocio.BOs;
 
 import DAOs.IAlumnosDAO;
 import DAOs.IAsistenciasDAO;
-import DAOs.IClasesDAO;
 import Entidades.Alumno;
 import Entidades.Asistencia;
 import Entidades.Clase;
 import Entidades.Justificante;
 import Entidades.TipoAsistencia;
+import GestionarClasesPersistencia.IClaseDAO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -28,10 +28,10 @@ import java.util.List;
 public class AsistenciasBO implements IAsistenciasBO {
 
     private IAsistenciasDAO asistenciasDAO;
-    private IClasesDAO clasesDAO;
+    private IClaseDAO clasesDAO;
     private IAlumnosDAO alumnosDAO;
 
-    public AsistenciasBO(IAsistenciasDAO asistenciasDAO, IClasesDAO clasesDAO, IAlumnosDAO alumnosDAO) {
+    public AsistenciasBO(IAsistenciasDAO asistenciasDAO, IClaseDAO clasesDAO, IAlumnosDAO alumnosDAO) {
         this.asistenciasDAO = asistenciasDAO;
         this.clasesDAO = clasesDAO;
         this.alumnosDAO = alumnosDAO;

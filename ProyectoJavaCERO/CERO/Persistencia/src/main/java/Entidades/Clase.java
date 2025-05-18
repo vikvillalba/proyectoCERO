@@ -34,7 +34,7 @@ public class Clase {
     }
 
     //nueva clase
-    public Clase(Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, String nombreMaestro, BigDecimal precio, boolean activa) {
+    public Clase(Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, BigDecimal precio, boolean activa) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.maestro = maestro;
@@ -46,7 +46,6 @@ public class Clase {
         this.fechaFin = fechaFin;
         this.capacidadAlumnos = capacidadAlumnos;
         this.aula = aula;
-        this.nombreMaestro = nombreMaestro;
         this.precio = precio;
         this.activa = activa;
     }
@@ -68,6 +67,57 @@ public class Clase {
         this.precio = precio;
         this.activa = activa;
     }
+
+    //Clase para CU_Contenidos
+    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.nombreMaestro = maestro;
+        this.precio = precio;
+    }
+
+    public Clase(int codigo, String nombre, String maestro, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.nombreMaestro = maestro;
+        this.precio = precio;
+    }
+
+    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, String nombreMaestro, BigDecimal precio) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.nombreMaestro = nombreMaestro;
+        this.precio = precio;
+    }
+
+    //Clase para Inscripcion
+    public Clase(int codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, String maestro) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.nombreMaestro = maestro;
+        this.precio = precio;
+    }
+
+    
 
     public ObjectId getId() {
         return id;

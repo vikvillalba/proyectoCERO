@@ -112,6 +112,11 @@ public class Maestro {
     public void setClasesImpartidad(List<ObjectId> clasesImpartidad) {
         this.clasesImpartidad = clasesImpartidad;
     }
+
+    public String getNombreCompleto() {
+        String nombreCompleto = nombre+""+apellidoPaterno+""+apellidoMaterno;
+        return nombreCompleto;
+    }
     
     
 }

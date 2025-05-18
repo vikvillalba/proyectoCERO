@@ -12,7 +12,8 @@ import java.time.LocalTime;
  * @author Jack Murrieta
  */
 public class EditarClaseDTO {
-    private String id;
+
+    private Integer codigo;
     private String nombreClase;
     private String nombreMaestro;
     private String modalidad;
@@ -29,8 +30,8 @@ public class EditarClaseDTO {
     public EditarClaseDTO() {
     }
 
-    public EditarClaseDTO(String id, String nombreClase, String nombreMaestro, String modalidad, String aulaNombre, String diasClase, String fechaInicio, String horaInicio, LocalDate fechaFin, LocalTime horaFin, int capacidad, String precio, boolean activa) {
-        this.id = id;
+    public EditarClaseDTO(Integer codigo, String nombreClase, String nombreMaestro, String modalidad, String aulaNombre, String diasClase, String fechaInicio, String horaInicio, LocalDate fechaFin, LocalTime horaFin, int capacidad, String precio, boolean activa) {
+        this.codigo = codigo;
         this.nombreClase = nombreClase;
         this.nombreMaestro = nombreMaestro;
         this.modalidad = modalidad;
@@ -60,12 +61,12 @@ public class EditarClaseDTO {
         this.activa = activa;
     }
 
-    public String getId() {
-        return id;
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombreMaestro() {
@@ -163,6 +164,5 @@ public class EditarClaseDTO {
     public void setNombreClase(String nombreClase) {
         this.nombreClase = nombreClase;
     }
-    
-    
+
 }

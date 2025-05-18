@@ -9,7 +9,7 @@ package DTOs.GestionarClases;
  * @author Jack Murrieta
  */
 public class ClaseListaDTO {
-    private String id;
+    private Integer codigo;
     private String nombreClase;
     private String horario;
     private String nombreMaestro;
@@ -18,8 +18,8 @@ public class ClaseListaDTO {
     private String nombreAula;
     private boolean activa;
 
-    public ClaseListaDTO(String id, String nombreClase, String horario, String nombreMaestro, int cupo, String periodo, String nombreAula, boolean activa) {
-        this.id = id;
+    public ClaseListaDTO(Integer codigo, String nombreClase, String horario, String nombreMaestro, int cupo, String periodo, String nombreAula, boolean activa) {
+        this.codigo = codigo;
         this.nombreClase = nombreClase;
         this.horario = horario;
         this.nombreMaestro = nombreMaestro;
@@ -29,15 +29,12 @@ public class ClaseListaDTO {
         this.activa = activa;
     }
 
-    public ClaseListaDTO() {
+    public Integer getCodigo() {
+        return codigo;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombreClase() {
@@ -95,8 +92,6 @@ public class ClaseListaDTO {
     public void setActiva(boolean activa) {
         this.activa = activa;
     }
-    
-    
     
     
 }

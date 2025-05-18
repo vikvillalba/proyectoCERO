@@ -1,0 +1,25 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+package Mapper;
+
+import DTOs.GestionarClases.ClaseListaDTO;
+import DTOs.GestionarClases.EditarClaseDTO;
+import DTOs.GestionarClases.NuevaClaseDTO;
+import Entidades.AulaClase;
+import Entidades.Clase;
+import Entidades.Maestro;
+
+/**
+ *
+ * @author Jack Murrieta
+ */
+public interface IClaseMapper {
+    
+    public Clase convertirClaseEntidad(NuevaClaseDTO nuevaClase,Maestro maestro, AulaClase aula);
+    
+    public ClaseListaDTO convertirClaseListaDTO(Clase clase);
+    public EditarClaseDTO convertirEditarClase(Clase clase);
+    //Metodo para obtener un editarClase y convertirlo en entidad clase
+}
