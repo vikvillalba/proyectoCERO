@@ -28,7 +28,7 @@ public class ClasesDAO implements IClasesDAO {
 
     public ClasesDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
-        this.coleccion = db.getCollection("Clase", Clase.class);
+        this.coleccion = db.getCollection("Clases", Clase.class);
     }
 
     @Override
@@ -89,5 +89,10 @@ public class ClasesDAO implements IClasesDAO {
     public Integer obtenerLimiteFaltas(Clase clase) {
         Clase claseEncontrada = coleccion.find(eq("_id", clase.getId())).first();
         return (claseEncontrada != null) ? claseEncontrada.getLIMITE_FALTAS() : null;
+    }
+
+    @Override
+    public Clase buscarClaseCodigoInteger(Integer codigo) {
+        return coleccion.find(eq("codigo", codigo)).first();
     }
 }

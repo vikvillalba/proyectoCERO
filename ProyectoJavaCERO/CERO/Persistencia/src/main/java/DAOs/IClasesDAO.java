@@ -31,6 +31,8 @@ public interface IClasesDAO {
     public List<Clase> obtenerListaClasesMaestro(Maestro maestro);
 
     public List<Clase> obtenerListaClasesAula(AulaClase aula);
+    
+    public Clase buscarClaseCodigoInteger(Integer codigo);
 
     //Metodos para CU_INscribirClase
     public List<Clase> obtenerClasesPorNombre(String nombreClase);

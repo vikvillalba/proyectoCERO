@@ -16,6 +16,7 @@ import com.mycompany.negocio.InterfazBO.IAulaBO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
 import com.mycompany.negocio.excepciones.NegocioException;
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -120,24 +121,29 @@ public class ClasesBO implements IClasesBO {
 
     @Override
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException {
-        //validar existencia de una clase similar
-//        List<Clase> clasesMaestroImpartidas = obtenerListaClasesMaestro(nuevaClase.getMaestro());
-//        List<Clase> clasesAulaPresenciales = obtenerListaClasesAula(nuevaClase.getAula());
-//        maestroBO.validarDisponibilidadHorarioMaestro(nuevaClase, clasesMaestroImpartidas);
-//        //si la clase es virtual o no necesita de un aulas
-//        if (nuevaClase.getAula() == null) {
-//            aulaBO.validarDisponibilidadHorarioAula(nuevaClase, clasesAulaPresenciales);
-//        }
-        //agregarle un contador para el interger de codigo de clase
-        
-        //validar que los horarios no se empalmen con los de las clases presenciales y clases impartidas del maestro seleccionado
-        //registrar clase
+        AulaClase aulaEncontrada = null;
+        if (nuevaClase.getAula() != null) {
+            String id = nuevaClase.getAula().getIdAula();
+            ObjectId idAula = new ObjectId(id);
+            AulaClase aulaEntity = new AulaClase();
+            aulaEntity.setId(idAula);
+            AulaClase aluaEncontrada = aulaBO.buscarAulaClaseID(aulaEntity);
+        }
+
+        String id = nuevaClase.getMaestro().getId();
+        ObjectId idMaestro = new ObjectId(id);
+        Maestro maestroEntity = new Maestro();
+        maestroEntity.setId(idMaestro);
+        Maestro maestroEncontrado = maestroBO.buscarMaestroID(maestroEntity);
+
+        Clase clase = claseMapper.convertirClaseEntidad(nuevaClase, maestroEncontrado, aulaEncontrada);
+        clasesDAO.registrarNuevaClase(clase);
     }
 
 
     @Override
     public void editarClase(EditarClaseDTO editarClase) {
-        Clase claseEncontrada = clasesDAO.buscarClase(editarClase.getCodigo());
+        Clase claseEncontrada = clasesDAO.buscarClaseCodigoInteger(editarClase.getCodigo());
         //actualiza activa
         claseEncontrada.setActiva(editarClase.isActiva());
         //actualiza la capacidad
@@ -242,7 +248,7 @@ public class ClasesBO implements IClasesBO {
 
     @Override
     public void eliminarClase(ClaseListaDTO clase) {
-        Clase claseEncontrada = clasesDAO.buscarClase(clase.getCodigo());
+        Clase claseEncontrada = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
         if (claseEncontrada != null) {
             clasesDAO.eliminarClase(claseEncontrada);
         }
