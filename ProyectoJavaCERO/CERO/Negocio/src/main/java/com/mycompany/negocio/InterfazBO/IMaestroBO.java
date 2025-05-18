@@ -7,6 +7,8 @@ package com.mycompany.negocio.InterfazBO;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
+import Entidades.Maestro;
+import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.List;
 
 /**
@@ -14,8 +16,13 @@ import java.util.List;
  * @author Jack Murrieta
  */
 public interface IMaestroBO {
-    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase,List<Clase> clasesImpartidad);
+
+    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidas) throws NegocioException;
+
     public List<MaestroDTO> obtenerListaMaestros();
-    
-    
+
+    public MaestroDTO convertirMaestroDTO(Maestro maestro);
+
+    public Maestro buscarMaestroID(Maestro maestro) throws NegocioException;
+
 }

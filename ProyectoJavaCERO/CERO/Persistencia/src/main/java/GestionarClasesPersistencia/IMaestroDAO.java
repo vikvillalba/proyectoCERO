@@ -6,6 +6,7 @@ package GestionarClasesPersistencia;
 
 import Entidades.Clase;
 import Entidades.Maestro;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -16,5 +17,7 @@ public interface IMaestroDAO {
     public List<Maestro> obtenerMaestros();
     //metodo buscarEspacioHorario
     public void agregarClaseImpartida(Clase clase);
+    
+    public Maestro buscarMaestro(Maestro maestro) throws PersistenciaException;
     
 }

@@ -1,7 +1,9 @@
 package com.mycompany.negocio.InterfazBO;
 
+import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
+import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Clase;
@@ -22,16 +24,15 @@ public interface IClasesBO {
     public Integer obtenerLimiteFaltas(ClaseDTO clase);
     
     //METODOS CU_GESTIONAR CLASES 
-    public List<Clase> obtenerListaClasesMaestro(Maestro maestro);
+    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro);
 
-    public List<Clase> obtenerListaClasesAula(AulaClase aula);
+    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula);
 
     //
     public List<ClaseListaDTO> buscarClasesListaNombre(String nombreClase);
 
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException;
 
-    public void validarDatosClase(NuevaClaseDTO nuevaClase);
 
     public void editarClase(EditarClaseDTO editarClse);
 
@@ -41,18 +42,14 @@ public interface IClasesBO {
 
     public List<ClaseListaDTO> buscarClasesExistentes();
 
-    public void inactivarClase(EditarClaseDTO clase);
-
     public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horaFin) throws NegocioException;
 
     public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException;
-
-    public Clase validarExistenciaClase(NuevaClaseDTO nuevaClase);
 
     public int obtenerCuposDisponibles(int cantidadInscritos, int capacidadClase);
 
     public boolean validarCapacidadMaxMenorCantidadInscritos(int capacidad, int cantidadInscritos);
 
-    public void eliminarClase(EditarClaseDTO clase);
+    public void eliminarClase(ClaseListaDTO clase);
         
 }

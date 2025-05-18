@@ -13,6 +13,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
+import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -47,7 +48,16 @@ public class ClasesDAO implements IClasesDAO {
 
     @Override
     public void editarClase(Clase editarClase) {
-        coleccion.replaceOne(eq("_id", editarClase.getId()), editarClase);
+        //se actualizan los campos activa FechaFin, Hora Fin y capacidadAlumnos
+        coleccion.updateOne(
+                eq("_id", editarClase.getId()),
+                Updates.combine(
+                        Updates.set("activa", editarClase.isActiva()),
+                        Updates.set("fechaFin", editarClase.getFechaFin()),
+                        Updates.set("horaFin", editarClase.getHoraFin()),
+                        Updates.set("capacidadAlumnos", editarClase.getCapacidadAlumnos())
+                )
+        );
     }
 
     @Override

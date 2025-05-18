@@ -18,4 +18,5 @@ public interface IAulaClaseDAO {
     public void agregarClasePresencial(Clase clase)throws PersistenciaException;
     //buscar espacio Horario Metodo
     public List<AulaClase> obtenerAulas();
+    public AulaClase buscarClase(AulaClase aula)throws PersistenciaException;
 }

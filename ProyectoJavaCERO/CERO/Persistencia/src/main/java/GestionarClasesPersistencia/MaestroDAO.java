@@ -7,6 +7,7 @@ package GestionarClasesPersistencia;
 import ConexionBD.ConexionMongoBD;
 import Entidades.Clase;
 import Entidades.Maestro;
+import Excepciones.PersistenciaException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -55,5 +56,20 @@ public class MaestroDAO implements IMaestroDAO {
                 eq("_id", idMaestro),
                 addToSet("clasesImpartidas", idClase)
         );
+    }
+
+    @Override
+    public Maestro buscarMaestro(Maestro maestro) throws PersistenciaException {
+        if (maestro == null || maestro.getId() == null) {
+            throw new IllegalArgumentException("El maestro o su ID no pueden ser nulos");
+        }
+
+        Maestro resultado = coleccionMaestros.find(eq("_id", maestro.getId())).first();
+
+        if (resultado == null) {
+            throw new PersistenciaException("No se encontró¿o el maestr@ con el ID especificado: " + maestro.getId().toHexString());
+        }
+
+        return resultado;
     }
 }

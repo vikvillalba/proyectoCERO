@@ -82,4 +82,19 @@ public class AulaClaseDAO implements IAulaClaseDAO {
         }
         return aulas;
     }
+
+    @Override
+    public AulaClase buscarClase(AulaClase aula)throws PersistenciaException {
+        if (aula == null || aula.getId() == null) {
+            throw new IllegalArgumentException("El aula o su ID no pueden ser nulos");
+        }
+
+        AulaClase resultado = coleccionAulas.find(eq("_id", aula.getId())).first();
+
+        if (resultado == null) {
+            throw new PersistenciaException("No se encontró la clase con el ID especificado: " + aula.getId().toHexString());
+        }
+
+        return resultado;
+    }
 }

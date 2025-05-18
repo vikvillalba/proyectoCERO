@@ -7,23 +7,100 @@ package com.mycompany.negocio.BOs;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
+import Entidades.Maestro;
+import Excepciones.PersistenciaException;
+import GestionarClasesPersistencia.IMaestroDAO;
+import GestionarClasesPersistencia.MaestroDAO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
+import com.mycompany.negocio.excepciones.NegocioException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Jack Murrieta
  */
-public class MaestroBO implements IMaestroBO{
+public class MaestroBO implements IMaestroBO {
+
+    private IMaestroDAO maestroDAO;
+
+    public MaestroBO() {
+        this.maestroDAO = new MaestroDAO();
+    }
 
     @Override
-    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidad) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidas) throws NegocioException {
+
+        List<DayOfWeek> diasClase = nuevaClase.getDiasClase();
+        LocalDate fechaInicioClase = nuevaClase.getFechaInicio();
+        LocalDate fechaFinClase = nuevaClase.getFechaFin();
+        LocalTime horaInicioNueva = nuevaClase.getHoraInicio();
+        LocalTime horaFinNueva = nuevaClase.getHoraFin();
+
+        for (Clase claseExistente : clasesImpartidas) {
+            // Verificar cruce de fechas
+            if (fechaFinClase.isBefore(claseExistente.getFechaInicio()) || fechaInicioClase.isAfter(claseExistente.getFechaFin())) {
+                continue;
+            }
+
+            // Verificar si hay días en común
+            List<DayOfWeek> diasExistente = claseExistente.getDias();
+            boolean hayDiaComun = diasClase.stream().anyMatch(diasExistente::contains);
+            if (!hayDiaComun) {
+                continue;
+            }
+
+            // Verificar traslape de horarios
+            LocalTime horaInicioExistente = claseExistente.getHoraInicio();
+            LocalTime horaFinExistente = claseExistente.getHoraFin();
+
+            boolean hayTraslapeHorario
+                    = !horaFinNueva.isBefore(horaInicioExistente)
+                    && !horaInicioNueva.isAfter(horaFinExistente);
+
+            if (hayTraslapeHorario) {
+                throw new NegocioException("El maestro ya tiene asignada la clase: " + claseExistente.getNombre());
+            }
+        }
+
+        return true;
+
     }
 
     @Override
     public List<MaestroDTO> obtenerListaMaestros() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<MaestroDTO> maestrosDTO = new ArrayList<>();
+        List<Maestro> maestros = maestroDAO.obtenerMaestros();
+        for (Maestro maestro : maestros) {
+            MaestroDTO maestroDTO = convertirMaestroDTO(maestro);
+            maestrosDTO.add(maestroDTO);
+        }
+        return maestrosDTO;
+
     }
-    
+
+    @Override
+    public MaestroDTO convertirMaestroDTO(Maestro maestro) {
+        String nombreCompleto = maestro.getNombre() + "" + maestro.getApellidoPaterno() + "" + maestro.getApellidoMaterno();
+        ObjectId id = maestro.getId();
+        String idMaestro = id.toHexString();
+        MaestroDTO maestroDTO = new MaestroDTO(idMaestro, nombreCompleto);
+        return maestroDTO;
+    }
+
+    public Maestro buscarMaestroID(Maestro maestro) throws NegocioException {
+        try {
+            maestroDAO.buscarMaestro(maestro);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
+        return null;
+    }
+
 }
