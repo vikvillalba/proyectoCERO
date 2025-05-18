@@ -1,26 +1,20 @@
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Usuario
  */
 public class Pago {
-    private Integer id;
+    private ObjectId id;
     private BigDecimal total;
     private LocalDateTime fechaPago;
     private boolean realizado;
     private MetodoPago metodoPago;
-
-    public Pago(Integer id, BigDecimal total, LocalDateTime fechaPago, boolean realizado, MetodoPago metodoPago) {
-        this.id = id;
-        this.total = total;
-        this.fechaPago = fechaPago;
-        this.realizado = realizado;
-        this.metodoPago = metodoPago;
-    }
 
     public Pago() {
     }
@@ -32,11 +26,11 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
-    public Integer getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -73,5 +67,7 @@ public class Pago {
     }
 
     
-    
+    public String getIdString(){
+        return ObjectIDMapper.toString(id);
+    }
 }

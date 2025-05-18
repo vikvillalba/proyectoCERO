@@ -4,9 +4,9 @@
  */
 package ObserverInscribirClase;
 
+import DAOs.IClasesDAO;
 import Entidades.Alumno;
 import Entidades.Clase;
-import GestionarClasesPersistencia.IClaseDAO;
 
 /**
  *
@@ -14,9 +14,9 @@ import GestionarClasesPersistencia.IClaseDAO;
  */
 public class ClaseBO implements INotificadorInscripcion {
 
-    private IClaseDAO clasesDAO;
+    private IClasesDAO clasesDAO;
 
-    public ClaseBO(IClaseDAO clasesDAO) {
+    public ClaseBO(IClasesDAO clasesDAO) {
         this.clasesDAO = clasesDAO;
     }
 

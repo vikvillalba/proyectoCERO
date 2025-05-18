@@ -1,8 +1,10 @@
+package DAOs;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package GestionarClasesPersistencia;
+
 
 import Entidades.AulaClase;
 import Entidades.Clase;
@@ -14,7 +16,7 @@ import org.bson.types.ObjectId;
  *
  * @author Jack Murrieta
  */
-public interface IClaseDAO {
+public interface IClasesDAO {
 
     public List<Clase> buscarNombreClases(String nombreClase);
 
@@ -33,7 +35,7 @@ public interface IClaseDAO {
     //Metodos para CU_INscribirClase
     public List<Clase> obtenerClasesPorNombre(String nombreClase);
 
-    public Clase buscarClase(Integer codigo);
+    public Clase buscarClase(String codigo);
 
     public Integer obtenerLimiteFaltas(Clase clase);
 

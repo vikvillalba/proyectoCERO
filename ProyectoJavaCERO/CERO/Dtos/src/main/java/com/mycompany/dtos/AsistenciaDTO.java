@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
  * @author victoria
  */
 public class AsistenciaDTO {
-    private Integer id; //cambiar luego a string
+    private String id; 
     private AlumnoDTO alumno;
     private ClaseDTO clase;
     private TipoAsistenciaDTO tipoAsistencia;
     private LocalDateTime fechaHora;
     private JustificanteDTO justificante;
 
-    public AsistenciaDTO(Integer id, AlumnoDTO alumno, ClaseDTO clase, TipoAsistenciaDTO tipoAsistencia, LocalDateTime fechaHora) {
+    public AsistenciaDTO(String id, AlumnoDTO alumno, ClaseDTO clase, TipoAsistenciaDTO tipoAsistencia, LocalDateTime fechaHora) {
         this.alumno = alumno;
         this.clase = clase;
         this.tipoAsistencia = tipoAsistencia;
@@ -23,7 +23,7 @@ public class AsistenciaDTO {
         this.id = id;
     }
 
-    public AsistenciaDTO(Integer id,AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fechaHora) {
+    public AsistenciaDTO(String id, AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fechaHora) {
         this.alumno = alumno;
         this.clase = clase;
         this.fechaHora = fechaHora;
@@ -35,7 +35,7 @@ public class AsistenciaDTO {
         this.clase = clase;
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
-        this.justificante = justificante;
+
     }
     
 
@@ -63,11 +63,11 @@ public class AsistenciaDTO {
         this.justificante = justificante;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

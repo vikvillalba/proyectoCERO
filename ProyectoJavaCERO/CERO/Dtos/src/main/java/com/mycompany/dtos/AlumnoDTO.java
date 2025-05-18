@@ -6,6 +6,7 @@ import java.time.LocalDate;
  * @author victoria
  */
 public class AlumnoDTO {
+    private String id;
     private Integer codigo;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -95,5 +96,14 @@ public class AlumnoDTO {
     public String getNombreCompleto() {
         return this.nombre + " " + this.apellidoPaterno;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     
 }

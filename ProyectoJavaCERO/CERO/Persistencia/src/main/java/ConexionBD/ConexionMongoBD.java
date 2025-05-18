@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ConexionBD;
 
 import com.mongodb.ConnectionString;
@@ -20,38 +16,31 @@ import org.bson.codecs.pojo.PojoCodecProvider;
  */
 public class ConexionMongoBD {
 
-    // Atributos estáticos para Singleton
-    private static final String DATABASE_NAME = "CeroBD";
-    private static MongoClient mongoClient;
-    private static MongoDatabase database;
+    private static final String BASE_DATOS = "CeroBD";
+    private static MongoClient cliente;
+    private static MongoDatabase baseDatos;
 
-    // Bloque estático para inicializar la conexión solo una vez
-    static {
-        CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-        CodecRegistry codecRegistry = fromRegistries(
+    
+    public static MongoDatabase getConexion() {
+         CodecRegistry pojoCodecRegistry = fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
-                pojoCodecRegistry
+                fromProviders(PojoCodecProvider.builder().automatic(true).build())
         );
 
-        ConnectionString cadenaConexion = new ConnectionString("mongodb://localhost:27017");
-
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(cadenaConexion)
-                .codecRegistry(codecRegistry)
+        // asignar la configuracion del mapeador con la conexion para que las clases POJO sean reconocidas automaticamente
+        MongoClientSettings configuraciones = MongoClientSettings.builder()
+                .codecRegistry(pojoCodecRegistry)
                 .build();
-
-        mongoClient = MongoClients.create(settings);
-        database = mongoClient.getDatabase(DATABASE_NAME);
-    }
-
-    // Método estático para obtener la base de datos
-    public static MongoDatabase getConexion() {
-        return database;
+        
+        // crea la conexion
+        cliente = MongoClients.create(configuraciones);
+        baseDatos = cliente.getDatabase(BASE_DATOS);
+        return baseDatos;
     }
 
     public static void cerrarConexion() {
-        if (mongoClient != null) {
-            mongoClient.close();
+        if (cliente != null) {
+            cliente.close();
         }
     }
 }

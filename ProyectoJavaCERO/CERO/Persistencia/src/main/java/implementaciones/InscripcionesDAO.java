@@ -1,20 +1,20 @@
 package implementaciones;
 
+import ConexionBD.ConexionMongoBD;
 import Entidades.Alumno;
-import Entidades.Clase;
 import Entidades.Inscripcion;
-import Entidades.MetodoPagoTarjeta;
-import Entidades.Pago;
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.List;
 import DAOs.IInscripcionesDAO;
-import java.time.Month;
+import Entidades.Clase;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -22,114 +22,71 @@ import java.util.ArrayList;
  */
 public class InscripcionesDAO implements IInscripcionesDAO {
 
+    private final String COLECCION = "Inscripciones";
+
     @Override
-    public List<Inscripcion> obtenerInscripcionesClase(Integer idClase) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Inscripcion> obtenerInscripcionesClase(String idClase) {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
+
+        Document filtro = new Document();
+        filtro.append("clase", new ObjectId(idClase));
+
+        List<Inscripcion> inscripcionesClase = new ArrayList<>();
+        FindIterable<Inscripcion> resultados = coleccion.find(filtro);
+
+        for (Inscripcion inscripcion : resultados) {
+            inscripcionesClase.add(inscripcion);
+        }
+
+        return inscripcionesClase;
     }
 
     @Override
     public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
+
+        coleccion.insertOne(inscripcion);
+        inscripcion.getPago().setRealizado(true);
+        return inscripcion;
+
     }
 
     @Override
     public List<Inscripcion> obtenerInscripcionesAlumno(Alumno alumno) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
+
+        Document filtro = new Document();
+        filtro.append("alumno", alumno.getId());
+
+        List<Inscripcion> inscripcionesClase = coleccion.find(filtro).into(new ArrayList<>());
+
+        return inscripcionesClase;
     }
 
     @Override
     public List<Inscripcion> obtenerInscripcionesAlumnoDiaActual(Alumno alumno) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
+        DayOfWeek diaActual = LocalDate.now().getDayOfWeek();
 
-//    private List<Inscripcion> inscripciones;
-//    private Integer codigoInscripcion = 1;
-//
-//    public InscripcionesDAO() {
-//        this.inscripciones = new ArrayList<>();
-//        Clase claseMock = new Clase(
-//                1,
-//                "Contemporaneo Avanzado",
-//                Arrays.asList(DayOfWeek.MONDAY, DayOfWeek.FRIDAY),
-//                LocalTime.of(9, 0),
-//                LocalTime.of(10, 30),
-//                "Cesar Gomez",
-//                new BigDecimal("250.00"),
-//                LocalDate.of(2025, Month.JANUARY, 12),
-//                LocalDate.of(2025, Month.JUNE, 15)
-//        );
-//
-//        Alumno alumnoMock = new Alumno(
-//                1,
-//                "Torres",
-//                "Murrieta",
-//                "Jack Tadeo",
-//                "5551234567",
-//                LocalDate.of(2002, 8, 15),
-//                "jackmurrieta@gmail.com"
-//        );
-//        MetodoPagoTarjeta metodoPagoTarjetaMock = new MetodoPagoTarjeta(
-//                2,
-//                "CONFIRM123456",
-//                LocalDateTime.now()
-//        );
-//        Pago pagoMock = new Pago(1, new BigDecimal("500.00"), LocalDateTime.now(), true, metodoPagoTarjetaMock);
-//
-//        // Crear una inscripción mock
-//        Inscripcion inscripcionMock = new Inscripcion(
-//                1,
-//                claseMock,
-//                alumnoMock,
-//                LocalDateTime.now(),
-//                pagoMock
-//        );
-//
-//        inscripciones.add(inscripcionMock);
-//    }
-//
-//    @Override
-//    public List<Inscripcion> obtenerInscripcionesClase(Integer idClase) {
-//        List<Inscripcion> inscripcionesClase = new ArrayList<>();
-//        for (Inscripcion inscripcion : inscripciones) {
-//            if(inscripcion.getClase().getCodigo().equals(idClase)){
-//                inscripcionesClase.add(inscripcion);
-//            }
-//        }
-//        return inscripcionesClase;
-//    }
-//
-//    @Override
-//    public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
-//        inscripcion.setId(codigoInscripcion);
-//        codigoInscripcion++;
-//        this.inscripciones.add(inscripcion);
-//        return inscripcion;
-//
-//    }
-//
-//    @Override
-//    public List<Inscripcion> obtenerInscripcionesAlumno(Alumno alumno) {
-//        List<Inscripcion> inscripcionesAlumno = new ArrayList<>();
-//        for (Inscripcion inscripcion : this.inscripciones) {
-//            if (inscripcion.getAlumno().getCodigo().equals(alumno.getCodigo())) {
-//                inscripcionesAlumno.add(inscripcion);
-//            }
-//        }
-//
-//        return inscripcionesAlumno;
-//    }
-//
-//    @Override
-//    public List<Inscripcion> obtenerInscripcionesAlumnoDiaActual(Alumno alumno) {
-//        DayOfWeek diaActual = LocalDate.now().getDayOfWeek();
-//        List<Inscripcion> inscripcionesAlumno = new ArrayList<>();
-//        for (Inscripcion inscripcion : this.inscripciones) {
-//            if (inscripcion.getAlumno().getCodigo().equals(alumno.getCodigo()) && inscripcion.getClase().getDias().contains(diaActual)) {
-//                inscripcionesAlumno.add(inscripcion);
-//            }
-//        }
-//
-//        return inscripcionesAlumno;
-//    }
+        List<ObjectId> clasesConDiaActual = baseDatos.getCollection("clases", Clase.class)
+                .find(Filters.in("dias", diaActual.name()))
+                .map(Clase::getId)
+                .into(new ArrayList<>());
+
+        if (clasesConDiaActual.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        return coleccion.find(
+                Filters.and(
+                        Filters.eq("alumno", alumno.getId()),
+                        Filters.in("clase", clasesConDiaActual)
+                )
+        ).into(new ArrayList<>());
+    }
 
 }

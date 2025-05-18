@@ -6,19 +6,10 @@ import java.time.LocalDateTime;
  * @author victoria
  */
 public class InscripcionDTO {
-    private int codigo;
     private AlumnoDTO alumno;
     private ClaseDTO clase;
     private LocalDateTime fecha;
     private PagoDTO pago;
-
-    public InscripcionDTO(int codigo, AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fecha, PagoDTO pago) {
-        this.codigo = codigo;
-        this.alumno = alumno;
-        this.clase = clase;
-        this.fecha = fecha;
-        this.pago = pago;
-    }
 
     public InscripcionDTO(AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fecha, PagoDTO pago) {
         this.alumno = alumno;
@@ -27,20 +18,10 @@ public class InscripcionDTO {
         this.pago = pago;
     }
 
-    public InscripcionDTO(int codigo, AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fecha) {
-        this.codigo = codigo;
+    public InscripcionDTO(AlumnoDTO alumno, ClaseDTO clase, LocalDateTime fecha) {
         this.alumno = alumno;
         this.clase = clase;
         this.fecha = fecha;
-    }
-
-    
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public AlumnoDTO getAlumno() {

@@ -1,12 +1,12 @@
 package com.mycompany.negocio.BOs;
 
+import DAOs.IClasesDAO;
 import Entidades.Clase;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Maestro;
-import GestionarClasesPersistencia.IClaseDAO;
 import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
 import com.mycompany.dtos.ClaseDTO;
@@ -24,10 +24,10 @@ import java.util.List;
  */
 public class ClasesBO implements IClasesBO {
 
-    private IClaseDAO clasesDAO;
+    private IClasesDAO clasesDAO;
     private IClaseMapper claseMapper;
 
-    public ClasesBO(IClaseDAO clasesDAO) {
+    public ClasesBO(IClasesDAO clasesDAO) {
         this.clasesDAO = clasesDAO;
         this.claseMapper = new ClaseMapper();
     }
@@ -82,7 +82,7 @@ public class ClasesBO implements IClasesBO {
 
     @Override
     public Integer obtenerLimiteFaltas(ClaseDTO clase) {
-        Clase claseReal = this.clasesDAO.buscarClase(clase.getCodigo());
+        Clase claseReal = this.clasesDAO.buscarClase(clase.getId());
         return claseReal.getLIMITE_FALTAS();
     }
 
@@ -184,6 +184,7 @@ public class ClasesBO implements IClasesBO {
     public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin) {
         //FechaInicio no sobrePase a la fechaFin
         //fechaFin que no sea menor a la fecha Inicio
+        return true;
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
  * @author Usuario
  */
 public interface IInscripcionesDAO {
-    public List<Inscripcion> obtenerInscripcionesClase(Integer idClase);
+    public List<Inscripcion> obtenerInscripcionesClase(String idClase);
     
     public Inscripcion registrarInscripcion(Inscripcion inscripcion);
     public List<Inscripcion> obtenerInscripcionesAlumno(Alumno alumno);

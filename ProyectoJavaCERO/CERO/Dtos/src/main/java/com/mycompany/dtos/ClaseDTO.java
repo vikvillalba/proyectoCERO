@@ -11,6 +11,7 @@ import java.util.List;
  * @author victoria
  */
 public class ClaseDTO {
+    private String id;
     private int codigo;
     private String nombre;
     private List<DayOfWeek> dias;
@@ -91,6 +92,14 @@ public class ClaseDTO {
 
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
    

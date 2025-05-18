@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IAlumnosDAO {
     
-    public Alumno obtenerAlumno(Integer idAlumno);
+    public Alumno obtenerAlumno(String idAlumno);
     public Alumno registrarAlumnoNuevo(Alumno alumno);
     public List<Alumno> obtenerAlumnos();
 

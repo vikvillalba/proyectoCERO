@@ -1,42 +1,46 @@
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
 import java.time.LocalDateTime;
+import org.bson.types.ObjectId;
 
 /**
- * Representación de una asistencia en el sistema 
+ * Representación de una asistencia en el sistema
+ *
  * @author victoria
  */
 public class Asistencia {
-    private Integer id;
+
+    private ObjectId id;
     private TipoAsistencia tipoAsistencia;
     private LocalDateTime fechaHora;
-    private Alumno alumno;
-    private Clase clase;
+    private String alumno;
+    private String clase;
     private Justificante justificante;
 
     public Asistencia() {
     }
 
-    public Asistencia(Integer id, TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, Alumno alumno, Clase clase) {
-        this.id = id;
+    public Asistencia(TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
         this.alumno = alumno;
         this.clase = clase;
     }
 
-    public Asistencia(TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, Alumno alumno, Clase clase) {
+    public Asistencia(String id, TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
+        this.id = ObjectIDMapper.toObjectId(id);
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
         this.alumno = alumno;
         this.clase = clase;
     }
 
-    public Integer getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -56,19 +60,19 @@ public class Asistencia {
         this.fechaHora = fechaHora;
     }
 
-    public Alumno getAlumno() {
+    public String getAlumno() {
         return alumno;
     }
 
-    public void setAlumno(Alumno alumno) {
+    public void setAlumno(String alumno) {
         this.alumno = alumno;
     }
 
-    public Clase getClase() {
+    public String getClase() {
         return clase;
     }
 
-    public void setClase(Clase clase) {
+    public void setClase(String clase) {
         this.clase = clase;
     }
 
@@ -79,6 +83,9 @@ public class Asistencia {
     public void setJustificante(Justificante justificante) {
         this.justificante = justificante;
     }
-    
-    
+
+    public String getIdString() {
+        return ObjectIDMapper.toString(id);
+    }
+
 }

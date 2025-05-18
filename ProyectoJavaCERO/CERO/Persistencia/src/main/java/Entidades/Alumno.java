@@ -1,13 +1,16 @@
 
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
 import java.time.LocalDate;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Usuario
  */
 public class Alumno {
+    private ObjectId id;
     private Integer codigo;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -94,5 +97,16 @@ public class Alumno {
         this.correoElectronico = correoElectronico;
     }
 
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public String getIdString(){
+        return ObjectIDMapper.toString(id);
+    }
 
 }

@@ -1,5 +1,6 @@
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -241,6 +242,10 @@ public class Clase {
 
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
+    }
+    
+    public String obtenerIdString(){
+        return ObjectIDMapper.toString(id);
     }
 
 }

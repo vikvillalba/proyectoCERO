@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  */
 public class PagoDTO {
     
-    private int codigo;
+    private String codigo;
     private BigDecimal total;
     private MetodoPagoDTO metodoPago;
     private LocalDateTime fechaHora;
@@ -18,19 +18,18 @@ public class PagoDTO {
     public PagoDTO() {
     }
 
-    public PagoDTO(int codigo, BigDecimal total, MetodoPagoDTO metodoPago, LocalDateTime fechaHora, boolean realizado) {
-        this.codigo = codigo;
+    public PagoDTO(BigDecimal total, MetodoPagoDTO metodoPago, LocalDateTime fechaHora, boolean realizado) {
         this.total = total;
         this.metodoPago = metodoPago;
         this.fechaHora = fechaHora;
         this.realizado = realizado;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

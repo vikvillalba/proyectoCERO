@@ -8,6 +8,7 @@ import Entidades.AulaClase;
 import Entidades.Clase;
 import Entidades.Maestro;
 import Excepciones.PersistenciaException;
+import implementaciones.AsistenciasDAO;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -65,5 +66,9 @@ public class Test {
 //    }
 
 //    
+
+//
+//        AsistenciasDAO dao = new AsistenciasDAO();
+
     }
 }

@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package GestionarClasesPersistencia;
+package implementaciones;
 
 import ConexionBD.ConexionMongoBD;
+import DAOs.IClasesDAO;
 import Entidades.AulaClase;
 import Entidades.Clase;
 import Entidades.Maestro;
@@ -20,11 +21,11 @@ import org.bson.types.ObjectId;
  *
  * @author Jack Murrieta
  */
-public class ClaseDAO implements IClaseDAO {
+public class ClasesDAO implements IClasesDAO {
 
     private final MongoCollection<Clase> coleccion;
 
-    public ClaseDAO() {
+    public ClasesDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccion = db.getCollection("Clase", Clase.class);
     }
@@ -70,8 +71,8 @@ public class ClaseDAO implements IClaseDAO {
     }
 
     @Override
-    public Clase buscarClase(Integer codigo) {
-        return coleccion.find(eq("codigo", codigo)).first();
+    public Clase buscarClase(String codigo) {
+        return coleccion.find(eq("_id", codigo)).first();
     }
 
     @Override

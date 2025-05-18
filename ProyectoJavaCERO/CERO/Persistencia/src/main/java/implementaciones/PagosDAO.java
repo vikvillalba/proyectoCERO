@@ -1,40 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package implementaciones;
 
-import Entidades.MetodoPagoTarjeta;
+import ConexionBD.ConexionMongoBD;
 import Entidades.Pago;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import DAOs.IPagosDAO;
-import java.util.ArrayList;
-import java.util.List;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 /**
  *
  * @author Usuario
  */
 public class PagosDAO implements IPagosDAO {
-    private List<Pago> pagos;
-    private Integer codigoPago = 1;
 
-    public PagosDAO() {
-        this.pagos = new ArrayList<>();
-    }
-    
-    
+    private final String COLECCION = "Pagos";
 
     @Override
     public Pago registrarPago(Pago pago) {
-        pago.setId(codigoPago);
-        codigoPago++;
-        pagos.add(pago);
-        pago.setRealizado(true);
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Pago> coleccion = baseDatos.getCollection(COLECCION, Pago.class);
+        coleccion.insertOne(pago);
         return pago;
 
     }
-    
+
 }

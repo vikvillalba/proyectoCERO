@@ -5,11 +5,11 @@ import implementaciones.InscripcionesDAO;
 import implementaciones.PagosDAO;
 import DAOs.IAlumnosDAO;
 import DAOs.IAsistenciasDAO;
+import DAOs.IClasesDAO;
 import DAOs.IContenidoDAO;
 import DAOs.IInscripcionesDAO;
 import DAOs.IPagosDAO;
-import GestionarClasesPersistencia.ClaseDAO;
-import GestionarClasesPersistencia.IClaseDAO;
+import implementaciones.ClasesDAO;
 import com.mycompany.negocio.BOs.AlumnosBO;
 import com.mycompany.negocio.BOs.AsistenciasBO;
 import com.mycompany.negocio.BOs.ClasesBO;
@@ -40,14 +40,16 @@ public class FabricaObjetosNegocio {
     }
 
     public static IClasesBO obtenerClasesBO() {
-        IClaseDAO dao =new ClaseDAO();
+        IClasesDAO dao =new ClasesDAO();
         IClasesBO bo = new ClasesBO(dao);
         return bo;
     }
     
     public static IInscripcionesBO obtenerInscripcionesBO(){
-        IInscripcionesDAO dao = new InscripcionesDAO();
-        IInscripcionesBO bo = new InscripcionesBO(dao);
+        IInscripcionesDAO inscripcionesDAO = new InscripcionesDAO();
+        IClasesDAO clasesDAO = new ClasesDAO();
+        IAlumnosDAO alumnosDAO = new AlumnosDAO();
+        IInscripcionesBO bo = new InscripcionesBO(inscripcionesDAO, clasesDAO, alumnosDAO);
         return bo;
     }
     
@@ -59,7 +61,7 @@ public class FabricaObjetosNegocio {
     
     public static IAsistenciasBO obtenerAsistenciasBO(){
         IAsistenciasDAO asistenciasDAO = new AsistenciasDAO();
-        IClaseDAO clasesDAO = new ClaseDAO();
+        IClasesDAO clasesDAO = new ClasesDAO();
         IAlumnosDAO alumnosDAO = new AlumnosDAO();
         IAsistenciasBO bo = new AsistenciasBO(asistenciasDAO, clasesDAO, alumnosDAO);
         return bo;
