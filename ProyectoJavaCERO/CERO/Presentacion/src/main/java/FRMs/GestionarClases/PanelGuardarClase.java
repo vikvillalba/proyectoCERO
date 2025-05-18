@@ -716,7 +716,7 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         double precio = (double) spinnerPrecio.getValue();
         
         //crear objeto dto
-        NuevaClaseDTO nuevaClase = new NuevaClaseDTO(
+        NuevaClaseDTO nuevaClase = new NuevaClaseDTO(null,
                 nombreClase, maestroSeleccionado, modalidadSeleccionada, 
                 aulaSeleccionada, diasSeleccionados, 
                 horaInicioCompleta, horaFinCompleta, 

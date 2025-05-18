@@ -27,9 +27,9 @@ public interface IClasesBO {
     public List<Clase> obtenerListaClasesAula(AulaClase aula);
 
     //
-    public ClaseListaDTO buscarClase(String nombreClase);
+    public List<ClaseListaDTO> buscarClasesListaNombre(String nombreClase);
 
-    public void registrarNuevaClase(NuevaClaseDTO nuevaClase);
+    public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException;
 
     public void validarDatosClase(NuevaClaseDTO nuevaClase);
 
@@ -43,9 +43,9 @@ public interface IClasesBO {
 
     public void inactivarClase(EditarClaseDTO clase);
 
-    public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horaFin);
+    public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horaFin) throws NegocioException;
 
-    public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin);
+    public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException;
 
     public Clase validarExistenciaClase(NuevaClaseDTO nuevaClase);
 
@@ -54,7 +54,5 @@ public interface IClasesBO {
     public boolean validarCapacidadMaxMenorCantidadInscritos(int capacidad, int cantidadInscritos);
 
     public void eliminarClase(EditarClaseDTO clase);
-
-    
-    
+        
 }
