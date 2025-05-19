@@ -39,9 +39,9 @@ public class AulasClaseDAO implements IAulasClaseDAO {
      * @return
      */
     @Override
-    public List<Clase> obtenerAulaClases(ObjectId idAula) {
+    public List<Clase> obtenerAulaClases(String idAula) {
         List<Clase> clases = new ArrayList<>();
-        AulaClase aulaEnBD = coleccionAulas.find(eq("_id", idAula)).first();
+        AulaClase aulaEnBD = coleccionAulas.find(eq("_id", new ObjectId(idAula))).first();
 
         if (aulaEnBD != null && aulaEnBD.getClasesPresenciales() != null) {
             for (ObjectId idClase : aulaEnBD.getClasesPresenciales()) {
@@ -100,4 +100,5 @@ public class AulasClaseDAO implements IAulasClaseDAO {
 
         return resultado;
     }
+
 }
