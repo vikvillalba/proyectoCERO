@@ -22,6 +22,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import java.time.ZoneId;
 import java.util.Date;
 import FRMs.GestionarClases.CustomHoraMinutoSpinner.Tipo;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.time.LocalTime;
 
 /**
@@ -611,6 +612,7 @@ public class PanelEditarClase extends javax.swing.JPanel {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
+        ControlNavegacion.mostrarFrmAdminClases();
         //Regresar a administracion Clases
     }//GEN-LAST:event_btnRegresarActionPerformed
 
@@ -646,6 +648,8 @@ public class PanelEditarClase extends javax.swing.JPanel {
         this.claseEditarDTO.setCapacidad(capacidad);
         this.claseEditarDTO.setFechaFin(fechaFin);
         this.claseEditarDTO.setFechaFin(fechaFin);
+        
+        ControlNavegacion.editarClase(claseEditarDTO);
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

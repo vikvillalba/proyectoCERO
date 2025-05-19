@@ -31,8 +31,8 @@ public class AulaBO implements IAulaBO {
 
     private IAulaClaseDAO aulaDAO;
 
-    public AulaBO() {
-        this.aulaDAO = new AulaClaseDAO();
+    public AulaBO(IAulaClaseDAO aulaDAO) {
+        this.aulaDAO = aulaDAO;
     }
 
     @Override

@@ -42,14 +42,12 @@ public interface IClasesBO {
 
     public List<ClaseListaDTO> buscarClasesExistentes();
 
-    public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horaFin) throws NegocioException;
-
-    public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException;
-
     public int obtenerCuposDisponibles(int cantidadInscritos, int capacidadClase);
 
     public boolean validarCapacidadMaxMenorCantidadInscritos(int capacidad, int cantidadInscritos);
 
     public void eliminarClase(ClaseListaDTO clase);
-        
+    
+    public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase);
+
 }

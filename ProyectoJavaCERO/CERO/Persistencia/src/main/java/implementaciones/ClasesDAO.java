@@ -16,6 +16,7 @@ import static com.mongodb.client.model.Filters.regex;
 import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -33,6 +34,12 @@ public class ClasesDAO implements IClasesDAO {
 
     @Override
     public void registrarNuevaClase(Clase nuevaClase) {
+        // Obtener el código máximo actual
+        Integer codigoMaximo = obtenerCodigoMaxClase();
+        // Asignar el siguiente código
+        nuevaClase.setCodigo(codigoMaximo + 1);
+
+        // Insertar la nueva clase con el código asignado
         coleccion.insertOne(nuevaClase);
     }
 
@@ -94,5 +101,17 @@ public class ClasesDAO implements IClasesDAO {
     @Override
     public Clase buscarClaseCodigoInteger(Integer codigo) {
         return coleccion.find(eq("codigo", codigo)).first();
+    }
+
+    @Override
+    public Integer obtenerCodigoMaxClase() {
+        Clase claseConMaxCodigo = coleccion.find()
+                .sort(new Document("codigo", -1)) // orden descendente por "codigo"
+                .first();
+
+        if (claseConMaxCodigo == null || claseConMaxCodigo.getCodigo() == null) {
+            return 0; // Si no hay clases, empieza en 0
+        }
+        return claseConMaxCodigo.getCodigo();
     }
 }

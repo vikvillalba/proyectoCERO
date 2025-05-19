@@ -1,6 +1,7 @@
 package FRMs.GestionarClases;
 
 import DTOs.GestionarClases.ClaseListaDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -275,11 +276,14 @@ public class JpanelClaseListaAdmin extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
         // TODO add your handling code here:
+        ControlNavegacion.eliminarClase(clase);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        ControlNavegacion.mostrarFrmEditarClase(clase);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnVerInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerInscritosActionPerformed

@@ -36,11 +36,11 @@ public class ClasesBO implements IClasesBO {
     private IAulaBO aulaBO;
     private IMaestroBO maestroBO;
 
-    public ClasesBO(IClasesDAO clasesDAO) {
+    public ClasesBO(IClasesDAO clasesDAO,IAulaBO aulaBO,IMaestroBO maestroBO) {
         this.clasesDAO = clasesDAO;
         this.claseMapper = new ClaseMapper();
-        this.aulaBO = new AulaBO();
-        this.maestroBO = new MaestroBO();
+        this.aulaBO = aulaBO;
+        this.maestroBO = maestroBO;
     }
 
     @Override
@@ -195,47 +195,6 @@ public class ClasesBO implements IClasesBO {
         return clasesExistentes;
     }
 
-    //metodo en gestionar clases
-    @Override
-    public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horaFin) throws NegocioException {
-        //horaFin no sea menor que horaInicio
-        //horaInicio no sobrePase HoraFin
-        if (horaInicio == null || horaFin == null) {
-            throw new NegocioException("Error en el lapso de Horas");
-        }
-
-        if (horaFin.isBefore(horaInicio)) {
-            throw new NegocioException("Hora fin es menor que la hora inicio");
-        }
-        
-        Duration duracion = Duration.between(horaInicio, horaFin);
-        if (duracion.toMinutes() < 30) {
-            throw new NegocioException("Debe de tener una duracion minima de 30 minutos");
-        }
-
-        return true;
-    }
-
-    //metodo en gestionr clases
-    @Override
-    public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException {
-        if (fechaInicio == null || fechaFin == null) {
-            throw new NegocioException("Error en el lapso de Fechas");
-        }
-
-        if (fechaFin.isBefore(fechaInicio)) {
-            throw new NegocioException("Fecha fin es menor que la fecha inicio");
-        }
-
-        long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
-        if (dias < 5) {
-            throw new NegocioException("El lapso entre fechas debe ser de al menos 5 días");
-        }
-
-        return true;
-    }
-
-
     @Override
     public int obtenerCuposDisponibles(int cantidadInscritos, int capacidadClase) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -264,5 +223,11 @@ public class ClasesBO implements IClasesBO {
         }
         return clasesEncontradas;
     }
-
+    
+    public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase){
+        Clase claseEntity = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
+        EditarClaseDTO claseDTO = claseMapper.convertirEditarClase(claseEntity);
+        return claseDTO;
+    }
+    
 }

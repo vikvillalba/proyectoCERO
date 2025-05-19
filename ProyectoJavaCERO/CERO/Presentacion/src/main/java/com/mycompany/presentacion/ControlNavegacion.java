@@ -1,6 +1,17 @@
 package com.mycompany.presentacion;
 
+import ControlGestionarClases.ControlGestionarClases;
+import ControlGestionarClases.IControlGestionarClases;
+import DTOs.GestionarClases.AulaClaseDTO;
+import DTOs.GestionarClases.ClaseListaDTO;
+import DTOs.GestionarClases.EditarClaseDTO;
+import DTOs.GestionarClases.MaestroDTO;
+import DTOs.GestionarClases.NuevaClaseDTO;
+import Exceptions.GestionarClasesException;
 import FRMs.*;
+import FRMs.GestionarClases.FrmAdminClases;
+import FRMs.GestionarClases.PanelScrollEditarClase;
+import FRMs.GestionarClases.PanelScrollGuardarClase;
 import FRMs.registroAsistencia.FrmAsistenciasClaseAnterior;
 import FRMs.registroAsistencia.FrmAsistenciasClaseDiaActual;
 import FRMs.registroAsistencia.FrmBuscarClase;
@@ -37,8 +48,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -48,6 +62,7 @@ public class ControlNavegacion {
 
     private static IInscribirClase inscribirClase = new InscribirClase();
     private static IRegistroAsistencias registroAsistencias = new RegistroAsistencias();
+    private static IControlGestionarClases gestionarClases = new ControlGestionarClases();
 
     private static FrmMenuPrincipal menuPrincipal;
 
@@ -60,8 +75,35 @@ public class ControlNavegacion {
     private static FrmClasesExistentes clasesExistentes;
     private static FrmDatosClase datosClase;
     private static FrmFinalizarInscripcion finalizarInscripcion;
+    
+    //formularios CU_GESTIONAR CLASES
+    private static FrmAdminClases frmAdminClases;
+    private static PanelScrollGuardarClase frmRegistrarClase;
+    private static PanelScrollEditarClase frmEditarClase;
+    
+    private static JFrame frameActual;
 
     private ControlNavegacion() {
+    }
+  
+    /**
+     * Crear un Jframe y se asigana para tener un referencia al frame actual donde esta el usuario
+     */
+    public static JFrame crearFrame(JPanel panel) {
+        if (frameActual != null) {
+            frameActual.dispose(); // Cierra el frame anterior
+        }
+
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //(1230, 1300)
+        frame.setSize(800, 800);
+        frame.setLocationRelativeTo(null); // Centra la ventana
+        frame.add(panel);
+        frame.setVisible(true);
+
+        frameActual = frame; // Guarda referencia
+        return frame;
     }
 
     /**
@@ -70,6 +112,7 @@ public class ControlNavegacion {
     public static void mostrarMenuPrincipal() {
         menuPrincipal = new FrmMenuPrincipal();
         menuPrincipal.setVisible(true);
+        frameActual = menuPrincipal;
     }
 
     /**
@@ -78,6 +121,7 @@ public class ControlNavegacion {
     public static void mostrarInscribirClase() {
         inscribir = new FrmInscribirClase();
         inscribir.setVisible(true);
+        frameActual = inscribir;
     }
 
     /**
@@ -86,6 +130,7 @@ public class ControlNavegacion {
     public static void mostrarPagoEfectivo(ClaseDTO clase, AlumnoDTO alumno) {
         pagoEfectivo = new FrmPagoEfectivo(clase, alumno);
         pagoEfectivo.setVisible(true);
+        frameActual = pagoEfectivo;
     }
 
     /**
@@ -94,6 +139,7 @@ public class ControlNavegacion {
     public static void mostrarPagoTarjeta(ClaseDTO clase, AlumnoDTO alumno) {
         pagoTarjeta = new FrmPagoTarjeta(clase, alumno);
         pagoTarjeta.setVisible(true);
+        frameActual = pagoTarjeta;
     }
 
     /**
@@ -118,17 +164,21 @@ public class ControlNavegacion {
     public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
+        frameActual = finalizarInscripcion;
+        
     }
 
     public static void mostrarAlumnosInscritos(ClaseDTO clase) {
         List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
         alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
         alumnosInscritos.setVisible(true);
+        frameActual = alumnosInscritos;
     }
 
     public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException {
         registrarAlumno = new FrmRegistrarAlumno(clase);
         registrarAlumno.setVisible(true);
+        frameActual = registrarAlumno;
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, Exception exc) {
@@ -300,7 +350,7 @@ public class ControlNavegacion {
     public static void mostrarDatosClase(ClaseDTO claseDTO) {
         datosClase = new FrmDatosClase(claseDTO);
         datosClase.setVisible(true);
-        clasesExistentes.dispose();
+        frameActual = datosClase;
     }
 
     //MOSTRAR CLASES EXISTENTES
@@ -343,6 +393,7 @@ public class ControlNavegacion {
 
         clasesExistentes = new FrmClasesExistentes(clases);
         clasesExistentes.setVisible(true);
+        frameActual = clasesExistentes;
     }
 
     private static List<ClaseDTO> obtenerClases(String nombre) {
@@ -428,6 +479,7 @@ public class ControlNavegacion {
     public static void mostrarSeleccionarOpcionAsistencia() {
         FrmSeleccionarOpcion seleccionOpcionAsistencia = new FrmSeleccionarOpcion();
         seleccionOpcionAsistencia.setVisible(true);
+        frameActual = seleccionOpcionAsistencia;
     }
 
     /**
@@ -436,6 +488,7 @@ public class ControlNavegacion {
     public static void mostrarRegistrarAsistenciaAlumno() {
         FrmRegistrarAsistenciaActualAlumno asistenciaActual = new FrmRegistrarAsistenciaActualAlumno();
         asistenciaActual.setVisible(true);
+        frameActual = asistenciaActual;
     }
 
     /**
@@ -477,6 +530,7 @@ public class ControlNavegacion {
     public static void mostrarBuscarClase() {
         FrmBuscarClase buscarClase = new FrmBuscarClase();
         buscarClase.setVisible(true);
+        frameActual = buscarClase;
     }
 
     /**
@@ -500,6 +554,7 @@ public class ControlNavegacion {
 
         FrmClasesExistentesAsistencia clasesResultado = new FrmClasesExistentesAsistencia(clases);
         clasesResultado.setVisible(true);
+        frameActual= clasesResultado;
     }
 
     /**
@@ -555,6 +610,7 @@ public class ControlNavegacion {
     public static void mostrarBuscarClaseReporte() {
         FrmBuscarClaseReporte seleccionClaseReporte = new FrmBuscarClaseReporte();
         seleccionClaseReporte.setVisible(true);
+        frameActual = seleccionClaseReporte;
     }
 
     /**
@@ -565,6 +621,7 @@ public class ControlNavegacion {
     public static void mostrarReportesAsistencias() {
         FrmReporteAsistencias reporteAsistencias = new FrmReporteAsistencias();
         reporteAsistencias.setVisible(true);
+        frameActual = reporteAsistencias;
     }
 
     /**
@@ -614,6 +671,7 @@ public class ControlNavegacion {
         List<LocalDate> dias = registroAsistencias.obtenerDiasClase(clase);
         FrmDiasAnterioresClase diasClase = new FrmDiasAnterioresClase(dias, clase);
         diasClase.setVisible(true);
+        frameActual = diasClase;
     }
 
     /**
@@ -628,6 +686,7 @@ public class ControlNavegacion {
             List<AsistenciaDTO> asistenciasClase = registroAsistencias.obtenerAsistenciasClase(clase, diaClase);
             FrmAsistenciasClaseAnterior pantallaAsistencias = new FrmAsistenciasClaseAnterior(diaClase, clase, asistenciasClase);
             pantallaAsistencias.setVisible(true);
+            frameActual = pantallaAsistencias;
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorConExcepcion(null, ex);
         }
@@ -636,6 +695,7 @@ public class ControlNavegacion {
     public static void mostrarJustificarFalta(AsistenciaDTO asistencia) {
         FrmJustificarFalta justificarFalta = new FrmJustificarFalta(asistencia);
         justificarFalta.setVisible(true);
+        frameActual = justificarFalta;
     }
 
     public static void justificarFalta(AsistenciaDTO faltaJustificada) {
@@ -670,6 +730,7 @@ public class ControlNavegacion {
             List<InscripcionDTO> inscripciones = registroAsistencias.obtenerInscripcionesClase(clase);
             FrmAsistenciasClaseDiaActual asistenciasActual = new FrmAsistenciasClaseDiaActual(clase, dia, asistenciasActuales, inscripciones);
             asistenciasActual.setVisible(true);
+            frameActual = asistenciasActual;
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorConExcepcion(null, ex);
         }
@@ -694,5 +755,60 @@ public class ControlNavegacion {
         JOptionPane.showMessageDialog(null, "Se han registrado las asistencias de hoy para la clase: " + clase.getNombre(),
                 "Asistencias registradas :)", JOptionPane.INFORMATION_MESSAGE);
     }
+    
+    //METODOS CU_GESTIONAR CLASES 
+    public static void mostrarFrmAdminClases(){
+        frameActual.dispose();
+        List<ClaseListaDTO> clases = gestionarClases.buscarClasesExistentes();
+        List<ClaseListaDTO> clasesInactivas = gestionarClases.buscarClasesInactivas();
+        List<ClaseListaDTO> clasesActivas = gestionarClases.buscarClasesActivas();
+        frmAdminClases = new FrmAdminClases(clases, clasesInactivas, clasesActivas);
+        frmAdminClases.setVisible(true);
+        frameActual = frmAdminClases;
+        
+    }
+    
+    public static void mostrarFrmRegistrarClase(){
+        frameActual.dispose();
+        List<MaestroDTO> maestros  =gestionarClases.obtenerListaMaestros();
+        List<AulaClaseDTO> aulas = gestionarClases.obtenerListasAulas();
+        frmRegistrarClase = new PanelScrollGuardarClase(maestros, aulas);
+        // agregar panel a un JFrame
+        crearFrame(frmRegistrarClase);
+    }
+     
+    public static void mostrarFrmEditarClase(ClaseListaDTO clase) {
+        frameActual.dispose();
+        EditarClaseDTO claseEditarDTO = gestionarClases.obtenerClaseLista(clase);
+        frmEditarClase = new PanelScrollEditarClase(claseEditarDTO);
+        crearFrame(frmEditarClase);
+    }
 
+    public static void registrarNuevaClase(NuevaClaseDTO nuevaClase) {
+        try {
+            gestionarClases.registrarNuevaClase(nuevaClase);
+            JOptionPane.showMessageDialog(frameActual, "Clase registrada exitosamente");
+        } catch (GestionarClasesException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
+    }
+
+    public static void editarClase(EditarClaseDTO editClase) {
+        try {
+            gestionarClases.editarClase(editClase);
+            JOptionPane.showMessageDialog(frameActual, "Datos de la clase actualizados exitosamente");
+        } catch (GestionarClasesException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
+
+    }
+
+    public static void eliminarClase(ClaseListaDTO claseLista) {
+        gestionarClases.eliminarClase(claseLista);
+        JOptionPane.showMessageDialog(frameActual, "Clase eliminada exitosamente");
+    }
+    
+    public static List<ClaseListaDTO> buscarClasesNombre(String nombreClase){
+        return gestionarClases.buscarClaseListaNombre(nombreClase);
+    }
 }

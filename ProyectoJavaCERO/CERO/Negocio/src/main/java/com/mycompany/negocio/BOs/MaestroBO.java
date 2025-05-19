@@ -30,8 +30,8 @@ public class MaestroBO implements IMaestroBO {
 
     private IMaestroDAO maestroDAO;
 
-    public MaestroBO() {
-        this.maestroDAO = new MaestroDAO();
+    public MaestroBO(IMaestroDAO maestroDAO) {
+        this.maestroDAO = maestroDAO;
     }
 
     @Override

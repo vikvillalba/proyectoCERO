@@ -22,6 +22,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import java.time.ZoneId;
 import java.util.Date;
 import FRMs.GestionarClases.CustomHoraMinutoSpinner.Tipo;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.time.LocalTime;
 
 /**
@@ -280,7 +281,8 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         add(diasClasesPanel);
         diasClasesPanel.setBounds(190, 300, 470, 30);
 
-        ComboxPanel.setBackground(new Color(0, 0, 0, 0));
+        ComboxPanel.setBackground(new java.awt.Color(102, 102, 102));
+        ComboxPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ComboxPanel.setOpaque(false);
         ComboxPanel.setLayout(new java.awt.GridLayout(1, 7));
 
@@ -289,7 +291,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxLun.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxLun.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxLun.setName(""); // NOI18N
-        checkBoxLun.setOpaque(false);
         checkBoxLun.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxLun.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxLun.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +305,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxMar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxMar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxMar.setName(""); // NOI18N
-        checkBoxMar.setOpaque(false);
         checkBoxMar.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxMar.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxMar.addActionListener(new java.awt.event.ActionListener() {
@@ -319,7 +319,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxMie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxMie.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxMie.setName(""); // NOI18N
-        checkBoxMie.setOpaque(false);
         checkBoxMie.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxMie.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxMie.addActionListener(new java.awt.event.ActionListener() {
@@ -334,7 +333,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxJue.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxJue.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxJue.setName(""); // NOI18N
-        checkBoxJue.setOpaque(false);
         checkBoxJue.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxJue.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxJue.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +347,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxVie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxVie.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxVie.setName(""); // NOI18N
-        checkBoxVie.setOpaque(false);
         checkBoxVie.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxVie.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxVie.addActionListener(new java.awt.event.ActionListener() {
@@ -364,7 +361,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxSab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxSab.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxSab.setName(""); // NOI18N
-        checkBoxSab.setOpaque(false);
         checkBoxSab.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxSab.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxSab.addActionListener(new java.awt.event.ActionListener() {
@@ -379,7 +375,6 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         checkBoxDom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         checkBoxDom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         checkBoxDom.setName(""); // NOI18N
-        checkBoxDom.setOpaque(false);
         checkBoxDom.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         checkBoxDom.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         checkBoxDom.addActionListener(new java.awt.event.ActionListener() {
@@ -390,7 +385,7 @@ public class PanelGuardarClase extends javax.swing.JPanel {
         ComboxPanel.add(checkBoxDom);
 
         add(ComboxPanel);
-        ComboxPanel.setBounds(190, 330, 470, 24);
+        ComboxPanel.setBounds(190, 330, 470, 26);
 
         panelModalidad.setBackground(new Color(0, 0, 0, 0));
         panelModalidad.setOpaque(false);
@@ -722,7 +717,9 @@ public class PanelGuardarClase extends javax.swing.JPanel {
                 horaInicioCompleta, horaFinCompleta, 
                 fechaInicio, fechaFin, capacidad, precio, true);
         
-        System.out.println(nuevaClase.toString());
+        //
+        ControlNavegacion.registrarNuevaClase(nuevaClase);
+        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtNomClaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNomClaseMouseClicked
@@ -744,6 +741,7 @@ public class PanelGuardarClase extends javax.swing.JPanel {
 
     private void btnRegresar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar2ActionPerformed
         // TODO add your handling code here:
+        ControlNavegacion.mostrarFrmAdminClases();
         //Regresar a administracion Clases
     }//GEN-LAST:event_btnRegresar2ActionPerformed
 
@@ -761,7 +759,7 @@ public class PanelGuardarClase extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkBoxSab;
     private javax.swing.JCheckBox checkBoxVie;
     private javax.swing.JComboBox<AulaClaseDTO> comboxAulas;
-    private javax.swing.JComboBox<MaestroDTO> comboxMaestro;
+    private javax.swing.JComboBox<DTOs.GestionarClases.MaestroDTO> comboxMaestro;
     private javax.swing.JComboBox<String> comboxModalidad;
     private javax.swing.JPanel diasClasesPanel;
     private com.toedter.calendar.JCalendar jCalendarFechaFin;

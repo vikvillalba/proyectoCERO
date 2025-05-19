@@ -40,5 +40,7 @@ public interface IClasesDAO {
     public Clase buscarClase(String codigo);
 
     public Integer obtenerLimiteFaltas(Clase clase);
+    
+    public Integer obtenerCodigoMaxClase();
 
 }

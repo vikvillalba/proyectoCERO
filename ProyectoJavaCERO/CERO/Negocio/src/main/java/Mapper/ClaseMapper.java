@@ -37,7 +37,7 @@ public class ClaseMapper implements IClaseMapper {
         double precioDouble = nuevaClase.getPrecio();
         BigDecimal precio = BigDecimal.valueOf(precioDouble);
 
-        Clase clase = new Clase(nuevaClase.getCodigo(),
+        Clase clase = new Clase(0,
                 nuevaClase.getNombreClase(),
                 maestro,
                 nuevaClase.getModalidad(),
