@@ -78,6 +78,14 @@ public class MaestrosDAO implements IMaestrosDAO {
     @Override
     public List<Clase> obtenerClasesImpartidas(String idMaestro) {
         
+    public Maestro agregarMaestro(Maestro maestro) {
+        coleccionMaestros.insertOne(maestro);
+        return maestro;
+    }
+    
+      @Override
+
+    public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro) {
         List<Clase> clases = new ArrayList<>();
         Maestro maestroBD = coleccionMaestros.find(eq("_id", new ObjectId(idMaestro))).first();
 

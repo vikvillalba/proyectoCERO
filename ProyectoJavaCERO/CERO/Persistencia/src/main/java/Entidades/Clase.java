@@ -41,7 +41,7 @@ public class Clase {
     }
 
     // Constructor Nueva Clase
-    public Clase(Integer codigo, String nombre, ObjectId idMaestro, ObjectId idAula, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, String nombreMaestro, String nombreAula, BigDecimal precio, boolean activa) {
+    public Clase(Integer codigo, String nombre, ObjectId idMaestro, ObjectId idAula, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, BigDecimal precio, boolean activa) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.idMaestro = idMaestro;
@@ -53,8 +53,6 @@ public class Clase {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.capacidadAlumnos = capacidadAlumnos;
-        this.nombreMaestro = nombreMaestro;
-        this.nombreAula = nombreAula;
         this.precio = precio;
         this.activa = activa;
     }
@@ -79,15 +77,6 @@ public class Clase {
         this.fechaFin = fechaFin;
         this.precio = precio;
 
-    }
-
-    public String getNombreAula() {
-        return nombreAula;
-    }
-
-    // Getters y Setters
-    public void setNombreAula(String nombreAula) {
-        this.nombreAula = nombreAula;
     }
 
     public ObjectId getId() {
@@ -186,14 +175,6 @@ public class Clase {
         this.capacidadAlumnos = capacidadAlumnos;
     }
 
-    public String getNombreMaestro() {
-        return nombreMaestro;
-    }
-
-    public void setNombreMaestro(String nombreMaestro) {
-        this.nombreMaestro = nombreMaestro;
-    }
-
     public BigDecimal getPrecio() {
         return precio;
     }
@@ -232,6 +213,29 @@ public class Clase {
     @Override
     public String toString() {
         return "Clase{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", idMaestro=" + idMaestro + ", idAula=" + idAula + ", modalidad=" + modalidad + ", dias=" + dias + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", capacidadAlumnos=" + capacidadAlumnos + ", LIMITE_FALTAS=" + LIMITE_FALTAS + ", nombreMaestro=" + nombreMaestro + ", nombreAula=" + nombreAula + ", precio=" + precio + ", activa=" + activa + '}';
+    @BsonIgnore
+    public String getNombreMaestro() {
+        return nombreMaestro;
+    }
+
+    @BsonIgnore
+    public void setNombreMaestro(String nombreMaestro) {
+        this.nombreMaestro = nombreMaestro;
+    }
+
+    @BsonIgnore
+    public String getNombreAula() {
+        return nombreAula;
+    }
+
+    @BsonIgnore
+    public void setNombreAula(String nombreAula) {
+        this.nombreAula = nombreAula;
+    }
+
+    @BsonIgnore
+    public String getIdClaseString() {
+        return ObjectIDMapper.toString(idMaestro);
     }
 
 }

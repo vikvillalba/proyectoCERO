@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 import implementaciones.ObjectIDMapper;
@@ -36,6 +32,16 @@ public class Maestro {
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
         this.clasesImpartidas = clasesImpartidas;
+    }
+
+    public Maestro(String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico, String contrasena) {
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
     }
 
     public Maestro() {

@@ -33,7 +33,6 @@ public class AlumnosDAO implements IAlumnosDAO {
     public Alumno obtenerAlumno(String idAlumno) {
 
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        // acceso a la coleccion
         MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
 
         // select * from Alumnos where _id = "id";
@@ -48,8 +47,11 @@ public class AlumnosDAO implements IAlumnosDAO {
 
     @Override
     public Alumno registrarAlumnoNuevo(Alumno alumno) {
-        Integer codigo = obtenerSiguienteCodigo();
-        alumno.setCodigo(codigo);
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
+        alumno.setCodigo(obtenerSiguienteCodigo());
+        
+        coleccion.insertOne(alumno);
         return alumno;
     }
 
@@ -59,7 +61,7 @@ public class AlumnosDAO implements IAlumnosDAO {
 
         Contador actualizado = coleccion.findOneAndUpdate(
                 Filters.eq("_id", "alumno"),
-                Updates.inc("seq", 1),
+                Updates.inc("codigoSecuencia", 1),
                 new FindOneAndUpdateOptions()
                         .upsert(true)
                         .returnDocument(ReturnDocument.AFTER)
@@ -70,7 +72,10 @@ public class AlumnosDAO implements IAlumnosDAO {
 
     @Override
     public List<Alumno> obtenerAlumnos() {
-        return null;
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Alumno> coleccion = baseDatos.getCollection("Alumnos", Alumno.class);
+
+        return coleccion.find().into(new ArrayList<>());
     }
 
 }
