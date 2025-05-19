@@ -213,6 +213,8 @@ public class Clase {
     @Override
     public String toString() {
         return "Clase{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", idMaestro=" + idMaestro + ", idAula=" + idAula + ", modalidad=" + modalidad + ", dias=" + dias + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", capacidadAlumnos=" + capacidadAlumnos + ", LIMITE_FALTAS=" + LIMITE_FALTAS + ", nombreMaestro=" + nombreMaestro + ", nombreAula=" + nombreAula + ", precio=" + precio + ", activa=" + activa + '}';
+    }
+
     @BsonIgnore
     public String getNombreMaestro() {
         return nombreMaestro;
