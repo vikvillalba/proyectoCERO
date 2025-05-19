@@ -8,6 +8,7 @@ import Entidades.AulaClase;
 import Entidades.Clase;
 import Excepciones.PersistenciaException;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *

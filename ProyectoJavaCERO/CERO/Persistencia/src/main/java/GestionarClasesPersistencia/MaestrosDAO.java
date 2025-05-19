@@ -74,18 +74,17 @@ public class MaestrosDAO implements IMaestrosDAO {
 
         return resultado;
     }
-
+  
     @Override
     public Maestro agregarMaestro(Maestro maestro) {
         coleccionMaestros.insertOne(maestro);
         return maestro;
     }
     
-      @Override
-
-    public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro) {
+    @Override
+    public List<Clase> obtenerClasesImpartidas(String idMaestro) {
         List<Clase> clases = new ArrayList<>();
-        Maestro maestroBD = coleccionMaestros.find(eq("_id", idMaestro)).first();
+        Maestro maestroBD = coleccionMaestros.find(eq("_id", new ObjectId(idMaestro))).first();
 
         if (maestroBD != null && maestroBD.getClasesImpartidas() != null) {
             for (ObjectId idClase : maestroBD.getClasesImpartidas()) {
@@ -98,4 +97,5 @@ public class MaestrosDAO implements IMaestrosDAO {
 
         return clases;
     }
+
 }
