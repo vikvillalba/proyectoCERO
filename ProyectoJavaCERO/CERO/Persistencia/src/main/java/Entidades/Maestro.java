@@ -38,6 +38,16 @@ public class Maestro {
         this.clasesImpartidas = clasesImpartidas;
     }
 
+    public Maestro(String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico, String contrasena) {
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
+    }
+
     public Maestro() {
     }
 
@@ -105,11 +115,11 @@ public class Maestro {
         this.contrasena = contrasena;
     }
 
-    public List<ObjectId> getClasesImpartidad() {
+    public List<ObjectId> getClasesImpartidas() {
         return clasesImpartidas;
     }
 
-    public void setClasesImpartidad(List<ObjectId> clasesImpartidad) {
+    public void setClasesImpartidas(List<ObjectId> clasesImpartidad) {
         this.clasesImpartidas = clasesImpartidad;
     }
 

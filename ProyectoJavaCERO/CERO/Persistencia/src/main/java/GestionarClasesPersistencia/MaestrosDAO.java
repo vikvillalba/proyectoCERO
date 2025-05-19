@@ -24,10 +24,12 @@ import org.bson.types.ObjectId;
 public class MaestrosDAO implements IMaestrosDAO {
 
     private final MongoCollection<Maestro> coleccionMaestros;
+    private final MongoCollection<Clase> coleccionClases;
 
     public MaestrosDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccionMaestros = db.getCollection("Maestros", Maestro.class);
+        this.coleccionClases = db.getCollection("Clases", Clase.class);
     }
 
     @Override
@@ -71,5 +73,28 @@ public class MaestrosDAO implements IMaestrosDAO {
         }
 
         return resultado;
+    }
+
+    @Override
+    public Maestro agregarMaestro(Maestro maestro) {
+        coleccionMaestros.insertOne(maestro);
+        return maestro;
+    }
+    
+      @Override
+    public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro) {
+        List<Clase> clases = new ArrayList<>();
+        Maestro maestroBD = coleccionMaestros.find(eq("_id", idMaestro)).first();
+
+        if (maestroBD != null && maestroBD.getClasesImpartidas() != null) {
+            for (ObjectId idClase : maestroBD.getClasesImpartidas()) {
+                Clase clase = coleccionClases.find(eq("_id", idClase)).first();
+                if (clase != null) {
+                    clases.add(clase);
+                }
+            }
+        }
+
+        return clases;
     }
 }

@@ -62,13 +62,12 @@ public class AulasClaseDAO implements IAulasClaseDAO {
     @Override
     public void agregarClasePresencial(Clase clase) throws PersistenciaException {
         ObjectId idClase = clase.getId();
-        ObjectId idAula = clase.getIdAula();  // ✅ uso del nuevo campo idAula
+        ObjectId idAula = clase.getIdAula();  
 
         if (idClase == null || idAula == null) {
             throw new PersistenciaException("Clase o aula no tiene un ID válido.");
         }
 
-        // Agrega el ID de la clase al arreglo clasesPresenciales del aula, sin duplicados
         coleccionAulas.updateOne(
                 eq("_id", idAula),
                 addToSet("clasesPresenciales", idClase)
@@ -98,5 +97,11 @@ public class AulasClaseDAO implements IAulasClaseDAO {
         }
 
         return resultado;
+    }
+
+    @Override
+    public AulaClase agregarAula(AulaClase aula) {
+        coleccionAulas.insertOne(aula);
+        return aula;
     }
 }
