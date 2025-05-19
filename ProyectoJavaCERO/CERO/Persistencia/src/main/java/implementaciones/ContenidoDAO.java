@@ -1,6 +1,5 @@
 package implementaciones;
 
-import DAOs.IContenidoDAO;
 import Entidades.Clase;
 import Entidades.Contenido;
 import Excepciones.PersistenciaException;
@@ -8,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import DAOs.IContenidoDAO;
 
 /**
  *

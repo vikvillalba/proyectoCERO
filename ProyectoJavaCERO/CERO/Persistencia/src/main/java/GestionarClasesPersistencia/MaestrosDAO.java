@@ -26,7 +26,7 @@ public class MaestrosDAO implements IMaestrosDAO {
     private final MongoCollection<Maestro> coleccionMaestros;
     private final MongoCollection<Clase> coleccionClases;
 
-    public MaestroDAO() {
+    public MaestrosDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccionMaestros = db.getCollection("Maestros", Maestro.class);
         this.coleccionClases = db.getCollection("Clases", Clase.class);

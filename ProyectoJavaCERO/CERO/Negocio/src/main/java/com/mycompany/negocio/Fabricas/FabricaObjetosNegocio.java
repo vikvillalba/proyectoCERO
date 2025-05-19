@@ -4,10 +4,8 @@ import implementaciones.AlumnosDAO;
 import implementaciones.InscripcionesDAO;
 import implementaciones.PagosDAO;
 import DAOs.IAlumnosDAO;
-import DAOs.IAsistenciasDAO;
 import DAOs.IClasesDAO;
 import DAOs.IContenidoDAO;
-import DAOs.IInscripcionesDAO;
 import DAOs.IPagosDAO;
 import GestionarClasesPersistencia.AulasClaseDAO;
 import GestionarClasesPersistencia.MaestrosDAO;
@@ -32,6 +30,8 @@ import implementaciones.AsistenciasDAO;
 import implementaciones.ContenidoDAO;
 import GestionarClasesPersistencia.IMaestrosDAO;
 import GestionarClasesPersistencia.IAulasClaseDAO;
+import DAOs.IAsistenciasDAO;
+import DAOs.IInscripcionesDAO;
 
 
 /**

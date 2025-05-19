@@ -2,7 +2,6 @@ package GestionarClasesPersistencia;
 
 import DAOs.IAlumnosDAO;
 import DAOs.IClasesDAO;
-import DAOs.IInscripcionesDAO;
 import Entidades.Alumno;
 import Entidades.AulaClase;
 import Entidades.Clase;
@@ -22,6 +21,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import DAOs.IInscripcionesDAO;
 
 /**
  *

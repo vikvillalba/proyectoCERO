@@ -192,4 +192,15 @@ public class ClasesDAO implements IClasesDAO {
     public Clase buscarClaseObjectID(ObjectId idClase) {
         return coleccion.find(eq("_id", idClase)).first();
     }
+    
+    @Override
+    public List<Clase> obtenerListaClasesMaestro(Maestro maestro) {
+        return coleccion.find(eq("maestro.id", maestro.getId())).into(new ArrayList<>());
+    }
+    
+    @Override
+    public List<Clase> obtenerListaClasesAula(AulaClase aula) {
+        return coleccion.find(eq("aula.id", aula.getId())).into(new ArrayList<>());
+
+    }
 }

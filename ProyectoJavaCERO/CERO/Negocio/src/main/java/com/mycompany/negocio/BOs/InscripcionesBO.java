@@ -2,7 +2,6 @@ package com.mycompany.negocio.BOs;
 
 import DAOs.IAlumnosDAO;
 import DAOs.IClasesDAO;
-import DAOs.IInscripcionesDAO;
 import Entidades.Alumno;
 import Entidades.Clase;
 import Entidades.Inscripcion;
@@ -23,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import DAOs.IInscripcionesDAO;
 
 /**
  *

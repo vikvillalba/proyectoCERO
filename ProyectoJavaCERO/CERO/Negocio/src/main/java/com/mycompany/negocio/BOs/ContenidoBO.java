@@ -1,6 +1,5 @@
 package com.mycompany.negocio.BOs;
 
-import DAOs.IContenidoDAO;
 import Entidades.Clase;
 import Entidades.Contenido;
 import Excepciones.PersistenciaException;
@@ -16,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import DAOs.IContenidoDAO;
 
 /**
  *

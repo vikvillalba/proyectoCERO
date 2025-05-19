@@ -6,7 +6,6 @@ import Entidades.Inscripcion;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import DAOs.IInscripcionesDAO;
 import Entidades.Clase;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -15,6 +14,7 @@ import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import DAOs.IInscripcionesDAO;
 
 /**
  *
