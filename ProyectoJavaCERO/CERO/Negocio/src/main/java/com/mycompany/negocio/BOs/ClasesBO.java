@@ -23,6 +23,8 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bson.types.ObjectId;
 
 /**
@@ -98,27 +100,36 @@ public class ClasesBO implements IClasesBO {
     }
 
     //METODOS CU_GESTIONAR CLASES
-    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro) {
+    @Override
+    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro) throws NegocioException {
         String id = maestro.getId();
-        ObjectId idMaestro = new ObjectId(id);
-        Maestro maestroEntity = new Maestro();
-        maestroEntity.setId(idMaestro);
+        Maestro maestroEntity;
+        try {
+            maestroEntity = maestroBO.buscarMaestroID(id);
+        } catch (NegocioException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         List<Clase> clasesEncontradas = clasesDAO.obtenerListaClasesMaestro(maestroEntity);
         return clasesEncontradas;
 
     }
 
-    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula) {
+    @Override
+    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula) throws NegocioException {
 
         String id = aula.getIdAula();
-        ObjectId idAula = new ObjectId(id);
-        AulaClase aulaEntity = new AulaClase();
-        aulaEntity.setId(idAula);
+        AulaClase aulaEntity;
+        try {
+            aulaEntity = aulaBO.buscarAulaClaseID(id);
+        } catch (NegocioException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         List<Clase> clasesEncontradas = clasesDAO.obtenerListaClasesAula(aulaEntity);
         return clasesEncontradas;
 
     }
 
+    //REGISTRAR NUEVA CLASE METODO
     @Override
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException {
         String idAula = nuevaClase.getAula().getIdAula();

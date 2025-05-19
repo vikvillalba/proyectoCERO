@@ -279,6 +279,7 @@ public class JpanelClaseListaAdmin extends javax.swing.JPanel {
 
         // TODO add your handling code here:
         ControlNavegacion.eliminarClase(clase);
+        ControlNavegacion.mostrarFrmAdminClases();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed

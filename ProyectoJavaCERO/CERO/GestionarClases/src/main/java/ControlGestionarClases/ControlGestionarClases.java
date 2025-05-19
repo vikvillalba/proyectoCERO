@@ -57,22 +57,26 @@ public class ControlGestionarClases implements IControlGestionarClases {
     @Override
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws GestionarClasesException {
         //
-        validarDatosClase(nuevaClase);
-        if (nuevaClase.getAula() != null) {
-            List<Clase> clasesPresencialesAula = clasesBO.obtenerListaClasesAula(nuevaClase.getAula());
-            try {
-                aulaBO.validarDisponibilidadHorarioAula(nuevaClase, clasesPresencialesAula);
-            } catch (NegocioException ex) {
-                throw new GestionarClasesException(ex.getMessage());
-            }
-        }
-        List<Clase> clasesImpartidasMaestro = clasesBO.obtenerListaClasesMaestro(nuevaClase.getMaestro());
         try {
-            maestroBO.validarDisponibilidadHorarioMaestro(nuevaClase, clasesImpartidasMaestro);
-        } catch (NegocioException ex) {
-            throw new GestionarClasesException(ex.getMessage());
-        }
+            // Validación de datos generales
+            validarDatosClase(nuevaClase);
 
+            // Validación de aula (si existe)
+            if (nuevaClase.getAula() != null) {
+                List<Clase> clasesPresencialesAula = clasesBO.obtenerListaClasesAula(nuevaClase.getAula());
+                aulaBO.validarDisponibilidadHorarioAula(nuevaClase, clasesPresencialesAula);
+            }
+
+            // Validación de disponibilidad del maestro
+            List<Clase> clasesImpartidasMaestro = clasesBO.obtenerListaClasesMaestro(nuevaClase.getMaestro());
+            maestroBO.validarDisponibilidadHorarioMaestro(nuevaClase, clasesImpartidasMaestro);
+
+            // Registro
+            clasesBO.registrarNuevaClase(nuevaClase);
+
+        } catch (NegocioException | IllegalArgumentException ex) {
+            throw new GestionarClasesException("No se pudo registrar la clase: " + ex.getMessage());
+        }
     }
 
     //obtiene las aula en AulaClaseDTO para seleccionarla en un combox
@@ -128,7 +132,6 @@ public class ControlGestionarClases implements IControlGestionarClases {
         // etc.
         clasesBO.editarClase(editarClase);
     }
-
 
     @Override
     public List<ClaseListaDTO> buscarClasesActivas() {

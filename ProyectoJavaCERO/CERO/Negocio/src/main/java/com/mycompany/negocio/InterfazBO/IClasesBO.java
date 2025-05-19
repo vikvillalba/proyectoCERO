@@ -19,20 +19,22 @@ import java.util.List;
  * @author victoria
  */
 public interface IClasesBO {
-    public List<ClaseDTO> obtenerClasesNombre(String nombreClase) throws NegocioException;
-    public List<ClaseDTO> obtenerClases()throws NegocioException;
-    public Integer obtenerLimiteFaltas(ClaseDTO clase);
-    
-    //METODOS CU_GESTIONAR CLASES 
-    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro);
 
-    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula);
+    public List<ClaseDTO> obtenerClasesNombre(String nombreClase) throws NegocioException;
+
+    public List<ClaseDTO> obtenerClases() throws NegocioException;
+
+    public Integer obtenerLimiteFaltas(ClaseDTO clase);
+
+    //METODOS CU_GESTIONAR CLASES 
+    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro) throws NegocioException;
+
+    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula) throws NegocioException;
 
     //
     public List<ClaseListaDTO> buscarClasesListaNombre(String nombreClase);
 
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException;
-
 
     public void editarClase(EditarClaseDTO editarClse);
 
@@ -47,7 +49,7 @@ public interface IClasesBO {
     public boolean validarCapacidadMaxMenorCantidadInscritos(int capacidad, int cantidadInscritos);
 
     public void eliminarClase(ClaseListaDTO clase);
-    
+
     public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase);
 
 }
