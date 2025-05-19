@@ -34,13 +34,14 @@ public class AulasClaseDAO implements IAulasClaseDAO {
 
     /**
      * Devuelve la lista de objetos Clase referenciados en clasesPresenciales del aula.
-     * @param aula
-     * @return 
+     *
+     * @param idAula
+     * @return
      */
     @Override
-    public List<Clase> obtenerAulaClases(AulaClase aula) {
+    public List<Clase> obtenerAulaClases(ObjectId idAula) {
         List<Clase> clases = new ArrayList<>();
-        AulaClase aulaEnBD = coleccionAulas.find(eq("_id", aula.getId())).first();
+        AulaClase aulaEnBD = coleccionAulas.find(eq("_id", idAula)).first();
 
         if (aulaEnBD != null && aulaEnBD.getClasesPresenciales() != null) {
             for (ObjectId idClase : aulaEnBD.getClasesPresenciales()) {
@@ -80,7 +81,7 @@ public class AulasClaseDAO implements IAulasClaseDAO {
         FindIterable<AulaClase> rsultado = coleccionAulas.find();
         for (AulaClase aulaClase : rsultado) {
             aulas.add(aulaClase);
-            
+
         }
         return aulas;
     }

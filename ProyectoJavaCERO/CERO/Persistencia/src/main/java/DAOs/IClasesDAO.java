@@ -31,12 +31,11 @@ public interface IClasesDAO {
     public void editarClase(Clase editarClase);
 
     public void eliminarClase(Clase clase);
-
-    public List<Clase> obtenerListaClasesMaestro(Maestro maestro);
-
-    public List<Clase> obtenerListaClasesAula(AulaClase aula);
     
     public Clase buscarClaseCodigoInteger(Integer codigo);
+    
+    public Clase buscarClaseObjectID(ObjectId idClase);
+    
 
     //Metodos para CU_INscribirClase
     public List<Clase> obtenerClasesPorNombre(String nombreClase);

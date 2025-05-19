@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Entidades;
 
 import implementaciones.ObjectIDMapper;
@@ -119,8 +115,8 @@ public class Maestro {
         return clasesImpartidas;
     }
 
-    public void setClasesImpartidas(List<ObjectId> clasesImpartidad) {
-        this.clasesImpartidas = clasesImpartidad;
+    public void setClasesImpartidas(List<ObjectId> clasesImpartidas) {
+        this.clasesImpartidas = clasesImpartidas;
     }
 
     public String getNombreCompleto() {

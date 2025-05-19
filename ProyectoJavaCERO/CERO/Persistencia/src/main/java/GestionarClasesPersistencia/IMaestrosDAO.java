@@ -25,4 +25,6 @@ public interface IMaestrosDAO {
     public Maestro agregarMaestro(Maestro maestro);
     public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro);
     
+    public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro);
+    
 }

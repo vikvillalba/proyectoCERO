@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.util.List;
 import com.mycompany.negocio.InterfazBO.*;
 import com.mycompany.negocio.excepciones.NegocioException;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -33,7 +34,6 @@ public class ControlGestionarClases implements IControlGestionarClases {
     private IClasesBO clasesBO;
     private IMaestroBO maestroBO;
     private IAulaBO aulaBO;
-    private Integer contador;
 
     public ControlGestionarClases() {
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
@@ -64,12 +64,12 @@ public class ControlGestionarClases implements IControlGestionarClases {
             // Validación de aula (si existe)
             if (nuevaClase.getAula() != null) {
                 List<Clase> clasesPresencialesAula = clasesBO.obtenerListaClasesAula(nuevaClase.getAula());
-                aulaBO.validarDisponibilidadHorarioAula(nuevaClase, clasesPresencialesAula);
+                validarDisponibilidadHorarioAula(nuevaClase, clasesPresencialesAula);
             }
 
             // Validación de disponibilidad del maestro
             List<Clase> clasesImpartidasMaestro = clasesBO.obtenerListaClasesMaestro(nuevaClase.getMaestro());
-            maestroBO.validarDisponibilidadHorarioMaestro(nuevaClase, clasesImpartidasMaestro);
+            validarDisponibilidadHorarioMaestro(nuevaClase, clasesImpartidasMaestro);
 
             // Registro
             clasesBO.registrarNuevaClase(nuevaClase);
@@ -209,6 +209,93 @@ public class ControlGestionarClases implements IControlGestionarClases {
     @Override
     public EditarClaseDTO obtenerClaseLista(ClaseListaDTO clase) {
         return clasesBO.obtenerClaseListaDTO(clase);
+    }
+
+    //Validar disponibilidad del aula
+    @Override
+    public boolean validarDisponibilidadHorarioAula(NuevaClaseDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException {
+        List<DayOfWeek> diasClase = nuevaClase.getDiasClase();
+        LocalDate fechaInicioClase = nuevaClase.getFechaInicio();
+        LocalDate fechaFinClase = nuevaClase.getFechaFin();
+        LocalTime horaInicioNueva = nuevaClase.getHoraInicio();
+        LocalTime horaFinNueva = nuevaClase.getHoraFin();
+
+        for (Clase claseExistente : clasesPresencialesAula) {
+            LocalDate fechaInicioExistente = claseExistente.getFechaInicio();
+            LocalDate fechaFinExistente = claseExistente.getFechaFin();
+
+            // Si las fechas nuevas están completamente fuera del rango de la clase existente, continuar
+            if ((fechaFinClase.isBefore(fechaInicioExistente) && fechaInicioClase.isBefore(fechaInicioExistente))
+                    || (fechaInicioClase.isAfter(fechaFinExistente) && fechaFinClase.isAfter(fechaFinExistente))) {
+                continue; // No hay cruce de fechas, revisar siguiente clase
+            }
+
+            // Verificar si hay días en común
+            List<DayOfWeek> diasExistente = claseExistente.getDias();
+            for (DayOfWeek dia : diasClase) {
+                if (diasExistente.contains(dia)) {
+                    // Validar traslape de horarios
+                    LocalTime horaInicioExistente = claseExistente.getHoraInicio();
+                    LocalTime horaFinExistente = claseExistente.getHoraFin();
+
+                    boolean hayTraslapeHorario
+                            = !horaFinNueva.isBefore(horaInicioExistente)
+                            && !horaInicioNueva.isAfter(horaFinExistente);
+
+                    if (hayTraslapeHorario) {
+                        throw new GestionarClasesException("El aula tiene Conflicto con la clase '" + claseExistente.getNombre()
+                                + "' el día " + dia + " entre " + horaInicioNueva + " y " + horaFinNueva
+                                + ". Horario existente: " + horaInicioExistente + " a " + horaFinExistente);
+                    }
+                }
+            }
+        }
+
+        return true; // Solo si pasó todas las validaciones
+    }
+
+    //VALIDAR DISPONIBILIDD CON EL HORARIO DEL MAESTRO
+    @Override
+    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException {
+
+        List<DayOfWeek> diasClase = nuevaClase.getDiasClase();
+        LocalDate fechaInicioClase = nuevaClase.getFechaInicio();
+        LocalDate fechaFinClase = nuevaClase.getFechaFin();
+        LocalTime horaInicioNueva = nuevaClase.getHoraInicio();
+        LocalTime horaFinNueva = nuevaClase.getHoraFin();
+
+        for (Clase claseExistente : clasesImpartidasMaestro) {
+            LocalDate fechaInicioExistente = claseExistente.getFechaInicio();
+            LocalDate fechaFinExistente = claseExistente.getFechaFin();
+
+            // Si las fechas nuevas están completamente fuera del rango de la clase existente, continuar
+            if ((fechaFinClase.isBefore(fechaInicioExistente) && fechaInicioClase.isBefore(fechaInicioExistente))
+                    || (fechaInicioClase.isAfter(fechaFinExistente) && fechaFinClase.isAfter(fechaFinExistente))) {
+                continue; // No hay cruce de fechas, revisar siguiente clase
+            }
+
+            // Verificar si hay días en común
+            List<DayOfWeek> diasExistente = claseExistente.getDias();
+            for (DayOfWeek dia : diasClase) {
+                if (diasExistente.contains(dia)) {
+                    // Validar traslape de horarios
+                    LocalTime horaInicioExistente = claseExistente.getHoraInicio();
+                    LocalTime horaFinExistente = claseExistente.getHoraFin();
+
+                    boolean hayTraslapeHorario
+                            = !horaFinNueva.isBefore(horaInicioExistente)
+                            && !horaInicioNueva.isAfter(horaFinExistente);
+
+                    if (hayTraslapeHorario) {
+                        throw new GestionarClasesException("El Maestro tiene Conflicto con la clase '" + claseExistente.getNombre()
+                                + "' el día " + dia + " entre " + horaInicioNueva + " y " + horaFinNueva
+                                + ". Horario existente: " + horaInicioExistente + " a " + horaFinExistente);
+                    }
+                }
+            }
+        }
+
+        return true; // Solo si pasó todas las validaciones
     }
 
 }

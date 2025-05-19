@@ -26,7 +26,7 @@ public class MaestrosDAO implements IMaestrosDAO {
     private final MongoCollection<Maestro> coleccionMaestros;
     private final MongoCollection<Clase> coleccionClases;
 
-    public MaestrosDAO() {
+    public MaestroDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccionMaestros = db.getCollection("Maestros", Maestro.class);
         this.coleccionClases = db.getCollection("Clases", Clase.class);
@@ -57,7 +57,7 @@ public class MaestrosDAO implements IMaestrosDAO {
         coleccionMaestros.updateOne(
                 eq("_id", idMaestro),
                 addToSet("clasesImpartidas", idClase));
-    
+
     }
 
     @Override
@@ -82,6 +82,7 @@ public class MaestrosDAO implements IMaestrosDAO {
     }
     
       @Override
+
     public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro) {
         List<Clase> clases = new ArrayList<>();
         Maestro maestroBD = coleccionMaestros.find(eq("_id", idMaestro)).first();
