@@ -28,8 +28,8 @@ public class AulaClaseDAO implements IAulaClaseDAO {
 
     public AulaClaseDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
-        this.coleccionAulas = db.getCollection("Aula", AulaClase.class);
-        this.coleccionClases = db.getCollection("Clase", Clase.class);
+        this.coleccionAulas = db.getCollection("Aulas", AulaClase.class);
+        this.coleccionClases = db.getCollection("Clases", Clase.class);
     }
 
     /**
@@ -56,20 +56,23 @@ public class AulaClaseDAO implements IAulaClaseDAO {
 
     /**
      * Agrega el ID de la clase al arreglo clasesPresenciales del aula correspondiente.
+     *
      * @param clase
      */
     @Override
     public void agregarClasePresencial(Clase clase) throws PersistenciaException {
         ObjectId idClase = clase.getId();
-        ObjectId idAula = clase.getAula() != null ? clase.getAula().getId() : null;
+        ObjectId idAula = clase.getIdAula();  // ✅ uso del nuevo campo idAula
 
         if (idClase == null || idAula == null) {
             throw new PersistenciaException("Clase o aula no tiene un ID válido.");
         }
 
-        // Se asegura de que el ID de la clase se agregue al arreglo clasesPresenciales
+        // Agrega el ID de la clase al arreglo clasesPresenciales del aula, sin duplicados
         coleccionAulas.updateOne(
-                eq("_id", idAula),addToSet("clasesPresenciales", idClase));
+                eq("_id", idAula),
+                addToSet("clasesPresenciales", idClase)
+        );
     }
 
     @Override
@@ -83,16 +86,15 @@ public class AulaClaseDAO implements IAulaClaseDAO {
         return aulas;
     }
 
-    @Override
-    public AulaClase buscarClase(AulaClase aula)throws PersistenciaException {
-        if (aula == null || aula.getId() == null) {
-            throw new IllegalArgumentException("El aula o su ID no pueden ser nulos");
+    public AulaClase buscarClase(ObjectId idAula) throws PersistenciaException {
+        if (idAula == null) {
+            throw new IllegalArgumentException("El ID del aula no puede ser nulo");
         }
 
-        AulaClase resultado = coleccionAulas.find(eq("_id", aula.getId())).first();
+        AulaClase resultado = coleccionAulas.find(eq("_id", idAula)).first();
 
         if (resultado == null) {
-            throw new PersistenciaException("No se encontró la clase con el ID especificado: " + aula.getId().toHexString());
+            throw new PersistenciaException("No se encontró el aula con el ID especificado: " + idAula.toHexString());
         }
 
         return resultado;

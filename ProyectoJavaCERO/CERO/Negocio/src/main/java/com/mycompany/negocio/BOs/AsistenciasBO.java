@@ -212,7 +212,7 @@ public class AsistenciasBO implements IAsistenciasBO {
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getMaestro().getNombreCompleto(),
+                    clase.getNombreMaestro(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()

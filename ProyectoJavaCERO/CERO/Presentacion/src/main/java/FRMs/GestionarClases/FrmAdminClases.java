@@ -384,12 +384,14 @@ public class FrmAdminClases extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         ControlNavegacion.mostrarMenuPrincipal();
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btnNuevaClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaClaseActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         ControlNavegacion.mostrarFrmRegistrarClase();
     }//GEN-LAST:event_btnNuevaClaseActionPerformed
 

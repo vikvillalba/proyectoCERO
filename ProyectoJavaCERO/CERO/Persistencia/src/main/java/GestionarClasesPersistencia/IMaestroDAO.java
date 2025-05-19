@@ -8,16 +8,19 @@ import Entidades.Clase;
 import Entidades.Maestro;
 import Excepciones.PersistenciaException;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Jack Murrieta
  */
 public interface IMaestroDAO {
+
     public List<Maestro> obtenerMaestros();
+
     //metodo buscarEspacioHorario
     public void agregarClaseImpartida(Clase clase);
-    
-    public Maestro buscarMaestro(Maestro maestro) throws PersistenciaException;
+
+    public Maestro buscarMaestro(ObjectId idMaestro) throws PersistenciaException;
     
 }

@@ -17,6 +17,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -26,38 +27,33 @@ public class ClaseMapper implements IClaseMapper {
 
     public ClaseMapper() {
     }
-    
+
     //Actualizar los cupos de las clases dependiend de las inscripciones
     //uso del Observer
-    
-
     @Override
     public Clase convertirClaseEntidad(NuevaClaseDTO nuevaClase, Maestro maestro, AulaClase aula) {
-
         double precioDouble = nuevaClase.getPrecio();
         BigDecimal precio = BigDecimal.valueOf(precioDouble);
 
-        Clase clase = new Clase(0,
+        ObjectId idMaestro = maestro != null ? maestro.getId() : null;
+        ObjectId idAula = aula != null ? aula.getId() : null;
+
+        return new Clase(null,
                 nuevaClase.getNombreClase(),
-                maestro,
+                idMaestro,
+                idAula,
                 nuevaClase.getModalidad(),
                 nuevaClase.getDiasClase(),
                 nuevaClase.getHoraInicio(),
                 nuevaClase.getHoraFin(),
                 nuevaClase.getFechaInicio(),
                 nuevaClase.getFechaFin(),
-                nuevaClase.getCapacidadAlumnos(),
-                aula,
-                precio,
-                true);
-
-        return clase;
-
+                nuevaClase.getCapacidadAlumnos(), nuevaClase.getMaestro().getNombreCompleto(), nuevaClase.getAula().getNombreAula(),
+                precio, true);
     }
 
     @Override
-    public ClaseListaDTO convertirClaseListaDTO(Clase clase) {
-
+    public ClaseListaDTO convertirClaseListaDTO(Clase clase, Maestro maestro, AulaClase aula) {
         List<DayOfWeek> dias = clase.getDias();
         String diasTexto = convertirDias(dias);
 
@@ -67,49 +63,49 @@ public class ClaseMapper implements IClaseMapper {
 
         String horaInicio = convertirHora(clase.getHoraInicio());
         String horaFin = convertirHora(clase.getHoraFin());
-        String horaCompleta = horaInicio + "-" + horaFin;
-        String horario = diasTexto + "\n" + horaCompleta;
+        String horario = diasTexto + "\n" + horaInicio + "-" + horaFin;
 
-        ClaseListaDTO claseListaDTO = new ClaseListaDTO(clase.getCodigo(),
+        return new ClaseListaDTO(
+                clase.getCodigo(),
                 clase.getNombre(),
                 horario,
-                clase.getMaestro().getNombreCompleto(),
+                maestro != null ? maestro.getNombreCompleto() : "Sin asignar",
                 clase.getCapacidadAlumnos(),
                 periodo,
-                clase.getAula().getNombreAula(),
-                clase.isActiva());
-
-        return claseListaDTO;
+                aula != null ? aula.getNombreAula() : "Sin aula",
+                clase.isActiva()
+        );
     }
 
     @Override
-    public EditarClaseDTO convertirEditarClase(Clase clase) {
-        String nombreMaestro = clase.getMaestro().getNombreCompleto();
-        String aulaNombre = clase.getAula().getNombreAula();
-        String diasClase = convertirDias(clase.getDias());
+    public EditarClaseDTO convertirEditarClase(Clase clase, Maestro maestro, AulaClase aula) {
+        String nombreMaestro = maestro != null ? maestro.getNombreCompleto() : "Sin asignar";
+        String nombreAula = aula != null ? aula.getNombreAula() : "Sin aula";
+
+        String diasTexto = convertirDias(clase.getDias());
         String fechaInicio = convertirFecha(clase.getFechaInicio());
         String horaInicio = convertirHora(clase.getHoraInicio());
         String precio = String.valueOf(clase.getPrecio());
 
-        EditarClaseDTO editarClaseDTO = new EditarClaseDTO(clase.getCodigo(),
+        return new EditarClaseDTO(
+                clase.getCodigo(),
                 clase.getNombre(),
                 nombreMaestro,
                 clase.getModalidad(),
-                aulaNombre,
-                diasClase,
+                nombreAula,
+                diasTexto,
                 fechaInicio,
                 horaInicio,
                 clase.getFechaFin(),
                 clase.getHoraFin(),
                 clase.getCapacidadAlumnos(),
                 precio,
-                clase.isActiva());
-        return editarClaseDTO;
+                clase.isActiva()
+        );
     }
 
     private String convertirDias(List<DayOfWeek> dias) {
         List<String> diasConvertidos = new ArrayList<>();
-
         for (DayOfWeek dia : dias) {
             switch (dia) {
                 case MONDAY ->
@@ -128,19 +124,16 @@ public class ClaseMapper implements IClaseMapper {
                     diasConvertidos.add("Dom");
             }
         }
-
         return String.join(",", diasConvertidos);
     }
 
-    public String convertirFecha(LocalDate fecha) {
-
+    private String convertirFecha(LocalDate fecha) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return fecha.format(formatter);
     }
 
-    public String convertirHora(LocalTime hora) {
+    private String convertirHora(LocalTime hora) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         return hora.format(formatter);
     }
-
 }

@@ -1,3 +1,4 @@
 galeriaContenidos\IGaleriaContenidos.class
-Exceptions\GaleriaContenidosException.class
+com\mycompany\galeriacontenidos\GaleriaContenidos.class
 galeriaContenidos\GaleriaContenidos.class
+Exceptions\GaleriaContenidosException.class

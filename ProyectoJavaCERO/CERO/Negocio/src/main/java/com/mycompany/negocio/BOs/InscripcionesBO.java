@@ -147,7 +147,15 @@ public class InscripcionesBO implements IInscripcionesBO {
 
         for (Inscripcion inscripcion : inscripcionesHoy) {
             Clase clase = clasesDAO.buscarClase(inscripcion.getClase());
-            ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(), clase.getNombre(), clase.getDias(), clase.getHoraInicio(), clase.getHoraFin(), clase.getMaestro().getNombreCompleto(), clase.getPrecio(), clase.getFechaInicio(), clase.getFechaFin());
+            ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(),
+                    clase.getNombre(),
+                    clase.getDias(),
+                    clase.getHoraInicio(),
+                    clase.getHoraFin(),
+                    clase.getNombreMaestro(),
+                    clase.getPrecio(),
+                    clase.getFechaInicio(),
+                    clase.getFechaFin());
             InscripcionDTO inscripcionDTO = new InscripcionDTO(alumnoDTO, claseDTO, inscripcion.getFechaInscripcion());
             inscripcionesDTO.add(inscripcionDTO);
         }

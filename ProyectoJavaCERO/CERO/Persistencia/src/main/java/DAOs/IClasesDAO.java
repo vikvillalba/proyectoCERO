@@ -21,6 +21,10 @@ public interface IClasesDAO {
     public List<Clase> buscarNombreClases(String nombreClase);
 
     public List<Clase> obtenerClases();
+    
+    public List<Clase> obtenerClasesActivas();
+    
+    public List<Clase> obtenerClasesInactivas();
 
     public void registrarNuevaClase(Clase nuevaClase);
 

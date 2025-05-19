@@ -17,9 +17,9 @@ import Entidades.Maestro;
  */
 public interface IClaseMapper {
     
-    public Clase convertirClaseEntidad(NuevaClaseDTO nuevaClase,Maestro maestro, AulaClase aula);
+    public Clase convertirClaseEntidad(NuevaClaseDTO nuevaClase, Maestro maestro, AulaClase aula);
     
-    public ClaseListaDTO convertirClaseListaDTO(Clase clase);
-    public EditarClaseDTO convertirEditarClase(Clase clase);
+    public EditarClaseDTO convertirEditarClase(Clase clase, Maestro maestro, AulaClase aula);
+    public ClaseListaDTO convertirClaseListaDTO(Clase clase, Maestro maestro, AulaClase aula);
     //Metodo para obtener un editarClase y convertirlo en entidad clase
 }

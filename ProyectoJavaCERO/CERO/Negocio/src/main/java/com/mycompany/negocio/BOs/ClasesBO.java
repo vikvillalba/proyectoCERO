@@ -36,7 +36,7 @@ public class ClasesBO implements IClasesBO {
     private IAulaBO aulaBO;
     private IMaestroBO maestroBO;
 
-    public ClasesBO(IClasesDAO clasesDAO,IAulaBO aulaBO,IMaestroBO maestroBO) {
+    public ClasesBO(IClasesDAO clasesDAO, IAulaBO aulaBO, IMaestroBO maestroBO) {
         this.clasesDAO = clasesDAO;
         this.claseMapper = new ClaseMapper();
         this.aulaBO = aulaBO;
@@ -57,7 +57,7 @@ public class ClasesBO implements IClasesBO {
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getMaestro().getNombre(),
+                    clase.getNombreMaestro(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()
@@ -81,7 +81,7 @@ public class ClasesBO implements IClasesBO {
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getMaestro().getNombre(),
+                    clase.getNombreMaestro(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()
@@ -97,7 +97,7 @@ public class ClasesBO implements IClasesBO {
         return claseReal.getLIMITE_FALTAS();
     }
 
-        //METODOS CU_GESTIONAR CLASES
+    //METODOS CU_GESTIONAR CLASES
     public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro) {
         String id = maestro.getId();
         ObjectId idMaestro = new ObjectId(id);
@@ -121,25 +121,15 @@ public class ClasesBO implements IClasesBO {
 
     @Override
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException {
-        AulaClase aulaEncontrada = null;
-        if (nuevaClase.getAula() != null) {
-            String id = nuevaClase.getAula().getIdAula();
-            ObjectId idAula = new ObjectId(id);
-            AulaClase aulaEntity = new AulaClase();
-            aulaEntity.setId(idAula);
-            AulaClase aluaEncontrada = aulaBO.buscarAulaClaseID(aulaEntity);
-        }
+        String idAula = nuevaClase.getAula().getIdAula();
+        String idMaestro = nuevaClase.getMaestro().getId();
 
-        String id = nuevaClase.getMaestro().getId();
-        ObjectId idMaestro = new ObjectId(id);
-        Maestro maestroEntity = new Maestro();
-        maestroEntity.setId(idMaestro);
-        Maestro maestroEncontrado = maestroBO.buscarMaestroID(maestroEntity);
+        Maestro maestroEncontrado = maestroBO.buscarMaestroID(idMaestro);
+        AulaClase aulaClase = aulaBO.buscarAulaClaseID(idAula);
 
-        Clase clase = claseMapper.convertirClaseEntidad(nuevaClase, maestroEncontrado, aulaEncontrada);
+        Clase clase = claseMapper.convertirClaseEntidad(nuevaClase, maestroEncontrado, aulaClase);
         clasesDAO.registrarNuevaClase(clase);
     }
-
 
     @Override
     public void editarClase(EditarClaseDTO editarClase) {
@@ -152,47 +142,81 @@ public class ClasesBO implements IClasesBO {
         claseEncontrada.setFechaFin(editarClase.getFechaFin());
         //actualiza la fechaFin
         claseEncontrada.setHoraFin(editarClase.getHoraFin());
-        
+
         clasesDAO.editarClase(claseEncontrada);
-        
+
     }
 
     @Override
     public List<ClaseListaDTO> buscarClasesActivas() {
-        List<Clase> clases = clasesDAO.obtenerClases();
-        List<ClaseListaDTO> clasesActivas = new ArrayList<>();
-        for (Clase clase : clases) {
-            if (clase.isActiva()) {
-                ClaseListaDTO claseListaDTO = claseMapper.convertirClaseListaDTO(clase);
-                clasesActivas.add(claseListaDTO);
+        List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
+        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+
+        for (Clase clase : clasesActivas) {
+            Maestro maestro = null;
+            AulaClase aula = null;
+
+            if (clase.getIdMaestro() != null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
             }
+
+            if (clase.getIdAula() != null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            }
+
+            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+            clasesDTO.add(dto);
         }
-        return clasesActivas;
+
+        return clasesDTO;
     }
 
     @Override
     public List<ClaseListaDTO> buscarClasesInactivas() {
-        List<Clase> clases = clasesDAO.obtenerClases();
-        List<ClaseListaDTO> clasesInactivas = new ArrayList<>();
-        for (Clase clase : clases) {
-            if (clase.isActiva() == false) {
-                ClaseListaDTO claseListaDTO = claseMapper.convertirClaseListaDTO(clase);
-                clasesInactivas.add(claseListaDTO);
+        List<Clase> clasesInactivas = clasesDAO.obtenerClasesInactivas();
+        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+
+        for (Clase clase : clasesInactivas) {
+            Maestro maestro = null;
+            AulaClase aula = null;
+
+            if (clase.getIdMaestro() != null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
             }
+
+            if (clase.getIdAula() != null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            }
+
+            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+            clasesDTO.add(dto);
         }
-        return clasesInactivas;
+
+        return clasesDTO;
     }
 
     @Override
     public List<ClaseListaDTO> buscarClasesExistentes() {
         List<Clase> clases = clasesDAO.obtenerClases();
-        List<ClaseListaDTO> clasesExistentes = new ArrayList<>();
-        for (Clase clase : clases) {
-            ClaseListaDTO claseListaDTO = claseMapper.convertirClaseListaDTO(clase);
-            clasesExistentes.add(claseListaDTO);
+        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
 
+        for (Clase clase : clases) {
+            Maestro maestro = null;
+            AulaClase aula = null;
+
+            if (clase.getIdMaestro() != null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
+            }
+
+            if (clase.getIdAula() != null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            }
+
+            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+            clasesDTO.add(dto);
         }
-        return clasesExistentes;
+
+        return clasesDTO;
     }
 
     @Override
@@ -216,18 +240,33 @@ public class ClasesBO implements IClasesBO {
     @Override
     public List<ClaseListaDTO> buscarClasesListaNombre(String nombreClase) {
         List<Clase> clasesNombre = clasesDAO.obtenerClasesPorNombre(nombreClase);
-        List<ClaseListaDTO> clasesEncontradas = new ArrayList<>();
-        for (Clase claseNombre : clasesNombre) {
-            ClaseListaDTO claseListaDTO = claseMapper.convertirClaseListaDTO(claseNombre);
-            clasesEncontradas.add(claseListaDTO);
+        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+
+        for (Clase clase : clasesNombre) {
+            Maestro maestro = null;
+            AulaClase aula = null;
+
+            if (clase.getIdMaestro() != null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
+            }
+
+            if (clase.getIdAula() != null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            }
+
+            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+            clasesDTO.add(dto);
         }
-        return clasesEncontradas;
+
+        return clasesDTO;
     }
-    
-    public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase){
+
+    @Override
+    public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase) {
         Clase claseEntity = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
-        EditarClaseDTO claseDTO = claseMapper.convertirEditarClase(claseEntity);
-        return claseDTO;
+        Maestro maestro = maestroBO.buscarMaestroObjectId(claseEntity.getIdMaestro());
+        AulaClase aula = aulaBO.buscarAulaClaseObjectId(claseEntity.getIdAula());
+        return claseMapper.convertirEditarClase(claseEntity, maestro, aula);
     }
-    
+
 }

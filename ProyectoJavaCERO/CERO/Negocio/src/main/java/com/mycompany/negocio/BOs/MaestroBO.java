@@ -94,11 +94,22 @@ public class MaestroBO implements IMaestroBO {
         return maestroDTO;
     }
 
-    public Maestro buscarMaestroID(Maestro maestro) throws NegocioException {
+    @Override
+    public Maestro buscarMaestroID(String idMaestro) throws NegocioException {
         try {
-            maestroDAO.buscarMaestro(maestro);
+            ObjectId id = new ObjectId(idMaestro);
+            return maestroDAO.buscarMaestro(id);
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public Maestro buscarMaestroObjectId(ObjectId id) {
+        try {
+            return maestroDAO.buscarMaestro(id); // o similar
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(MaestroBO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

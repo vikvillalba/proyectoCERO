@@ -10,6 +10,7 @@ import com.mycompany.dtos.ContenidoNuevoDTO;
 import com.mycompany.dtos.ContenidoViejoDTO;
 import com.mycompany.negocio.InterfazBO.IContenidoBO;
 import com.mycompany.negocio.excepciones.NegocioException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -111,7 +112,7 @@ public class ContenidoBO implements IContenidoBO {
                                              c.getClase().getDias(),
                                              c.getClase().getHoraInicio(),
                                              c.getClase().getHoraFin(), 
-                                             c.getClase().getMaestro().getNombre(),
+                                             c.getClase().getNombreMaestro(),
                                              c.getClase().getPrecio(),
                                              c.getClase().getFechaInicio(),
                                              c.getClase().getFechaFin())
@@ -129,16 +130,15 @@ public class ContenidoBO implements IContenidoBO {
                  contenido.getNombre(),
                  contenido.getAutor(),
                  contenido.getFechaHora(),
-                 new Clase(
-                         contenido.getClase().getCodigo(),
+                 new Clase( contenido.getClase().getCodigo(),
                          contenido.getClase().getNombre(),
-                         contenido.getClase().getMaestro(),
                          contenido.getClase().getDias(),
                          contenido.getClase().getHoraInicio(),
-                         contenido.getClase().getHoraFin(), 
+                         contenido.getClase().getHoraFin(),
                          contenido.getClase().getPrecio(),
                          contenido.getClase().getFechaInicio(),
-                         contenido.getClase().getFechaFin())
+                         contenido.getClase().getFechaFin(),
+                         contenido.getClase().getMaestro())
         );
         
         try {

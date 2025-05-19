@@ -27,7 +27,7 @@ public class MaestroDAO implements IMaestroDAO {
 
     public MaestroDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
-        this.coleccionMaestros = db.getCollection("Maestro", Maestro.class);
+        this.coleccionMaestros = db.getCollection("Maestros", Maestro.class);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class MaestroDAO implements IMaestroDAO {
     @Override
     public void agregarClaseImpartida(Clase clase) {
         ObjectId idClase = clase.getId();
-        ObjectId idMaestro = clase.getMaestro() != null ? clase.getMaestro().getId() : null;
+        ObjectId idMaestro = clase.getIdMaestro();
 
         if (idClase == null || idMaestro == null) {
             throw new IllegalArgumentException("Clase o maestro no tiene un ID válido.");
@@ -54,20 +54,20 @@ public class MaestroDAO implements IMaestroDAO {
         // Agrega el ObjectId de la clase al arreglo clasesImpartidas del maestro, sin duplicados
         coleccionMaestros.updateOne(
                 eq("_id", idMaestro),
-                addToSet("clasesImpartidas", idClase)
-        );
+                addToSet("clasesImpartidas", idClase));
+    
     }
 
     @Override
-    public Maestro buscarMaestro(Maestro maestro) throws PersistenciaException {
-        if (maestro == null || maestro.getId() == null) {
-            throw new IllegalArgumentException("El maestro o su ID no pueden ser nulos");
+    public Maestro buscarMaestro(ObjectId idMaestro) throws PersistenciaException {
+        if (idMaestro == null) {
+            throw new IllegalArgumentException("El ID del maestro no puede ser nulo");
         }
 
-        Maestro resultado = coleccionMaestros.find(eq("_id", maestro.getId())).first();
+        Maestro resultado = coleccionMaestros.find(eq("_id", idMaestro)).first();
 
         if (resultado == null) {
-            throw new PersistenciaException("No se encontró¿o el maestr@ con el ID especificado: " + maestro.getId().toHexString());
+            throw new PersistenciaException("No se encontró el maestro con el ID especificado: " + idMaestro.toHexString());
         }
 
         return resultado;

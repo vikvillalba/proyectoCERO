@@ -12,12 +12,17 @@ import org.bson.types.ObjectId;
  *
  * @author Jack Murrieta
  */
+/**
+ *
+ * @author Jack Murrieta
+ */
 public class Clase {
 
     private ObjectId id;
     private Integer codigo;
     private String nombre;
-    private Maestro maestro;
+    private ObjectId idMaestro;     // Solo el ID del maestro
+    private ObjectId idAula;        // Solo el ID del aula
     private String modalidad;
     private List<DayOfWeek> dias;
     private LocalTime horaInicio;
@@ -25,20 +30,21 @@ public class Clase {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private int capacidadAlumnos;
-    private AulaClase aula;
     private final Integer LIMITE_FALTAS = 3;
-    private String nombreMaestro;  // PROVISIONAL !!!!!!!
+    private String nombreMaestro;  // mostrar en reportes
+    private String nombreAula;
     private BigDecimal precio;
     private boolean activa;
 
     public Clase() {
     }
 
-    //nueva clase
-    public Clase(Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, BigDecimal precio, boolean activa) {
+    // Constructor Nueva Clase
+    public Clase(Integer codigo, String nombre, ObjectId idMaestro, ObjectId idAula, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, String nombreMaestro, String nombreAula, BigDecimal precio, boolean activa) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.maestro = maestro;
+        this.idMaestro = idMaestro;
+        this.idAula = idAula;
         this.modalidad = modalidad;
         this.dias = dias;
         this.horaInicio = horaInicio;
@@ -46,66 +52,12 @@ public class Clase {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.capacidadAlumnos = capacidadAlumnos;
-        this.aula = aula;
-        this.precio = precio;
-        this.activa = activa;
-    }
-
-    //obtener clase
-    public Clase(ObjectId id, Integer codigo, String nombre, Maestro maestro, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, AulaClase aula, BigDecimal precio, boolean activa) {
-        this.id = id;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.maestro = maestro;
-        this.modalidad = modalidad;
-        this.dias = dias;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.capacidadAlumnos = capacidadAlumnos;
-        this.aula = aula;
-        this.precio = precio;
-        this.activa = activa;
-    }
-
-    //Clase para CU_Contenidos
-    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
-        this.nombre = nombre;
-        this.dias = dias;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.nombreMaestro = maestro;
-        this.precio = precio;
-    }
-
-    public Clase(int codigo, String nombre, String maestro, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.dias = dias;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.nombreMaestro = maestro;
-        this.precio = precio;
-    }
-
-    public Clase(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, String nombreMaestro, BigDecimal precio) {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.dias = dias;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
         this.nombreMaestro = nombreMaestro;
+        this.nombreAula = nombreAula;
         this.precio = precio;
+        this.activa = activa;
     }
 
-    //Clase para Inscripcion
     public Clase(int codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, String maestro) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -114,11 +66,28 @@ public class Clase {
         this.horaFin = horaFin;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.nombreMaestro = maestro;
         this.precio = precio;
     }
 
-    
+    public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.nombre = nombre;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.precio = precio;
+
+    }
+
+    public String getNombreAula() {
+        return nombreAula;
+    }
+
+    // Getters y Setters
+    public void setNombreAula(String nombreAula) {
+        this.nombreAula = nombreAula;
+    }
 
     public ObjectId getId() {
         return id;
@@ -144,12 +113,20 @@ public class Clase {
         this.nombre = nombre;
     }
 
-    public Maestro getMaestro() {
-        return maestro;
+    public ObjectId getIdMaestro() {
+        return idMaestro;
     }
 
-    public void setMaestro(Maestro maestro) {
-        this.maestro = maestro;
+    public void setIdMaestro(ObjectId idMaestro) {
+        this.idMaestro = idMaestro;
+    }
+
+    public ObjectId getIdAula() {
+        return idAula;
+    }
+
+    public void setIdAula(ObjectId idAula) {
+        this.idAula = idAula;
     }
 
     public String getModalidad() {
@@ -208,14 +185,6 @@ public class Clase {
         this.capacidadAlumnos = capacidadAlumnos;
     }
 
-    public AulaClase getAula() {
-        return aula;
-    }
-
-    public void setAula(AulaClase aula) {
-        this.aula = aula;
-    }
-
     public String getNombreMaestro() {
         return nombreMaestro;
     }
@@ -243,9 +212,8 @@ public class Clase {
     public Integer getLIMITE_FALTAS() {
         return LIMITE_FALTAS;
     }
-    
-    public String obtenerIdString(){
+
+    public String obtenerIdString() {
         return ObjectIDMapper.toString(id);
     }
-
 }

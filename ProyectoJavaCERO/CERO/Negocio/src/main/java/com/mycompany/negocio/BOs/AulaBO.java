@@ -102,11 +102,22 @@ public class AulaBO implements IAulaBO {
         return aulaDTO;
     }
 
-    public AulaClase buscarAulaClaseID(AulaClase aulaclase) throws NegocioException {
-        try {
-            aulaDAO.buscarClase(aulaclase);
+    @Override
+    public AulaClase buscarAulaClaseID(String idAulaClase) throws NegocioException {
+      try {
+            ObjectId id = new ObjectId(idAulaClase);
+            return aulaDAO.buscarClase(id);
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
+        }
+    }
+    // En AulaBO
+
+    public AulaClase buscarAulaClaseObjectId(ObjectId id) {
+        try {
+            return aulaDAO.buscarClase(id); // o similar
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(AulaBO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
