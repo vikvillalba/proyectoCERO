@@ -107,7 +107,7 @@ public class ClasesDAO implements IClasesDAO {
 
         Contador actualizado = coleccion.findOneAndUpdate(
                 Filters.eq("_id", "clase"),
-                Updates.inc("seq", 1),
+                Updates.inc("codigoSecuencia", 1),
                 new FindOneAndUpdateOptions()
                         .upsert(true) 
                         .returnDocument(ReturnDocument.AFTER)
@@ -162,7 +162,7 @@ public class ClasesDAO implements IClasesDAO {
 
     @Override
     public Clase buscarClase(String codigo) {
-        return coleccion.find(eq("_id", codigo)).first();
+        return coleccion.find(eq("_id", new ObjectId(codigo))).first();
     }
 
     @Override

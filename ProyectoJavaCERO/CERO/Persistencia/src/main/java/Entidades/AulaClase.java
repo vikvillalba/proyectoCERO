@@ -27,6 +27,10 @@ public class AulaClase {
         this.clasesPresenciales = clasesPresenciales;
     }
 
+    public AulaClase(String nombreAula) {
+        this.nombreAula = nombreAula;
+    }
+
     public ObjectId getId() {
         return id;
     }

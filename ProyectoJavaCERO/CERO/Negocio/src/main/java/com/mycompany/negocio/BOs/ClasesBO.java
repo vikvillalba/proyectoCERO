@@ -9,7 +9,7 @@ import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Maestro;
-import Mapper.ClaseMapper;
+//import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
@@ -32,7 +32,7 @@ public class ClasesBO implements IClasesBO {
 
     public ClasesBO(IClasesDAO clasesDAO, IAulaBO aulaBO, IMaestroBO maestroBO) {
         this.clasesDAO = clasesDAO;
-        this.claseMapper = new ClaseMapper();
+//        this.claseMapper = new ClaseMapper();
         this.aulaBO = aulaBO;
         this.maestroBO = maestroBO;
     }

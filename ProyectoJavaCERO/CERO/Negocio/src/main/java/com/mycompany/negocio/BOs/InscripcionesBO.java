@@ -146,7 +146,7 @@ public class InscripcionesBO implements IInscripcionesBO {
         List<InscripcionDTO> inscripcionesDTO = new ArrayList<>();
 
         for (Inscripcion inscripcion : inscripcionesHoy) {
-            Clase clase = clasesDAO.buscarClase(inscripcion.getClase());
+            Clase clase = clasesDAO.buscarClase(inscripcion.getIdClaseString());
             ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(),
                     clase.getNombre(),
                     clase.getDias(),
@@ -172,7 +172,7 @@ public class InscripcionesBO implements IInscripcionesBO {
         }
 
         for (Inscripcion inscripcion : inscripciones) {
-            Alumno alumnoEntidad = this.alumnosDAO.obtenerAlumno(inscripcion.getAlumno());
+            Alumno alumnoEntidad = this.alumnosDAO.obtenerAlumno(inscripcion.getIdAlumnoString());
             AlumnoDTO alumno = new AlumnoDTO(
                     alumnoEntidad.getCodigo(),
                     alumnoEntidad.getApellidoPaterno(),

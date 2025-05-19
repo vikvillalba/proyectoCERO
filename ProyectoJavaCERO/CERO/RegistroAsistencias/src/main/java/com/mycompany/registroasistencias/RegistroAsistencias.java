@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,7 +54,7 @@ public class RegistroAsistencias implements IRegistroAsistencias {
         List<AlumnoDTO> alumnos = alumnosBO.obtenerAlumnos();
 
         for (AlumnoDTO alumno : alumnos) {
-            if (alumno.getCodigo() == alumnoBusqueda.getCodigo()) {
+            if (Objects.equals(alumno.getCodigo(), alumnoBusqueda.getCodigo())) {
                 return alumno;
             }
         }
@@ -77,21 +78,8 @@ public class RegistroAsistencias implements IRegistroAsistencias {
     @Override
     public boolean validarNombreClase(String nombre) throws AsistenciaException {
         try {
-            List<ClaseDTO> clasesExistentes = clasesBO.obtenerClases();
-
-            // Separar el nombre ingresado en palabras
-            String[] palabras = nombre.trim().split("\\s+");
-
-            for (String palabra : palabras) {
-                for (ClaseDTO claseExistente : clasesExistentes) {
-                    // Comparación LIKE "%palabra%", ignorando mayúsculas y minúsculas
-                    if (claseExistente.getNombre().toLowerCase().contains(palabra.toLowerCase())) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            List<ClaseDTO> clasesExistentes = clasesBO.obtenerClasesNombre(nombre);
+            return !clasesExistentes.isEmpty();
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }

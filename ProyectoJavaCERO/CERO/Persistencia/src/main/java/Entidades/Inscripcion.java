@@ -12,15 +12,15 @@ import org.bson.types.ObjectId;
 public class Inscripcion {
 
     private ObjectId id;
-    private String clase;
-    private String alumno;
+    private ObjectId clase;
+    private ObjectId alumno;
     private LocalDateTime fechaInscripcion;
     private Pago pago;
 
     public Inscripcion(String id, String clase, String alumno, LocalDateTime fechaInscripcion, Pago pago) {
         this.id = ObjectIDMapper.toObjectId(id);
-        this.clase = clase;
-        this.alumno = alumno;
+        this.clase = ObjectIDMapper.toObjectId(clase);
+        this.alumno = ObjectIDMapper.toObjectId(alumno);
         this.fechaInscripcion = fechaInscripcion;
         this.pago = pago;
     }
@@ -29,8 +29,8 @@ public class Inscripcion {
     }
 
     public Inscripcion(String clase, String alumno, LocalDateTime fechaInscripcion, Pago pago) {
-        this.clase = clase;
-        this.alumno = alumno;
+        this.clase = ObjectIDMapper.toObjectId(clase);
+        this.alumno = ObjectIDMapper.toObjectId(alumno);
         this.fechaInscripcion = fechaInscripcion;
         this.pago = pago;
     }
@@ -43,19 +43,19 @@ public class Inscripcion {
         this.id = id;
     }
 
-    public String getClase() {
+    public ObjectId getClase() {
         return clase;
     }
 
-    public void setClase(String clase) {
+    public void setClase(ObjectId clase) {
         this.clase = clase;
     }
 
-    public String getAlumno() {
+    public ObjectId getAlumno() {
         return alumno;
     }
 
-    public void setAlumno(String alumno) {
+    public void setAlumno(ObjectId alumno) {
         this.alumno = alumno;
     }
 
@@ -78,6 +78,16 @@ public class Inscripcion {
     @BsonIgnore
     public String getIdString() {
         return ObjectIDMapper.toString(id);
+    }
+
+    @BsonIgnore
+    public String getIdClaseString() {
+        return ObjectIDMapper.toString(clase);
+    }
+
+    @BsonIgnore
+    public String getIdAlumnoString() {
+        return ObjectIDMapper.toString(alumno);
     }
 
 }
