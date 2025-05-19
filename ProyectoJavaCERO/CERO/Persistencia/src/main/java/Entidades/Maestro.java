@@ -105,12 +105,12 @@ public class Maestro {
         this.contrasena = contrasena;
     }
 
-    public List<ObjectId> getClasesImpartidad() {
+    public List<ObjectId> getClasesImpartidas() {
         return clasesImpartidas;
     }
 
-    public void setClasesImpartidad(List<ObjectId> clasesImpartidad) {
-        this.clasesImpartidas = clasesImpartidad;
+    public void setClasesImpartidas(List<ObjectId> clasesImpartidas) {
+        this.clasesImpartidas = clasesImpartidas;
     }
 
     public String getNombreCompleto() {

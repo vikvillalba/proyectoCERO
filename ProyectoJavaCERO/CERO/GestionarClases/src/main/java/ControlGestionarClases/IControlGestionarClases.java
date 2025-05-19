@@ -9,6 +9,7 @@ import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
+import Entidades.Clase;
 import Exceptions.GestionarClasesException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,5 +36,6 @@ public interface IControlGestionarClases {
     public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin)throws GestionarClasesException;
     
     public EditarClaseDTO obtenerClaseLista(ClaseListaDTO clase);
-    
+    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException;
+    public boolean validarDisponibilidadHorarioAula(NuevaClaseDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException;
 }

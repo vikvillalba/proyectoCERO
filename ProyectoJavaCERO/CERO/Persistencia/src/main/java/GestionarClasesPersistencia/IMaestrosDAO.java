@@ -23,4 +23,6 @@ public interface IMaestrosDAO {
 
     public Maestro buscarMaestro(String idMaestro) throws PersistenciaException;
     
+    public List<Clase> obtenerClasesImpartidas(ObjectId idMaestro);
+    
 }

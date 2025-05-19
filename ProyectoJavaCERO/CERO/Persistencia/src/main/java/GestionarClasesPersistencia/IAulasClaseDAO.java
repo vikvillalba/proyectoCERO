@@ -14,7 +14,7 @@ import java.util.List;
  * @author Jack Murrrieta
  */
 public interface IAulasClaseDAO {
-    public List<Clase> obtenerAulaClases(AulaClase aula);
+    public List<Clase> obtenerAulaClases(String idAula);
     public void agregarClasePresencial(Clase clase)throws PersistenciaException;
     //buscar espacio Horario Metodo
     public List<AulaClase> obtenerAulas();

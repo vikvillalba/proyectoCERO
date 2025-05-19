@@ -228,4 +228,5 @@ public class Clase {
     public String getIdAulaString() {
         return ObjectIDMapper.toString(idAula);
     }
+
 }
