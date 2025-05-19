@@ -1,7 +1,6 @@
 package com.mycompany.negocio.Fabricas;
 
 import implementaciones.AlumnosDAO;
-import implementaciones.InscripcionesDAO;
 import implementaciones.PagosDAO;
 import DAOs.IAlumnosDAO;
 import DAOs.IClasesDAO;
@@ -32,6 +31,7 @@ import GestionarClasesPersistencia.IMaestrosDAO;
 import GestionarClasesPersistencia.IAulasClaseDAO;
 import DAOs.IAsistenciasDAO;
 import DAOs.IInscripcionesDAO;
+import implementaciones.InscripcionesDAO;
 
 
 /**
