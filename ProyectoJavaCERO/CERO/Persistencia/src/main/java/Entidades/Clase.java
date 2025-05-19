@@ -6,6 +6,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -213,7 +214,18 @@ public class Clase {
         return LIMITE_FALTAS;
     }
 
+    @BsonIgnore
     public String obtenerIdString() {
         return ObjectIDMapper.toString(id);
+    }
+
+    @BsonIgnore
+    public String getIdMaestroString() {
+        return ObjectIDMapper.toString(idMaestro);
+    }
+
+    @BsonIgnore
+    public String getIdAulaString() {
+        return ObjectIDMapper.toString(idAula);
     }
 }

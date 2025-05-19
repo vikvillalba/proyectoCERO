@@ -4,8 +4,10 @@
  */
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
 import java.time.LocalDate;
 import java.util.List;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -13,7 +15,7 @@ import org.bson.types.ObjectId;
  * @author Jack Murrieta
  */
 public class Maestro {
-    
+
     private ObjectId id;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -36,8 +38,6 @@ public class Maestro {
         this.clasesImpartidas = clasesImpartidas;
     }
 
-    
-    
     public Maestro() {
     }
 
@@ -114,9 +114,13 @@ public class Maestro {
     }
 
     public String getNombreCompleto() {
-        String nombreCompleto = nombre+" "+apellidoPaterno+" "+apellidoMaterno;
+        String nombreCompleto = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
         return nombreCompleto;
     }
-    
-    
+
+    @BsonIgnore
+    public String getIdString() {
+        return ObjectIDMapper.toString(id);
+    }
+
 }

@@ -14,13 +14,13 @@ import org.bson.types.ObjectId;
  *
  * @author Jack Murrieta
  */
-public interface IMaestroDAO {
+public interface IMaestrosDAO {
 
     public List<Maestro> obtenerMaestros();
 
     //metodo buscarEspacioHorario
     public void agregarClaseImpartida(Clase clase);
 
-    public Maestro buscarMaestro(ObjectId idMaestro) throws PersistenciaException;
+    public Maestro buscarMaestro(String idMaestro) throws PersistenciaException;
     
 }

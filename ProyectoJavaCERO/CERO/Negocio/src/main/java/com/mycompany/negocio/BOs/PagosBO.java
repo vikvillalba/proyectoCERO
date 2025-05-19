@@ -40,7 +40,7 @@ public class PagosBO implements IPagosBO{
         Pago pago = new Pago(total, fecha, false, metodoPago);
         
         Pago pagoRealizado = this.pagosDAO.registrarPago(pago);
-        MetodoPago metodoPagoRealizado = new MetodoPagoEfectivo(pago.getMetodoPago().getId(), pago.getTotal(), cambio);
+        MetodoPago metodoPagoRealizado = new MetodoPagoEfectivo(pago.getTotal(), cambio);
         
         PagoDTO pagoRealizadoDTO = new PagoDTO(pago.getTotal(), metodoPagoDTO, pago.getFechaPago(), pago.isRealizado());
         return pagoRealizadoDTO;
@@ -58,7 +58,7 @@ public class PagosBO implements IPagosBO{
         Pago pago = new Pago(total, fecha, false, metodoPago);
         
         Pago pagoRealizado = this.pagosDAO.registrarPago(pago);
-        MetodoPago metodoPagoRealizado = new MetodoPagoTarjeta(pago.getMetodoPago().getId(), metodoPagoDTO.getCodigoConfirmacion(), fecha);
+        MetodoPago metodoPagoRealizado = new MetodoPagoTarjeta(metodoPagoDTO.getCodigoConfirmacion(), fecha);
         
         PagoDTO pagoRealizadoDTO = new PagoDTO(pago.getTotal(), metodoPagoDTO, pago.getFechaPago(), pago.isRealizado());
         return pagoRealizadoDTO;

@@ -10,7 +10,6 @@ import Entidades.AulaClase;
 import Entidades.Clase;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -24,6 +23,6 @@ public interface IAulaBO {
     public void agregarClasePresencial(Clase clase)throws NegocioException;
     public AulaClaseDTO convertirAulaDTO(AulaClase aulaClase);
     public AulaClase buscarAulaClaseID(String idAulaClase) throws NegocioException;
-    public AulaClase buscarAulaClaseObjectId(ObjectId id);
+    public AulaClase buscarAulaClaseObjectId(String id);
     
 }

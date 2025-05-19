@@ -10,7 +10,6 @@ import Entidades.Clase;
 import Entidades.Maestro;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -26,5 +25,5 @@ public interface IMaestroBO {
 
     public Maestro buscarMaestroID(String idMaestro) throws NegocioException;
 
-    public Maestro buscarMaestroObjectId(ObjectId id);
+    public Maestro buscarMaestroObjectId(String id);
 }

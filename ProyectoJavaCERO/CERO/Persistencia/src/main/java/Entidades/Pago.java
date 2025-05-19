@@ -3,6 +3,7 @@ package Entidades;
 import implementaciones.ObjectIDMapper;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -10,6 +11,7 @@ import org.bson.types.ObjectId;
  * @author Usuario
  */
 public class Pago {
+
     private ObjectId id;
     private BigDecimal total;
     private LocalDateTime fechaPago;
@@ -66,8 +68,8 @@ public class Pago {
         this.metodoPago = metodoPago;
     }
 
-    
-    public String getIdString(){
+    @BsonIgnore
+    public String getIdString() {
         return ObjectIDMapper.toString(id);
     }
 }

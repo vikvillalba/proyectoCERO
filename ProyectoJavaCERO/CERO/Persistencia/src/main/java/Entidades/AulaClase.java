@@ -4,7 +4,9 @@
  */
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
 import java.util.List;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -49,5 +51,8 @@ public class AulaClase {
         this.clasesPresenciales = clasesPresenciales;
     }
 
-    
+    @BsonIgnore
+    public String getIdString(){
+        return ObjectIDMapper.toString(id);
+    }
 }

@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.math.BigDecimal;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -8,11 +9,10 @@ import java.math.BigDecimal;
  */
 public class MetodoPagoEfectivo extends MetodoPago {
     
-    private Integer id;
     private BigDecimal cantidadRecibida;
     private BigDecimal cambio;
     
-    public MetodoPagoEfectivo(Integer id,BigDecimal cantidadRecibida, BigDecimal cambio) {
+    public MetodoPagoEfectivo(ObjectId id,BigDecimal cantidadRecibida, BigDecimal cambio) {
         super(id);
         this.cantidadRecibida = cantidadRecibida;
         this.cambio = cambio;
@@ -24,14 +24,6 @@ public class MetodoPagoEfectivo extends MetodoPago {
     public MetodoPagoEfectivo(BigDecimal cantidadRecibida, BigDecimal cambio) {
         this.cantidadRecibida = cantidadRecibida;
         this.cambio = cambio;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public BigDecimal getCantidadRecibida() {

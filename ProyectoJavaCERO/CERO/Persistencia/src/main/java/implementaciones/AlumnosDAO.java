@@ -4,9 +4,14 @@ import ConexionBD.ConexionMongoBD;
 import Entidades.Alumno;
 import java.time.LocalDate;
 import DAOs.IAlumnosDAO;
+import Entidades.Contador;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
+import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
@@ -43,8 +48,24 @@ public class AlumnosDAO implements IAlumnosDAO {
 
     @Override
     public Alumno registrarAlumnoNuevo(Alumno alumno) {
-
+        Integer codigo = obtenerSiguienteCodigo();
+        alumno.setCodigo(codigo);
         return alumno;
+    }
+
+    private Integer obtenerSiguienteCodigo() {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Contador> coleccion = baseDatos.getCollection("counters", Contador.class);
+
+        Contador actualizado = coleccion.findOneAndUpdate(
+                Filters.eq("_id", "alumno"),
+                Updates.inc("seq", 1),
+                new FindOneAndUpdateOptions()
+                        .upsert(true)
+                        .returnDocument(ReturnDocument.AFTER)
+        );
+
+        return actualizado.getCodigoSecuencia();
     }
 
     @Override

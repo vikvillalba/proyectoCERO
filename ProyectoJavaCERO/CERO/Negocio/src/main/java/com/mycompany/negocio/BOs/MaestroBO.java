@@ -9,8 +9,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
 import Entidades.Maestro;
 import Excepciones.PersistenciaException;
-import GestionarClasesPersistencia.IMaestroDAO;
-import GestionarClasesPersistencia.MaestroDAO;
+import GestionarClasesPersistencia.MaestrosDAO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.time.DayOfWeek;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bson.types.ObjectId;
+import GestionarClasesPersistencia.IMaestrosDAO;
 
 /**
  *
@@ -28,9 +27,9 @@ import org.bson.types.ObjectId;
  */
 public class MaestroBO implements IMaestroBO {
 
-    private IMaestroDAO maestroDAO;
+    private IMaestrosDAO maestroDAO;
 
-    public MaestroBO(IMaestroDAO maestroDAO) {
+    public MaestroBO(IMaestrosDAO maestroDAO) {
         this.maestroDAO = maestroDAO;
     }
 
@@ -88,8 +87,7 @@ public class MaestroBO implements IMaestroBO {
     @Override
     public MaestroDTO convertirMaestroDTO(Maestro maestro) {
         String nombreCompleto = maestro.getNombre() + "" + maestro.getApellidoPaterno() + "" + maestro.getApellidoMaterno();
-        ObjectId id = maestro.getId();
-        String idMaestro = id.toHexString();
+        String idMaestro = maestro.getIdString();
         MaestroDTO maestroDTO = new MaestroDTO(idMaestro, nombreCompleto);
         return maestroDTO;
     }
@@ -97,15 +95,14 @@ public class MaestroBO implements IMaestroBO {
     @Override
     public Maestro buscarMaestroID(String idMaestro) throws NegocioException {
         try {
-            ObjectId id = new ObjectId(idMaestro);
-            return maestroDAO.buscarMaestro(id);
+            return maestroDAO.buscarMaestro(idMaestro);
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }
     }
 
     @Override
-    public Maestro buscarMaestroObjectId(ObjectId id) {
+    public Maestro buscarMaestroObjectId(String id) {
         try {
             return maestroDAO.buscarMaestro(id); // o similar
         } catch (PersistenciaException ex) {

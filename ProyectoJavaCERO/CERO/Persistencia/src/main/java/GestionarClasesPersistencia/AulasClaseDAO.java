@@ -21,12 +21,12 @@ import org.bson.types.ObjectId;
  *
  * @author Jack Murrieta
  */
-public class AulaClaseDAO implements IAulaClaseDAO {
+public class AulasClaseDAO implements IAulasClaseDAO {
 
     private final MongoCollection<AulaClase> coleccionAulas;
     private final MongoCollection<Clase> coleccionClases;
 
-    public AulaClaseDAO() {
+    public AulasClaseDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccionAulas = db.getCollection("Aulas", AulaClase.class);
         this.coleccionClases = db.getCollection("Clases", Clase.class);
@@ -86,15 +86,15 @@ public class AulaClaseDAO implements IAulaClaseDAO {
         return aulas;
     }
 
-    public AulaClase buscarClase(ObjectId idAula) throws PersistenciaException {
+    public AulaClase buscarClase(String idAula) throws PersistenciaException {
         if (idAula == null) {
             throw new IllegalArgumentException("El ID del aula no puede ser nulo");
         }
 
-        AulaClase resultado = coleccionAulas.find(eq("_id", idAula)).first();
+        AulaClase resultado = coleccionAulas.find(eq("_id", new ObjectId(idAula))).first();
 
         if (resultado == null) {
-            throw new PersistenciaException("No se encontró el aula con el ID especificado: " + idAula.toHexString());
+            throw new PersistenciaException("No se encontró el aula con el ID especificado: " + idAula);
         }
 
         return resultado;

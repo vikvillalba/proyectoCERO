@@ -8,16 +8,15 @@ import Entidades.AulaClase;
 import Entidades.Clase;
 import Excepciones.PersistenciaException;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 /**
  *
  * @author Jack Murrrieta
  */
-public interface IAulaClaseDAO {
+public interface IAulasClaseDAO {
     public List<Clase> obtenerAulaClases(AulaClase aula);
     public void agregarClasePresencial(Clase clase)throws PersistenciaException;
     //buscar espacio Horario Metodo
     public List<AulaClase> obtenerAulas();
-    public AulaClase buscarClase(ObjectId aula)throws PersistenciaException;
+    public AulaClase buscarClase(String aula)throws PersistenciaException;
 }

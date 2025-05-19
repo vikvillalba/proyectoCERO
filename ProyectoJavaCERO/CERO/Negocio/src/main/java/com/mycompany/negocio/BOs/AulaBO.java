@@ -9,8 +9,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Clase;
 import Excepciones.PersistenciaException;
-import GestionarClasesPersistencia.AulaClaseDAO;
-import GestionarClasesPersistencia.IAulaClaseDAO;
+import GestionarClasesPersistencia.AulasClaseDAO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.time.DayOfWeek;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bson.types.ObjectId;
+import GestionarClasesPersistencia.IAulasClaseDAO;
 
 /**
  *
@@ -29,9 +28,9 @@ import org.bson.types.ObjectId;
  */
 public class AulaBO implements IAulaBO {
 
-    private IAulaClaseDAO aulaDAO;
+    private IAulasClaseDAO aulaDAO;
 
-    public AulaBO(IAulaClaseDAO aulaDAO) {
+    public AulaBO(IAulasClaseDAO aulaDAO) {
         this.aulaDAO = aulaDAO;
     }
 
@@ -95,9 +94,7 @@ public class AulaBO implements IAulaBO {
 
     @Override
     public AulaClaseDTO convertirAulaDTO(AulaClase aulaClase) {
-
-        ObjectId id = aulaClase.getId();
-        String idAula = id.toHexString();
+        String idAula = aulaClase.getIdString();
         AulaClaseDTO aulaDTO = new AulaClaseDTO(idAula, aulaClase.getNombreAula());
         return aulaDTO;
     }
@@ -105,15 +102,14 @@ public class AulaBO implements IAulaBO {
     @Override
     public AulaClase buscarAulaClaseID(String idAulaClase) throws NegocioException {
       try {
-            ObjectId id = new ObjectId(idAulaClase);
-            return aulaDAO.buscarClase(id);
+            return aulaDAO.buscarClase(idAulaClase);
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }
     }
     // En AulaBO
 
-    public AulaClase buscarAulaClaseObjectId(ObjectId id) {
+    public AulaClase buscarAulaClaseObjectId(String id) {
         try {
             return aulaDAO.buscarClase(id); // o similar
         } catch (PersistenciaException ex) {

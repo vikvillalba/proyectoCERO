@@ -9,10 +9,8 @@ import DAOs.IClasesDAO;
 import DAOs.IContenidoDAO;
 import DAOs.IInscripcionesDAO;
 import DAOs.IPagosDAO;
-import GestionarClasesPersistencia.AulaClaseDAO;
-import GestionarClasesPersistencia.IAulaClaseDAO;
-import GestionarClasesPersistencia.IMaestroDAO;
-import GestionarClasesPersistencia.MaestroDAO;
+import GestionarClasesPersistencia.AulasClaseDAO;
+import GestionarClasesPersistencia.MaestrosDAO;
 import implementaciones.ClasesDAO;
 import com.mycompany.negocio.BOs.AlumnosBO;
 import com.mycompany.negocio.BOs.AsistenciasBO;
@@ -32,6 +30,8 @@ import com.mycompany.negocio.InterfazBO.IMaestroBO;
 import com.mycompany.negocio.InterfazBO.IPagosBO;
 import implementaciones.AsistenciasDAO;
 import implementaciones.ContenidoDAO;
+import GestionarClasesPersistencia.IMaestrosDAO;
+import GestionarClasesPersistencia.IAulasClaseDAO;
 
 
 /**
@@ -54,13 +54,13 @@ public class FabricaObjetosNegocio {
     }
     
     public static IAulaBO obtenerAulaBO(){
-        IAulaClaseDAO dao = new AulaClaseDAO();
+        IAulasClaseDAO dao = new AulasClaseDAO();
         IAulaBO bo = new AulaBO(dao);
         return bo;
     }
     
     public static IMaestroBO obtenerMaestroBO(){
-        IMaestroDAO dao = new MaestroDAO();
+        IMaestrosDAO dao = new MaestrosDAO();
         IMaestroBO bo = new MaestroBO(dao);
         return bo;
     }

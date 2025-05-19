@@ -2,6 +2,7 @@ package Entidades;
 
 import implementaciones.ObjectIDMapper;
 import java.time.LocalDateTime;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -14,8 +15,8 @@ public class Asistencia {
     private ObjectId id;
     private TipoAsistencia tipoAsistencia;
     private LocalDateTime fechaHora;
-    private String alumno;
-    private String clase;
+    private ObjectId alumno;
+    private ObjectId clase;
     private Justificante justificante;
 
     public Asistencia() {
@@ -24,11 +25,11 @@ public class Asistencia {
     public Asistencia(TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
-        this.alumno = alumno;
-        this.clase = clase;
+        this.alumno = ObjectIDMapper.toObjectId(alumno);
+        this.clase = ObjectIDMapper.toObjectId(clase);
     }
 
-    public Asistencia(String id, TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
+    public Asistencia(String id, TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, ObjectId alumno, ObjectId clase) {
         this.id = ObjectIDMapper.toObjectId(id);
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
@@ -60,19 +61,19 @@ public class Asistencia {
         this.fechaHora = fechaHora;
     }
 
-    public String getAlumno() {
+    public ObjectId getAlumno() {
         return alumno;
     }
 
-    public void setAlumno(String alumno) {
+    public void setAlumno(ObjectId alumno) {
         this.alumno = alumno;
     }
 
-    public String getClase() {
+    public ObjectId getClase() {
         return clase;
     }
 
-    public void setClase(String clase) {
+    public void setClase(ObjectId clase) {
         this.clase = clase;
     }
 
@@ -84,8 +85,19 @@ public class Asistencia {
         this.justificante = justificante;
     }
 
+    @BsonIgnore
     public String getIdString() {
         return ObjectIDMapper.toString(id);
+    }
+
+    @BsonIgnore
+    public String getIdAlumnoString() {
+        return ObjectIDMapper.toString(alumno);
+    }
+
+    @BsonIgnore
+    public String getIdClaseString() {
+        return ObjectIDMapper.toString(clase);
     }
 
 }

@@ -1,19 +1,18 @@
 package Entidades;
 
 import java.time.LocalDateTime;
+import org.bson.types.ObjectId;
 
 /**
  *
  * @author Usuario
  */
 public class MetodoPagoTarjeta extends MetodoPago {
-    private Integer id;
     private String codigoCondfirmacion;
     private LocalDateTime fechayHoraPago;
 
-    public MetodoPagoTarjeta(Integer id, String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
+    public MetodoPagoTarjeta(ObjectId id, String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
         super(id);
-        this.id = id;
         this.codigoCondfirmacion = codigoCondfirmacion;
         this.fechayHoraPago = fechayHoraPago;
     }
@@ -24,14 +23,6 @@ public class MetodoPagoTarjeta extends MetodoPago {
     public MetodoPagoTarjeta(String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
         this.codigoCondfirmacion = codigoCondfirmacion;
         this.fechayHoraPago = fechayHoraPago;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getCodigoCondfirmacion() {

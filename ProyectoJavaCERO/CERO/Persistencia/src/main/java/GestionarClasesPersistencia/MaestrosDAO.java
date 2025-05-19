@@ -21,11 +21,11 @@ import org.bson.types.ObjectId;
  *
  * @author Jack Murrieta
  */
-public class MaestroDAO implements IMaestroDAO {
+public class MaestrosDAO implements IMaestrosDAO {
 
     private final MongoCollection<Maestro> coleccionMaestros;
 
-    public MaestroDAO() {
+    public MaestrosDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccionMaestros = db.getCollection("Maestros", Maestro.class);
     }
@@ -59,15 +59,15 @@ public class MaestroDAO implements IMaestroDAO {
     }
 
     @Override
-    public Maestro buscarMaestro(ObjectId idMaestro) throws PersistenciaException {
+    public Maestro buscarMaestro(String idMaestro) throws PersistenciaException {
         if (idMaestro == null) {
             throw new IllegalArgumentException("El ID del maestro no puede ser nulo");
         }
 
-        Maestro resultado = coleccionMaestros.find(eq("_id", idMaestro)).first();
+        Maestro resultado = coleccionMaestros.find(eq("_id", new ObjectId(idMaestro))).first();
 
         if (resultado == null) {
-            throw new PersistenciaException("No se encontró el maestro con el ID especificado: " + idMaestro.toHexString());
+            throw new PersistenciaException("No se encontró el maestro con el ID especificado: " + idMaestro);
         }
 
         return resultado;

@@ -4,22 +4,21 @@
  */
 package GestionarClasesPersistencia;
 
-import DAOs.IClasesDAO;
-import Entidades.AulaClase;
+import ConexionBD.ConexionMongoBD;
+import DAOs.IAsistenciasDAO;
+import Entidades.Alumno;
+import Entidades.Asistencia;
 import Entidades.Clase;
-import Entidades.Maestro;
-import Excepciones.PersistenciaException;
+import Entidades.TipoAsistencia;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import implementaciones.AsistenciasDAO;
-import implementaciones.ClasesDAO;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bson.types.ObjectId;
 
 /**
@@ -32,20 +31,22 @@ public class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ConexionBD.ConexionMongoBD.getConexion();
-        IClasesDAO claseDAO = new ClasesDAO();
-        IAulaClaseDAO aulaDAO = new AulaClaseDAO();
-        IMaestroDAO maestroDAO = new MaestroDAO();
+        Asistencia asistencia = new Asistencia();
+        asistencia.setTipoAsistencia(TipoAsistencia.ASISTENCIA);
+        asistencia.setFechaHora(LocalDateTime.now());
+        asistencia.setAlumno(new ObjectId("682b940c46008c0e096940bd")); // ID del alumno como String
+        asistencia.setClase(new ObjectId("682b9482d3fc123c05b01d37"));  // ID de la clase como String
+        asistencia.setJustificante(null); // Sin justificante
 
-        List<Maestro> maestros = maestroDAO.obtenerMaestros();
-        List<AulaClase> aulas = aulaDAO.obtenerAulas();
+        // Registrar asistencia
+        IAsistenciasDAO dao = new AsistenciasDAO(); 
+        Asistencia registrada = dao.registrarAsistencia(asistencia);
 
-        //Obtener Maestro 
-        Maestro maestro = new Maestro();
-        ObjectId idMaestro = new ObjectId("682abe6f0de506d1b244152e");
-        maestro.setId(idMaestro);
+        System.out.println("Asistencia registrada con ID: " + registrada.getId());
+
     }
 }
+
 
 //        try {
 //            Maestro maestroEncontrado = maestroDAO.buscarMaestro(maestro);
@@ -103,4 +104,4 @@ public class Test {
 //            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-    
+

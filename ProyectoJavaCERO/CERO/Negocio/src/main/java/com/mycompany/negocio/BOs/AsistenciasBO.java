@@ -99,7 +99,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
         List<AsistenciaDTO> asistenciasDTO = new ArrayList<>();
         for (Asistencia asistencia : asistencias) {
-            Alumno alumnoEntidad = alumnosDAO.obtenerAlumno(asistencia.getAlumno());
+            Alumno alumnoEntidad = alumnosDAO.obtenerAlumno(asistencia.getIdAlumnoString());
             AlumnoDTO alumno = new AlumnoDTO(
                     alumnoEntidad.getApellidoPaterno(),
                     alumnoEntidad.getApellidoMaterno(),
@@ -126,7 +126,6 @@ public class AsistenciasBO implements IAsistenciasBO {
         Clase clase = this.clasesDAO.buscarClase(faltaJustificada.getClase().getId());
 
         Asistencia asistenciaJustificada = new Asistencia(
-                faltaJustificada.getId(),
                 TipoAsistencia.JUSTIFICADO,
                 faltaJustificada.getFechaHora(),
                 alumno.getIdString(),
@@ -180,7 +179,6 @@ public class AsistenciasBO implements IAsistenciasBO {
             TipoAsistencia tipo = TipoAsistencia.valueOf(dto.getTipoAsistencia().name());
 
             Asistencia asistencia = new Asistencia(
-                    dto.getId(),
                     tipo,
                     dto.getFechaHora(),
                     alumno.getIdString(),
@@ -194,7 +192,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
         List<AsistenciaDTO> asistenciasActualizadasDTO = new ArrayList<>();
         for (Asistencia asistencia : asistenciasActualizadas) {
-            Alumno alumnoEntidad = alumnosDAO.obtenerAlumno(asistencia.getAlumno());
+            Alumno alumnoEntidad = alumnosDAO.obtenerAlumno(asistencia.getIdAlumnoString());
             AlumnoDTO alumno = new AlumnoDTO(
                     alumnoEntidad.getApellidoPaterno(),
                     alumnoEntidad.getApellidoMaterno(),
@@ -205,7 +203,7 @@ public class AsistenciasBO implements IAsistenciasBO {
             );
             alumno.setId(alumnoEntidad.getIdString());
 
-            Clase clase = clasesDAO.buscarClase(asistencia.getClase());
+            Clase clase = clasesDAO.buscarClase(asistencia.getIdClaseString());
             ClaseDTO claseDTO = new ClaseDTO(
                     clase.getCodigo(),
                     clase.getNombre(),

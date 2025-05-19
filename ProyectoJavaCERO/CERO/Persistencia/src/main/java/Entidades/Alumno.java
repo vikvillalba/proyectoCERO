@@ -1,8 +1,8 @@
-
 package Entidades;
 
 import implementaciones.ObjectIDMapper;
 import java.time.LocalDate;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
  * @author Usuario
  */
 public class Alumno {
+
     private ObjectId id;
     private Integer codigo;
     private String apellidoPaterno;
@@ -105,7 +106,8 @@ public class Alumno {
         this.id = id;
     }
 
-    public String getIdString(){
+    @BsonIgnore
+    public String getIdString() {
         return ObjectIDMapper.toString(id);
     }
 

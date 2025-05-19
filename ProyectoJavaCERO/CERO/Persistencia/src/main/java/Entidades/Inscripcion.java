@@ -1,8 +1,8 @@
-
 package Entidades;
 
 import implementaciones.ObjectIDMapper;
 import java.time.LocalDateTime;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
 /**
@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
  * @author Usuario
  */
 public class Inscripcion {
+
     private ObjectId id;
     private String clase;
     private String alumno;
@@ -73,9 +74,10 @@ public class Inscripcion {
     public void setPago(Pago pago) {
         this.pago = pago;
     }
-    
-    public String getIdString(){
+
+    @BsonIgnore
+    public String getIdString() {
         return ObjectIDMapper.toString(id);
     }
-    
-} 
+
+}

@@ -1,21 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package implementaciones;
 
 import ConexionBD.ConexionMongoBD;
 import DAOs.IClasesDAO;
 import Entidades.AulaClase;
 import Entidades.Clase;
+import Entidades.Contador;
+import Entidades.Inscripcion;
 import Entidades.Maestro;
 import Excepciones.PersistenciaException;
-import GestionarClasesPersistencia.AulaClaseDAO;
-import GestionarClasesPersistencia.MaestroDAO;
+import GestionarClasesPersistencia.AulasClaseDAO;
+import GestionarClasesPersistencia.MaestrosDAO;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,21 +32,21 @@ import org.bson.types.ObjectId;
 public class ClasesDAO implements IClasesDAO {
 
     private final MongoCollection<Clase> coleccion;
-    private final AulaClaseDAO aulaClaseDAO;
-    private final MaestroDAO maestroDAO;
+    private final AulasClaseDAO aulaClaseDAO;
+    private final MaestrosDAO maestroDAO;
 
     public ClasesDAO() {
         MongoDatabase db = ConexionMongoBD.getConexion();
         this.coleccion = db.getCollection("Clases", Clase.class);
-        this.aulaClaseDAO = new AulaClaseDAO();
-        this.maestroDAO = new MaestroDAO();
+        this.aulaClaseDAO = new AulasClaseDAO();
+        this.maestroDAO = new MaestrosDAO();
     }
 
     @Override
     public void registrarNuevaClase(Clase nuevaClase) {
         // Obtener el código máximo actual
-        Integer codigoMaximo = obtenerCodigoMaxClase();
-        nuevaClase.setCodigo(codigoMaximo + 1);
+        Integer codigoMaximo = obtenerSiguienteCodigo();
+        nuevaClase.setCodigo(codigoMaximo);
 
         ObjectId idAula = nuevaClase.getIdAula();
         ObjectId idMaestro = nuevaClase.getIdMaestro();
@@ -53,7 +54,7 @@ public class ClasesDAO implements IClasesDAO {
         // Validar existencia del aula si la modalidad es presencial
         if ("Presencial".equalsIgnoreCase(nuevaClase.getModalidad()) && idAula != null) {
             try {
-                AulaClase aula = aulaClaseDAO.buscarClase(idAula);
+                AulaClase aula = aulaClaseDAO.buscarClase(idAula.toHexString());
                 if (aula == null) {
                     System.err.println("El aula especificada no existe.");
                     return;
@@ -67,7 +68,7 @@ public class ClasesDAO implements IClasesDAO {
         // Validar existencia del maestro
         if (idMaestro != null) {
             try {
-                Maestro maestro = maestroDAO.buscarMaestro(idMaestro);
+                Maestro maestro = maestroDAO.buscarMaestro(idMaestro.toHexString());
                 if (maestro == null) {
                     System.err.println("El maestro especificado no existe.");
                     return;
@@ -100,6 +101,20 @@ public class ClasesDAO implements IClasesDAO {
         }
     }
 
+    private Integer obtenerSiguienteCodigo() {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Contador> coleccion = baseDatos.getCollection("counters", Contador.class);
+
+        Contador actualizado = coleccion.findOneAndUpdate(
+                Filters.eq("_id", "clase"),
+                Updates.inc("seq", 1),
+                new FindOneAndUpdateOptions()
+                        .upsert(true) 
+                        .returnDocument(ReturnDocument.AFTER)
+        );
+
+        return actualizado.getCodigoSecuencia();
+    }
 
     @Override
     public List<Clase> buscarNombreClases(String nombreClase) {

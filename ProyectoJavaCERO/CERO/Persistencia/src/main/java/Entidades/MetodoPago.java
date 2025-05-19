@@ -1,26 +1,35 @@
 package Entidades;
 
+import implementaciones.ObjectIDMapper;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
+import org.bson.types.ObjectId;
+
 /**
  *
  * @author Usuario
  */
 public abstract class MetodoPago {
-    private Integer id;
+
+    private ObjectId id;
 
     public MetodoPago() {
     }
 
-    public MetodoPago(Integer id) {
+    public MetodoPago(ObjectId id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
-     
-    
+
+    @BsonIgnore
+    public String getIdString() {
+        return ObjectIDMapper.toString(id);
+    }
+
 }

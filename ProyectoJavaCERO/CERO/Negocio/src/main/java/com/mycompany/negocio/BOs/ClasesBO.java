@@ -16,16 +16,8 @@ import com.mycompany.negocio.InterfazBO.IAulaBO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
 import com.mycompany.negocio.excepciones.NegocioException;
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -167,12 +159,12 @@ public class ClasesBO implements IClasesBO {
             Maestro maestro = null;
             AulaClase aula = null;
 
-            if (clase.getIdMaestro() != null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
+            if (clase.getIdMaestroString() != null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
             }
 
-            if (clase.getIdAula() != null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            if (clase.getIdAulaString() != null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
             }
 
             ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
@@ -191,12 +183,12 @@ public class ClasesBO implements IClasesBO {
             Maestro maestro = null;
             AulaClase aula = null;
 
-            if (clase.getIdMaestro() != null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
+            if (clase.getIdMaestroString() != null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
             }
 
-            if (clase.getIdAula() != null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            if (clase.getIdAulaString()!= null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
             }
 
             ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
@@ -215,12 +207,12 @@ public class ClasesBO implements IClasesBO {
             Maestro maestro = null;
             AulaClase aula = null;
 
-            if (clase.getIdMaestro() != null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
+            if (clase.getIdMaestroString()!= null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
             }
 
-            if (clase.getIdAula() != null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            if (clase.getIdAulaString()!= null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
             }
 
             ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
@@ -257,12 +249,12 @@ public class ClasesBO implements IClasesBO {
             Maestro maestro = null;
             AulaClase aula = null;
 
-            if (clase.getIdMaestro() != null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestro());
+            if (clase.getIdMaestroString()!= null) {
+                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
             }
 
-            if (clase.getIdAula() != null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAula());
+            if (clase.getIdAulaString()!= null) {
+                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
             }
 
             ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
@@ -275,8 +267,8 @@ public class ClasesBO implements IClasesBO {
     @Override
     public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase) {
         Clase claseEntity = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
-        Maestro maestro = maestroBO.buscarMaestroObjectId(claseEntity.getIdMaestro());
-        AulaClase aula = aulaBO.buscarAulaClaseObjectId(claseEntity.getIdAula());
+        Maestro maestro = maestroBO.buscarMaestroObjectId(claseEntity.getIdMaestroString());
+        AulaClase aula = aulaBO.buscarAulaClaseObjectId(claseEntity.getIdAulaString());
         return claseMapper.convertirEditarClase(claseEntity, maestro, aula);
     }
 
