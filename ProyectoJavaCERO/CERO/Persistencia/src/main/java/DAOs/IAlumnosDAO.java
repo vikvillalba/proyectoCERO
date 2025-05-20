@@ -12,5 +12,6 @@ public interface IAlumnosDAO {
     public Alumno obtenerAlumno(String idAlumno);
     public Alumno registrarAlumnoNuevo(Alumno alumno);
     public List<Alumno> obtenerAlumnos();
+    public Alumno obtenerAlumnoPorCodigo(Integer codigo);
 
 }

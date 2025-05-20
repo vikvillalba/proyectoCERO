@@ -3,15 +3,18 @@ package com.mycompany.negocio.BOs;
 import DAOs.IAlumnosDAO;
 import DAOs.IAsistenciasDAO;
 import DAOs.IClasesDAO;
+import DTOs.GestionarClases.ClaseListaDTO;
 import Entidades.Alumno;
 import Entidades.Asistencia;
 import Entidades.Clase;
 import Entidades.Justificante;
+import Entidades.ReporteAsistencia;
 import Entidades.TipoAsistencia;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
+import com.mycompany.dtos.ReporteAsistenciaDTO;
 import com.mycompany.dtos.TipoAsistenciaDTO;
 import com.mycompany.negocio.InterfazBO.IAsistenciasBO;
 import com.mycompany.negocio.excepciones.NegocioException;
@@ -232,6 +235,33 @@ public class AsistenciasBO implements IAsistenciasBO {
         }
 
         return asistenciasActualizadasDTO;
+    }
+
+    @Override
+    public List<ReporteAsistenciaDTO> obtenerReporteAsistencias(Integer codigoClase, Integer codigoAlumno, LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException {
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(codigoClase);
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(codigoAlumno);
+        List<ReporteAsistencia> reportes = asistenciasDAO.obtenerReporteAsistencias(alumno.getIdString(), clase.getIdClaseString(), fechaInicio, fechaFin);
+        
+        if(reportes.isEmpty()) {
+            throw new NegocioException("No se encontraron asistencias para el alumno: " + alumno.getNombreCompleto());
+        }
+        
+        List<ReporteAsistenciaDTO> reportesDTO = new ArrayList<>();
+        
+        for (ReporteAsistencia reporte : reportes) {
+            ReporteAsistenciaDTO reporteDTO = new ReporteAsistenciaDTO(
+                    reporte.getIdAlumno(), 
+                    reporte.getNombre(), 
+                    reporte.getFechaClase(), 
+                    TipoAsistenciaDTO.valueOf(reporte.getTipoAsistencia().name()), 
+                    reporte.getJustificante()
+            );
+            
+            reportesDTO.add(reporteDTO);
+        }
+        
+        return reportesDTO;
     }
 
 }

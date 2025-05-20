@@ -111,4 +111,8 @@ public class Alumno {
         return ObjectIDMapper.toString(id);
     }
 
+    @BsonIgnore
+    public String getNombreCompleto() {
+        return nombre + " " + apellidoPaterno;
+    }
 }

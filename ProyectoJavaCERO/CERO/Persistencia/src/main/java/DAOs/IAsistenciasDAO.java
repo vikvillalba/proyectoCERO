@@ -3,6 +3,7 @@ package DAOs;
 import Entidades.Alumno;
 import Entidades.Asistencia;
 import Entidades.Clase;
+import Entidades.ReporteAsistencia;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface IAsistenciasDAO {
     public Asistencia justificarFalta(Asistencia faltaJustificada);
     public List<Asistencia> obtenerFaltasJustificadasAlumnoClase(Alumno alumno, Clase clase);
     public List<Asistencia> actualizarAsistencias(List<Asistencia> asistencia);
+    public List<ReporteAsistencia> obtenerReporteAsistencias(String idAlumno, String idClase, LocalDate fechaInicio, LocalDate fechaFin);
 }

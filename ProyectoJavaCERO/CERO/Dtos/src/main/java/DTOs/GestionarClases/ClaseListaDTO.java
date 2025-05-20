@@ -93,5 +93,9 @@ public class ClaseListaDTO {
         this.activa = activa;
     }
     
+    @Override
+    public String toString() {
+        return nombreClase;
+    }
     
 }

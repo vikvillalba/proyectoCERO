@@ -1,11 +1,13 @@
 package com.mycompany.registroasistencias;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
+import com.mycompany.dtos.ReporteAsistenciaDTO;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import com.mycompany.negocio.InterfazBO.IAlumnosBO;
 import com.mycompany.negocio.InterfazBO.IAsistenciasBO;
@@ -155,6 +157,25 @@ public class RegistroAsistencias implements IRegistroAsistencias {
     public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias) throws AsistenciaException {
         try {
             return this.asistenciasBO.actualizarAsistencias(asistencias);
+        } catch (NegocioException ex) {
+            throw new AsistenciaException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<ClaseListaDTO> obtenerClasesActivas() throws AsistenciaException {
+        try {
+            return clasesBO.buscarClasesActivas();
+        } catch (NegocioException ex) {
+            throw new AsistenciaException(ex.getMessage());
+        }
+
+    }
+
+    @Override
+    public List<ReporteAsistenciaDTO> obtenerReporteAsistencias(Integer codigoClase, Integer codigoAlumno, LocalDate fechaInicio, LocalDate fechaFin) throws AsistenciaException {
+        try {
+            return this.asistenciasBO.obtenerReporteAsistencias(codigoClase, codigoAlumno, fechaInicio, fechaFin);
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }

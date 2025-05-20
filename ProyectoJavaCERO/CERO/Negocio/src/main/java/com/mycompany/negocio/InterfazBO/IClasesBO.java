@@ -38,7 +38,7 @@ public interface IClasesBO {
 
     public void editarClase(EditarClaseDTO editarClse);
 
-    public List<ClaseListaDTO> buscarClasesActivas();
+    public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException;
 
     public List<ClaseListaDTO> buscarClasesInactivas();
 

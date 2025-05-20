@@ -1,9 +1,11 @@
 package com.mycompany.negocio.InterfazBO;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
+import com.mycompany.dtos.ReporteAsistenciaDTO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,4 +21,5 @@ public interface IAsistenciasBO {
     public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada);
     public List<AsistenciaDTO> obtenerFaltasJustificadas(AsistenciaDTO asistencia);
     public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias)throws NegocioException;
+    public List<ReporteAsistenciaDTO> obtenerReporteAsistencias(Integer codigoClase, Integer codigoAlumno, LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException;
 }

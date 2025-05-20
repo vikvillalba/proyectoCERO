@@ -34,6 +34,7 @@ import com.mycompany.dtos.NuevaInscripcionDTO;
 import com.mycompany.dtos.NuevoPagoDTO;
 import com.mycompany.dtos.PagoDTO;
 import com.mycompany.dtos.PagoTarjetaDTO;
+import com.mycompany.dtos.ReporteAsistenciaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
@@ -46,6 +47,7 @@ import com.mycompany.registroasistencias.excepciones.AsistenciaException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -75,17 +77,17 @@ public class ControlNavegacion {
     private static FrmClasesExistentes clasesExistentes;
     private static FrmDatosClase datosClase;
     private static FrmFinalizarInscripcion finalizarInscripcion;
-    
+
     //formularios CU_GESTIONAR CLASES
     private static FrmAdminClases frmAdminClases;
     private static PanelScrollGuardarClase frmRegistrarClase;
     private static PanelScrollEditarClase frmEditarClase;
-    
+
     private static JFrame frameActual;
 
     private ControlNavegacion() {
     }
-  
+
     /**
      * Crear un Jframe y se asigana para tener un referencia al frame actual donde esta el usuario
      */
@@ -165,7 +167,7 @@ public class ControlNavegacion {
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
         frameActual = finalizarInscripcion;
-        
+
     }
 
     public static void mostrarAlumnosInscritos(ClaseDTO clase) {
@@ -554,7 +556,7 @@ public class ControlNavegacion {
 
         FrmClasesExistentesAsistencia clasesResultado = new FrmClasesExistentesAsistencia(clases);
         clasesResultado.setVisible(true);
-        frameActual= clasesResultado;
+        frameActual = clasesResultado;
     }
 
     /**
@@ -608,9 +610,13 @@ public class ControlNavegacion {
      * Muestra la pantalla para seleccionar una clase a la que se le generarán reportes.
      */
     public static void mostrarBuscarClaseReporte() {
-        FrmBuscarClaseReporte seleccionClaseReporte = new FrmBuscarClaseReporte();
-        seleccionClaseReporte.setVisible(true);
-        frameActual = seleccionClaseReporte;
+        try {
+            FrmBuscarClaseReporte seleccionClaseReporte = new FrmBuscarClaseReporte(registroAsistencias.obtenerClasesActivas());
+            seleccionClaseReporte.setVisible(true);
+            frameActual = seleccionClaseReporte;
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
     }
 
     /**
@@ -618,8 +624,8 @@ public class ControlNavegacion {
      *
      * @param clase clase que el usuario seleccionó
      */
-    public static void mostrarReportesAsistencias() {
-        FrmReporteAsistencias reporteAsistencias = new FrmReporteAsistencias();
+    public static void mostrarReportesAsistencias(ClaseListaDTO clase) {
+        FrmReporteAsistencias reporteAsistencias = new FrmReporteAsistencias(clase);
         reporteAsistencias.setVisible(true);
         frameActual = reporteAsistencias;
     }
@@ -745,7 +751,7 @@ public class ControlNavegacion {
         try {
             registroAsistencias.actualizarAsistencias(asistencias);
             mostrarAsistenciasAlumnosClaseRegistradasCorrectamente(clase);
-            
+
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorConExcepcion(null, ex);
         }
@@ -755,9 +761,9 @@ public class ControlNavegacion {
         JOptionPane.showMessageDialog(null, "Se han registrado las asistencias de hoy para la clase: " + clase.getNombre(),
                 "Asistencias registradas :)", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     //METODOS CU_GESTIONAR CLASES 
-    public static void mostrarFrmAdminClases(){
+    public static void mostrarFrmAdminClases() {
         frameActual.dispose();
         List<ClaseListaDTO> clases = gestionarClases.buscarClasesExistentes();
         List<ClaseListaDTO> clasesInactivas = gestionarClases.buscarClasesInactivas();
@@ -765,18 +771,18 @@ public class ControlNavegacion {
         frmAdminClases = new FrmAdminClases(clases, clasesInactivas, clasesActivas);
         frmAdminClases.setVisible(true);
         frameActual = frmAdminClases;
-        
+
     }
-    
-    public static void mostrarFrmRegistrarClase(){
+
+    public static void mostrarFrmRegistrarClase() {
         frameActual.dispose();
-        List<MaestroDTO> maestros  =gestionarClases.obtenerListaMaestros();
+        List<MaestroDTO> maestros = gestionarClases.obtenerListaMaestros();
         List<AulaClaseDTO> aulas = gestionarClases.obtenerListasAulas();
         frmRegistrarClase = new PanelScrollGuardarClase(maestros, aulas);
         // agregar panel a un JFrame
         crearFrame(frmRegistrarClase);
     }
-     
+
     public static void mostrarFrmEditarClase(ClaseListaDTO clase) {
         frameActual.dispose();
         EditarClaseDTO claseEditarDTO = gestionarClases.obtenerClaseLista(clase);
@@ -807,8 +813,19 @@ public class ControlNavegacion {
         gestionarClases.eliminarClase(claseLista);
         JOptionPane.showMessageDialog(frameActual, "Clase eliminada exitosamente");
     }
-    
-    public static List<ClaseListaDTO> buscarClasesNombre(String nombreClase){
+
+    public static List<ClaseListaDTO> buscarClasesNombre(String nombreClase) {
         return gestionarClases.buscarClaseListaNombre(nombreClase);
     }
+
+    public static List<ReporteAsistenciaDTO> obtenerReportesAsistencia(
+            Integer codigoClase, Integer codigoAlumno, LocalDate fechaInicio, LocalDate fechaFin) {
+        try {
+            return registroAsistencias.obtenerReporteAsistencias(codigoClase, codigoAlumno, fechaInicio, fechaFin);
+        } catch (AsistenciaException ex) {
+            mostrarMensajeErrorConExcepcion(null, ex);
+            return new ArrayList<>();
+        }
+    }
+
 }

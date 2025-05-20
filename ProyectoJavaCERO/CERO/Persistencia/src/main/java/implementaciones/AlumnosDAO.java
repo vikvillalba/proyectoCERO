@@ -9,6 +9,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
@@ -50,7 +51,7 @@ public class AlumnosDAO implements IAlumnosDAO {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
         MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
         alumno.setCodigo(obtenerSiguienteCodigo());
-        
+
         coleccion.insertOne(alumno);
         return alumno;
     }
@@ -73,9 +74,17 @@ public class AlumnosDAO implements IAlumnosDAO {
     @Override
     public List<Alumno> obtenerAlumnos() {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Alumno> coleccion = baseDatos.getCollection("Alumnos", Alumno.class);
+        MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
 
         return coleccion.find().into(new ArrayList<>());
+    }
+
+    @Override
+    public Alumno obtenerAlumnoPorCodigo(Integer codigo) {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
+
+        return coleccion.find(eq("codigo", codigo)).first();
     }
 
 }

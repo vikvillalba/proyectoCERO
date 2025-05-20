@@ -151,8 +151,11 @@ public class ClasesBO implements IClasesBO {
     }
 
     @Override
-    public List<ClaseListaDTO> buscarClasesActivas() {
+    public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException {
         List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
+        if(clasesActivas.isEmpty() || clasesActivas == null){
+            throw new NegocioException("No se encontraron clases activas");
+        }
         List<ClaseListaDTO> clasesDTO = new ArrayList<>();
 
         for (Clase clase : clasesActivas) {
