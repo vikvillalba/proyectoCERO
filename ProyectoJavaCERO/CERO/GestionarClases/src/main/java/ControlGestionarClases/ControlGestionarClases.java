@@ -63,12 +63,12 @@ public class ControlGestionarClases implements IControlGestionarClases {
 
             // Validación de aula (si existe)
             if (nuevaClase.getAula() != null) {
-                List<Clase> clasesPresencialesAula = clasesBO.obtenerListaClasesAula(nuevaClase.getAula());
+                List<Clase> clasesPresencialesAula = aulaBO.obtenerClasesPresencialesAula(nuevaClase.getAula().getIdAula());
                 validarDisponibilidadHorarioAula(nuevaClase, clasesPresencialesAula);
             }
 
             // Validación de disponibilidad del maestro
-            List<Clase> clasesImpartidasMaestro = clasesBO.obtenerListaClasesMaestro(nuevaClase.getMaestro());
+            List<Clase> clasesImpartidasMaestro = maestroBO.obtenerClasesImpartidadMaestro(nuevaClase.getMaestro().getId());
             validarDisponibilidadHorarioMaestro(nuevaClase, clasesImpartidasMaestro);
 
             // Registro

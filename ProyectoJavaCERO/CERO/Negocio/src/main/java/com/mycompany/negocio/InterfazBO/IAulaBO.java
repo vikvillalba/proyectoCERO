@@ -17,12 +17,12 @@ import java.util.List;
  */
 public interface IAulaBO {
     
-    public boolean validarDisponibilidadHorarioAula(NuevaClaseDTO nuevaClase , List<Clase> clasesPresencialesAula)throws NegocioException;
     public List<AulaClaseDTO> obtenerListaAulas();
     //metodo para obtener clases en aula 
+    public List<Clase> obtenerClasesPresencialesAula(String idAula);
     public void agregarClasePresencial(Clase clase)throws NegocioException;
     public AulaClaseDTO convertirAulaDTO(AulaClase aulaClase);
+    
     public AulaClase buscarAulaClaseID(String idAulaClase) throws NegocioException;
-    public AulaClase buscarAulaClaseObjectId(String id);
     
 }

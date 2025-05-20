@@ -27,11 +27,7 @@ public interface IClasesBO {
     public Integer obtenerLimiteFaltas(ClaseDTO clase);
 
     //METODOS CU_GESTIONAR CLASES 
-    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro) throws NegocioException;
 
-    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula) throws NegocioException;
-
-    //
     public List<ClaseListaDTO> buscarClasesListaNombre(String nombreClase);
 
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException;
