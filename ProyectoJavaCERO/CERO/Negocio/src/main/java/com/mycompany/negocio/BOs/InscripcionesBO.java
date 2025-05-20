@@ -30,6 +30,7 @@ import GestionarClasesPersistencia.IMaestrosDAO;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import com.mycompany.dtos.InscripcionClaseDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -179,5 +180,11 @@ public class InscripcionesBO implements IInscripcionesBO {
         }
         return alumnosClase;
     }
-
+    
+    //Metodo dar debaja
+    @Override
+    public void cancelarInscripcion(InscripcionClaseDTO inscripcion){
+        String idInscripcion = inscripcion.getIdInscricpcion();
+        inscripcionesDAO.cancelarInscripcion(idInscripcion);
+    }
 }

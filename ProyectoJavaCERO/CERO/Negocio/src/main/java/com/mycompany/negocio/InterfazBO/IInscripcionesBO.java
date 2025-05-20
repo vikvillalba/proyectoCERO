@@ -5,6 +5,7 @@ import Entidades.Inscripcion;
 import DTOs.GestionarClases.AlumnoClaseDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.InscripcionClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.dtos.NuevaInscripcionDTO;
 import com.mycompany.negocio.excepciones.NegocioException;
@@ -25,4 +26,6 @@ public interface IInscripcionesBO {
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws NegocioException;
 
     public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseDTO clase);
+    
+    public void cancelarInscripcion(InscripcionClaseDTO inscripcion);
 }

@@ -12,13 +12,38 @@ import DTOs.GestionarClases.ClaseListaDTO;
  */
 //DTO para CU_GESTIONAR ALUMNO
 public class InscripcionClaseDTO {
+    private String idInscricpcion;
     private AlumnoDTO alumno;
     private ClaseListaDTO claseListaDTO;
+    private boolean activa;
 
-    public InscripcionClaseDTO(AlumnoDTO alumno, ClaseListaDTO claseListaDTO) {
+    public InscripcionClaseDTO(String idInscricpcion, AlumnoDTO alumno, ClaseListaDTO claseListaDTO, boolean activa) {
+        this.idInscricpcion = idInscricpcion;
         this.alumno = alumno;
         this.claseListaDTO = claseListaDTO;
+        this.activa = activa;
     }
+
+    
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    
+
+    public String getIdInscricpcion() {
+        return idInscricpcion;
+    }
+
+    public void setIdInscricpcion(String idInscricpcion) {
+        this.idInscricpcion = idInscricpcion;
+    }
+
+    
 
     public AlumnoDTO getAlumno() {
         return alumno;

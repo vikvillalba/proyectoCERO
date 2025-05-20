@@ -20,6 +20,6 @@ import com.mycompany.dtos.InscripcionDTO;
 public interface IInscripcionMapper {
     public AlumnoClaseDTO convertirAlumnoInscritoDTO(Inscripcion inscripcion);
     
-    public InscripcionClaseDTO convertirInscripcionDTO(Alumno alumno, Clase clase, Maestro maestro , AulaClase aula);
+    public InscripcionClaseDTO convertirInscripcionDTO(Inscripcion inscricion,Alumno alumno, Clase clase, Maestro maestro , AulaClase aula);
     
 }

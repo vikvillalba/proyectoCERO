@@ -5,6 +5,7 @@ import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.InscripcionClaseDTO;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import com.mycompany.negocio.InterfazBO.IAlumnosBO;
+import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.List;
 
@@ -16,9 +17,11 @@ import java.util.List;
 public class ControlGestionarAlumnos implements IControlGestionarAlumnos{
     
     private final IAlumnosBO alumnosBO;
+    private final IInscripcionesBO inscripcionesBO;
 
     public ControlGestionarAlumnos() {
         this.alumnosBO = FabricaObjetosNegocio.obtenerAlumnosBO();
+        this.inscripcionesBO = FabricaObjetosNegocio.obtenerInscripcionesBO();
     }
     
     @Override
@@ -60,5 +63,12 @@ public class ControlGestionarAlumnos implements IControlGestionarAlumnos{
     public List<AlumnoDTO> obtenerAlumnosDTOLista() {
         return alumnosBO.obtenerAlumnosDTOLista();
     }
+    
+    //dar de baja de un inscripcion
+    @Override
+    public void cancelarInscripcion(InscripcionClaseDTO inscripcion){
+        inscripcionesBO.cancelarInscripcion(inscripcion);
+    }
+    
     
 }

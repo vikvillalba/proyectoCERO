@@ -37,7 +37,7 @@ public class InscripcionMapper implements IInscripcionMapper{
     }
 
     @Override
-    public InscripcionClaseDTO convertirInscripcionDTO(Alumno alumno, Clase clase, Maestro maestro , AulaClase aula) {
+    public InscripcionClaseDTO convertirInscripcionDTO(Inscripcion inscripcion,Alumno alumno, Clase clase, Maestro maestro , AulaClase aula) {
         ClaseListaDTO claseListaDTO = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
         AlumnoDTO alumnoDTO = new AlumnoDTO();
         alumnoDTO.setCodigo(alumno.getCodigo());
@@ -46,7 +46,7 @@ public class InscripcionMapper implements IInscripcionMapper{
         alumno.setApellidoPaterno(alumno.getApellidoPaterno());
         alumno.setApellidoMaterno(alumno.getApellidoMaterno());
         
-        return new InscripcionClaseDTO(alumnoDTO, claseListaDTO);
+        return new InscripcionClaseDTO(inscripcion.getIdString(),alumnoDTO, claseListaDTO, inscripcion.isActivo());
     
     }
     

@@ -130,7 +130,7 @@ public class AlumnosBO implements IAlumnosBO {
                 AulaClase aula = aulaDAO.buscarClase(clase.getIdAulaString());
                 Maestro maestroEncontrado = maestro.buscarMaestro(clase.getIdMaestroString());
 
-                InscripcionClaseDTO inscripcionDTO = inscripcionMapper.convertirInscripcionDTO(alumno,
+                InscripcionClaseDTO inscripcionDTO = inscripcionMapper.convertirInscripcionDTO(inscripcion,alumno,
                         clase,
                         maestroEncontrado,
                         aula);

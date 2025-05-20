@@ -24,4 +24,6 @@ public interface IControlGestionarAlumnos {
     public List<InscripcionClaseDTO> obtenerInscripciones(AlumnoDTO alumnoDTO) throws GestionarAlumnosException;
 
     public List<AlumnoDTO> obtenerAlumnosDTOLista();
+    
+    public void cancelarInscripcion(InscripcionClaseDTO inscripcion);
 }
