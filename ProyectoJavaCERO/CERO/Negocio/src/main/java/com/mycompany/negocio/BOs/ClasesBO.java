@@ -9,6 +9,7 @@ import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Maestro;
+import Mapper.ClaseMapper;
 //import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
 import com.mycompany.dtos.ClaseDTO;
@@ -34,7 +35,7 @@ public class ClasesBO implements IClasesBO {
 
     public ClasesBO(IClasesDAO clasesDAO, IAulaBO aulaBO, IMaestroBO maestroBO) {
         this.clasesDAO = clasesDAO;
-//        this.claseMapper = new ClaseMapper();
+        this.claseMapper = new ClaseMapper();
         this.aulaBO = aulaBO;
         this.maestroBO = maestroBO;
     }
@@ -123,16 +124,9 @@ public class ClasesBO implements IClasesBO {
 
     }
 
+    
     @Override
-    public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException {
-        List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
-        if(clasesActivas.isEmpty() || clasesActivas == null){
-            throw new NegocioException("No se encontraron clases activas");
-        }
-        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
-    }
-
-    public List<ClaseListaDTO> buscarClasesActivasClaseListaDTO() {
+    public List<ClaseListaDTO> buscarClasesActivas() {
 
         try {
             List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
