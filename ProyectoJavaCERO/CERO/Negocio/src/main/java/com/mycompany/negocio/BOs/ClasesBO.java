@@ -9,6 +9,7 @@ import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Maestro;
+import Mapper.ClaseMapper;
 //import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
 import com.mycompany.dtos.ClaseDTO;
@@ -34,26 +35,27 @@ public class ClasesBO implements IClasesBO {
 
     public ClasesBO(IClasesDAO clasesDAO, IAulaBO aulaBO, IMaestroBO maestroBO) {
         this.clasesDAO = clasesDAO;
-//        this.claseMapper = new ClaseMapper();
+        this.claseMapper = new ClaseMapper();
         this.aulaBO = aulaBO;
         this.maestroBO = maestroBO;
     }
 
     @Override
     public List<ClaseDTO> obtenerClasesNombre(String nombreClase) throws NegocioException {
-        List<Clase> clases = this.clasesDAO.obtenerClasesPorNombre(nombreClase);
+        List<Clase> clases = this.clasesDAO.buscarNombreClases(nombreClase);
         if (clases == null || clases.isEmpty()) {
             throw new NegocioException("No se encontraron clases relacionadas.");
         }
         List<ClaseDTO> clasesObtenidas = new ArrayList<>();
         for (Clase clase : clases) {
+            Maestro maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
             ClaseDTO claseDTO = new ClaseDTO(
                     clase.getCodigo(),
                     clase.getNombre(),
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getNombreMaestro(),
+                    maestro.getNombreCompleto(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()
@@ -125,7 +127,7 @@ public class ClasesBO implements IClasesBO {
     }
 
     @Override
-    public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException{
+    public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException {
         List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
         if (clasesActivas.isEmpty() || clasesActivas == null) {
             return new ArrayList<>();
@@ -135,7 +137,7 @@ public class ClasesBO implements IClasesBO {
             try {
                 Maestro maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
                 AulaClase aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
-                
+
                 clases.add(claseMapper.convertirClaseListaDTO(clase, maestro, aula));
             } catch (NegocioException ex) {
                 throw new NegocioException(ex.getMessage());

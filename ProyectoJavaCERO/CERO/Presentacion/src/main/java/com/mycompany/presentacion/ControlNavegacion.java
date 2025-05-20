@@ -557,6 +557,8 @@ public class ControlNavegacion {
         FrmClasesExistentesAsistencia clasesResultado = new FrmClasesExistentesAsistencia(clases);
         clasesResultado.setVisible(true);
         frameActual = clasesResultado;
+        
+
     }
 
     /**
@@ -568,6 +570,7 @@ public class ControlNavegacion {
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorClaseNoExiste();
             return Collections.emptyList();
+            
         }
     }
 
@@ -688,7 +691,7 @@ public class ControlNavegacion {
      */
     public static void mostrarAsistenciasAnterioresClase(ClaseDTO clase, LocalDate diaClase) {
         try {
-            // llamar registroAsistencias y obtener las asistencias de esa clase en ese dia (llamar a la dao?? idk)
+            
             List<AsistenciaDTO> asistenciasClase = registroAsistencias.obtenerAsistenciasClase(clase, diaClase);
             FrmAsistenciasClaseAnterior pantallaAsistencias = new FrmAsistenciasClaseAnterior(diaClase, clase, asistenciasClase);
             pantallaAsistencias.setVisible(true);

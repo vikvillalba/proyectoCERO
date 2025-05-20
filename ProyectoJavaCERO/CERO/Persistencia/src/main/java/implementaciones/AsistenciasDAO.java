@@ -67,7 +67,7 @@ public class AsistenciasDAO implements IAsistenciasDAO {
     @Override
     public List<Asistencia> obtenerAsistenciasAlumnos(Clase clase, LocalDate fechaClase) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Asistencia> coleccion = baseDatos.getCollection("asistencias", Asistencia.class);
+        MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         LocalDateTime inicioDia = fechaClase.atStartOfDay();
         LocalDateTime finDia = fechaClase.atTime(LocalTime.MAX);
@@ -84,7 +84,7 @@ public class AsistenciasDAO implements IAsistenciasDAO {
     @Override
     public Asistencia justificarFalta(Asistencia faltaJustificada) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Asistencia> coleccion = baseDatos.getCollection("asistencias", Asistencia.class);
+        MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         if (faltaJustificada.getId() == null) {
             return null;
@@ -101,7 +101,7 @@ public class AsistenciasDAO implements IAsistenciasDAO {
     @Override
     public List<Asistencia> obtenerFaltasJustificadasAlumnoClase(Alumno alumno, Clase clase) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Asistencia> coleccion = baseDatos.getCollection("asistencias", Asistencia.class);
+        MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         Document filtro = new Document();
         filtro.append("alumno", alumno.getId());
@@ -116,7 +116,7 @@ public class AsistenciasDAO implements IAsistenciasDAO {
     @Override
     public List<Asistencia> actualizarAsistencias(List<Asistencia> nuevasAsistencias) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Asistencia> coleccion = baseDatos.getCollection("asistencias", Asistencia.class);
+        MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         for (Asistencia nueva : nuevasAsistencias) {
             if (nueva.getId() != null) {
@@ -134,40 +134,56 @@ public class AsistenciasDAO implements IAsistenciasDAO {
     @Override
     public List<ReporteAsistencia> obtenerReporteAsistencias(String idAlumno, String idClase, LocalDate fechaInicio, LocalDate fechaFin) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Document> coleccion = baseDatos.getCollection("asistencias");
+        MongoCollection<Document> coleccion = baseDatos.getCollection("Asistencias");
 
-        List<Bson> filtros = Arrays.asList(
-                Aggregates.match(Filters.and(
-                        Filters.eq("alumno", new ObjectId(idAlumno)),
-                        Filters.eq("clase", new ObjectId(idClase)),
-                        Filters.gte("fechaHora", fechaInicio.atStartOfDay()),
-                        Filters.lte("fechaHora", fechaFin.atTime(23, 59, 59))
-                )),
+        Date fechaInicioDate = Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date fechaFinDate = Date.from(fechaFin.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<Bson> filtros = new ArrayList<>();
+
+        filtros.add(Filters.eq("clase", new ObjectId(idClase)));
+
+
+        if (idAlumno != null && !idAlumno.trim().isEmpty()) {
+            filtros.add(Filters.eq("alumno", new ObjectId(idAlumno)));
+        }
+
+
+        filtros.add(Filters.gte("fechaHora", fechaInicioDate));
+        filtros.add(Filters.lte("fechaHora", fechaFinDate));
+
+        Bson filtroFinal = Filters.and(filtros);
+
+        List<Bson> pipeline = Arrays.asList(
+                Aggregates.match(filtroFinal),
                 Aggregates.lookup("Alumnos", "alumno", "_id", "datosAlumno"),
                 Aggregates.unwind("$datosAlumno")
         );
 
         List<ReporteAsistencia> reportes = new ArrayList<>();
 
-        for (Document documento : coleccion.aggregate(filtros)) {
+        for (Document documento : coleccion.aggregate(pipeline)) {
             Document alumno = documento.get("datosAlumno", Document.class);
-            // obtener datos del alumno
             String nombre = alumno.getString("nombre") + " " + alumno.getString("apellidoPaterno");
             Integer codigo = alumno.getInteger("codigo");
+
             Date fecha = documento.getDate("fechaHora");
             LocalDate fechaClase = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            String tipoAsistencia = documento.get("tipoAsistencia", Document.class).getString("nombre");
-            TipoAsistencia tipoEnum = TipoAsistencia.valueOf(tipoAsistencia.toUpperCase());
 
-            Document justificanteDoc = documento.get("justificante", Document.class);
+            String tipoAsistenciaStr = documento.getString("tipoAsistencia");
+            TipoAsistencia tipoEnum = TipoAsistencia.valueOf(tipoAsistenciaStr.toUpperCase());
 
             String justificante = "No aplica";
-            if (justificanteDoc != null) {
-                justificante = justificanteDoc.getString("descripcion");
+            if (documento.containsKey("justificante")) {
+                Document justificanteDoc = documento.get("justificante", Document.class);
+                if (justificanteDoc != null) {
+                    justificante = justificanteDoc.getString("descripcion") != null
+                            ? justificanteDoc.getString("descripcion")
+                            : justificanteDoc.getString("motivo");
+                }
             }
 
             reportes.add(new ReporteAsistencia(codigo, nombre, fechaClase, tipoEnum, justificante));
-
         }
 
         return reportes;

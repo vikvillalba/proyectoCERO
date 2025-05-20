@@ -87,6 +87,7 @@ public class AsistenciasBO implements IAsistenciasBO {
         for (Asistencia asistencia : asistencias) {
             Alumno alumnoEntidad = alumnosDAO.obtenerAlumno(asistencia.getIdAlumnoString());
             AlumnoDTO alumno = new AlumnoDTO(
+                    alumnoEntidad.getCodigo(),
                     alumnoEntidad.getApellidoPaterno(),
                     alumnoEntidad.getApellidoMaterno(),
                     alumnoEntidad.getNombre(),
@@ -180,6 +181,7 @@ public class AsistenciasBO implements IAsistenciasBO {
         for (Asistencia asistencia : asistenciasActualizadas) {
             Alumno alumnoEntidad = alumnosDAO.obtenerAlumno(asistencia.getIdAlumnoString());
             AlumnoDTO alumno = new AlumnoDTO(
+                    alumnoEntidad.getCodigo(),
                     alumnoEntidad.getApellidoPaterno(),
                     alumnoEntidad.getApellidoMaterno(),
                     alumnoEntidad.getNombre(),
@@ -211,8 +213,6 @@ public class AsistenciasBO implements IAsistenciasBO {
                     tipoDTO,
                     asistencia.getFechaHora()
             );
-            
-            
 
             asistenciasActualizadasDTO.add(dtoActualizado);
         }
@@ -223,27 +223,40 @@ public class AsistenciasBO implements IAsistenciasBO {
     @Override
     public List<ReporteAsistenciaDTO> obtenerReporteAsistencias(Integer codigoClase, Integer codigoAlumno, LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException {
         Clase clase = clasesDAO.buscarClaseCodigoInteger(codigoClase);
-        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(codigoAlumno);
-        List<ReporteAsistencia> reportes = asistenciasDAO.obtenerReporteAsistencias(alumno.getIdString(), clase.getIdClaseString(), fechaInicio, fechaFin);
-        
-        if(reportes.isEmpty()) {
-            throw new NegocioException("No se encontraron asistencias para el alumno: " + alumno.getNombreCompleto());
+        if (clase == null) {
+            throw new NegocioException("No existe la clase con código: " + codigoClase);
         }
-        
+
+        List<ReporteAsistencia> reportes;
+        if (codigoAlumno == null) {
+            reportes = asistenciasDAO.obtenerReporteAsistencias(null, clase.getIdClaseString(), fechaInicio, fechaFin);
+        } else {
+            Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(codigoAlumno);
+            reportes = asistenciasDAO.obtenerReporteAsistencias(alumno.getIdString(), clase.getIdClaseString(), fechaInicio, fechaFin);
+        }
+        if (reportes.isEmpty()) {
+            String mensaje;
+            if (codigoAlumno == null) {
+                mensaje = "No se encontraron asistencias para la clase: " + clase.getNombre();
+            } else {
+                Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(codigoAlumno);
+                mensaje = "No se encontraron asistencias para el alumno: " + alumno.getNombreCompleto();
+            }
+            throw new NegocioException(mensaje);
+        }
+
         List<ReporteAsistenciaDTO> reportesDTO = new ArrayList<>();
-        
         for (ReporteAsistencia reporte : reportes) {
             ReporteAsistenciaDTO reporteDTO = new ReporteAsistenciaDTO(
-                    reporte.getIdAlumno(), 
-                    reporte.getNombre(), 
-                    reporte.getFechaClase(), 
-                    TipoAsistenciaDTO.valueOf(reporte.getTipoAsistencia().name()), 
+                    reporte.getIdAlumno(),
+                    reporte.getNombre(),
+                    reporte.getFechaClase(),
+                    TipoAsistenciaDTO.valueOf(reporte.getTipoAsistencia().name()),
                     reporte.getJustificante()
             );
-            
             reportesDTO.add(reporteDTO);
         }
-        
+
         return reportesDTO;
     }
 

@@ -132,8 +132,9 @@ public class InscripcionesBO implements IInscripcionesBO {
     }
 
     @Override
-    public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws NegocioException {
-        List<Inscripcion> inscripciones = this.inscripcionesDAO.obtenerInscripcionesClase(clase.getId());
+    public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO claseDTO) throws NegocioException {
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
+        List<Inscripcion> inscripciones = this.inscripcionesDAO.obtenerInscripcionesClase(clase.obtenerIdString());
         List<InscripcionDTO> inscripcionesClase = new ArrayList<>();
         if (inscripciones.isEmpty() || inscripciones == null) {
             throw new NegocioException("No se encontraron inscripciones para la clase: " + clase.getNombre());
@@ -151,7 +152,7 @@ public class InscripcionesBO implements IInscripcionesBO {
                     alumnoEntidad.getCorreoElectronico()
             );
 
-            InscripcionDTO inscripcionDTO = new InscripcionDTO(alumno, clase, inscripcion.getFechaInscripcion());
+            InscripcionDTO inscripcionDTO = new InscripcionDTO(alumno, claseDTO, inscripcion.getFechaInscripcion());
             inscripcionesClase.add(inscripcionDTO);
 
         }

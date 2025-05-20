@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -88,17 +89,28 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
     }
 
     private void cargarDatos() {
-        Integer idAlumno = Integer.parseInt(this.txtIdAlumno.getText());
+        Integer idAlumno = null;
+        if (!txtIdAlumno.getText().isEmpty()) {
+            try {
+                idAlumno = Integer.valueOf(this.txtIdAlumno.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "El ID del alumno no es válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
         Date inicio = this.fechaInicio.getDate();
         Date fin = this.fechaFin.getDate();
-
+        
         LocalDate fechaInicio = inicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate fechaFin = fin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        List<ReporteAsistenciaDTO> reportes = ControlNavegacion.obtenerReportesAsistencia(claseDTO.getCodigo(), idAlumno, fechaInicio, fechaFin);
 
-        if (reportes.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se encontraron registros relacionados", "Sin registros.", JOptionPane.INFORMATION_MESSAGE);
-            this.txtIdAlumno.setText(" ");
+        List<ReporteAsistenciaDTO> reportes;
+        if (idAlumno == null) {
+
+            reportes = ControlNavegacion.obtenerReportesAsistencia(claseDTO.getCodigo(), null, fechaInicio, fechaFin);
+        } else {
+            reportes = ControlNavegacion.obtenerReportesAsistencia(claseDTO.getCodigo(), idAlumno, fechaInicio, fechaFin);
         }
         llenarTabla(reportes);
     }
@@ -268,8 +280,12 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
         JFileChooser j = new JFileChooser();
         j.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int x = j.showSaveDialog(this);
+
         if (x == JFileChooser.APPROVE_OPTION) {
-            path = j.getSelectedFile().getPath();
+            File selectedDir = j.getSelectedFile();
+            if (selectedDir != null && selectedDir.isDirectory()) {
+                path = selectedDir.getAbsolutePath();
+            }
         }
 
         if (path.isEmpty()) {
@@ -277,12 +293,13 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
             return;
         }
 
-        String fullPath = String.format("%s/CEROReporteAsistencias.pdf", path);
-        Document doc = new Document();
+        String fullPath = path + File.separator + "CERO_ReporteAsistencias.pdf";
+        System.out.println("Ruta seleccionada: " + fullPath);
         File file = new File(fullPath);
+        Document doc = new Document();
 
         try {
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(fullPath));
+            PdfWriter.getInstance(doc, new FileOutputStream(file));
             doc.open();
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, new BaseColor(65, 70, 105));
@@ -294,10 +311,29 @@ public class FrmReporteAsistencias extends javax.swing.JFrame {
             title.setAlignment(Element.ALIGN_CENTER);
             doc.add(title);
 
-            Paragraph valores = new Paragraph(
-                    "id del alumno: " + txtIdAlumno.getText() + " clase: " + claseDTO.getNombreClase() + " Fechas de: " + fechaInicio.getDate().toString() + " a: " + fechaFin.getDate().toString(),
-                    subtitleFont
-            );
+            DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            Date fechaInicioDate = fechaInicio.getDate();
+            Date fechaFinDate = fechaFin.getDate();
+
+            LocalDate localFechaInicio = fechaInicioDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate localFechaFin = fechaFinDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            String fechaInicioFormateada = localFechaInicio.format(formatoFecha);
+            String fechaFinFormateada = localFechaFin.format(formatoFecha);
+
+            Paragraph valores = new Paragraph();
+            valores.setAlignment(Element.ALIGN_CENTER);
+            valores.setFont(subtitleFont);
+
+            valores.add(new Chunk("ID del alumno: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE)));
+            valores.add(new Chunk(txtIdAlumno.getText() + "\n", FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+
+            valores.add(new Chunk("Clase: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE)));
+            valores.add(new Chunk(claseDTO.getNombreClase() + "\n", FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
+
+            valores.add(new Chunk("Fechas: ", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLUE)));
+            valores.add(new Chunk(fechaInicioFormateada + " a " + fechaFinFormateada, FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.BLACK)));
             valores.setAlignment(Element.ALIGN_CENTER);
             doc.add(valores);
             doc.add(Chunk.NEWLINE);

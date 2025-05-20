@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -109,7 +110,7 @@ public class ClasesDAO implements IClasesDAO {
                 Filters.eq("_id", "clase"),
                 Updates.inc("codigoSecuencia", 1),
                 new FindOneAndUpdateOptions()
-                        .upsert(true) 
+                        .upsert(true)
                         .returnDocument(ReturnDocument.AFTER)
         );
 
@@ -118,7 +119,9 @@ public class ClasesDAO implements IClasesDAO {
 
     @Override
     public List<Clase> buscarNombreClases(String nombreClase) {
-        return coleccion.find(regex("nombre", ".*" + nombreClase + ".*", "i")).into(new ArrayList<>());
+        Pattern patron = Pattern.compile(".*" + Pattern.quote(nombreClase) + ".*", Pattern.CASE_INSENSITIVE);
+
+        return coleccion.find(Filters.regex("nombre", patron)).into(new ArrayList<>());
     }
 
     @Override
@@ -192,5 +195,5 @@ public class ClasesDAO implements IClasesDAO {
     public Clase buscarClaseObjectID(ObjectId idClase) {
         return coleccion.find(eq("_id", idClase)).first();
     }
- 
+
 }

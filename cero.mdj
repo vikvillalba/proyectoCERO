@@ -213577,7 +213577,7 @@
 																	"top": 1644,
 																	"width": 517.2421875,
 																	"height": 13,
-																	"text": "+actualizarAsistencia(AsistenciaDTO asistencia): AsistenciaDTO",
+																	"text": "+actualizarAsistencias(AsistenciaDTO asistencia): AsistenciaDTO",
 																	"horizontalAlignment": 0
 																},
 																{
@@ -214502,7 +214502,7 @@
 																	"top": 2915,
 																	"width": 165.6201171875,
 																	"height": 13,
-																	"text": "-clase: Clase",
+																	"text": "-clase: String",
 																	"horizontalAlignment": 0
 																},
 																{
@@ -214520,7 +214520,7 @@
 																	"top": 2930,
 																	"width": 165.6201171875,
 																	"height": 13,
-																	"text": "-alumno: Alumno",
+																	"text": "-alumno: String",
 																	"horizontalAlignment": 0
 																}
 															],
@@ -214610,7 +214610,7 @@
 																	"top": 2998,
 																	"width": 165.6201171875,
 																	"height": 13,
-																	"text": "+getClase(): Clase",
+																	"text": "+getClase(): String",
 																	"horizontalAlignment": 0
 																},
 																{
@@ -214628,7 +214628,7 @@
 																	"top": 3013,
 																	"width": 165.6201171875,
 																	"height": 13,
-																	"text": "+getAlumno(): Alumno",
+																	"text": "+getAlumno(): String",
 																	"horizontalAlignment": 0
 																}
 															],
@@ -217414,7 +217414,7 @@
 																	"top": 2987,
 																	"width": 508.609375,
 																	"height": 13,
-																	"text": "+actualizarAsistencia(Asistencia asistencia): Asistencia",
+																	"text": "+actualizarAsistencias(Asistencia asistencia): Asistencia",
 																	"horizontalAlignment": 0
 																},
 																{
@@ -222182,7 +222182,7 @@
 																	"top": 2202,
 																	"width": 510.7421875,
 																	"height": 13,
-																	"text": "+actualizarAsistencia(AsistenciaDTO asistencia): AsistenciaDTO",
+																	"text": "+actualizarAsistencias(AsistenciaDTO asistencia): AsistenciaDTO",
 																	"horizontalAlignment": 0
 																},
 																{
@@ -229161,7 +229161,7 @@
 													"_parent": {
 														"$ref": "AAAAAAGWk1gxmIGzD68="
 													},
-													"name": "actualizarAsistencia",
+													"name": "actualizarAsistencias",
 													"parameters": [
 														{
 															"_type": "UMLParameter",
@@ -229169,8 +229169,7 @@
 															"_parent": {
 																"$ref": "AAAAAAGWk1gxmIG9JRQ="
 															},
-															"name": "AsistenciaDTO asistencia",
-															"type": ""
+															"name": "AsistenciaDTO asistencia"
 														},
 														{
 															"_type": "UMLParameter",
@@ -229482,9 +229481,7 @@
 															},
 															"name": "clase",
 															"visibility": "private",
-															"type": {
-																"$ref": "AAAAAAGWk1gxmIHqzlo="
-															}
+															"type": "String"
 														},
 														{
 															"_type": "UMLAttribute",
@@ -229494,9 +229491,7 @@
 															},
 															"name": "alumno",
 															"visibility": "private",
-															"type": {
-																"$ref": "AAAAAAGWk1gxmIHoUGg="
-															}
+															"type": "String"
 														}
 													],
 													"operations": [
@@ -229573,9 +229568,7 @@
 																	"_parent": {
 																		"$ref": "AAAAAAGWk1gxmIHejU4="
 																	},
-																	"type": {
-																		"$ref": "AAAAAAGWk1gxmIHqzlo="
-																	},
+																	"type": "String",
 																	"direction": "return"
 																}
 															]
@@ -229594,9 +229587,7 @@
 																	"_parent": {
 																		"$ref": "AAAAAAGWk1gxmIHg7B8="
 																	},
-																	"type": {
-																		"$ref": "AAAAAAGWk1gxmIHoUGg="
-																	},
+																	"type": "String",
 																	"direction": "return"
 																}
 															]
@@ -230621,7 +230612,7 @@
 															"_parent": {
 																"$ref": "AAAAAAGWk1gxmII9QF0="
 															},
-															"name": "actualizarAsistencia",
+															"name": "actualizarAsistencias",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -230629,8 +230620,7 @@
 																	"_parent": {
 																		"$ref": "AAAAAAGWk1gxmYJE0E4="
 																	},
-																	"name": "Asistencia asistencia",
-																	"type": ""
+																	"name": "Asistencia asistencia"
 																},
 																{
 																	"_type": "UMLParameter",
@@ -230639,7 +230629,7 @@
 																		"$ref": "AAAAAAGWk1gxmYJE0E4="
 																	},
 																	"type": {
-																		"$ref": "AAAAAAGWk1gxmIHPJmM="
+																		"$ref": "AAAAAAGVeFblZf2gYXk="
 																	},
 																	"direction": "return"
 																}
@@ -232401,7 +232391,7 @@
 													"_parent": {
 														"$ref": "AAAAAAGWk1gxmIF3hL4="
 													},
-													"name": "actualizarAsistencia",
+													"name": "actualizarAsistencias",
 													"parameters": [
 														{
 															"_type": "UMLParameter",
@@ -232409,8 +232399,7 @@
 															"_parent": {
 																"$ref": "AAAAAAGWk1gxmIGcPAQ="
 															},
-															"name": "AsistenciaDTO asistencia",
-															"type": ""
+															"name": "AsistenciaDTO asistencia"
 														},
 														{
 															"_type": "UMLParameter",

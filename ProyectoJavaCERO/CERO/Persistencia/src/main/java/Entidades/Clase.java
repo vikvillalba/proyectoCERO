@@ -254,7 +254,7 @@ public class Clase {
 
     @BsonIgnore
     public String getIdClaseString() {
-        return ObjectIDMapper.toString(idMaestro);
+        return ObjectIDMapper.toString(id);
     }
 
 }
