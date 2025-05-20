@@ -7,6 +7,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -232,9 +233,12 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
         String correo = txfCorreo.getText();
         String nombre = txfNombre.getText();
         Date fecha = selectorFechas.getDate();
+        LocalDate fechaLocal = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        
         
         // CREAR Y ENVIAR AlumnoDTO
-        AlumnoDTO alumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, LocalDate.MIN, correo);
+        AlumnoDTO alumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaLocal, correo);
         if (ControlNavegacion.validarDatosAlumno(alumnoDTO)) {
             ControlNavegacion.AgregarAlumno(alumnoDTO);
         }

@@ -82,14 +82,14 @@ public class Test {
 //                true
 //        );
 //
-//        claseDAO.registrarNuevaClase(clase1);
-        Alumno alumno = alumnosDAO.obtenerAlumno("682bb2a25a8c9265a446e937");
-        Clase clase = claseDAO.buscarClase("682bb177f1a13c3c4fa23f7c");
-        MetodoPago metodoPago = new MetodoPagoEfectivo(new BigDecimal(2000), new BigDecimal(500));
-        Pago pago = new Pago(clase.getPrecio(), LocalDateTime.now(), true, metodoPago);
-        Inscripcion inscripcion = new Inscripcion(clase.obtenerIdString(), alumno.getIdString(), LocalDateTime.now(), pago);
-        
-        Inscripcion inscripcionRegistrada = inscripcionesDAO.registrarInscripcion(inscripcion);
+////        claseDAO.registrarNuevaClase(clase1);
+//        Alumno alumno = alumnosDAO.obtenerAlumno("682bb2a25a8c9265a446e937");
+//        Clase clase = claseDAO.buscarClase("682bb177f1a13c3c4fa23f7c");
+//        MetodoPago metodoPago = new MetodoPagoEfectivo(new BigDecimal(2000), new BigDecimal(500));
+//        Pago pago = new Pago(clase.getPrecio(), LocalDateTime.now(), true, metodoPago);
+//        Inscripcion inscripcion = new Inscripcion(clase.obtenerIdString(), alumno.getIdString(), LocalDateTime.now(), pago);
+//        
+//        Inscripcion inscripcionRegistrada = inscripcionesDAO.registrarInscripcion(inscripcion);
 
     }
 }

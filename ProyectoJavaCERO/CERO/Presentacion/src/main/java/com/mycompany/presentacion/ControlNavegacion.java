@@ -474,7 +474,11 @@ public class ControlNavegacion {
         if (alumnoRegistrado == null) {
             return false;
         } else {
+            JOptionPane.showMessageDialog(null,
+                    "El alumno se registró exitosamente. El código de integrante es: " + alumnoRegistrado.getCodigo().toString(),
+                    "Alumno Registrado :)", JOptionPane.INFORMATION_MESSAGE);
             return true;
+
         }
     }
 
@@ -546,7 +550,7 @@ public class ControlNavegacion {
      */
     public static void mostrarClasesExistentes(String nombre, JFrame frame) {
         if (validarErrorNombreClaseAsistencia(frame, nombre)) {
-            mostrarInscribirClase();
+            mostrarBuscarClase();
             return;
         }
 
@@ -561,7 +565,6 @@ public class ControlNavegacion {
         FrmClasesExistentesAsistencia clasesResultado = new FrmClasesExistentesAsistencia(clases);
         clasesResultado.setVisible(true);
         frameActual = clasesResultado;
-        
 
     }
 
@@ -574,7 +577,7 @@ public class ControlNavegacion {
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorClaseNoExiste();
             return Collections.emptyList();
-            
+
         }
     }
 
@@ -695,7 +698,7 @@ public class ControlNavegacion {
      */
     public static void mostrarAsistenciasAnterioresClase(ClaseDTO clase, LocalDate diaClase) {
         try {
-            
+
             List<AsistenciaDTO> asistenciasClase = registroAsistencias.obtenerAsistenciasClase(clase, diaClase);
             FrmAsistenciasClaseAnterior pantallaAsistencias = new FrmAsistenciasClaseAnterior(diaClase, clase, asistenciasClase);
             pantallaAsistencias.setVisible(true);

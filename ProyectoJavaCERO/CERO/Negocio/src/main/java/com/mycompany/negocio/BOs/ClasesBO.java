@@ -10,8 +10,8 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Maestro;
 import Mapper.ClaseMapper;
-//import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
+import com.mycompany.dtos.AlumnoClaseDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
@@ -265,5 +265,6 @@ public class ClasesBO implements IClasesBO {
         }
         return null;
     }
+
 
 }
