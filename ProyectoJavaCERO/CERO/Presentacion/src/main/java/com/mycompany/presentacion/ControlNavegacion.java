@@ -1,5 +1,6 @@
 package com.mycompany.presentacion;
 
+
 import ControlGestionarAlumnos.ControlGestionarAlumnos;
 import ControlGestionarAlumnos.IControlGestionarAlumnos;
 import ControlGestionarClases.ControlGestionarClases;
@@ -40,6 +41,7 @@ import com.mycompany.dtos.NuevoPagoDTO;
 import com.mycompany.dtos.PagoDTO;
 import com.mycompany.dtos.PagoTarjetaDTO;
 import com.mycompany.dtos.ReporteAsistenciaDTO;
+import com.mycompany.gestionaralumnos.GestionarAlumnos;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.PagoRealizadoDTO;
 import com.mycompany.inscribirclase.IInscribirClase;
