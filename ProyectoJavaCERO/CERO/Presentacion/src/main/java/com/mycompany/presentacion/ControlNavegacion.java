@@ -900,7 +900,7 @@ public class ControlNavegacion {
     }
 
     public static void mostrarFrmInscripcionesClasesAlumno(AlumnoDTO alumno) {
-        frameActual.dispose();
+        
         List<InscripcionClaseDTO> inscripciones = obtenerInscripciones(alumno);
         if(!inscripciones.isEmpty()){
              frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);

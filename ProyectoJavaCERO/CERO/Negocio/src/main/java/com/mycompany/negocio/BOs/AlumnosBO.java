@@ -17,6 +17,7 @@ import GestionarClasesPersistencia.MaestrosDAO;
 import Mapper.AlumnoMapper;
 import Mapper.IAlumnoMapper;
 import Mapper.IInscripcionMapper;
+import Mapper.InscripcionMapper;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.InscripcionClaseDTO;
 import com.mycompany.negocio.InterfazBO.IAlumnosBO;
@@ -47,6 +48,7 @@ public class AlumnosBO implements IAlumnosBO {
         this.aulaDAO = new AulasClaseDAO();
         this.maestro = new MaestrosDAO();
         this.alumnoMapper = new AlumnoMapper();
+        this.inscripcionMapper = new InscripcionMapper();
     }
 
     @Override
