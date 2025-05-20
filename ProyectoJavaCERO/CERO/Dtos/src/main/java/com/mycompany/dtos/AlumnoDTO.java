@@ -8,6 +8,7 @@ import java.time.LocalDate;
 public class AlumnoDTO {
     private String id;
     private Integer codigo;
+    private int edad;
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String nombre;
@@ -37,6 +38,26 @@ public class AlumnoDTO {
         this.correoElectronico = correoElectronico;
     }
 
+    //AlumnoDTO de la lista CU_GESTIONAR ALUMNOS
+    public AlumnoDTO(String id, Integer codigo, int edad, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, String correoElectronico) {
+        this.id = id;
+        this.codigo = codigo;
+        this.edad = edad;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.correoElectronico = correoElectronico;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    
     public Integer getCodigo() {
         return codigo;
     }
