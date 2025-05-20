@@ -546,7 +546,7 @@ public class ControlNavegacion {
      */
     public static void mostrarClasesExistentes(String nombre, JFrame frame) {
         if (validarErrorNombreClaseAsistencia(frame, nombre)) {
-            mostrarInscribirClase();
+            mostrarBuscarClase();
             return;
         }
 
