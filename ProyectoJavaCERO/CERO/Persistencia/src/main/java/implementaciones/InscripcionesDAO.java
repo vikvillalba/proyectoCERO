@@ -48,9 +48,10 @@ public class InscripcionesDAO implements IInscripcionesDAO {
     public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
         MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
-
-        coleccion.insertOne(inscripcion);
+        
         inscripcion.getPago().setRealizado(true);
+        coleccion.insertOne(inscripcion);
+
         return inscripcion;
 
     }
@@ -81,7 +82,6 @@ public class InscripcionesDAO implements IInscripcionesDAO {
                 Aggregates.unwind("$infoClase"),
                 Aggregates.match(Filters.in("infoClase.dias", diaActual.name()))
         )).into(new ArrayList<>());
-
 
         return resultado;
     }
