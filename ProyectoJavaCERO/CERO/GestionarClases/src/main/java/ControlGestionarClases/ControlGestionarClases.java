@@ -12,7 +12,6 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
 import Exceptions.GestionarClasesException;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
-import com.mycompany.negocio.InterfazBO.IClasesBO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,6 +21,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import com.mycompany.negocio.InterfazBO.IClasesBO;
 
 /**
  *

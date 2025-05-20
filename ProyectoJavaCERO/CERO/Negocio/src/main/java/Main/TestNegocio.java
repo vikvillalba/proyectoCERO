@@ -9,7 +9,6 @@ import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import com.mycompany.negocio.BOs.ClasesBO;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
-import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.mycompany.negocio.InterfazBO.IClasesBO;
 
 /**
  *

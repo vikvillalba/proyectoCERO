@@ -14,13 +14,13 @@ import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
-import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.mycompany.negocio.InterfazBO.IClasesBO;
 
 /**
  *

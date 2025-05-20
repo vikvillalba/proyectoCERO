@@ -226,8 +226,8 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
                         .addGap(378, 378, 378)
                         .addComponent(btnRegresar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(258, 258, 258)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(224, 224, 224)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(344, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -249,7 +249,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
                     .addComponent(txfCuposDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(btnRegresar)
-                .addContainerGap(408, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();

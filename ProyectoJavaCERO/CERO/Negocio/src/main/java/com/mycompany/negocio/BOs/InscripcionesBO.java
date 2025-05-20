@@ -23,9 +23,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import DAOs.IInscripcionesDAO;
+import DTOs.GestionarClases.ClaseListaDTO;
 import Entidades.Maestro;
 import Excepciones.PersistenciaException;
 import GestionarClasesPersistencia.IMaestrosDAO;
+import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -158,5 +161,7 @@ public class InscripcionesBO implements IInscripcionesBO {
         }
         return inscripcionesClase;
     }
+    
+    //METODO CU_GESTIONAR CLASES OBTIENE LAS INSCRIPCIONES 
 
 }

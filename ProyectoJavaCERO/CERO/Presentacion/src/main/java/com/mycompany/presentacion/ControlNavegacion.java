@@ -121,6 +121,7 @@ public class ControlNavegacion {
      * Muestra la pantalla que inicia el caso de uso para inscribir a un alumno.
      */
     public static void mostrarInscribirClase() {
+        frameActual.dispose();
         inscribir = new FrmInscribirClase();
         inscribir.setVisible(true);
         frameActual = inscribir;
@@ -171,6 +172,7 @@ public class ControlNavegacion {
     }
 
     public static void mostrarAlumnosInscritos(ClaseDTO clase) {
+        frameActual.dispose();
         List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
         alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
         alumnosInscritos.setVisible(true);
@@ -350,6 +352,7 @@ public class ControlNavegacion {
      * Muestra pantalla de DatosClase
      */
     public static void mostrarDatosClase(ClaseDTO claseDTO) {
+        frameActual.dispose();
         datosClase = new FrmDatosClase(claseDTO);
         datosClase.setVisible(true);
         frameActual = datosClase;
@@ -380,6 +383,7 @@ public class ControlNavegacion {
     }
 
     public static void mostrarClasesExistentes(String nombre) {
+        frameActual.dispose();
         if (validarErrorNombreClase(inscribir, nombre)) {
             mostrarInscribirClase();
             return;

@@ -20,7 +20,6 @@ import com.mycompany.negocio.BOs.PagosBO;
 import com.mycompany.negocio.InterfazBO.IAlumnosBO;
 import com.mycompany.negocio.InterfazBO.IAsistenciasBO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
-import com.mycompany.negocio.InterfazBO.IClasesBO;
 import com.mycompany.negocio.InterfazBO.IContenidoBO;
 import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
@@ -32,6 +31,7 @@ import GestionarClasesPersistencia.IAulasClaseDAO;
 import DAOs.IAsistenciasDAO;
 import DAOs.IInscripcionesDAO;
 import implementaciones.InscripcionesDAO;
+import com.mycompany.negocio.InterfazBO.IClasesBO;
 
 
 /**
