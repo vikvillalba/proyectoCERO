@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ControlGestionarAlumnos;
 
 import Exception.GestionarAlumnosException;
@@ -19,7 +15,7 @@ import java.util.List;
  */
 public class ControlGestionarAlumnos implements IControlGestionarAlumnos{
     
-    private IAlumnosBO alumnosBO;
+    private final IAlumnosBO alumnosBO;
 
     public ControlGestionarAlumnos() {
         this.alumnosBO = FabricaObjetosNegocio.obtenerAlumnosBO();
