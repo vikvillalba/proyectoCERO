@@ -26,6 +26,7 @@ import DAOs.IInscripcionesDAO;
 import Entidades.Maestro;
 import Excepciones.PersistenciaException;
 import GestionarClasesPersistencia.IMaestrosDAO;
+import com.mycompany.dtos.AlumnoClaseDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -157,6 +158,21 @@ public class InscripcionesBO implements IInscripcionesBO {
 
         }
         return inscripcionesClase;
+    }
+
+    @Override
+    public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseDTO claseDTO) {
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
+        List<Alumno> alumnos = this.inscripcionesDAO.obtenerAlumnosInscritosClase(clase.obtenerIdString());
+        Integer numeroLista = 1;
+        List<AlumnoClaseDTO> alumnosClase = new ArrayList<>();
+        
+        for (Alumno alumno : alumnos) {
+            AlumnoClaseDTO alumnoDTO = new AlumnoClaseDTO(numeroLista, alumno.getCodigo(), alumno.getNombreCompleto());
+            alumnosClase.add(alumnoDTO);
+            numeroLista ++;
+        }
+        return alumnosClase;
     }
 
 }

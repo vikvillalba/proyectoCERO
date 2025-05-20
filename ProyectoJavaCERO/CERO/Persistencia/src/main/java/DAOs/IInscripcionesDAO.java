@@ -15,6 +15,7 @@ public interface IInscripcionesDAO {
     public Inscripcion registrarInscripcion(Inscripcion inscripcion);
     public List<Inscripcion> obtenerInscripcionesAlumno(Alumno alumno);
     public List<Inscripcion>obtenerInscripcionesAlumnoDiaActual(Alumno alumno);
+    public List<Alumno> obtenerAlumnosInscritosClase(String idClase);
 
     
 }

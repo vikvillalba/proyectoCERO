@@ -16,7 +16,10 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import DAOs.IInscripcionesDAO;
 import com.mongodb.client.model.Aggregates;
+import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Date;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -48,7 +51,7 @@ public class InscripcionesDAO implements IInscripcionesDAO {
     public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
         MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
-        
+
         inscripcion.getPago().setRealizado(true);
         coleccion.insertOne(inscripcion);
 
@@ -84,6 +87,43 @@ public class InscripcionesDAO implements IInscripcionesDAO {
         )).into(new ArrayList<>());
 
         return resultado;
+    }
+
+    @Override
+    public List<Alumno> obtenerAlumnosInscritosClase(String idClase) {
+        MongoDatabase db = ConexionMongoBD.getConexion();
+        MongoCollection<Document> coleccion = db.getCollection("Inscripciones");
+
+        List<Bson> pipeline = Arrays.asList(
+                Aggregates.match(Filters.eq("clase", new ObjectId(idClase))),
+                Aggregates.lookup("Alumnos", "alumno", "_id", "datosAlumno"),
+                Aggregates.unwind("$datosAlumno"),
+                Aggregates.replaceRoot("$datosAlumno")
+        );
+
+        List<Alumno> alumnos = new ArrayList<>();
+
+        for (Document doc : coleccion.aggregate(pipeline)) {
+            Alumno alumno = new Alumno();
+            alumno.setId(doc.getObjectId("_id"));
+            alumno.setCodigo(doc.getInteger("codigo"));
+            alumno.setApellidoPaterno(doc.getString("apellidoPaterno"));
+            alumno.setApellidoMaterno(doc.getString("apellidoMaterno"));
+            alumno.setNombre(doc.getString("nombre"));
+            alumno.setTelefono(doc.getString("telefono"));
+
+            Date fechaNacimiento = doc.getDate("fechaNacimiento");
+            if (fechaNacimiento != null) {
+                alumno.setFechaNacimiento(fechaNacimiento.toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate());
+            }
+
+            alumno.setCorreoElectronico(doc.getString("correoElectronico"));
+
+            alumnos.add(alumno);
+        }
+
+        return alumnos;
     }
 
 }
