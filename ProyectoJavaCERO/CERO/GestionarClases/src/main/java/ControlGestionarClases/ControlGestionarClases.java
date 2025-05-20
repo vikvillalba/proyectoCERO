@@ -22,8 +22,6 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -124,14 +122,13 @@ public class ControlGestionarClases implements IControlGestionarClases {
         } catch (GestionarClasesException ex) {
             throw new GestionarClasesException(ex.getMessage());
         }
-
-        // Aquí puedes usar estas variables o guardarlas en el DTO si lo tienes preparado
-        // Ejemplo:
-        // editarClase.setHoraInicioLocal(horaInicio);
-        // editarClase.setFechaInicioLocal(fechaInicio);
-        // etc.
+        
+        //validar que no puedes inactivar una clase que no se ha cumplido su lapso de fecha fin 
+        // no puedes inactivar una clase con inscripciones
+        
         clasesBO.editarClase(editarClase);
     }
+    
 
     @Override
     public List<ClaseListaDTO> buscarClasesActivas() throws GestionarClasesException {

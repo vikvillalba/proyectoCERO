@@ -126,6 +126,7 @@ public class ClasesBO implements IClasesBO {
 
     }
 
+    
     @Override
     public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException {
         List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
@@ -145,39 +146,6 @@ public class ClasesBO implements IClasesBO {
         }
 
         return clases;
-    }
-
-    public List<ClaseListaDTO> buscarClasesActivasClaseListaDTO() {
-
-        try {
-            List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
-            List<ClaseListaDTO> clasesDTO = new ArrayList<>();
-
-            for (Clase clase : clasesActivas) {
-                Maestro maestro = null;
-                AulaClase aula = null;
-
-                if (clase.getIdMaestroString() != null) {
-                    maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
-                }
-
-                if (clase.getIdAulaString() != null) {
-                    try {
-                        aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
-                    } catch (NegocioException ex) {
-                        Logger.getLogger(ClasesBO.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
-                clasesDTO.add(dto);
-            }
-
-            return clasesDTO;
-        } catch (NegocioException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
     }
 
     @Override

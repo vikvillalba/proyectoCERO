@@ -28,7 +28,8 @@ public interface IControlGestionarClases {
     public List<MaestroDTO> obtenerListaMaestros();
     public void validarDatosClase(NuevaClaseDTO nuevaClase) throws GestionarClasesException;
     public void editarClase(EditarClaseDTO editarClase)throws GestionarClasesException;
-    public List<ClaseListaDTO> buscarClasesActivas()throws GestionarClasesException;
+    public List<ClaseListaDTO> buscarClasesActivas() throws GestionarClasesException;
+
     public List<ClaseListaDTO> buscarClasesInactivas();
     public List<ClaseListaDTO> buscarClasesExistentes();
     public void validarNombreClase(String nombre)throws GestionarClasesException;
