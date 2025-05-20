@@ -48,7 +48,7 @@ public class AsistenciasBO implements IAsistenciasBO {
         Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
         Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
-        Asistencia asistencia = new Asistencia(Entidades.TipoAsistencia.ASISTENCIA, LocalDateTime.now(), alumno.getIdString(), clase.obtenerIdString());
+        Asistencia asistencia = new Asistencia(Entidades.TipoAsistencia.ASISTENCIA.toString(), LocalDateTime.now(), alumno.getIdString(), clase.obtenerIdString());
         Asistencia asistenciaRegistrada = this.asistenciasDAO.registrarAsistencia(asistencia);
 
         if (asistenciaRegistrada == null) {
@@ -97,7 +97,7 @@ public class AsistenciasBO implements IAsistenciasBO {
             );
             alumno.setId(alumnoEntidad.getIdString());
 
-            TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia().name());
+            TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia());
             AsistenciaDTO asistenciaDTO = new AsistenciaDTO(asistencia.getIdString(), alumno, claseDTO, tipo, asistencia.getFechaHora());
             asistenciasDTO.add(asistenciaDTO);
         }
@@ -113,11 +113,13 @@ public class AsistenciasBO implements IAsistenciasBO {
         Clase clase = this.clasesDAO.buscarClaseCodigoInteger(faltaJustificada.getClase().getCodigo());
 
         Asistencia asistenciaJustificada = new Asistencia(
-                TipoAsistencia.JUSTIFICADO,
+                faltaJustificada.getId(),
+                TipoAsistencia.JUSTIFICADO.toString(),
                 faltaJustificada.getFechaHora(),
                 alumno.getIdString(),
                 clase.obtenerIdString()
         );
+        
 
         Asistencia justificanteRegistrado = this.asistenciasDAO.justificarFalta(asistenciaJustificada);
         faltaJustificada.setTipoAsistencia(TipoAsistenciaDTO.JUSTIFICADO);
@@ -134,7 +136,7 @@ public class AsistenciasBO implements IAsistenciasBO {
         List<Asistencia> faltasJustificadas = this.asistenciasDAO.obtenerFaltasJustificadasAlumnoClase(alumno, clase);
 
         for (Asistencia falta : faltasJustificadas) {
-            TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(falta.getTipoAsistencia().name());
+            TipoAsistenciaDTO tipo = TipoAsistenciaDTO.valueOf(falta.getTipoAsistencia());
             AlumnoDTO alumnoDTO = asistencia.getAlumno();
             ClaseDTO claseDTO = asistencia.getClase();
             AsistenciaDTO dto = new AsistenciaDTO(
@@ -153,11 +155,14 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistenciasDTO) throws NegocioException {
+        
         List<Asistencia> asistenciasEntidad = new ArrayList<>();
+        String idClase = "";
 
         for (AsistenciaDTO dto : asistenciasDTO) {
             Alumno alumno = alumnosDAO.obtenerAlumno(dto.getAlumno().getId());
             Clase clase = clasesDAO.buscarClaseCodigoInteger(dto.getClase().getCodigo());
+            idClase = clase.obtenerIdString();
 
             if (alumno == null || clase == null) {
                 throw new NegocioException("No se pudo encontrar el alumno o la clase para una de las asistencias.");
@@ -166,16 +171,23 @@ public class AsistenciasBO implements IAsistenciasBO {
             TipoAsistencia tipo = TipoAsistencia.valueOf(dto.getTipoAsistencia().name());
 
             Asistencia asistencia = new Asistencia(
-                    tipo,
+                    tipo.toString(),
                     dto.getFechaHora(),
                     alumno.getIdString(),
                     clase.obtenerIdString()
             );
 
+            if (dto.getId() != null) {
+                asistencia.setIdString(dto.getId());
+            }
+
+            System.out.println("Actualizando asistencia: " + asistencia.getId() + " con tipo " + asistencia.getTipoAsistencia());
+
             asistenciasEntidad.add(asistencia);
+
         }
 
-        List<Asistencia> asistenciasActualizadas = asistenciasDAO.actualizarAsistencias(asistenciasEntidad);
+        List<Asistencia> asistenciasActualizadas = asistenciasDAO.actualizarAsistencias(asistenciasEntidad, idClase);
 
         List<AsistenciaDTO> asistenciasActualizadasDTO = new ArrayList<>();
         for (Asistencia asistencia : asistenciasActualizadas) {
@@ -204,7 +216,7 @@ public class AsistenciasBO implements IAsistenciasBO {
                     clase.getFechaFin()
             );
 
-            TipoAsistenciaDTO tipoDTO = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia().name());
+            TipoAsistenciaDTO tipoDTO = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia());
 
             AsistenciaDTO dtoActualizado = new AsistenciaDTO(
                     asistencia.getIdString(),

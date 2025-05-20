@@ -28,11 +28,24 @@ public class PnlAsistenciaEditable extends javax.swing.JPanel {
 
         TipoAsistenciaDTO[] tipos = TipoAsistenciaDTO.values();
 
-        for (int i = 0; i < 2; i++) { 
-            cbxAsistencia.addItem(tipos[i].toString());
+        for (int i = 0; i < 2; i++) {
+            cbxAsistencia.addItem(tipos[i]);
         }
-        cbxAsistencia.setSelectedIndex(0);
+        if(asistencia.getTipoAsistencia().equals(TipoAsistenciaDTO.FALTA)){
+            cbxAsistencia.setSelectedIndex(1);
+        } else {
+            cbxAsistencia.setSelectedIndex(0);
+        }
+        
 
+    }
+
+    public TipoAsistenciaDTO getTipoAsistencia() {
+        return (TipoAsistenciaDTO) cbxAsistencia.getSelectedItem();
+    }
+
+    public AsistenciaDTO getAsistencia() {
+        return this.asistencia;
     }
 
     /**
@@ -109,7 +122,7 @@ public class PnlAsistenciaEditable extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbxAsistencia;
+    private javax.swing.JComboBox<TipoAsistenciaDTO> cbxAsistencia;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblFecha1;
     private javax.swing.JLabel lblFecha2;

@@ -24,13 +24,7 @@ public class ConexionMongoBD {
     public static MongoDatabase getConexion() {
         CodecRegistry pojoCodecRegistry = fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
-                fromProviders(
-                        PojoCodecProvider.builder()
-                                .register("Entidades")
-                                .automatic(true)
-                                .build()
-                )
-        );
+                fromProviders(PojoCodecProvider.builder().register("Entidades").automatic(true).build()));
 
         MongoClientSettings configuraciones = MongoClientSettings.builder()
                 .codecRegistry(pojoCodecRegistry)

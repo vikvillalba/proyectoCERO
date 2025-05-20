@@ -13,7 +13,7 @@ import org.bson.types.ObjectId;
 public class Asistencia {
 
     private ObjectId id;
-    private TipoAsistencia tipoAsistencia;
+    private String tipoAsistencia;
     private LocalDateTime fechaHora;
     private ObjectId alumno;
     private ObjectId clase;
@@ -22,19 +22,19 @@ public class Asistencia {
     public Asistencia() {
     }
 
-    public Asistencia(TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
+    public Asistencia(String tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
         this.alumno = ObjectIDMapper.toObjectId(alumno);
         this.clase = ObjectIDMapper.toObjectId(clase);
     }
 
-    public Asistencia(String id, TipoAsistencia tipoAsistencia, LocalDateTime fechaHora, ObjectId alumno, ObjectId clase) {
+    public Asistencia(String id, String tipoAsistencia, LocalDateTime fechaHora, String alumno, String clase) {
         this.id = ObjectIDMapper.toObjectId(id);
         this.tipoAsistencia = tipoAsistencia;
         this.fechaHora = fechaHora;
-        this.alumno = alumno;
-        this.clase = clase;
+        this.alumno = ObjectIDMapper.toObjectId(alumno);
+        this.clase = ObjectIDMapper.toObjectId(clase);
     }
 
     public ObjectId getId() {
@@ -45,12 +45,12 @@ public class Asistencia {
         this.id = id;
     }
 
-    public TipoAsistencia getTipoAsistencia() {
-        return tipoAsistencia;
+    public String getTipoAsistencia() {
+       return tipoAsistencia;
     }
 
-    public void setTipoAsistencia(TipoAsistencia tipoAsistencia) {
-        this.tipoAsistencia = tipoAsistencia;
+      public void setTipoAsistencia(String tipo) {
+        this.tipoAsistencia = tipo;
     }
 
     public LocalDateTime getFechaHora() {
@@ -98,6 +98,11 @@ public class Asistencia {
     @BsonIgnore
     public String getIdClaseString() {
         return ObjectIDMapper.toString(clase);
+    }
+
+    @BsonIgnore
+    public void setIdString(String id) {
+        this.id = ObjectIDMapper.toObjectId(id);
     }
 
 }

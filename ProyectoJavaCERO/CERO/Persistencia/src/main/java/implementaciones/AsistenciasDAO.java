@@ -18,10 +18,6 @@ import DAOs.IAsistenciasDAO;
 import Entidades.ReporteAsistencia;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.gte;
-import static com.mongodb.client.model.Filters.lte;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
@@ -104,9 +100,9 @@ public class AsistenciasDAO implements IAsistenciasDAO {
         MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         Document filtro = new Document();
-        filtro.append("alumno", alumno.getId());
-        filtro.append("clase", clase.getId());
-        filtro.append("tipoAsistencia", TipoAsistencia.JUSTIFICADO);
+        filtro.append("alumno", alumno.getId()); 
+        filtro.append("clase", clase.getId()); 
+        filtro.append("tipoAsistencia", TipoAsistencia.JUSTIFICADO.name());
 
         List<Asistencia> asistenciasClase = coleccion.find(filtro).into(new ArrayList<>());
         return asistenciasClase;
@@ -114,20 +110,42 @@ public class AsistenciasDAO implements IAsistenciasDAO {
     }
 
     @Override
-    public List<Asistencia> actualizarAsistencias(List<Asistencia> nuevasAsistencias) {
+    public List<Asistencia> actualizarAsistencias(List<Asistencia> nuevasAsistencias, String idClase) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
         MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
-        for (Asistencia nueva : nuevasAsistencias) {
-            if (nueva.getId() != null) {
-                Document filtro = new Document("_id", nueva.getId());
-                ReplaceOptions opciones = new ReplaceOptions().upsert(true);
-                coleccion.replaceOne(filtro, nueva, opciones);
-            } else {
-                coleccion.insertOne(nueva);
+        Document filtros = new Document("clase", new ObjectId(idClase));
+        List<Asistencia> asistenciasRegistradas = coleccion.find(filtros).into(new ArrayList<>());
+
+        List<ObjectId> idsRegistrados = new ArrayList<>();
+        for (Asistencia asistencia : asistenciasRegistradas) {
+            if (asistencia.getId() != null) {
+                idsRegistrados.add(asistencia.getId());
             }
         }
 
+        for (Asistencia nueva : nuevasAsistencias) {
+            if (nueva.getId() != null && idsRegistrados.contains(nueva.getId())) {
+                // reemplaza si existe
+                Document filtro = new Document();
+                filtro.append("alumno", nueva.getAlumno());
+                filtro.append("clase", nueva.getClase());
+                Asistencia asistenciaExistente = coleccion.find(filtro).first();
+
+                if (asistenciaExistente != null) {
+                    ObjectId idExistente = asistenciaExistente.getId();
+                    Document filtroId = new Document("_id", idExistente);
+                    nueva.setId(idExistente);
+                    ReplaceOptions opciones = new ReplaceOptions().upsert(true);
+                    coleccion.replaceOne(filtroId, nueva, opciones);
+                } else {
+
+                    coleccion.insertOne(nueva);
+                }
+
+            }
+
+        }
         return nuevasAsistencias;
     }
 
@@ -143,11 +161,9 @@ public class AsistenciasDAO implements IAsistenciasDAO {
 
         filtros.add(Filters.eq("clase", new ObjectId(idClase)));
 
-
         if (idAlumno != null && !idAlumno.trim().isEmpty()) {
             filtros.add(Filters.eq("alumno", new ObjectId(idAlumno)));
         }
-
 
         filtros.add(Filters.gte("fechaHora", fechaInicioDate));
         filtros.add(Filters.lte("fechaHora", fechaFinDate));

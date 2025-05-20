@@ -36,6 +36,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     private List<AsistenciaDTO> asistencias;
     private List<InscripcionDTO> inscripciones;
     private List<AsistenciaDTO> asistenciasActualizadas;
+    private List<PnlAsistenciaEditable> panelesAsistencias;
 
     public FrmAsistenciasClaseDiaActual(ClaseDTO clase, LocalDate fecha, List<AsistenciaDTO> asistencias, List<InscripcionDTO> inscripciones) {
         initComponents();
@@ -99,6 +100,8 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
 
     private void llenarAlumnos() {
         this.asistenciasActualizadas = new ArrayList<>();
+        this.panelesAsistencias = new ArrayList<>();
+        
         JPanel contenedorAsistencias = new JPanel();
         contenedorAsistencias.setOpaque(false);
         jScrollAsistencias.getViewport().setOpaque(false);
@@ -122,6 +125,7 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
             this.asistenciasActualizadas.add(asistenciaAlumno);
             contenedorAsistencias.add(Box.createVerticalStrut(10));
             contenedorAsistencias.add(pnl);
+            this.panelesAsistencias.add(pnl);
         }
         jScrollAsistencias.setViewportView(contenedorAsistencias);
         jScrollAsistencias.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -335,7 +339,24 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciasActionPerformed
-       ControlNavegacion.actualizarAsistencias(asistencias, clase);
+for (AsistenciaDTO asistenciaActualizada : asistenciasActualizadas) {
+    for (PnlAsistenciaEditable asistencia : panelesAsistencias) {
+        AsistenciaDTO panelDTO = asistencia.getAsistencia();
+
+        boolean mismoAlumno = panelDTO.getAlumno().getCodigo().equals(asistenciaActualizada.getAlumno().getCodigo());
+        boolean mismaClase = panelDTO.getClase().getCodigo().equals(asistenciaActualizada.getClase().getCodigo());
+        
+        LocalDate fechaPanel = panelDTO.getFechaHora().toLocalDate();
+        LocalDate fechaActualizada = asistenciaActualizada.getFechaHora().toLocalDate();
+        boolean mismaFecha = fechaPanel.equals(fechaActualizada);
+
+        if (mismoAlumno && mismaClase && mismaFecha) {
+            asistenciaActualizada.setTipoAsistencia(asistencia.getTipoAsistencia());
+            break; 
+        }
+    }
+}
+        ControlNavegacion.actualizarAsistencias(asistencias, clase);
     }//GEN-LAST:event_btnRegistrarAsistenciasActionPerformed
 
 

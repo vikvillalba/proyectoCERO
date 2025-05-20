@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ClaseDTO {
     private String id;
-    private int codigo;
+    private Integer codigo;
     private String nombre;
     private List<DayOfWeek> dias;
     private LocalTime horaInicio;
@@ -25,7 +25,7 @@ public class ClaseDTO {
     public ClaseDTO() {
     }
 
-    public ClaseDTO(int codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
+    public ClaseDTO(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.dias = dias;
@@ -50,7 +50,7 @@ public class ClaseDTO {
 
 
 
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 

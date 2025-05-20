@@ -92,7 +92,7 @@ public class ClasesBO implements IClasesBO {
 
     @Override
     public Integer obtenerLimiteFaltas(ClaseDTO clase) {
-        Clase claseReal = this.clasesDAO.buscarClase(clase.getId());
+        Clase claseReal = this.clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
         return claseReal.getLIMITE_FALTAS();
     }
 
