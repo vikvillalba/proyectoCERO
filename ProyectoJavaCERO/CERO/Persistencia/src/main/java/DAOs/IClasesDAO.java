@@ -43,8 +43,4 @@ public interface IClasesDAO {
 
     public Integer obtenerCodigoMaxClase();
 
-    public List<Clase> obtenerListaClasesMaestro(Maestro maestro);
-
-    public List<Clase> obtenerListaClasesAula(AulaClase aula);
-
 }

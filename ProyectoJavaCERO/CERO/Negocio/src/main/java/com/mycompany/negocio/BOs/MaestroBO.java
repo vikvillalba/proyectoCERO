@@ -102,13 +102,9 @@ public class MaestroBO implements IMaestroBO {
     }
 
     @Override
-    public Maestro buscarMaestroObjectId(String id) {
-        try {
-            return maestroDAO.buscarMaestro(id); // o similar
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(MaestroBO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public List<Clase> obtenerClasesImpartidadMaestro(String idMaestro) {
+        List<Clase> clasesImpartidasMaestro = maestroDAO.obtenerClasesImpartidas(idMaestro);
+        return clasesImpartidasMaestro;
     }
 
 }

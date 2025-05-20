@@ -24,6 +24,7 @@ public interface IMaestroBO {
     public MaestroDTO convertirMaestroDTO(Maestro maestro);
 
     public Maestro buscarMaestroID(String idMaestro) throws NegocioException;
+    
+    public List<Clase> obtenerClasesImpartidadMaestro(String idMaestro);
 
-    public Maestro buscarMaestroObjectId(String id);
 }

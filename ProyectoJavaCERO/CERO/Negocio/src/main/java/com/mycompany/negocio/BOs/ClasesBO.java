@@ -18,6 +18,8 @@ import com.mycompany.negocio.InterfazBO.IMaestroBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -92,35 +94,6 @@ public class ClasesBO implements IClasesBO {
     }
 
     //METODOS CU_GESTIONAR CLASES
-    @Override
-    public List<Clase> obtenerListaClasesMaestro(MaestroDTO maestro) throws NegocioException {
-        String id = maestro.getId();
-        Maestro maestroEntity;
-        try {
-            maestroEntity = maestroBO.buscarMaestroID(id);
-        } catch (NegocioException ex) {
-            throw new NegocioException(ex.getMessage());
-        }
-        List<Clase> clasesEncontradas = clasesDAO.obtenerListaClasesMaestro(maestroEntity);
-        return clasesEncontradas;
-
-    }
-
-    @Override
-    public List<Clase> obtenerListaClasesAula(AulaClaseDTO aula) throws NegocioException {
-
-        String id = aula.getIdAula();
-        AulaClase aulaEntity;
-        try {
-            aulaEntity = aulaBO.buscarAulaClaseID(id);
-        } catch (NegocioException ex) {
-            throw new NegocioException(ex.getMessage());
-        }
-        List<Clase> clasesEncontradas = clasesDAO.obtenerListaClasesAula(aulaEntity);
-        return clasesEncontradas;
-
-    }
-
     //REGISTRAR NUEVA CLASE METODO
     @Override
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException {
@@ -157,72 +130,97 @@ public class ClasesBO implements IClasesBO {
            return new ArrayList<>();
         }
         List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+    }
 
-        for (Clase clase : clasesActivas) {
-            Maestro maestro = null;
-            AulaClase aula = null;
+    public List<ClaseListaDTO> buscarClasesActivasClaseListaDTO() {
 
-            if (clase.getIdMaestroString() != null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
+        try {
+            List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
+            List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+
+            for (Clase clase : clasesActivas) {
+                Maestro maestro = null;
+                AulaClase aula = null;
+
+                if (clase.getIdMaestroString() != null) {
+                    maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
+                }
+
+                if (clase.getIdAulaString() != null) {
+                    try {
+                        aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
+                    } catch (NegocioException ex) {
+                        Logger.getLogger(ClasesBO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+                clasesDTO.add(dto);
             }
 
-            if (clase.getIdAulaString() != null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
-            }
-
-            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
-            clasesDTO.add(dto);
+            return clasesDTO;
+        } catch (NegocioException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        return clasesDTO;
+        return null;
     }
 
     @Override
     public List<ClaseListaDTO> buscarClasesInactivas() {
-        List<Clase> clasesInactivas = clasesDAO.obtenerClasesInactivas();
-        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+        try {
+            List<Clase> clasesInactivas = clasesDAO.obtenerClasesInactivas();
+            List<ClaseListaDTO> clasesDTO = new ArrayList<>();
 
-        for (Clase clase : clasesInactivas) {
-            Maestro maestro = null;
-            AulaClase aula = null;
+            for (Clase clase : clasesInactivas) {
+                Maestro maestro = null;
+                AulaClase aula = null;
 
-            if (clase.getIdMaestroString() != null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
+                if (clase.getIdMaestroString() != null) {
+                    maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
+                }
+
+                if (clase.getIdAulaString() != null) {
+                    aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
+                }
+
+                ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+                clasesDTO.add(dto);
             }
 
-            if (clase.getIdAulaString()!= null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
-            }
-
-            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
-            clasesDTO.add(dto);
+            return clasesDTO;
+        } catch (NegocioException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        return clasesDTO;
+        return null;
     }
 
     @Override
     public List<ClaseListaDTO> buscarClasesExistentes() {
-        List<Clase> clases = clasesDAO.obtenerClases();
-        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+        try {
+            List<Clase> clasesExistentes = clasesDAO.obtenerClases();
+            List<ClaseListaDTO> clasesDTO = new ArrayList<>();
 
-        for (Clase clase : clases) {
-            Maestro maestro = null;
-            AulaClase aula = null;
+            for (Clase clase : clasesExistentes) {
+                Maestro maestro = null;
+                AulaClase aula = null;
 
-            if (clase.getIdMaestroString()!= null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
+                if (clase.getIdMaestroString() != null) {
+                    maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
+                }
+
+                if (clase.getIdAulaString() != null) {
+                    aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
+                }
+
+                ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+                clasesDTO.add(dto);
             }
 
-            if (clase.getIdAulaString()!= null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
-            }
-
-            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
-            clasesDTO.add(dto);
+            return clasesDTO;
+        } catch (NegocioException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        return clasesDTO;
+        return null;
     }
 
     @Override
@@ -245,34 +243,44 @@ public class ClasesBO implements IClasesBO {
 
     @Override
     public List<ClaseListaDTO> buscarClasesListaNombre(String nombreClase) {
-        List<Clase> clasesNombre = clasesDAO.obtenerClasesPorNombre(nombreClase);
-        List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+        try {
+            List<Clase> clasesNombre = clasesDAO.obtenerClasesPorNombre(nombreClase);
+            List<ClaseListaDTO> clasesDTO = new ArrayList<>();
 
-        for (Clase clase : clasesNombre) {
-            Maestro maestro = null;
-            AulaClase aula = null;
+            for (Clase clase : clasesNombre) {
+                Maestro maestro = null;
+                AulaClase aula = null;
 
-            if (clase.getIdMaestroString()!= null) {
-                maestro = maestroBO.buscarMaestroObjectId(clase.getIdMaestroString());
+                if (clase.getIdMaestroString() != null) {
+                    maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
+                }
+
+                if (clase.getIdAulaString() != null) {
+                    aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
+                }
+
+                ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
+                clasesDTO.add(dto);
             }
 
-            if (clase.getIdAulaString()!= null) {
-                aula = aulaBO.buscarAulaClaseObjectId(clase.getIdAulaString());
-            }
-
-            ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
-            clasesDTO.add(dto);
+            return clasesDTO;
+        } catch (NegocioException ex) {
+            System.out.println(ex.getMessage());
         }
-
-        return clasesDTO;
+        return null;
     }
 
     @Override
     public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase) {
-        Clase claseEntity = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
-        Maestro maestro = maestroBO.buscarMaestroObjectId(claseEntity.getIdMaestroString());
-        AulaClase aula = aulaBO.buscarAulaClaseObjectId(claseEntity.getIdAulaString());
-        return claseMapper.convertirEditarClase(claseEntity, maestro, aula);
+        try {
+            Clase claseEntity = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
+            Maestro maestro = maestroBO.buscarMaestroID(claseEntity.getIdMaestroString());
+            AulaClase aula = aulaBO.buscarAulaClaseID(claseEntity.getIdAulaString());
+            return claseMapper.convertirEditarClase(claseEntity, maestro, aula);
+        } catch (NegocioException ex) {
+            Logger.getLogger(ClasesBO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }
