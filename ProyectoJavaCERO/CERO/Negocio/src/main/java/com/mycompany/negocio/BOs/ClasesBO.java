@@ -11,7 +11,7 @@ import Entidades.AulaClase;
 import Entidades.Maestro;
 import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
-import com.mycompany.dtos.AlumnoClaseDTO;
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;

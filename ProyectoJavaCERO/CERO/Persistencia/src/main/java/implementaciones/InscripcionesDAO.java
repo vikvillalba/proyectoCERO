@@ -6,7 +6,6 @@ import Entidades.Inscripcion;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import Entidades.Clase;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -16,6 +15,8 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import DAOs.IInscripcionesDAO;
 import com.mongodb.client.model.Aggregates;
+import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.client.model.Updates;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,11 +24,12 @@ import org.bson.conversions.Bson;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public class InscripcionesDAO implements IInscripcionesDAO {
 
     private final String COLECCION = "Inscripciones";
+    private final String COLECCION_ALUMNOS = "Alumnos";
 
     @Override
     public List<Inscripcion> obtenerInscripcionesClase(String idClase) {
@@ -50,10 +52,24 @@ public class InscripcionesDAO implements IInscripcionesDAO {
     @Override
     public Inscripcion registrarInscripcion(Inscripcion inscripcion) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
 
+        // Colecciones
+        MongoCollection<Inscripcion> coleccionInscripciones = baseDatos.getCollection(COLECCION, Inscripcion.class);
+        MongoCollection<Alumno> coleccionAlumnos = baseDatos.getCollection(COLECCION_ALUMNOS, Alumno.class);
+
+        // Marcar el pago como realizado
         inscripcion.getPago().setRealizado(true);
-        coleccion.insertOne(inscripcion);
+
+        // Insertar la inscripción
+        inscripcion.setActivo(true);
+        coleccionInscripciones.insertOne(inscripcion);
+        ObjectId idInscripcion = inscripcion.getId(); 
+
+        // Actualizar el alumno agregando la inscripción a su lista
+        coleccionAlumnos.updateOne(
+                eq("_id", inscripcion.getAlumno()),
+                Updates.push("inscripcionesAlumno", idInscripcion)
+        );
 
         return inscripcion;
 
@@ -125,5 +141,19 @@ public class InscripcionesDAO implements IInscripcionesDAO {
 
         return alumnos;
     }
+
+    //DAR DEBAJA UN INSCRIPCION
+    @Override
+    public void cancelarInscripcion(String idInscripcion) {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Inscripcion> coleccion = baseDatos.getCollection("Inscripciones", Inscripcion.class);
+
+        coleccion.updateOne(
+                eq("_id", new ObjectId(idInscripcion)),
+                Updates.set("activo", false)
+        );
+    }
+    
+    //obtener inscripciones no activas en list<Inscripcion> ........
 
 }

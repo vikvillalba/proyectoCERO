@@ -4,14 +4,22 @@
  */
 package Mapper;
 
-import DTOs.GestionarClases.AlumnoInscritoDTO;
+import DTOs.GestionarClases.AlumnoClaseDTO;
+import Entidades.Alumno;
+import Entidades.AulaClase;
+import Entidades.Clase;
 import Entidades.Inscripcion;
+import Entidades.Maestro;
+import com.mycompany.dtos.InscripcionClaseDTO;
+import com.mycompany.dtos.InscripcionDTO;
 
 /**
  *
  * @author Jack Murrieta
  */
 public interface IInscripcionMapper {
-    public AlumnoInscritoDTO convertirAlumnoInscritoDTO(Inscripcion inscripcion);
+    public AlumnoClaseDTO convertirAlumnoInscritoDTO(Inscripcion inscripcion);
+    
+    public InscripcionClaseDTO convertirInscripcionDTO(Alumno alumno, Clase clase, Maestro maestro , AulaClase aula);
     
 }

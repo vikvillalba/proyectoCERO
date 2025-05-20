@@ -2,7 +2,6 @@ package implementaciones;
 
 import ConexionBD.ConexionMongoBD;
 import Entidades.Alumno;
-import java.time.LocalDate;
 import DAOs.IAlumnosDAO;
 import Entidades.Contador;
 import com.mongodb.client.FindIterable;
@@ -20,7 +19,7 @@ import org.bson.types.ObjectId;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public class AlumnosDAO implements IAlumnosDAO {
 
@@ -87,4 +86,32 @@ public class AlumnosDAO implements IAlumnosDAO {
         return coleccion.find(eq("codigo", codigo)).first();
     }
 
+    @Override
+    public Alumno editarAlumno(Alumno alumno) {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
+
+        coleccion.updateOne(
+                eq("_id", alumno.getId()),
+                Updates.combine(
+                        Updates.set("apellidoPaterno", alumno.getApellidoPaterno()),
+                        Updates.set("apellidoMaterno", alumno.getApellidoMaterno()),
+                        Updates.set("nombre", alumno.getNombre()),
+                        Updates.set("telefono", alumno.getTelefono()),
+                        Updates.set("correoElectronico", alumno.getCorreoElectronico()),
+                        Updates.set("fechaNacimiento", alumno.getFechaNacimiento()),
+                        Updates.set("codigo", alumno.getCodigo())
+                )
+        );
+
+        return alumno;
+    }
+
+    @Override
+    public void eliminarAlumno(Integer codigo) {
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Alumno> coleccion = baseDatos.getCollection(COLECCION, Alumno.class);
+
+        coleccion.deleteOne(eq("codigo", codigo));
+    }
 }

@@ -2,6 +2,8 @@ package Entidades;
 
 import implementaciones.ObjectIDMapper;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 
@@ -19,6 +21,7 @@ public class Alumno {
     private String telefono;
     private LocalDate fechaNacimiento;
     private String correoElectronico;
+    private List<ObjectId> inscripcionesAlumno = new ArrayList<>();
 
     public Alumno(Integer codigo, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, LocalDate fechaNacimiento, String correoElectronico) {
         this.codigo = codigo;
@@ -45,6 +48,15 @@ public class Alumno {
     public Integer getCodigo() {
         return codigo;
     }
+
+    public List<ObjectId> getInscripcionesAlumno() {
+        return inscripcionesAlumno;
+    }
+
+    public void setInscripcionesAlumno(List<ObjectId> inscripcionesAlumno) {
+        this.inscripcionesAlumno = inscripcionesAlumno;
+    }
+    
 
     public void setCodigo(Integer codigo) {
         this.codigo = codigo;

@@ -29,7 +29,7 @@ import Excepciones.PersistenciaException;
 import GestionarClasesPersistencia.IMaestrosDAO;
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import com.mycompany.dtos.AlumnoClaseDTO;
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

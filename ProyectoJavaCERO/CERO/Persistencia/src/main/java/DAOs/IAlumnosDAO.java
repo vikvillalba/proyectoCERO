@@ -13,5 +13,7 @@ public interface IAlumnosDAO {
     public Alumno registrarAlumnoNuevo(Alumno alumno);
     public List<Alumno> obtenerAlumnos();
     public Alumno obtenerAlumnoPorCodigo(Integer codigo);
+    public Alumno editarAlumno(Alumno alumno);
+    public void eliminarAlumno(Integer codigo);
 
 }

@@ -3,7 +3,7 @@ package com.mycompany.negocio.InterfazBO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
-import com.mycompany.dtos.AlumnoClaseDTO;
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.List;

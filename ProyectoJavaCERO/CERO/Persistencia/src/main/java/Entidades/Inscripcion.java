@@ -16,6 +16,7 @@ public class Inscripcion {
     private ObjectId alumno;
     private LocalDateTime fechaInscripcion;
     private Pago pago;
+    private boolean activo;
 
     public Inscripcion(String id, String clase, String alumno, LocalDateTime fechaInscripcion, Pago pago) {
         this.id = ObjectIDMapper.toObjectId(id);
@@ -35,6 +36,15 @@ public class Inscripcion {
         this.pago = pago;
     }
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    
     public ObjectId getId() {
         return id;
     }
@@ -89,5 +99,11 @@ public class Inscripcion {
     public String getIdAlumnoString() {
         return ObjectIDMapper.toString(alumno);
     }
+
+    @Override
+    public String toString() {
+        return "Inscripcion{" + "id=" + id + ", clase=" + clase + ", alumno=" + alumno + ", fechaInscripcion=" + fechaInscripcion + ", pago=" + pago + ", activo=" + activo + '}';
+    }
+    
 
 }

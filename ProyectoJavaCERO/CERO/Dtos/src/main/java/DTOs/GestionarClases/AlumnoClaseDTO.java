@@ -1,4 +1,4 @@
-package com.mycompany.dtos;
+package DTOs.GestionarClases;
 
 /**
  *
