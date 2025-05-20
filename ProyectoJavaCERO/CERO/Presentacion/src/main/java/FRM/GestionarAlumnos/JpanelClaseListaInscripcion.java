@@ -3,6 +3,7 @@ package FRM.GestionarAlumnos;
 import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.InscripcionClaseDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -227,7 +228,7 @@ public class JpanelClaseListaInscripcion extends javax.swing.JPanel {
     private void btnDarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDarBajaActionPerformed
         // TODO add your handling code here:
         //Dar baja inscripcion
-        
+        ControlNavegacion.cancelarInscripcion(inscripcionDTO);
     }//GEN-LAST:event_btnDarBajaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

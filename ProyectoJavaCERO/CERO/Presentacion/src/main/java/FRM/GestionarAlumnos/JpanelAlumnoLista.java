@@ -264,6 +264,7 @@ public class JpanelAlumnoLista extends javax.swing.JPanel {
 
     private void btnVerInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerInscritosActionPerformed
         // TODO add your handling code here:
+        ControlNavegacion.mostrarFrmInscripcionesClasesAlumno(alumno);
         // mostrar clases
     }//GEN-LAST:event_btnVerInscritosActionPerformed
 

@@ -10,9 +10,11 @@ import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
+import Exception.GestionarAlumnosException;
 import Exceptions.GestionarClasesException;
 import FRM.GestionarAlumnos.FrmAdminAlumnos;
 import FRM.GestionarAlumnos.FrmEditarAlumno;
+import FRM.GestionarAlumnos.FrmInscripcionesClasesAlumno;
 import FRM.GestionarAlumnos.FrmRegistrarNuevoAlumno;
 import FRMs.*;
 import FRMs.GestionarClases.FrmAdminClases;
@@ -33,6 +35,7 @@ import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.InscripcionClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.dtos.NombreClaseParam;
 import com.mycompany.dtos.NuevaAsistenciaDTO;
@@ -56,6 +59,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -92,6 +97,7 @@ public class ControlNavegacion {
     private static FrmAdminAlumnos frmAdminAlumnos;
     private static FrmEditarAlumno frmEditarAlumno;
     private static FrmRegistrarNuevoAlumno frmRegistrarNuevoAlumno;
+    private static FrmInscripcionesClasesAlumno frmInscripcionesClasesAlumno;
 
     private static JFrame frameActual;
 
@@ -891,5 +897,38 @@ public class ControlNavegacion {
     }
     public static void eliminarAlumno(AlumnoDTO alumno){
         gestionarAlumnos.eliminarAlumno(alumno);
+    }
+
+    public static void mostrarFrmInscripcionesClasesAlumno(AlumnoDTO alumno) {
+        frameActual.dispose();
+        List<InscripcionClaseDTO> inscripciones = obtenerInscripciones(alumno);
+        if(!inscripciones.isEmpty()){
+             frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);
+             frmInscripcionesClasesAlumno.setVisible(true);
+             frameActual = frmInscripcionesClasesAlumno;
+        }else{
+            try {
+                throw new PresentacionException("El alumno no tiene inscripciones");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frameActual, ex);
+                mostrarFrmAdminAlumnos();
+            }
+        }
+
+    }
+
+    public static List<InscripcionClaseDTO> obtenerInscripciones(AlumnoDTO alumnoDTO) {
+
+        try {
+            return gestionarAlumnos.obtenerInscripciones(alumnoDTO);
+        } catch (GestionarAlumnosException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
+        return null;
+    }
+
+    public static void cancelarInscripcion(InscripcionClaseDTO inscripcion) {
+        gestionarAlumnos.cancelarInscripcion(inscripcion);
+        JOptionPane.showMessageDialog(frameActual, "La inscripcion ya esta inactiva");
     }
 }
