@@ -164,11 +164,7 @@ public class RegistroAsistencias implements IRegistroAsistencias {
 
     @Override
     public List<ClaseListaDTO> obtenerClasesActivas() throws AsistenciaException {
-        try {
-            return clasesBO.buscarClasesActivas();
-        } catch (NegocioException ex) {
-            throw new AsistenciaException(ex.getMessage());
-        }
+        return clasesBO.buscarClasesActivas();
 
     }
 

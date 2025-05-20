@@ -1,18 +1,21 @@
 package Entidades;
 
 import java.time.LocalDateTime;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.types.ObjectId;
 
 /**
  *
  * @author Usuario
  */
+
+@BsonDiscriminator
 public class MetodoPagoTarjeta extends MetodoPago {
     private String codigoCondfirmacion;
     private LocalDateTime fechayHoraPago;
 
     public MetodoPagoTarjeta(ObjectId id, String codigoCondfirmacion, LocalDateTime fechayHoraPago) {
-        super(id);
+        super(id, "Tarjeta");
         this.codigoCondfirmacion = codigoCondfirmacion;
         this.fechayHoraPago = fechayHoraPago;
     }

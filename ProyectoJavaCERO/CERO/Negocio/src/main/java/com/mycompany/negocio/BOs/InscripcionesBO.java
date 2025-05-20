@@ -84,28 +84,10 @@ public class InscripcionesBO implements IInscripcionesBO {
     @Override
     public InscripcionDTO registrarInscripcionPagoTarjeta(NuevaInscripcionDTO nuevaInscripcionDTO) {
         ClaseDTO claseDTO = nuevaInscripcionDTO.getClase();
-        Clase clase = new Clase(
-                claseDTO.getCodigo(),
-                claseDTO.getNombre(),
-                claseDTO.getDias(),
-                claseDTO.getHoraInicio(),
-                claseDTO.getHoraFin(),
-                claseDTO.getPrecio(),
-                claseDTO.getFechaInicio(),
-                claseDTO.getFechaFin(),
-                claseDTO.getMaestro()
-        );
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
         AlumnoDTO alumnoDTO = nuevaInscripcionDTO.getAlumno();
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
 
         PagoDTO pagoDTO = nuevaInscripcionDTO.getPago();
         PagoTarjetaDTO metodoPagoDTO = (PagoTarjetaDTO) nuevaInscripcionDTO.getPago().getMetodoPago();
@@ -121,15 +103,7 @@ public class InscripcionesBO implements IInscripcionesBO {
 
     @Override
     public List<InscripcionDTO> obtenerInscripcionesAlumno(AlumnoDTO alumnoDTO) throws NegocioException {
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
 
         List<Inscripcion> todasLasInscripciones = this.inscripcionesDAO.obtenerInscripcionesAlumno(alumno);
         if (todasLasInscripciones.isEmpty()) {
