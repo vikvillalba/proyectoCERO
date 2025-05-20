@@ -14,6 +14,8 @@ import GestionarClasesPersistencia.AulasClaseDAO;
 import GestionarClasesPersistencia.IAulasClaseDAO;
 import GestionarClasesPersistencia.IMaestrosDAO;
 import GestionarClasesPersistencia.MaestrosDAO;
+import Mapper.AlumnoMapper;
+import Mapper.IAlumnoMapper;
 import Mapper.IInscripcionMapper;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.InscripcionClaseDTO;
@@ -36,6 +38,7 @@ public class AlumnosBO implements IAlumnosBO {
     private IAulasClaseDAO aulaDAO;
     private IMaestrosDAO maestro;
     private IInscripcionMapper inscripcionMapper;
+    private IAlumnoMapper alumnoMapper;
 
     public AlumnosBO(IAlumnosDAO alumnosDAO) {
         this.alumnosDAO = alumnosDAO;
@@ -43,6 +46,7 @@ public class AlumnosBO implements IAlumnosBO {
         this.clasesDAO = new ClasesDAO();
         this.aulaDAO = new AulasClaseDAO();
         this.maestro = new MaestrosDAO();
+        this.alumnoMapper = new AlumnoMapper();
     }
 
     @Override
@@ -137,6 +141,18 @@ public class AlumnosBO implements IAlumnosBO {
             }
         }
         return inscripcionesDTO;
+
+    }
+
+    @Override
+    public List<AlumnoDTO> obtenerAlumnosDTOLista() {
+        List<AlumnoDTO> alumnoDTOs = new ArrayList<>();
+        List<Alumno> alumnosEncontrados = alumnosDAO.obtenerAlumnos();
+        for (Alumno alumnosEncontrado : alumnosEncontrados) {
+            AlumnoDTO alumnoDTO = alumnoMapper.convertirAlumnoDTO(alumnosEncontrado);
+            alumnoDTOs.add(alumnoDTO);
+        }
+        return alumnoDTOs;
 
     }
 

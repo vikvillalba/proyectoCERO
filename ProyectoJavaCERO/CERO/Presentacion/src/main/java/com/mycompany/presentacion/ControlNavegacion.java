@@ -1,5 +1,7 @@
 package com.mycompany.presentacion;
 
+import ControlGestionarAlumnos.ControlGestionarAlumnos;
+import ControlGestionarAlumnos.IControlGestionarAlumnos;
 import ControlGestionarClases.ControlGestionarClases;
 import ControlGestionarClases.IControlGestionarClases;
 import DTOs.GestionarClases.AulaClaseDTO;
@@ -8,6 +10,9 @@ import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Exceptions.GestionarClasesException;
+import FRM.GestionarAlumnos.FrmAdminAlumnos;
+import FRM.GestionarAlumnos.FrmEditarAlumno;
+import FRM.GestionarAlumnos.FrmRegistrarNuevoAlumno;
 import FRMs.*;
 import FRMs.GestionarClases.FrmAdminClases;
 import FRMs.GestionarClases.PanelScrollEditarClase;
@@ -65,7 +70,8 @@ public class ControlNavegacion {
     private static IInscribirClase inscribirClase = new InscribirClase();
     private static IRegistroAsistencias registroAsistencias = new RegistroAsistencias();
     private static IControlGestionarClases gestionarClases = new ControlGestionarClases();
-
+    private static IControlGestionarAlumnos gestionarAlumnos = new ControlGestionarAlumnos();
+    
     private static FrmMenuPrincipal menuPrincipal;
 
     // formularios CU inscribir 
@@ -82,6 +88,11 @@ public class ControlNavegacion {
     private static FrmAdminClases frmAdminClases;
     private static PanelScrollGuardarClase frmRegistrarClase;
     private static PanelScrollEditarClase frmEditarClase;
+    
+    //formularios CU_Gestionar Alumnos
+    private static FrmAdminAlumnos frmAdminAlumnos;
+    private static FrmEditarAlumno frmEditarAlumno;
+    private static FrmRegistrarNuevoAlumno frmRegistrarNuevoAlumno;
 
     private static JFrame frameActual;
 
@@ -841,5 +852,45 @@ public class ControlNavegacion {
             return new ArrayList<>();
         }
     }
+    
+    //CU GESTIONAR ALUMNOS
+    public static void mostrarFrmAdminAlumnos(){
+        frameActual.dispose();
+        List<AlumnoDTO> alumnos = gestionarAlumnos.obtenerAlumnosDTOLista();
+        frmAdminAlumnos = new FrmAdminAlumnos(alumnos);
+        frmAdminAlumnos.setVisible(true);
+        frameActual = frmAdminAlumnos;
+    }
+    
+    public static void mostrarFrmRegistrarNuevoAlumno(){
+        frameActual.dispose();
+        frmRegistrarNuevoAlumno = new FrmRegistrarNuevoAlumno();
+        frmRegistrarNuevoAlumno.setVisible(true);
+        frameActual = frmRegistrarNuevoAlumno;
+        
+    }
+    public static void mostrarFrmEditarAlumno(AlumnoDTO alumno){
+        frameActual.dispose();
+        frmEditarAlumno = new FrmEditarAlumno(alumno);
+        frmEditarAlumno.setVisible(true);
+        frameActual = frmEditarAlumno;
+    }
+    
+    public static void registrarNuevoAlumno(AlumnoDTO nuevoAlumno) {
+  
+        gestionarAlumnos.registrarNuevoAlumno(nuevoAlumno);
+        JOptionPane.showMessageDialog(frameActual, "Alumn@ registrad@ exitosamente");
 
+        //PONER UN JOPTION PANE DE EERROR
+
+    }
+    public static void editarAlumno(AlumnoDTO alumno) {
+
+        gestionarAlumnos.editarAlumno(alumno);
+        JOptionPane.showMessageDialog(frameActual, "Alumn@ editad@ exitosamente");
+
+    }
+    public static void eliminarAlumno(AlumnoDTO alumno){
+        gestionarAlumnos.eliminarAlumno(alumno);
+    }
 }

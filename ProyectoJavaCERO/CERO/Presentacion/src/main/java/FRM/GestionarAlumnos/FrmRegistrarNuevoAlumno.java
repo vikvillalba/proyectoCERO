@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
  *
  * @author Jack Murrieta
  */
-public class FrmRegistrarAlumno extends javax.swing.JFrame {
+public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
 
     private Image imagenFondo;
 
@@ -33,7 +33,7 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
      *
      * 
      */
-    public FrmRegistrarAlumno() {
+    public FrmRegistrarNuevoAlumno() {
         initComponents();
 
         // Cargar la imagen de fondo
@@ -352,7 +352,7 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ControlNavegacion.mostrarMenuPrincipal();
+        ControlNavegacion.mostrarFrmAdminAlumnos();
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -377,7 +377,9 @@ public class FrmRegistrarAlumno extends javax.swing.JFrame {
 
         // Crear alumnoDTO solo si la fecha fue válida
         AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
-
+        ControlNavegacion.registrarNuevoAlumno(nuevoAlumnoDTO);
+        ControlNavegacion.mostrarFrmAdminAlumnos();
+        
     }//GEN-LAST:event_btnNuevoEstudianteActionPerformed
 
     private void txtApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoPActionPerformed

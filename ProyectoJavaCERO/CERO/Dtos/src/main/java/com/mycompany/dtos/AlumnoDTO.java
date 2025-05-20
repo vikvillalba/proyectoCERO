@@ -39,9 +39,10 @@ public class AlumnoDTO {
     }
 
     //AlumnoDTO de la lista CU_GESTIONAR ALUMNOS
-    public AlumnoDTO(String id, Integer codigo, int edad, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, String correoElectronico) {
+    public AlumnoDTO(String id, Integer codigo,LocalDate fechaNacimiento, int edad, String apellidoPaterno, String apellidoMaterno, String nombre, String telefono, String correoElectronico) {
         this.id = id;
         this.codigo = codigo;
+        this.fechaNacimiento = fechaNacimiento;
         this.edad = edad;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;

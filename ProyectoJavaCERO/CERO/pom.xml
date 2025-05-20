@@ -15,6 +15,7 @@
         <module>RegistroAsistencias</module>
         <module>GaleriaContenidos</module>
         <module>GestionarClases</module>
+        <module>GestionarAlumnos</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

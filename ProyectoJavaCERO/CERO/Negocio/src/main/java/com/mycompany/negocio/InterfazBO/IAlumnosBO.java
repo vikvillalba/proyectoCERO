@@ -17,6 +17,6 @@ public interface IAlumnosBO {
     public void eliminarAlumno(AlumnoDTO alumnoDTO);
     public void editarAlumno(AlumnoDTO alumnoDTO);
     
-     public List<InscripcionClaseDTO> obtenerInscripciones(AlumnoDTO alumnoDTO) throws NegocioException;
-    
+    public List<InscripcionClaseDTO> obtenerInscripciones(AlumnoDTO alumnoDTO) throws NegocioException;
+    public List<AlumnoDTO> obtenerAlumnosDTOLista();
 }

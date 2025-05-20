@@ -61,6 +61,8 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
         // Usar panelFondo como contenido principal del JFrame
         setContentPane(panelFondo);
 
+        //mostrar los datos del alumno en los txts
+        configurarCamposAlumno(alumnoEdit);
         // Configuración del frame
         setTitle("Editar alumno");
         setSize(1300, 500);
@@ -383,7 +385,7 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ControlNavegacion.mostrarMenuPrincipal();
+        ControlNavegacion.mostrarFrmAdminAlumnos();
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -408,7 +410,7 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
 
         // Crear alumnoDTO solo si la fecha fue válida
         AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
-
+        //Hacer setters en el alumnoEditadar y llamar metodo editarAlumno();
     }//GEN-LAST:event_btnNuevoEstudianteActionPerformed
 
     private void txtApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoPActionPerformed

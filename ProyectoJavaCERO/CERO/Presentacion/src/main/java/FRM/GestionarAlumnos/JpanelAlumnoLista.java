@@ -1,10 +1,12 @@
 package FRM.GestionarAlumnos;
 
 import com.mycompany.dtos.AlumnoDTO;
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -249,11 +251,15 @@ public class JpanelAlumnoLista extends javax.swing.JPanel {
 
         // TODO add your handling code here:
         //Eliminar un alumno
+        ControlNavegacion.eliminarAlumno(alumno);
+        JOptionPane.showMessageDialog(panelEditarBtn, "Alumno Eliminado con exito");
+        ControlNavegacion.mostrarFrmAdminAlumnos();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
        //Mostrar editar Alumno
+        ControlNavegacion.mostrarFrmEditarAlumno(alumno);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnVerInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerInscritosActionPerformed

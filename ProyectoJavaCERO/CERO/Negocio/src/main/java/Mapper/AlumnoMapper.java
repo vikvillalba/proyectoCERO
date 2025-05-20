@@ -24,7 +24,7 @@ public class AlumnoMapper implements IAlumnoMapper{
         String id = alumno.getIdString();
         return new AlumnoDTO(
                 id,
-                alumno.getCodigo(), // código único
+                alumno.getCodigo(),alumno.getFechaNacimiento(), // código único
                 edad, // edad calculada
                 alumno.getApellidoPaterno(),
                 alumno.getApellidoMaterno(),

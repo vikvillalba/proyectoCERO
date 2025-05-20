@@ -97,6 +97,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnGestionarAlumnos.setBorder(null);
         btnGestionarAlumnos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionarAlumnos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/gestionarAlumnosHovered.png"))); // NOI18N
+        btnGestionarAlumnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionarAlumnosActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnGestionarAlumnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, -1, -1));
 
         btnControlAsistencias.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/controlAsistencias.png"))); // NOI18N
@@ -142,6 +147,12 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ControlNavegacion.mostrarFrmAdminClases();
     }//GEN-LAST:event_btnGestionarClasesActionPerformed
+
+    private void btnGestionarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarAlumnosActionPerformed
+        // TODO add your handling code here:
+      ControlNavegacion.mostrarFrmAdminAlumnos();
+      this.dispose();
+    }//GEN-LAST:event_btnGestionarAlumnosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
