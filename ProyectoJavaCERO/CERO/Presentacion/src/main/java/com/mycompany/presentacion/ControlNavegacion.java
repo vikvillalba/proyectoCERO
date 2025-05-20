@@ -764,13 +764,17 @@ public class ControlNavegacion {
 
     //METODOS CU_GESTIONAR CLASES 
     public static void mostrarFrmAdminClases() {
-        frameActual.dispose();
-        List<ClaseListaDTO> clases = gestionarClases.buscarClasesExistentes();
-        List<ClaseListaDTO> clasesInactivas = gestionarClases.buscarClasesInactivas();
-        List<ClaseListaDTO> clasesActivas = gestionarClases.buscarClasesActivas();
-        frmAdminClases = new FrmAdminClases(clases, clasesInactivas, clasesActivas);
-        frmAdminClases.setVisible(true);
-        frameActual = frmAdminClases;
+        try {
+            frameActual.dispose();
+            List<ClaseListaDTO> clases = gestionarClases.buscarClasesExistentes();
+            List<ClaseListaDTO> clasesInactivas = gestionarClases.buscarClasesInactivas();
+            List<ClaseListaDTO> clasesActivas = gestionarClases.buscarClasesActivas();
+            frmAdminClases = new FrmAdminClases(clases, clasesInactivas, clasesActivas);
+            frmAdminClases.setVisible(true);
+            frameActual = frmAdminClases;
+        } catch (GestionarClasesException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
 
     }
 

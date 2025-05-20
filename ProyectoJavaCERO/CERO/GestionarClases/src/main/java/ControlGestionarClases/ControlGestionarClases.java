@@ -134,8 +134,12 @@ public class ControlGestionarClases implements IControlGestionarClases {
     }
 
     @Override
-    public List<ClaseListaDTO> buscarClasesActivas() {
-        return clasesBO.buscarClasesActivas();
+    public List<ClaseListaDTO> buscarClasesActivas() throws GestionarClasesException {
+        try {
+            return clasesBO.buscarClasesActivas();
+        } catch (NegocioException ex) {
+            throw new GestionarClasesException(ex.getMessage());
+        }
     }
 
     @Override
