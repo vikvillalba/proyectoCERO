@@ -192,5 +192,4 @@ public class ClasesDAO implements IClasesDAO {
     public Clase buscarClaseObjectID(ObjectId idClase) {
         return coleccion.find(eq("_id", idClase)).first();
     }
-    
 }

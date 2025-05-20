@@ -1,17 +1,10 @@
 package com.mycompany.negocio.InterfazBO;
 
-import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
-import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
-import Entidades.AulaClase;
-import Entidades.Clase;
-import Entidades.Maestro;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.excepciones.NegocioException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 /**

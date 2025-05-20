@@ -72,13 +72,14 @@ public class ClasesBO implements IClasesBO {
         }
         List<ClaseDTO> clasesObtenidas = new ArrayList<>();
         for (Clase clase : clases) {
+            Maestro maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
             ClaseDTO claseDTO = new ClaseDTO(
                     clase.getCodigo(),
                     clase.getNombre(),
                     clase.getDias(),
                     clase.getHoraInicio(),
                     clase.getHoraFin(),
-                    clase.getNombreMaestro(),
+                    maestro.getNombreCompleto(),
                     clase.getPrecio(),
                     clase.getFechaInicio(),
                     clase.getFechaFin()
@@ -126,37 +127,24 @@ public class ClasesBO implements IClasesBO {
 
     
     @Override
-    public List<ClaseListaDTO> buscarClasesActivas() {
-
-        try {
-            List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
-            List<ClaseListaDTO> clasesDTO = new ArrayList<>();
-
-            for (Clase clase : clasesActivas) {
-                Maestro maestro = null;
-                AulaClase aula = null;
-
-                if (clase.getIdMaestroString() != null) {
-                    maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
-                }
-
-                if (clase.getIdAulaString() != null) {
-                    try {
-                        aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
-                    } catch (NegocioException ex) {
-                        Logger.getLogger(ClasesBO.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                ClaseListaDTO dto = claseMapper.convertirClaseListaDTO(clase, maestro, aula);
-                clasesDTO.add(dto);
-            }
-
-            return clasesDTO;
-        } catch (NegocioException ex) {
-            System.out.println(ex.getMessage());
+    public List<ClaseListaDTO> buscarClasesActivas() throws NegocioException{
+        List<Clase> clasesActivas = clasesDAO.obtenerClasesActivas();
+        if (clasesActivas.isEmpty() || clasesActivas == null) {
+            return new ArrayList<>();
         }
-        return null;
+        List<ClaseListaDTO> clases = new ArrayList<>();
+        for (Clase clase : clasesActivas) {
+            try {
+                Maestro maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
+                AulaClase aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
+                
+                clases.add(claseMapper.convertirClaseListaDTO(clase, maestro, aula));
+            } catch (NegocioException ex) {
+                throw new NegocioException(ex.getMessage());
+            }
+        }
+
+        return clases;
     }
 
     @Override

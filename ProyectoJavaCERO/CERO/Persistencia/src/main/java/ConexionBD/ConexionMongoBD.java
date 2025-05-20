@@ -1,5 +1,6 @@
 package ConexionBD;
 
+import Entidades.Alumno;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -20,18 +21,21 @@ public class ConexionMongoBD {
     private static MongoClient cliente;
     private static MongoDatabase baseDatos;
 
-    
     public static MongoDatabase getConexion() {
-         CodecRegistry pojoCodecRegistry = fromRegistries(
+        CodecRegistry pojoCodecRegistry = fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).build())
+                fromProviders(
+                        PojoCodecProvider.builder()
+                                .register("Entidades")
+                                .automatic(true)
+                                .build()
+                )
         );
 
-        // asignar la configuracion del mapeador con la conexion para que las clases POJO sean reconocidas automaticamente
         MongoClientSettings configuraciones = MongoClientSettings.builder()
                 .codecRegistry(pojoCodecRegistry)
                 .build();
-        
+
         // crea la conexion
         cliente = MongoClients.create(configuraciones);
         baseDatos = cliente.getDatabase(BASE_DATOS);

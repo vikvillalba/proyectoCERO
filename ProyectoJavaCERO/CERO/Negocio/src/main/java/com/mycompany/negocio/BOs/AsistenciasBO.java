@@ -45,18 +45,9 @@ public class AsistenciasBO implements IAsistenciasBO {
         ClaseDTO claseDTO = nuevaAsistencia.getClase();
         AlumnoDTO alumnoDTO = nuevaAsistencia.getAlumno();
 
-        Clase clase = clasesDAO.buscarClase(claseDTO.getId());
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
-
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
         Asistencia asistencia = new Asistencia(Entidades.TipoAsistencia.ASISTENCIA, LocalDateTime.now(), alumno.getIdString(), clase.obtenerIdString());
         Asistencia asistenciaRegistrada = this.asistenciasDAO.registrarAsistencia(asistencia);
 
@@ -71,17 +62,9 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public AsistenciaDTO obtenerAsistenciaAlumnoClase(AlumnoDTO alumnoDTO, ClaseDTO claseDTO) {
-        Clase clase = clasesDAO.buscarClase(claseDTO.getId());
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
 
         Asistencia asistencia = this.asistenciasDAO.obtenerAsistenciaAlumnoClase(alumno, clase);
         if (asistencia != null) {
@@ -93,7 +76,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public List<AsistenciaDTO> obtenerAsistenciasClase(ClaseDTO claseDTO, LocalDate diaClase) {
-        Clase clase = this.clasesDAO.buscarClase(claseDTO.getId());
+        Clase clase = this.clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
         List<Asistencia> asistencias = this.asistenciasDAO.obtenerAsistenciasAlumnos(clase, diaClase);
         if (asistencias == null || asistencias.isEmpty()) {
@@ -126,7 +109,7 @@ public class AsistenciasBO implements IAsistenciasBO {
         Justificante justificante = new Justificante(faltaJustificada.getJustificante().getMotivo(), faltaJustificada.getJustificante().getFechaHora());
         Alumno alumno = this.alumnosDAO.obtenerAlumno(faltaJustificada.getAlumno().getId());
 
-        Clase clase = this.clasesDAO.buscarClase(faltaJustificada.getClase().getId());
+        Clase clase = this.clasesDAO.buscarClaseCodigoInteger(faltaJustificada.getClase().getCodigo());
 
         Asistencia asistenciaJustificada = new Asistencia(
                 TipoAsistencia.JUSTIFICADO,
@@ -145,7 +128,7 @@ public class AsistenciasBO implements IAsistenciasBO {
     public List<AsistenciaDTO> obtenerFaltasJustificadas(AsistenciaDTO asistencia) {
         List<AsistenciaDTO> asistenciasDTO = new ArrayList<>();
         Alumno alumno = this.alumnosDAO.obtenerAlumno(asistencia.getAlumno().getId());
-        Clase clase = this.clasesDAO.buscarClase(asistencia.getClase().getId());
+        Clase clase = this.clasesDAO.buscarClaseCodigoInteger(asistencia.getClase().getCodigo());
 
         List<Asistencia> faltasJustificadas = this.asistenciasDAO.obtenerFaltasJustificadasAlumnoClase(alumno, clase);
 
@@ -173,7 +156,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
         for (AsistenciaDTO dto : asistenciasDTO) {
             Alumno alumno = alumnosDAO.obtenerAlumno(dto.getAlumno().getId());
-            Clase clase = clasesDAO.buscarClase(dto.getClase().getId());
+            Clase clase = clasesDAO.buscarClaseCodigoInteger(dto.getClase().getCodigo());
 
             if (alumno == null || clase == null) {
                 throw new NegocioException("No se pudo encontrar el alumno o la clase para una de las asistencias.");

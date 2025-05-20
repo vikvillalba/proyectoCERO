@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import DAOs.IInscripcionesDAO;
+import com.mongodb.client.model.Aggregates;
+import java.util.Arrays;
 
 /**
  *
@@ -70,23 +72,18 @@ public class InscripcionesDAO implements IInscripcionesDAO {
     public List<Inscripcion> obtenerInscripcionesAlumnoDiaActual(Alumno alumno) {
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
         MongoCollection<Inscripcion> coleccion = baseDatos.getCollection(COLECCION, Inscripcion.class);
+
         DayOfWeek diaActual = LocalDate.now().getDayOfWeek();
 
-        List<ObjectId> clasesConDiaActual = baseDatos.getCollection("clases", Clase.class)
-                .find(Filters.in("dias", diaActual.name()))
-                .map(Clase::getId)
-                .into(new ArrayList<>());
+        List<Inscripcion> resultado = coleccion.aggregate(Arrays.asList(
+                Aggregates.match(Filters.eq("alumno", alumno.getId())),
+                Aggregates.lookup("Clases", "clase", "_id", "infoClase"),
+                Aggregates.unwind("$infoClase"),
+                Aggregates.match(Filters.in("infoClase.dias", diaActual.name()))
+        )).into(new ArrayList<>());
 
-        if (clasesConDiaActual.isEmpty()) {
-            return new ArrayList<>();
-        }
 
-        return coleccion.find(
-                Filters.and(
-                        Filters.eq("alumno", alumno.getId()),
-                        Filters.in("clase", clasesConDiaActual)
-                )
-        ).into(new ArrayList<>());
+        return resultado;
     }
 
 }

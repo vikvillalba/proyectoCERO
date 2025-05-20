@@ -23,6 +23,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import DAOs.IInscripcionesDAO;
+import Entidades.Maestro;
+import Excepciones.PersistenciaException;
+import GestionarClasesPersistencia.IMaestrosDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,39 +38,23 @@ public class InscripcionesBO implements IInscripcionesBO {
     private IInscripcionesDAO inscripcionesDAO;
     private IClasesDAO clasesDAO;
     private IAlumnosDAO alumnosDAO;
+    private IMaestrosDAO maestrosDAO;
 
-    public InscripcionesBO(IInscripcionesDAO inscripcionesDAO, IClasesDAO clasesDAO, IAlumnosDAO alumnosDAO) {
+    public InscripcionesBO(IInscripcionesDAO inscripcionesDAO, IClasesDAO clasesDAO, IAlumnosDAO alumnosDAO, IMaestrosDAO maestrosDAO) {
         this.inscripcionesDAO = inscripcionesDAO;
         this.clasesDAO = clasesDAO;
         this.alumnosDAO = alumnosDAO;
+        this.maestrosDAO = maestrosDAO;
     }
 
     @Override
     public InscripcionDTO registrarInscripcionPagoEfectivo(NuevaInscripcionDTO nuevaInscripcionDTO) {
 
         ClaseDTO claseDTO = nuevaInscripcionDTO.getClase();
-        Clase clase = new Clase(
-                claseDTO.getCodigo(),
-                claseDTO.getNombre(),
-                claseDTO.getDias(),
-                claseDTO.getHoraInicio(),
-                claseDTO.getHoraFin(),
-                claseDTO.getPrecio(),
-                claseDTO.getFechaInicio(),
-                claseDTO.getFechaFin(),
-                claseDTO.getMaestro()
-        );
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
         AlumnoDTO alumnoDTO = nuevaInscripcionDTO.getAlumno();
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
 
         PagoDTO pagoDTO = nuevaInscripcionDTO.getPago();
         PagoEfectivoDTO metodoPagoDTO = (PagoEfectivoDTO) nuevaInscripcionDTO.getPago().getMetodoPago();
@@ -84,28 +73,10 @@ public class InscripcionesBO implements IInscripcionesBO {
     @Override
     public InscripcionDTO registrarInscripcionPagoTarjeta(NuevaInscripcionDTO nuevaInscripcionDTO) {
         ClaseDTO claseDTO = nuevaInscripcionDTO.getClase();
-        Clase clase = new Clase(
-                claseDTO.getCodigo(),
-                claseDTO.getNombre(),
-                claseDTO.getDias(),
-                claseDTO.getHoraInicio(),
-                claseDTO.getHoraFin(),
-                claseDTO.getPrecio(),
-                claseDTO.getFechaInicio(),
-                claseDTO.getFechaFin(),
-                claseDTO.getMaestro()
-        );
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
 
         AlumnoDTO alumnoDTO = nuevaInscripcionDTO.getAlumno();
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
 
         PagoDTO pagoDTO = nuevaInscripcionDTO.getPago();
         PagoTarjetaDTO metodoPagoDTO = (PagoTarjetaDTO) nuevaInscripcionDTO.getPago().getMetodoPago();
@@ -121,15 +92,7 @@ public class InscripcionesBO implements IInscripcionesBO {
 
     @Override
     public List<InscripcionDTO> obtenerInscripcionesAlumno(AlumnoDTO alumnoDTO) throws NegocioException {
-        Alumno alumno = new Alumno(
-                alumnoDTO.getCodigo(),
-                alumnoDTO.getApellidoPaterno(),
-                alumnoDTO.getApellidoMaterno(),
-                alumnoDTO.getNombre(),
-                alumnoDTO.getTelefono(),
-                alumnoDTO.getFechaNacimiento(),
-                alumnoDTO.getCorreoElectronico()
-        );
+        Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(alumnoDTO.getCodigo());
 
         List<Inscripcion> todasLasInscripciones = this.inscripcionesDAO.obtenerInscripcionesAlumno(alumno);
         if (todasLasInscripciones.isEmpty()) {
@@ -146,18 +109,23 @@ public class InscripcionesBO implements IInscripcionesBO {
         List<InscripcionDTO> inscripcionesDTO = new ArrayList<>();
 
         for (Inscripcion inscripcion : inscripcionesHoy) {
-            Clase clase = clasesDAO.buscarClase(inscripcion.getIdClaseString());
-            ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(),
-                    clase.getNombre(),
-                    clase.getDias(),
-                    clase.getHoraInicio(),
-                    clase.getHoraFin(),
-                    clase.getNombreMaestro(),
-                    clase.getPrecio(),
-                    clase.getFechaInicio(),
-                    clase.getFechaFin());
-            InscripcionDTO inscripcionDTO = new InscripcionDTO(alumnoDTO, claseDTO, inscripcion.getFechaInscripcion());
-            inscripcionesDTO.add(inscripcionDTO);
+            try {
+                Clase clase = clasesDAO.buscarClase(inscripcion.getIdClaseString());
+                Maestro maestro = maestrosDAO.buscarMaestro(clase.getIdMaestroString());
+                ClaseDTO claseDTO = new ClaseDTO(clase.getCodigo(),
+                        clase.getNombre(),
+                        clase.getDias(),
+                        clase.getHoraInicio(),
+                        clase.getHoraFin(),
+                        maestro.getNombreCompleto(),
+                        clase.getPrecio(),
+                        clase.getFechaInicio(),
+                        clase.getFechaFin());
+                InscripcionDTO inscripcionDTO = new InscripcionDTO(alumnoDTO, claseDTO, inscripcion.getFechaInscripcion());
+                inscripcionesDTO.add(inscripcionDTO);
+            } catch (PersistenciaException ex) {
+                throw new NegocioException(ex.getMessage());
+            }
         }
 
         return inscripcionesDTO;
