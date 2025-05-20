@@ -19,6 +19,4 @@ public interface IInscripcionesBO {
     public List<InscripcionDTO> obtenerInscripcionesAlumno(AlumnoDTO alumnoDTO) throws NegocioException;
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase)throws NegocioException;
     
-    //Posible metodo 
-    //public List<Inscripcion> obtenerListaInscritosClase(Clase clase);
 }

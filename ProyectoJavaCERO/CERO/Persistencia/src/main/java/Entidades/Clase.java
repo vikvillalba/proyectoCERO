@@ -79,6 +79,23 @@ public class Clase {
 
     }
 
+    public Clase(String nombre, String idMaestro, String idAula, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, BigDecimal precio, boolean activa) {
+        this.nombre = nombre;
+        this.idMaestro = ObjectIDMapper.toObjectId(idMaestro);
+        this.idAula = ObjectIDMapper.toObjectId(idAula);
+        this.modalidad = modalidad;
+        this.dias = dias;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.capacidadAlumnos = capacidadAlumnos;
+        this.precio = precio;
+        this.activa = activa;
+    }
+    
+    
+
     public ObjectId getId() {
         return id;
     }

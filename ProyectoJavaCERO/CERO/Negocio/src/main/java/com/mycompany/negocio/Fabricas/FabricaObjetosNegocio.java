@@ -69,7 +69,8 @@ public class FabricaObjetosNegocio {
         IInscripcionesDAO inscripcionesDAO = new InscripcionesDAO();
         IClasesDAO clasesDAO = new ClasesDAO();
         IAlumnosDAO alumnosDAO = new AlumnosDAO();
-        IInscripcionesBO bo = new InscripcionesBO(inscripcionesDAO, clasesDAO, alumnosDAO);
+        IMaestrosDAO maestrosDAO = new MaestrosDAO();
+        IInscripcionesBO bo = new InscripcionesBO(inscripcionesDAO, clasesDAO, alumnosDAO, maestrosDAO);
         return bo;
     }
     
