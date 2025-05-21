@@ -8,7 +8,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -52,16 +55,16 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 
-        List<DayOfWeek> diasSemana = claseDTO.getDias();  // Lista de DayOfWeek
-        StringBuilder diasAbreviados = new StringBuilder();
+        List<DayOfWeek> diasSemana = clase.getDias();
+        //Dias en español
+        Locale localeEspanol = new Locale("es", "MX");
 
-        for (DayOfWeek dia : diasSemana) {
-            // Tomamos las dos primeras letras del nombre en español
-            diasAbreviados.append(dia.getDisplayName(java.time.format.TextStyle.SHORT, new java.util.Locale("es")).substring(0, 2));
-        }
+        String diasAbreviados = (diasSemana != null) ? diasSemana.stream()
+                .map(dia -> dia.getDisplayName(TextStyle.SHORT, localeEspanol))
+                .collect(Collectors.joining(", ")) : "Sin días";
 
         String horario = String.format("%s %s %s",
-                diasAbreviados.toString(),
+                diasAbreviados,
                 claseDTO.getHoraInicio().format(formatoHora),
                 claseDTO.getHoraFin().format(formatoHora));
 

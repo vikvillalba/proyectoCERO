@@ -7,7 +7,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.time.DayOfWeek;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -68,22 +70,25 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         JpanelHeader.add(lblColumnDias);
         JpanelHeader.add(lblColumnMaestro);
     }
-    
-   private void configurarDatos() {
+
+    private void configurarDatos() {
         JpanelDatos.setBackground(new Color(30, 47, 86));
         JpanelDatos.setLayout(new GridLayout(1, 5, 10, 0));
 
-       lblIdClase = new JLabel(String.valueOf(clase.getCodigo()), SwingConstants.CENTER);
-       lblNombreClase = new JLabel(clase.getNombre(), SwingConstants.CENTER);
-       //JUNTAR HORA INICIO Y HORA FIN
-       lblHorario = new JLabel(clase.getHoraInicio() + "-" + clase.getHoraFin(), SwingConstants.CENTER);
-       List<DayOfWeek> diasSemana = clase.getDias();
-       String diasTexto = (diasSemana != null) ? diasSemana.stream()
-               .map(DayOfWeek::toString)
-               .collect(Collectors.joining(", ")) : "Sin días";
+        lblIdClase = new JLabel(String.valueOf(clase.getCodigo()), SwingConstants.CENTER);
+        lblNombreClase = new JLabel(clase.getNombre(), SwingConstants.CENTER);
+        //JUNTAR HORA INICIO Y HORA FIN
+        lblHorario = new JLabel(clase.getHoraInicio() + "-" + clase.getHoraFin(), SwingConstants.CENTER);
+        List<DayOfWeek> diasSemana = clase.getDias();
+        //Dias en español
+        Locale localeEspanol = new Locale("es", "MX");
 
-       lblDias = new JLabel(diasTexto, SwingConstants.CENTER);
-       lblMaestro = new JLabel(clase.getMaestro(), SwingConstants.CENTER);
+        String diasTexto = (diasSemana != null) ? diasSemana.stream()
+                .map(dia -> dia.getDisplayName(TextStyle.SHORT, localeEspanol))
+                .collect(Collectors.joining(", ")) : "Sin días";
+
+        lblDias = new JLabel(diasTexto, SwingConstants.CENTER);
+        lblMaestro = new JLabel(clase.getMaestro(), SwingConstants.CENTER);
 
         configurarLabelDatos(lblIdClase);
         configurarLabelDatos(lblNombreClase);
@@ -105,7 +110,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
         btnSeleccionarClase.setBackground(new Color(30, 47, 86));
         btnSeleccionarClase.setFocusPainted(false);
     }
-    
+
     //Configura los Labels del Header
     private void configurarLabel(JLabel label) {
         label.setFont(new Font("Menlo", Font.BOLD, 14));

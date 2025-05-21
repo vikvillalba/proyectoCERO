@@ -86,7 +86,7 @@ public class MaestroBO implements IMaestroBO {
 
     @Override
     public MaestroDTO convertirMaestroDTO(Maestro maestro) {
-        String nombreCompleto = maestro.getNombre() + "" + maestro.getApellidoPaterno() + "" + maestro.getApellidoMaterno();
+        String nombreCompleto = maestro.getNombre() + " " + maestro.getApellidoPaterno() + " " + maestro.getApellidoMaterno();
         String idMaestro = maestro.getIdString();
         MaestroDTO maestroDTO = new MaestroDTO(idMaestro, nombreCompleto);
         return maestroDTO;

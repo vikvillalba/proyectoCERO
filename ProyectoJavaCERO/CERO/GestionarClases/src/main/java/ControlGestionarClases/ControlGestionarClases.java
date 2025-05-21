@@ -44,10 +44,6 @@ public class ControlGestionarClases implements IControlGestionarClases {
     public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase) throws GestionarClasesException {
         nombreClase = nombreClase.trim();
 
-        if (nombreClase.length() < 2) {
-            throw new GestionarClasesException("Ingresa al menos 2 caracteres para realizar la búsqueda.");
-        }
-
         List<ClaseListaDTO> clasesEncontradas = clasesBO.buscarClasesListaNombre(nombreClase);
 
         if (clasesEncontradas == null || clasesEncontradas.isEmpty()) {

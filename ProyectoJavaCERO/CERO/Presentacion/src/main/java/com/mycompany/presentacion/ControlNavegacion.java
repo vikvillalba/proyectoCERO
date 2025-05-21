@@ -420,9 +420,7 @@ public class ControlNavegacion {
     }
 
     public static void mostrarClasesExistentes(String nombre) {
-        if (validarErrorNombreClase(inscribir, nombre)) {
-            mostrarInscribirClase();
-            
+        if (validarErrorNombreClase(inscribir, nombre)) {            
             return;
         }
 
@@ -434,6 +432,7 @@ public class ControlNavegacion {
             return;
         }
 
+        frameActual.dispose();
         clasesExistentes = new FrmClasesExistentes(clases);
         clasesExistentes.setVisible(true);
         frameActual = clasesExistentes;
@@ -817,6 +816,7 @@ public class ControlNavegacion {
             frmAdminClases = new FrmAdminClases(clases, clasesInactivas, clasesActivas);
             frmAdminClases.setVisible(true);
             frameActual = frmAdminClases;
+            frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
         } catch (GestionarClasesException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }

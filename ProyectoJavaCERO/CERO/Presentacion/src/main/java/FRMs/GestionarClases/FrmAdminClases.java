@@ -225,7 +225,7 @@ public class FrmAdminClases extends javax.swing.JFrame {
 
         btnNinguno.setBackground(new java.awt.Color(255, 255, 255));
         btnNinguno.setForeground(new java.awt.Color(0, 157, 255));
-        btnNinguno.setText("NONE");
+        btnNinguno.setText("No filtros");
         btnNinguno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNingunoActionPerformed(evt);
