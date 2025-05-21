@@ -15,11 +15,11 @@ import java.util.List;
  */
 public interface IControlGestionarAlumnos {
 
-    public AlumnoDTO registrarNuevoAlumno(AlumnoDTO nuevoAlumno);
+    public AlumnoDTO registrarNuevoAlumno(AlumnoDTO nuevoAlumno)throws GestionarAlumnosException;
 
     public void eliminarAlumno(AlumnoDTO alumnoDTO);
 
-    public void editarAlumno(AlumnoDTO alumnoDTO);
+    public void editarAlumno(AlumnoDTO alumnoDTO)throws GestionarAlumnosException;
 
     public List<InscripcionClaseDTO> obtenerInscripciones(AlumnoDTO alumnoDTO) throws GestionarAlumnosException;
 

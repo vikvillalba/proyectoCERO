@@ -1,24 +1,16 @@
 package FRM.GestionarAlumnos;
 
-import FRMs.GestionarClases.*;
-import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 /**
  *
@@ -117,7 +109,7 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         lblIP7 = new javax.swing.JLabel();
         lblIP8 = new javax.swing.JLabel();
-        txtFechaNan = new javax.swing.JTextField();
+        selectorFecha = new com.toedter.calendar.JDateChooser();
         lblIP10 = new javax.swing.JLabel();
         lblIP11 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
@@ -194,7 +186,7 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         panelBtnRegresarLayout.setVerticalGroup(
             panelBtnRegresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnRegresarLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(14, 14, 14))
         );
@@ -222,7 +214,7 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         panelBtnAñadirLayout.setVerticalGroup(
             panelBtnAñadirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnAñadirLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(btnNuevoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -291,15 +283,7 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         lblIP8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblIP8.setText("Fecha de Nacimiento:");
         panelScroll.add(lblIP8);
-
-        txtFechaNan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtFechaNan.setText("dd / mm / aaaa");
-        txtFechaNan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaNanActionPerformed(evt);
-            }
-        });
-        panelScroll.add(txtFechaNan);
+        panelScroll.add(selectorFecha);
 
         lblIP10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblIP10.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,7 +321,7 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
+            .addComponent(panelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,19 +345,12 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         String apellidoPaterno = txtApellidoP.getText().trim();
         String apellidoMaterno = txtApellidoM.getText().trim();
         String nombre = txtNombre.getText().trim();
-        String fechaNacimiento = txtFechaNan.getText().trim();
+        Date fechaSeleccionada = selectorFecha.getDate();
         String telefono = txtTelefono.getText().trim();
         String correoElectronico = txtCorreo.getText().trim();
 
         // Validar formato de fecha
-        LocalDate fechaNacimientoDate = null;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            fechaNacimientoDate = LocalDate.parse(fechaNacimiento, formatter);
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "La fecha debe estar en formato dd/MM/yyyy", "Error de formato", JOptionPane.ERROR_MESSAGE);
-            return; // Salir del método si la fecha es inválida
-        }
+        LocalDate fechaNacimientoDate = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         // Crear alumnoDTO solo si la fecha fue válida
         AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
@@ -389,11 +366,6 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void txtFechaNanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNanActionPerformed
-    // TODO add your handling code here:
-        txtFechaNan.setText("");
-    }//GEN-LAST:event_txtFechaNanActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
@@ -423,10 +395,10 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
     private javax.swing.JPanel panelFondo;
     private javax.swing.JPanel panelScroll;
     private javax.swing.JPanel panelTipoFiltro;
+    private com.toedter.calendar.JDateChooser selectorFecha;
     private javax.swing.JTextField txtApellidoM;
     private javax.swing.JTextField txtApellidoP;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtFechaNan;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables

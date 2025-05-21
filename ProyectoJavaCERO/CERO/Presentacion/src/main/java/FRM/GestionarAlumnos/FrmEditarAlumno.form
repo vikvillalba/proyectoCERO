@@ -369,14 +369,7 @@
                 <Property name="text" type="java.lang.String" value="Fecha de Nacimiento:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtFechaNan">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="dd / mm / aaaa"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFechaNanActionPerformed"/>
-              </Events>
+            <Component class="com.toedter.calendar.JDateChooser" name="selectorFecha">
             </Component>
             <Component class="javax.swing.JLabel" name="lblIP10">
               <Properties>

@@ -880,18 +880,24 @@ public class ControlNavegacion {
         frmEditarAlumno.setVisible(true);
         frameActual = frmEditarAlumno;
     }
-    
+   
     public static void registrarNuevoAlumno(AlumnoDTO nuevoAlumno) {
-  
-        gestionarAlumnos.registrarNuevoAlumno(nuevoAlumno);
+        try {
+            gestionarAlumnos.registrarNuevoAlumno(nuevoAlumno);
+        } catch (GestionarAlumnosException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
         JOptionPane.showMessageDialog(frameActual, "Alumn@ registrad@ exitosamente");
-
-        //PONER UN JOPTION PANE DE EERROR
-
+        
     }
+    
     public static void editarAlumno(AlumnoDTO alumno) {
 
-        gestionarAlumnos.editarAlumno(alumno);
+        try {
+            gestionarAlumnos.editarAlumno(alumno);
+        } catch (GestionarAlumnosException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
         JOptionPane.showMessageDialog(frameActual, "Alumn@ editad@ exitosamente");
 
     }
