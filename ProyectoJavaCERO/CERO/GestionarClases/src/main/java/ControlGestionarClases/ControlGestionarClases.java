@@ -69,10 +69,19 @@ public class ControlGestionarClases implements IControlGestionarClases {
             // Validación de datos generales
             validarDatosClase(nuevaClase);
 
-            // Validación de aula (si existe)
-            if (nuevaClase.getAula() != null) {
+            String modalidad = nuevaClase.getModalidad();
+
+            // Validación de aula solo si la modalidad es presencial
+            if ("Presencial".equalsIgnoreCase(modalidad)) {
+                if (nuevaClase.getAula() == null) {
+                    throw new GestionarClasesException("Una clase presencial debe tener un aula asignada.");
+                }
+
                 List<Clase> clasesPresencialesAula = aulaBO.obtenerClasesPresencialesAula(nuevaClase.getAula().getIdAula());
                 validarDisponibilidadHorarioAula(nuevaClase, clasesPresencialesAula);
+            } else {
+                // Asegurar que el aula no se utilice si es virtual
+                nuevaClase.setAula(null);
             }
 
             // Validación de disponibilidad del maestro
@@ -212,6 +221,12 @@ public class ControlGestionarClases implements IControlGestionarClases {
         long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
         if (dias < 5) {
             throw new GestionarClasesException("El lapso entre fechas debe ser de al menos 5 días");
+        }
+        
+        // la fecha de fin no puede ser anterior a la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        if (fechaFin.isBefore(fechaActual)) {
+            throw new GestionarClasesException("La fecha de fin ya ha pasado. La clase no puede ya haber terminado.");
         }
 
         return true;

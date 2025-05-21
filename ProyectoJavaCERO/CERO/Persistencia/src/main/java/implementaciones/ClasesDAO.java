@@ -49,11 +49,18 @@ public class ClasesDAO implements IClasesDAO {
         Integer codigoMaximo = obtenerSiguienteCodigo();
         nuevaClase.setCodigo(codigoMaximo);
 
-        ObjectId idAula = nuevaClase.getIdAula();
         ObjectId idMaestro = nuevaClase.getIdMaestro();
+        String modalidad = nuevaClase.getModalidad();
 
-        // Validar existencia del aula si la modalidad es presencial
-        if ("Presencial".equalsIgnoreCase(nuevaClase.getModalidad()) && idAula != null) {
+        // Validar existencia del aula SOLO si es presencial
+        if ("Presencial".equalsIgnoreCase(modalidad)) {
+            ObjectId idAula = nuevaClase.getIdAula();
+
+            if (idAula == null) {
+                System.err.println("La clase presencial requiere un aula asignada.");
+                return;
+            }
+
             try {
                 AulaClase aula = aulaClaseDAO.buscarClase(idAula.toHexString());
                 if (aula == null) {
@@ -65,7 +72,7 @@ public class ClasesDAO implements IClasesDAO {
                 return;
             }
         }
-
+        
         // Validar existencia del maestro
         if (idMaestro != null) {
             try {
@@ -83,8 +90,8 @@ public class ClasesDAO implements IClasesDAO {
         // Insertar la nueva clase en la colección
         coleccion.insertOne(nuevaClase);
 
-        // Agregar clase al arreglo de clasesPresenciales del aula (si aplica)
-        if ("Presencial".equalsIgnoreCase(nuevaClase.getModalidad()) && idAula != null) {
+        // Si es presencial, agregarla al aula
+        if ("Presencial".equalsIgnoreCase(modalidad) && nuevaClase.getIdAula() != null) {
             try {
                 aulaClaseDAO.agregarClasePresencial(nuevaClase);
             } catch (PersistenciaException e) {
@@ -92,7 +99,7 @@ public class ClasesDAO implements IClasesDAO {
             }
         }
 
-        // Agregar clase al arreglo de clasesImpartidas del maestro (si aplica)
+        // Si tiene maestro, agregar la clase al maestro
         if (idMaestro != null) {
             try {
                 maestroDAO.agregarClaseImpartida(nuevaClase);

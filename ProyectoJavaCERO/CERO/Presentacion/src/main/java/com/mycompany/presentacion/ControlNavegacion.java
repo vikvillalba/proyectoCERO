@@ -843,6 +843,7 @@ public class ControlNavegacion {
         try {
             gestionarClases.registrarNuevaClase(nuevaClase);
             JOptionPane.showMessageDialog(frameActual, "Clase registrada exitosamente");
+            mostrarFrmAdminClases();
         } catch (GestionarClasesException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }

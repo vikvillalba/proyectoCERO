@@ -52,6 +52,7 @@ public class PanelEditarClase extends javax.swing.JPanel {
         //fecha inicio y hora inicio
         lblFechaInicio.setText(claseEditarDTO.getFechaInicio());
         lblHoraInicio.setText(claseEditarDTO.getHoraInicio());
+        lblPrecio.setText(claseEditarDTO.getPrecio());
         activa = true;
 
     }

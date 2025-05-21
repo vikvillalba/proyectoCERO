@@ -100,15 +100,42 @@ public class ClasesBO implements IClasesBO {
     //REGISTRAR NUEVA CLASE METODO
     @Override
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws NegocioException {
-        String idAula = nuevaClase.getAula().getIdAula();
+        if (nuevaClase == null) {
+            throw new NegocioException("La clase no puede ser nula.");
+        }
+
+        AulaClase aulaClase = null;
+
+        // Solo buscar el aula si la modalidad es PRESENCIAL
+        if ("Presencial".equalsIgnoreCase(nuevaClase.getModalidad())) {
+            if (nuevaClase.getAula() == null || nuevaClase.getAula().getIdAula() == null) {
+                throw new NegocioException("Una clase presencial requiere un aula asignada.");
+            }
+            String idAula = nuevaClase.getAula().getIdAula();
+            aulaClase = aulaBO.buscarAulaClaseID(idAula);
+            if (aulaClase == null) {
+                throw new NegocioException("No se encontró el aula especificada.");
+            }
+        }
+
+        // Validar maestro
+        if (nuevaClase.getMaestro() == null || nuevaClase.getMaestro().getId() == null) {
+            throw new NegocioException("Debe seleccionarse un maestro.");
+        }
+
         String idMaestro = nuevaClase.getMaestro().getId();
-
         Maestro maestroEncontrado = maestroBO.buscarMaestroID(idMaestro);
-        AulaClase aulaClase = aulaBO.buscarAulaClaseID(idAula);
+        if (maestroEncontrado == null) {
+            throw new NegocioException("No se encontró el maestro especificado.");
+        }
 
+        // Convertir DTO a entidad
         Clase clase = claseMapper.convertirClaseEntidad(nuevaClase, maestroEncontrado, aulaClase);
+
+        // Registrar en la base de datos
         clasesDAO.registrarNuevaClase(clase);
     }
+
 
     @Override
     public void editarClase(EditarClaseDTO editarClase) {
