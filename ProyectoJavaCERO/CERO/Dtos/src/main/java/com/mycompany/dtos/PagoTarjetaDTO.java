@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * recibe parámetros de un pago validado por infraestructura. 
  * @author victoria
  */
-public class PagoTarjetaDTO implements MetodoPagoDTO{
+public class PagoTarjetaDTO extends MetodoPagoDTO{
     
     private String codigoConfirmacion;
     private LocalDateTime fechaHora;

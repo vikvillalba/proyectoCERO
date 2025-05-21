@@ -8,6 +8,7 @@ import com.mycompany.negocio.InterfazBO.IAlumnosBO;
 import com.mycompany.negocio.InterfazBO.IInscripcionesBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 /**
@@ -81,13 +82,29 @@ public class ControlGestionarAlumnos implements IControlGestionarAlumnos {
         if (correo == null || !correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
             throw new GestionarAlumnosException("El correo electrónico no es válido.");
         }
+        //valida el correoElectronico
     }
 
     private void validarFechaNacimientoAlumno(LocalDate fechaNacimiento) throws GestionarAlumnosException {
         if (fechaNacimiento == null) {
             throw new GestionarAlumnosException("La fecha de nacimiento no puede ser nula.");
         }
+
+        LocalDate fechaActual = LocalDate.now();
+
+        // Verifica que la fecha no sea en el futuro
+        if (fechaNacimiento.isAfter(fechaActual)) {
+            throw new GestionarAlumnosException("La fecha de nacimiento no puede ser posterior a la fecha actual.");
+        }
+
+        // Calcula la edad
+        int edad = Period.between(fechaNacimiento, fechaActual).getYears();
+
+        if (edad <= 10) {
+            throw new GestionarAlumnosException("El alumno debe tener más de 10 años.");
+        }
     }
+
 
     private void validarTelefonoAlumno(String telefono) throws GestionarAlumnosException {
         if (telefono == null || !telefono.matches("^[0-9]{10}$")) {

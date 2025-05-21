@@ -143,7 +143,7 @@ public class FrmInscripcionesClasesAlumno extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Menlo", 1, 48));
         lblTitulo.setForeground(new java.awt.Color(30, 47, 86));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("ADMINISTRACION ALUMNOS");
+        lblTitulo.setText("INSCRIPCIONES ALUMNO");
         Header.add(lblTitulo, java.awt.BorderLayout.PAGE_START);
 
         panelFiltros.setLayout(new java.awt.GridLayout(2, 1, 10, 25));

@@ -361,9 +361,8 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
         // obtenerInfo de txt
         String campo = txtCodigoAlumno.getText().trim();
-        ControlNavegacion.mostrarErrorcampoIdAlumno(campo);
-        this.dispose();
-        ControlNavegacion.mostrarFinalizarInscripcion(this.clase, campo);
+        Integer campoId = ControlNavegacion.mostrarErrorcampoIdAlumno(campo);
+        ControlNavegacion.mostrarFinalizarInscripcion(this.clase, campoId);
     }//GEN-LAST:event_btnInscribirAlumnoActionPerformed
 
     private void txtCodigoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoAlumnoActionPerformed

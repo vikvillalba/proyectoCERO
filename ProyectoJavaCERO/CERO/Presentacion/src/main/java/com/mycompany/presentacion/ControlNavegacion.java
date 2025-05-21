@@ -119,8 +119,10 @@ public class ControlNavegacion {
         frame.setLocationRelativeTo(null); // Centra la ventana
         frame.add(panel);
         frame.setVisible(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         frameActual = frame; // Guarda referencia
+        
         return frame;
     }
 
@@ -131,6 +133,7 @@ public class ControlNavegacion {
         menuPrincipal = new FrmMenuPrincipal();
         menuPrincipal.setVisible(true);
         frameActual = menuPrincipal;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -141,6 +144,7 @@ public class ControlNavegacion {
         inscribir = new FrmInscribirClase();
         inscribir.setVisible(true);
         frameActual = inscribir;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -150,6 +154,7 @@ public class ControlNavegacion {
         pagoEfectivo = new FrmPagoEfectivo(clase, alumno);
         pagoEfectivo.setVisible(true);
         frameActual = pagoEfectivo;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -159,6 +164,7 @@ public class ControlNavegacion {
         pagoTarjeta = new FrmPagoTarjeta(clase, alumno);
         pagoTarjeta.setVisible(true);
         frameActual = pagoTarjeta;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -181,9 +187,11 @@ public class ControlNavegacion {
      * @param claseDTO el DTO que tendra los datos a mostrar.
      */
     public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
+        frameActual.dispose();
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
         frameActual = finalizarInscripcion;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -193,12 +201,14 @@ public class ControlNavegacion {
         alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
         alumnosInscritos.setVisible(true);
         frameActual = alumnosInscritos;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException {
         registrarAlumno = new FrmRegistrarAlumno(clase);
         registrarAlumno.setVisible(true);
         frameActual = registrarAlumno;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, Exception exc) {
@@ -312,15 +322,20 @@ public class ControlNavegacion {
 
         // obtiene el pago de infraesttuctura
         PagoRealizadoDTO pagoRealizadoSistemaPagos = confirmarPagoTarjeta(pago);
+        if (pagoRealizadoSistemaPagos == null) {
+            mostrarMensajeErrorConExcepcion(frameActual, new PresentacionException("No se pudo registrar el pago en el sistema de pagos"));
+            return;
+        }
         // arma la dto
         PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizadoSistemaPagos.getCodigoConfirmacion(), pagoRealizadoSistemaPagos.getFechaHora());
         NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(pago.getMonto(), pagoTarjeta);
-
+        
         PagoDTO pagoDTO = inscribirClase.realizarPagoTarjeta(nuevoPagoDTO);
         LocalDateTime fechaActual = LocalDateTime.now();
         NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pagoDTO);
-
+        
         InscripcionDTO inscripcion = realizarInscripcionPagoTarjeta(inscripcionDTO);
+        mostrarMensajePagoExitoso(frameActual);
         if (inscripcion == null) {
             try {
                 throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
@@ -328,13 +343,13 @@ public class ControlNavegacion {
                 mostrarMensajeErrorConExcepcion(frame, ex);
             }
         }
-
+        
     }
 
     /**
      * LLamada al SS del CU de inscripciones para guardar los datos ya validados del pago en efectivo.
      */
-    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseDTO clase, AlumnoDTO alumno, JFrame frame) {
+    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseDTO clase, AlumnoDTO alumno) {
 
         PagoDTO pago = inscribirClase.realizarPagoEfectivo(nuevoPago);
         LocalDateTime fechaActual = LocalDateTime.now();
@@ -345,7 +360,7 @@ public class ControlNavegacion {
             try {
                 throw new PresentacionException("Ocurrió un problema al realizar el pago y registrar la inscripción.");
             } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(frame, ex);
+                mostrarMensajeErrorConExcepcion(frameActual, ex);
             }
         }
     }
@@ -354,14 +369,19 @@ public class ControlNavegacion {
      * Calcula el cambio para el efectivo recibido.
      */
     public static BigDecimal calcularCambio(BigDecimal precioClase, BigDecimal efectivoRecibido, JFrame frame) {
-        if (!validarEfectivoRecibido(precioClase, efectivoRecibido, frame)) {
-            try {
-                throw new PresentacionException("El efectivo ingresado no es suficiente para realizar el pago. Verifique e intente nuevamente.");
-            } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(frame, ex);
+        try {
+            if (!validarEfectivoRecibido(precioClase, efectivoRecibido, frame)) {
+                try {
+                    throw new PresentacionException("El efectivo ingresado no es suficiente para realizar el pago. Verifique e intente nuevamente.");
+                } catch (PresentacionException ex) {
+                    mostrarMensajeErrorConExcepcion(frame, ex);
+                }
             }
+            return inscribirClase.calcularCambio(precioClase, efectivoRecibido);
+        } catch (InscripcionException ex) {
+            mostrarMensajeErrorConExcepcion(frame, ex);   
         }
-        return inscribirClase.calcularCambio(precioClase, efectivoRecibido);
+        return null;
     }
 
     /**
@@ -372,6 +392,7 @@ public class ControlNavegacion {
         datosClase = new FrmDatosClase(claseDTO);
         datosClase.setVisible(true);
         frameActual = datosClase;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     //MOSTRAR CLASES EXISTENTES
@@ -399,9 +420,9 @@ public class ControlNavegacion {
     }
 
     public static void mostrarClasesExistentes(String nombre) {
-        frameActual.dispose();
         if (validarErrorNombreClase(inscribir, nombre)) {
             mostrarInscribirClase();
+            
             return;
         }
 
@@ -441,15 +462,13 @@ public class ControlNavegacion {
             } catch (PresentacionException ex) {
                 mostrarMensajeErrorConExcepcion(datosClase, ex);
             }
-            return null;
         }
         Integer codigoAlumno = Integer.valueOf(campo);
         return codigoAlumno;
     }
 
-    public static void mostrarFinalizarInscripcion(ClaseDTO clase, String campo) {
-
-        Integer codigoAlumno = mostrarErrorcampoIdAlumno(campo);
+    public static void mostrarFinalizarInscripcion(ClaseDTO clase, Integer codigoAlumno) {
+        frameActual.dispose();
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
         AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
         if (alumnoEncontrado == null) {
@@ -889,10 +908,10 @@ public class ControlNavegacion {
     public static void registrarNuevoAlumno(AlumnoDTO nuevoAlumno) {
         try {
             gestionarAlumnos.registrarNuevoAlumno(nuevoAlumno);
+            JOptionPane.showMessageDialog(frameActual, "Alumn@ registrad@ exitosamente");
         } catch (GestionarAlumnosException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
-        JOptionPane.showMessageDialog(frameActual, "Alumn@ registrad@ exitosamente");
         
     }
     
@@ -900,10 +919,11 @@ public class ControlNavegacion {
 
         try {
             gestionarAlumnos.editarAlumno(alumno);
+            JOptionPane.showMessageDialog(frameActual, "Alumn@ editad@ exitosamente");
+            mostrarFrmAdminAlumnos();
         } catch (GestionarAlumnosException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
-        JOptionPane.showMessageDialog(frameActual, "Alumn@ editad@ exitosamente");
 
     }
     public static void eliminarAlumno(AlumnoDTO alumno){
@@ -911,7 +931,7 @@ public class ControlNavegacion {
     }
 
     public static void mostrarFrmInscripcionesClasesAlumno(AlumnoDTO alumno) {
-        
+        frameActual.dispose();
         List<InscripcionClaseDTO> inscripciones = obtenerInscripciones(alumno);
         if(!inscripciones.isEmpty()){
              frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);

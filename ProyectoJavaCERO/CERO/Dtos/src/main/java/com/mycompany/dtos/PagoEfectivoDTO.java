@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * Clase de transporte para un pago con efectivo.
  * @author victoria
  */
-public class PagoEfectivoDTO implements MetodoPagoDTO {
+public class PagoEfectivoDTO extends MetodoPagoDTO {
     
     private BigDecimal cantidadRecibida;
     private BigDecimal cambio;

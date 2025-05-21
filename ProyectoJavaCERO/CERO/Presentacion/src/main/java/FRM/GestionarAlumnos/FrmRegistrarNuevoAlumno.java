@@ -2,6 +2,7 @@ package FRM.GestionarAlumnos;
 
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
+import com.mycompany.presentacion.excepciones.PresentacionException;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -348,14 +349,18 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         Date fechaSeleccionada = selectorFecha.getDate();
         String telefono = txtTelefono.getText().trim();
         String correoElectronico = txtCorreo.getText().trim();
-
+        
         // Validar formato de fecha
+        if(fechaSeleccionada != null){
         LocalDate fechaNacimientoDate = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         // Crear alumnoDTO solo si la fecha fue válida
         AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
         ControlNavegacion.registrarNuevoAlumno(nuevoAlumnoDTO);
         ControlNavegacion.mostrarFrmAdminAlumnos();
+        }else{
+            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, new PresentacionException("Campos vacios"));
+        }
         
     }//GEN-LAST:event_btnNuevoEstudianteActionPerformed
 

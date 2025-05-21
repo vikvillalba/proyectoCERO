@@ -2,6 +2,7 @@ package FRM.GestionarAlumnos;
 
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
+import com.mycompany.presentacion.excepciones.PresentacionException;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -116,7 +117,7 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
         panelBtnRegresar = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         panelBtnAñadir = new javax.swing.JPanel();
-        btnNuevoEstudiante = new javax.swing.JButton();
+        btnEditarAlumno = new javax.swing.JButton();
         panelScroll = new javax.swing.JPanel();
         lblIP2 = new javax.swing.JLabel();
         txtApellidoP = new javax.swing.JTextField();
@@ -212,12 +213,12 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
 
         panelBotones.add(panelBtnRegresar, java.awt.BorderLayout.LINE_START);
 
-        btnNuevoEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnGuardar.png"))); // NOI18N
-        btnNuevoEstudiante.setBorderPainted(false);
-        btnNuevoEstudiante.setContentAreaFilled(false);
-        btnNuevoEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnGuardar.png"))); // NOI18N
+        btnEditarAlumno.setBorderPainted(false);
+        btnEditarAlumno.setContentAreaFilled(false);
+        btnEditarAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoEstudianteActionPerformed(evt);
+                btnEditarAlumnoActionPerformed(evt);
             }
         });
 
@@ -227,14 +228,14 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
             panelBtnAñadirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBtnAñadirLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnNuevoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEditarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelBtnAñadirLayout.setVerticalGroup(
             panelBtnAñadirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBtnAñadirLayout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(btnNuevoEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEditarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
 
@@ -374,7 +375,7 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void btnNuevoEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEstudianteActionPerformed
+    private void btnEditarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAlumnoActionPerformed
         // TODO add your handling code here:
         String apellidoPaterno = txtApellidoP.getText().trim();
         String apellidoMaterno = txtApellidoM.getText().trim();
@@ -384,12 +385,23 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
         String correoElectronico = txtCorreo.getText().trim();
 
         // Validar formato de fecha
+        if(fechaSeleccionada != null){
         LocalDate fechaNacimientoDate = fechaSeleccionada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        // Crear alumnoDTO solo si la fecha fue válida
-        AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
         //Hacer setters en el alumnoEditadar y llamar metodo editarAlumno();
-    }//GEN-LAST:event_btnNuevoEstudianteActionPerformed
+        alumnoEdit.setApellidoMaterno(apellidoMaterno);
+        alumnoEdit.setApellidoPaterno(apellidoPaterno);
+        alumnoEdit.setCorreoElectronico(correoElectronico);
+        alumnoEdit.setFechaNacimiento(fechaNacimientoDate);
+        alumnoEdit.setNombre(nombre);
+        alumnoEdit.setTelefono(telefono);
+        
+        ControlNavegacion.editarAlumno(alumnoEdit);
+        }else{
+            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, new PresentacionException("La fecha esta vacia"));
+        }
+        
+    }//GEN-LAST:event_btnEditarAlumnoActionPerformed
 
     private void txtApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoPActionPerformed
         // TODO add your handling code here:
@@ -418,7 +430,7 @@ public class FrmEditarAlumno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Header;
-    private javax.swing.JButton btnNuevoEstudiante;
+    private javax.swing.JButton btnEditarAlumno;
     private javax.swing.JLabel campoVacio;
     private javax.swing.JLabel campoVacio2;
     private javax.swing.JLabel campoVacio3;

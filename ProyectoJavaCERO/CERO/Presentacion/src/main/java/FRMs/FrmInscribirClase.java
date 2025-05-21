@@ -125,7 +125,6 @@ public class FrmInscribirClase extends javax.swing.JFrame {
 
         String campo = txfNombreClase.getText();
         ControlNavegacion.mostrarClasesExistentes(campo);
-        this.dispose();
 
     }//GEN-LAST:event_botonBuscarClaseActionPerformed
 

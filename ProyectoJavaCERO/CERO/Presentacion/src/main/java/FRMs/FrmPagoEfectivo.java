@@ -174,31 +174,52 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         }
 
         try {
-            // Primero intenta parsear como Double
-            double valorDouble = Double.parseDouble(textoEfectivo);
-            // Luego convierte correctamente a BigDecimal usando el constructor con String (más preciso)
-            this.efectivoRecibido = new BigDecimal(String.valueOf(valorDouble));
+            // Convertir texto a BigDecimal de forma precisa
+            this.efectivoRecibido = new BigDecimal(textoEfectivo);
+
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor ingresa un número válido para el efectivo recibido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Calcular cambio
         this.cambio = ControlNavegacion.calcularCambio(clase.getPrecio(), this.efectivoRecibido, this);
+
+        // Validar si el cambio es menor a 0.00
+        if (this.cambio.compareTo(BigDecimal.ZERO) < 0) {
+            this.cambio = BigDecimal.ZERO;
+        }
+
         lblCambio.setText(cambio.toString());
+
     }//GEN-LAST:event_btnCalcularCambioActionPerformed
 
     private void btnRealizarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarPagoActionPerformed
         //hacer pagoefectivodto
-        PagoEfectivoDTO pagoEfectivo = new PagoEfectivoDTO(this.efectivoRecibido,this.cambio);
-        // armar nuevopagodto
-        NuevoPagoDTO nuevoPago = new NuevoPagoDTO(clase.getPrecio(), pagoEfectivo);
-        ControlNavegacion.realizarPagoEfectivo(nuevoPago, clase, alumno, this);
-        ControlNavegacion.mostrarMensajePagoExitoso(this);
+        // Validar que el cambio no sea 0.00
+        //valida que el efectivo recibido no sea nulo 
+        if (cambio == null) {
+            ControlNavegacion.calcularCambio(cambio, efectivoRecibido, this);
+            return;
+        }
+        if (this.efectivoRecibido.compareTo(clase.getPrecio()) >= 0) {
+            // Crear el DTO de pago en efectivo
+            PagoEfectivoDTO pagoEfectivo = new PagoEfectivoDTO(efectivoRecibido, cambio);
 
+            // Crear el nuevo objeto de pago
+            NuevoPagoDTO nuevoPago = new NuevoPagoDTO(clase.getPrecio(), pagoEfectivo);
+
+            // Realizar el pago
+            ControlNavegacion.realizarPagoEfectivo(nuevoPago, clase, alumno);
+
+            // Mostrar mensaje de éxito
+            ControlNavegacion.mostrarMensajePagoExitoso(this);
+        }
     }//GEN-LAST:event_btnRealizarPagoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.dispose();
+        ControlNavegacion.mostrarFrmFinalizarInscripcion(clase, alumno);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
 

@@ -47,7 +47,10 @@ public class InscribirClase implements IInscribirClase {
     }
 
     @Override
-    public BigDecimal calcularCambio(BigDecimal costoClase, BigDecimal cantidadRecibida) {
+    public BigDecimal calcularCambio(BigDecimal costoClase, BigDecimal cantidadRecibida)throws InscripcionException{
+        if(cantidadRecibida == null){
+            throw new InscripcionException("Ingresa una cantidad y calcula el cambio :)");
+        }
         return cantidadRecibida.subtract(costoClase);
     }
 

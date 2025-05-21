@@ -23,13 +23,20 @@ public interface IInscribirClase {
 
     /**
      * valida el efectivo recibido.
+     * @param costoClase
+     * @param efectivo
+     * @return 
      */
     public abstract boolean validarEfectivoRecibido(BigDecimal costoClase, BigDecimal efectivo);
 
     /**
      * Calcula el cambio para el pago en efectivo.
+     * @param costoClase
+     * @param cantidadRecibida
+     * @return 
+     * @throws com.mycompany.inscribirclase.excepciones.InscripcionException 
      */
-    public abstract BigDecimal calcularCambio(BigDecimal costoClase, BigDecimal cantidadRecibida);
+    public BigDecimal calcularCambio(BigDecimal costoClase, BigDecimal cantidadRecibida)throws InscripcionException;
 
     /**
      * Procesa el pago en efectivo.
@@ -38,6 +45,8 @@ public interface IInscribirClase {
 
     /**
      * Crea conexión al sistema de pagos en infraestructura.
+     * @param pagoTarjeta
+     * @return 
      */
     public abstract PagoRealizadoDTO confirmarPagoTarjeta(NuevoPagoTarjetaDTO pagoTarjeta);
 
