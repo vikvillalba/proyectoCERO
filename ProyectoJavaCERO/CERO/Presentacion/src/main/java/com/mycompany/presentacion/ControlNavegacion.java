@@ -133,7 +133,6 @@ public class ControlNavegacion {
         menuPrincipal = new FrmMenuPrincipal();
         menuPrincipal.setVisible(true);
         frameActual = menuPrincipal;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -143,8 +142,7 @@ public class ControlNavegacion {
         frameActual.dispose();
         inscribir = new FrmInscribirClase();
         inscribir.setVisible(true);
-        frameActual = inscribir;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
     /**
@@ -154,7 +152,6 @@ public class ControlNavegacion {
         pagoEfectivo = new FrmPagoEfectivo(clase, alumno);
         pagoEfectivo.setVisible(true);
         frameActual = pagoEfectivo;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -164,7 +161,6 @@ public class ControlNavegacion {
         pagoTarjeta = new FrmPagoTarjeta(clase, alumno);
         pagoTarjeta.setVisible(true);
         frameActual = pagoTarjeta;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -192,7 +188,7 @@ public class ControlNavegacion {
         finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
         finalizarInscripcion.setVisible(true);
         frameActual = finalizarInscripcion;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 
     }
 
@@ -202,14 +198,14 @@ public class ControlNavegacion {
         alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
         alumnosInscritos.setVisible(true);
         frameActual = alumnosInscritos;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
+ 
     }
 
     public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException {
         frmRegistrarAlumnoInscribirClase = new FrmRegistrarNuevoAlumnoInscribirClase(clase);
         frmRegistrarAlumnoInscribirClase.setVisible(true);
         frameActual = frmRegistrarAlumnoInscribirClase;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
     public static void mostrarMensajeErrorConExcepcion(JFrame parentComponent, Exception exc) {
@@ -393,7 +389,7 @@ public class ControlNavegacion {
         datosClase = new FrmDatosClase(claseDTO);
         datosClase.setVisible(true);
         frameActual = datosClase;
-        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
     }
 
     //MOSTRAR CLASES EXISTENTES
@@ -940,7 +936,6 @@ public class ControlNavegacion {
             frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);
             frmInscripcionesClasesAlumno.setVisible(true);
             frameActual = frmInscripcionesClasesAlumno;
-            frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }else{
             try {
                 throw new PresentacionException("El alumno no tiene inscripciones");

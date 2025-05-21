@@ -4,6 +4,7 @@ import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -15,13 +16,13 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    
+
     public FrmRegistrarAsistenciaActualAlumno() {
         initComponents();
         this.setTitle("Registrar asistencia individual");
-        
+
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
-        
+
         JPanel pnlFondo = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -29,14 +30,14 @@ public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
                 g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        
+
         getContentPane().setLayout(new AbsoluteLayout());
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
-        
-        this.setLocationRelativeTo(null);        
-        
-        pack();        
-        
+
+        this.setLocationRelativeTo(null);
+
+        pack();
+
     }
 
     /**
@@ -101,6 +102,19 @@ public class FrmRegistrarAsistenciaActualAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverMenuPrincipalActionPerformed
 
     private void btnRegistrarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciaActionPerformed
+        String textoId = txtCodigoAlumno.getText().trim();
+        if (textoId.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un ID de alumno.");
+            return;
+        }
+
+        int idAlumno;
+        try {
+            idAlumno = Integer.parseInt(textoId);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El ID de alumno debe ser un número válido.");
+            return;
+        }
         ControlNavegacion.mostrarInscripcionesAlumno(txtCodigoAlumno.getText(), this);
     }//GEN-LAST:event_btnRegistrarAsistenciaActionPerformed
 

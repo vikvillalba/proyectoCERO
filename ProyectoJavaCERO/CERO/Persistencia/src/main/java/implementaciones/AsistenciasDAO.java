@@ -18,6 +18,7 @@ import DAOs.IAsistenciasDAO;
 import Entidades.ReporteAsistencia;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.UpdateResult;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
@@ -79,18 +80,20 @@ public class AsistenciasDAO implements IAsistenciasDAO {
 
     @Override
     public Asistencia justificarFalta(Asistencia faltaJustificada) {
-        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
-        MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
-
         if (faltaJustificada.getId() == null) {
             return null;
         }
+        System.out.println("Justificante: " + faltaJustificada.getJustificante().getMotivo());
+
+        MongoDatabase baseDatos = ConexionMongoBD.getConexion();
+        MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         Document filtro = new Document("_id", faltaJustificada.getId());
 
-        ReplaceOptions opciones = new ReplaceOptions().upsert(false);
-        coleccion.replaceOne(filtro, faltaJustificada, opciones);
+        Document update = new Document("$set", new Document("tipoAsistencia", faltaJustificada.getTipoAsistencia())
+                .append("justificante", faltaJustificada.getJustificante()));
 
+        UpdateResult resultado = coleccion.updateOne(filtro, update);
         return faltaJustificada;
     }
 
@@ -100,8 +103,8 @@ public class AsistenciasDAO implements IAsistenciasDAO {
         MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
         Document filtro = new Document();
-        filtro.append("alumno", alumno.getId()); 
-        filtro.append("clase", clase.getId()); 
+        filtro.append("alumno", alumno.getId());
+        filtro.append("clase", clase.getId());
         filtro.append("tipoAsistencia", TipoAsistencia.JUSTIFICADO.name());
 
         List<Asistencia> asistenciasClase = coleccion.find(filtro).into(new ArrayList<>());

@@ -20,7 +20,9 @@ import com.mycompany.negocio.InterfazBO.IAsistenciasBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,7 +109,10 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada) {
-        Justificante justificante = new Justificante(faltaJustificada.getJustificante().getMotivo(), faltaJustificada.getJustificante().getFechaHora());
+        // De LocalDateTime a Date
+        Date fecha = Date.from(faltaJustificada.getJustificante().getFechaHora().atZone(ZoneId.systemDefault()).toInstant());
+
+        Justificante justificante = new Justificante(faltaJustificada.getJustificante().getMotivo(), fecha);
         Alumno alumno = this.alumnosDAO.obtenerAlumno(faltaJustificada.getAlumno().getId());
 
         Clase clase = this.clasesDAO.buscarClaseCodigoInteger(faltaJustificada.getClase().getCodigo());
@@ -119,8 +124,8 @@ public class AsistenciasBO implements IAsistenciasBO {
                 alumno.getIdString(),
                 clase.obtenerIdString()
         );
-        
 
+        asistenciaJustificada.setJustificante(justificante);
         Asistencia justificanteRegistrado = this.asistenciasDAO.justificarFalta(asistenciaJustificada);
         faltaJustificada.setTipoAsistencia(TipoAsistenciaDTO.JUSTIFICADO);
         return faltaJustificada;
@@ -155,7 +160,7 @@ public class AsistenciasBO implements IAsistenciasBO {
 
     @Override
     public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistenciasDTO) throws NegocioException {
-        
+
         List<Asistencia> asistenciasEntidad = new ArrayList<>();
         String idClase = "";
 
