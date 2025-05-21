@@ -4,9 +4,12 @@ import implementaciones.ObjectIDMapper;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 /**
@@ -22,25 +25,39 @@ public class Clase {
     private ObjectId id;
     private Integer codigo;
     private String nombre;
-    private ObjectId idMaestro;     // Solo el ID del maestro
-    private ObjectId idAula;        // Solo el ID del aula
+    private ObjectId idMaestro;
+    private ObjectId idAula;
     private String modalidad;
     private List<DayOfWeek> dias;
+
+    @BsonIgnore
     private LocalTime horaInicio;
+
+    @BsonIgnore
     private LocalTime horaFin;
+
+    @BsonIgnore
     private LocalDate fechaInicio;
+
+    @BsonIgnore
     private LocalDate fechaFin;
+
     private int capacidadAlumnos;
     private final Integer LIMITE_FALTAS = 3;
-    private String nombreMaestro;  // mostrar en reportes
+
+    private String nombreMaestro;
+
     private String nombreAula;
+
     private BigDecimal precio;
     private boolean activa;
+
+    private LocalDateTime fechaHoraInicio;
+    private LocalDateTime fechaHoraFin;
 
     public Clase() {
     }
 
-    // Constructor Nueva Clase
     public Clase(Integer codigo, String nombre, ObjectId idMaestro, ObjectId idAula, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, BigDecimal precio, boolean activa) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -55,6 +72,8 @@ public class Clase {
         this.capacidadAlumnos = capacidadAlumnos;
         this.precio = precio;
         this.activa = activa;
+        this.fechaHoraInicio = LocalDateTime.of(fechaInicio, horaInicio);
+        this.fechaHoraFin = LocalDateTime.of(fechaFin, horaFin);
     }
 
     public Clase(int codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin, String maestro) {
@@ -66,6 +85,9 @@ public class Clase {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.precio = precio;
+        this.nombreMaestro = maestro;
+        this.fechaHoraInicio = LocalDateTime.of(fechaInicio, horaInicio);
+        this.fechaHoraFin = LocalDateTime.of(fechaFin, horaFin);
     }
 
     public Clase(String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
@@ -73,10 +95,12 @@ public class Clase {
         this.dias = dias;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.nombreMaestro = maestro;
+        this.precio = precio;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.precio = precio;
-
+        this.fechaHoraInicio = LocalDateTime.of(fechaInicio, horaInicio);
+        this.fechaHoraFin = LocalDateTime.of(fechaFin, horaFin);
     }
 
     public Clase(String nombre, String idMaestro, String idAula, String modalidad, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, BigDecimal precio, boolean activa) {
@@ -92,10 +116,48 @@ public class Clase {
         this.capacidadAlumnos = capacidadAlumnos;
         this.precio = precio;
         this.activa = activa;
+        this.fechaHoraInicio = LocalDateTime.of(fechaInicio, horaInicio);
+        this.fechaHoraFin = LocalDateTime.of(fechaFin, horaFin);
     }
-    
-    
 
+    @BsonCreator
+    public Clase(
+            @BsonProperty("codigo") Integer codigo,
+            @BsonProperty("nombre") String nombre,
+            @BsonProperty("idMaestro") ObjectId idMaestro,
+            @BsonProperty("idAula") ObjectId idAula,
+            @BsonProperty("modalidad") String modalidad,
+            @BsonProperty("dias") List<DayOfWeek> dias,
+            @BsonProperty("fechaHoraInicio") LocalDateTime fechaHoraInicio,
+            @BsonProperty("fechaHoraFin") LocalDateTime fechaHoraFin,
+            @BsonProperty("capacidadAlumnos") int capacidadAlumnos,
+            @BsonProperty("precio") BigDecimal precio,
+            @BsonProperty("activa") boolean activa
+    ) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.idMaestro = idMaestro;
+        this.idAula = idAula;
+        this.modalidad = modalidad;
+        this.dias = dias;
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.fechaHoraFin = fechaHoraFin;
+        this.capacidadAlumnos = capacidadAlumnos;
+        this.precio = precio;
+        this.activa = activa;
+
+        // reconstrucción automática
+        if (fechaHoraInicio != null) {
+            this.fechaInicio = fechaHoraInicio.toLocalDate();
+            this.horaInicio = fechaHoraInicio.toLocalTime();
+        }
+        if (fechaHoraFin != null) {
+            this.fechaFin = fechaHoraFin.toLocalDate();
+            this.horaFin = fechaHoraFin.toLocalTime();
+        }
+    }
+
+    // Getters y Setters
     public ObjectId getId() {
         return id;
     }
@@ -212,6 +274,22 @@ public class Clase {
         return LIMITE_FALTAS;
     }
 
+    public LocalDateTime getFechaHoraInicio() {
+        return fechaHoraInicio;
+    }
+
+    public void setFechaHoraInicio(LocalDateTime fechaHoraInicio) {
+        this.fechaHoraInicio = fechaHoraInicio;
+    }
+
+    public LocalDateTime getFechaHoraFin() {
+        return fechaHoraFin;
+    }
+
+    public void setFechaHoraFin(LocalDateTime fechaHoraFin) {
+        this.fechaHoraFin = fechaHoraFin;
+    }
+
     @BsonIgnore
     public String obtenerIdString() {
         return ObjectIDMapper.toString(id);
@@ -225,11 +303,6 @@ public class Clase {
     @BsonIgnore
     public String getIdAulaString() {
         return ObjectIDMapper.toString(idAula);
-    }
-
-    @Override
-    public String toString() {
-        return "Clase{" + "id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", idMaestro=" + idMaestro + ", idAula=" + idAula + ", modalidad=" + modalidad + ", dias=" + dias + ", horaInicio=" + horaInicio + ", horaFin=" + horaFin + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", capacidadAlumnos=" + capacidadAlumnos + ", LIMITE_FALTAS=" + LIMITE_FALTAS + ", nombreMaestro=" + nombreMaestro + ", nombreAula=" + nombreAula + ", precio=" + precio + ", activa=" + activa + '}';
     }
 
     @BsonIgnore
@@ -257,4 +330,27 @@ public class Clase {
         return ObjectIDMapper.toString(id);
     }
 
+    @Override
+    public String toString() {
+        return "Clase{"
+                + "id=" + id
+                + ", codigo=" + codigo
+                + ", nombre='" + nombre + '\''
+                + ", idMaestro=" + idMaestro
+                + ", idAula=" + idAula
+                + ", modalidad='" + modalidad + '\''
+                + ", dias=" + dias
+                + ", horaInicio=" + horaInicio
+                + ", horaFin=" + horaFin
+                + ", fechaInicio=" + fechaInicio
+                + ", fechaFin=" + fechaFin
+                + ", capacidadAlumnos=" + capacidadAlumnos
+                + ", LIMITE_FALTAS=" + LIMITE_FALTAS
+                + ", nombreMaestro='" + nombreMaestro + '\''
+                + ", nombreAula='" + nombreAula + '\''
+                + ", precio=" + precio
+                + ", activa=" + activa
+                + '}';
+    }
+    
 }

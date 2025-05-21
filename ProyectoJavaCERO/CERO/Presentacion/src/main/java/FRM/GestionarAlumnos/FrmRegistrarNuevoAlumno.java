@@ -357,7 +357,6 @@ public class FrmRegistrarNuevoAlumno extends javax.swing.JFrame {
         // Crear alumnoDTO solo si la fecha fue válida
         AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
         ControlNavegacion.registrarNuevoAlumno(nuevoAlumnoDTO);
-        ControlNavegacion.mostrarFrmAdminAlumnos();
         }else{
             ControlNavegacion.mostrarMensajeErrorConExcepcion(this, new PresentacionException("Campos vacios"));
         }

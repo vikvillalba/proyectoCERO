@@ -890,6 +890,7 @@ public class ControlNavegacion {
         frmAdminAlumnos = new FrmAdminAlumnos(alumnos);
         frmAdminAlumnos.setVisible(true);
         frameActual = frmAdminAlumnos;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
     public static void mostrarFrmRegistrarNuevoAlumno(){
@@ -897,6 +898,7 @@ public class ControlNavegacion {
         frmRegistrarNuevoAlumno = new FrmRegistrarNuevoAlumno();
         frmRegistrarNuevoAlumno.setVisible(true);
         frameActual = frmRegistrarNuevoAlumno;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
     }
     public static void mostrarFrmEditarAlumno(AlumnoDTO alumno){
@@ -904,12 +906,14 @@ public class ControlNavegacion {
         frmEditarAlumno = new FrmEditarAlumno(alumno);
         frmEditarAlumno.setVisible(true);
         frameActual = frmEditarAlumno;
+        frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
    
     public static void registrarNuevoAlumno(AlumnoDTO nuevoAlumno) {
         try {
             gestionarAlumnos.registrarNuevoAlumno(nuevoAlumno);
             JOptionPane.showMessageDialog(frameActual, "Alumn@ registrad@ exitosamente");
+            mostrarFrmAdminAlumnos();
         } catch (GestionarAlumnosException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
@@ -932,18 +936,19 @@ public class ControlNavegacion {
     }
 
     public static void mostrarFrmInscripcionesClasesAlumno(AlumnoDTO alumno) {
-        frameActual.dispose();
+       
         List<InscripcionClaseDTO> inscripciones = obtenerInscripciones(alumno);
         if(!inscripciones.isEmpty()){
-             frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);
-             frmInscripcionesClasesAlumno.setVisible(true);
-             frameActual = frmInscripcionesClasesAlumno;
+            frameActual.dispose();
+            frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);
+            frmInscripcionesClasesAlumno.setVisible(true);
+            frameActual = frmInscripcionesClasesAlumno;
+            frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }else{
             try {
                 throw new PresentacionException("El alumno no tiene inscripciones");
             } catch (PresentacionException ex) {
                 mostrarMensajeErrorConExcepcion(frameActual, ex);
-                mostrarFrmAdminAlumnos();
             }
         }
 
