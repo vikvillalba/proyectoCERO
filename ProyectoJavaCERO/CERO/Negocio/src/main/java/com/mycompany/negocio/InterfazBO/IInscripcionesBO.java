@@ -25,6 +25,7 @@ public interface IInscripcionesBO {
 
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws NegocioException;
 
+    //Metodo para obtener la lista de alumnos id, numero de lista, nombre
     public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseDTO clase);
     
     public void cancelarInscripcion(InscripcionClaseDTO inscripcion);

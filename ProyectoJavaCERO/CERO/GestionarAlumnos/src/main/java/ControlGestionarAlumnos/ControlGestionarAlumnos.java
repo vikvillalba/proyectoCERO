@@ -69,7 +69,8 @@ public class ControlGestionarAlumnos implements IControlGestionarAlumnos {
         inscripcionesBO.cancelarInscripcion(inscripcion);
     }
 
-    private void validarDatosCompletosAlumno(AlumnoDTO alumno) throws GestionarAlumnosException {
+    @Override
+    public void validarDatosCompletosAlumno(AlumnoDTO alumno) throws GestionarAlumnosException {
         validarApellidoMaterno(alumno.getApellidoMaterno());
         validarApellidoPaterno(alumno.getApellidoPaterno());
         validarCorreoElectronicoAlumno(alumno.getCorreoElectronico());

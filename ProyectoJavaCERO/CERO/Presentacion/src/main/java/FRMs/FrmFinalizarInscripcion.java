@@ -28,10 +28,10 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
      * Creates new customizer FrmFinalizarInscripcion
      */
     public FrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
-        initComponents();
-        this.setTitle("Finalizar Inscripcion");
         this.clase = claseDTO;
         this.alumno = alumno;
+        initComponents();
+        this.setTitle("Finalizar Inscripcion");
 
 
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
@@ -125,7 +125,7 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
         jLabel10.setText("REALIZAR PAGO");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(430, 370, 400, 57);
+        jLabel10.setBounds(430, 370, 400, 62);
 
         txtPrecio.setEditable(false);
         txtPrecio.setBackground(new java.awt.Color(30, 47, 86));

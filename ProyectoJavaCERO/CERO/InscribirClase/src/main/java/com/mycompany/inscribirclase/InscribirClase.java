@@ -2,6 +2,7 @@ package com.mycompany.inscribirclase;
 
 
 
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -111,7 +112,9 @@ public class InscribirClase implements IInscribirClase {
         ClaseDTO clase = inscripcion.getClase();
         LocalDateTime fechaHora = inscripcion.getFecha();
         InscripcionDTO nuevaInscripcion = new InscripcionDTO(alumno, clase, fechaHora, pago);
-
+        //valida si el alumno ya se encuentra con inscripcion en esa clase
+        
+        
         InscripcionDTO inscripcionRealizada = inscripcionesBO.registrarInscripcionPagoEfectivo(inscripcion);
         return inscripcionRealizada;
     }
@@ -248,6 +251,22 @@ public class InscribirClase implements IInscribirClase {
         return alumnoAgregado;
     }
 
+    //validar existencia de alumno en una clase inscrita se utiliza este metodo
+    @Override
+    public List<AlumnoClaseDTO> obtenerAlumnosInscritosClase(ClaseDTO clase) {
+        return inscripcionesBO.obtenerAlumnosClase(clase);
+    }
 
+    @Override
+    public boolean validarExistenciaInscripcion(ClaseDTO clase, AlumnoDTO alumno) throws InscripcionException {
+        List<AlumnoClaseDTO> inscripciones = obtenerAlumnosInscritosClase(clase);
+        for (AlumnoClaseDTO inscripcion : inscripciones) {
+            Integer codigoAlumno = inscripcion.getCodigoAlumno();
+            if (codigoAlumno.equals(alumno.getCodigo())) {
+                throw new InscripcionException("El alumno ya cuenta con una inscripción en este curso");
+            }
+        }
+        return true; // No se encontró una inscripción previa
+    }
 
 }

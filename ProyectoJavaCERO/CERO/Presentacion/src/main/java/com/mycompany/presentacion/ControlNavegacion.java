@@ -81,7 +81,7 @@ public class ControlNavegacion {
     // formularios CU inscribir 
     private static FrmPagoEfectivo pagoEfectivo;
     private static FrmPagoTarjeta pagoTarjeta;
-    private static FrmRegistrarAlumno registrarAlumno;
+    private static FrmRegistrarNuevoAlumnoInscribirClase frmRegistrarAlumnoInscribirClase;
     private static FrmInscribirClase inscribir;
     private static FrmAlumnosInscritos alumnosInscritos;
     private static FrmClasesExistentes clasesExistentes;
@@ -185,6 +185,7 @@ public class ControlNavegacion {
      * Muestra el JFrmae FrmFinalizarInscripcion.
      *
      * @param claseDTO el DTO que tendra los datos a mostrar.
+     * @param alumno
      */
     public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
         frameActual.dispose();
@@ -205,9 +206,9 @@ public class ControlNavegacion {
     }
 
     public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException {
-        registrarAlumno = new FrmRegistrarAlumno(clase);
-        registrarAlumno.setVisible(true);
-        frameActual = registrarAlumno;
+        frmRegistrarAlumnoInscribirClase = new FrmRegistrarNuevoAlumnoInscribirClase(clase);
+        frmRegistrarAlumnoInscribirClase.setVisible(true);
+        frameActual = frmRegistrarAlumnoInscribirClase;
         frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
@@ -467,7 +468,6 @@ public class ControlNavegacion {
     }
 
     public static void mostrarFinalizarInscripcion(ClaseDTO clase, Integer codigoAlumno) {
-        frameActual.dispose();
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
         AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
         if (alumnoEncontrado == null) {
@@ -478,42 +478,39 @@ public class ControlNavegacion {
             }
             return;
         }
-        mostrarFrmFinalizarInscripcion(clase, alumnoEncontrado);
+        try {
+            //valida que el alumno no este inscrito ya en la clase
+            if(inscribirClase.validarExistenciaInscripcion(clase, alumnoEncontrado)){
+                mostrarFrmFinalizarInscripcion(clase, alumnoEncontrado);
+            }
+        } catch (InscripcionException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
+        
     }
 
-    public static boolean validarDatosAlumno(AlumnoDTO alumnoDTO) {
-        if (inscribirClase.validarApellidoPaterno(alumnoDTO.getApellidoPaterno())) {
-            return true;
-        }
-        if (inscribirClase.validarApellidoMaterno(alumnoDTO.getApellidoMaterno())) {
-            return true;
-        }
-        if (inscribirClase.validarNombreAlumno(alumnoDTO.getNombre())) {
-            return true;
-        }
-        if (inscribirClase.validarFechaNacimientoAlumno(alumnoDTO.getFechaNacimiento())) {
-            return true;
-        }
-        if (inscribirClase.validarCorreoElectronicoAlumno(alumnoDTO.getCorreoElectronico())) {
-            return true;
-        }
-        if (inscribirClase.validarTelefonoAlumno(alumnoDTO.getTelefono())) {
-            return true;
+    //agregarAlumno desde el flujo InscribirClase
+    public static boolean AgregarAlumno(ClaseDTO clase, AlumnoDTO alumnoDTO) {
+        try {
+            gestionarAlumnos.validarDatosCompletosAlumno(alumnoDTO);
+            //llamar a gestionar 
+            AlumnoDTO alumnoRegistrado = inscribirClase.agregarAlumno(alumnoDTO);
+            if (alumnoRegistrado == null) {
+                return false;
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "El alumno se registró exitosamente. El código de integrante es: " + alumnoRegistrado.getCodigo().toString(),
+                        "Alumno Registrado :)", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "El alumno : " + alumnoRegistrado.getCodigo().toString() + " \"se inscribira en la clase :  " + clase.getNombre(),
+                        "proxima inscripcion ", JOptionPane.INFORMATION_MESSAGE);
+                mostrarFrmFinalizarInscripcion(clase, alumnoRegistrado);
+                return true;
+            }
+        } catch (GestionarAlumnosException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
         return false;
-    }
-
-    public static boolean AgregarAlumno(AlumnoDTO alumnoDTO) {
-        AlumnoDTO alumnoRegistrado = inscribirClase.agregarAlumno(alumnoDTO);
-        if (alumnoRegistrado == null) {
-            return false;
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    "El alumno se registró exitosamente. El código de integrante es: " + alumnoRegistrado.getCodigo().toString(),
-                    "Alumno Registrado :)", JOptionPane.INFORMATION_MESSAGE);
-            return true;
-
-        }
     }
 
     // formularios para el CU de registro de asistencias
