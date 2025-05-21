@@ -12,6 +12,8 @@ import Entidades.Maestro;
 import Mapper.ClaseMapper;
 import Mapper.IClaseMapper;
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import Entidades.Alumno;
+import ObserverInscribirClase.INotificadorInscripcion;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.InterfazBO.IAulaBO;
 import com.mycompany.negocio.InterfazBO.IMaestroBO;
@@ -26,7 +28,7 @@ import com.mycompany.negocio.InterfazBO.IClasesBO;
  *
  * @author victoria
  */
-public class ClasesBO implements IClasesBO {
+public class ClasesBO implements IClasesBO{
 
     private IClasesDAO clasesDAO;
     private IClaseMapper claseMapper;
@@ -291,6 +293,16 @@ public class ClasesBO implements IClasesBO {
             Logger.getLogger(ClasesBO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public void notificarRegistroInscripcion(Alumno alumno, Clase clase) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void notificarCancelacionInscripcion(Alumno alumno, Clase clase) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

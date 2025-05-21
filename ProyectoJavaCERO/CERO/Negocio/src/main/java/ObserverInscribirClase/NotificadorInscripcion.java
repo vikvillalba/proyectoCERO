@@ -15,15 +15,22 @@ import java.util.List;
  */
 public class NotificadorInscripcion implements INotificadorInscripcion {
 
-    private List<INotificadorInscripcion> listeners = new ArrayList<>();
+   private List<INotificadorInscripcion> listeners = new ArrayList<>();
 
     public void agregarListener(INotificadorInscripcion listener) {
         listeners.add(listener);
     }
 
-    public void notificarInscripcion(Alumno alumno, Clase clase) {
+    public void notificarRegistroInscripcion(Alumno alumno, Clase clase) {
         for (INotificadorInscripcion listener : listeners) {
-            listener.notificarInscripcion(alumno, clase);
+            listener.notificarRegistroInscripcion(alumno, clase);
+        }
+    }
+
+    public void notificarCancelacionInscripcion(Alumno alumno, Clase clase) {
+        for (INotificadorInscripcion listener : listeners) {
+            listener.notificarCancelacionInscripcion(alumno, clase);
         }
     }
 }
+

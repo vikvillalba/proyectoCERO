@@ -12,7 +12,6 @@ import Entidades.Clase;
  * @author Jack Murrieta
  */
 public interface INotificadorInscripcion {
-    public void notificarInscripcion(Alumno alumno, Clase clase);
-    
-    
+    void notificarRegistroInscripcion(Alumno alumno, Clase clase);
+    void notificarCancelacionInscripcion(Alumno alumno, Clase clase);
 }

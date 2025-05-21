@@ -30,6 +30,7 @@ import GestionarClasesPersistencia.IMaestrosDAO;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import ObserverInscribirClase.NotificadorInscripcion;
 import com.mycompany.dtos.InscripcionClaseDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,12 +45,15 @@ public class InscripcionesBO implements IInscripcionesBO {
     private IClasesDAO clasesDAO;
     private IAlumnosDAO alumnosDAO;
     private IMaestrosDAO maestrosDAO;
+    private NotificadorInscripcion notificadorInscripcion;
 
-    public InscripcionesBO(IInscripcionesDAO inscripcionesDAO, IClasesDAO clasesDAO, IAlumnosDAO alumnosDAO, IMaestrosDAO maestrosDAO) {
+    public InscripcionesBO(IInscripcionesDAO inscripcionesDAO, IClasesDAO clasesDAO, IAlumnosDAO alumnosDAO, IMaestrosDAO maestrosDAO, NotificadorInscripcion notificadorInscripcion) {
         this.inscripcionesDAO = inscripcionesDAO;
         this.clasesDAO = clasesDAO;
         this.alumnosDAO = alumnosDAO;
         this.maestrosDAO = maestrosDAO;
+        this.notificadorInscripcion = notificadorInscripcion;
+
     }
 
     @Override
@@ -70,7 +74,9 @@ public class InscripcionesBO implements IInscripcionesBO {
         Inscripcion inscripcionRealizada = this.inscripcionesDAO.registrarInscripcion(inscripcion);
 
         InscripcionDTO inscripcionDTO = new InscripcionDTO(alumnoDTO, claseDTO, inscripcionRealizada.getFechaInscripcion(), pagoDTO);
-
+        
+        //notificar 
+        notificadorInscripcion.notificarRegistroInscripcion(alumno, clase);
         return inscripcionDTO;
 
     }
@@ -92,6 +98,9 @@ public class InscripcionesBO implements IInscripcionesBO {
         Inscripcion inscripcionRealizada = this.inscripcionesDAO.registrarInscripcion(inscripcion);
 
         InscripcionDTO inscripcionDTO = new InscripcionDTO(alumnoDTO, claseDTO, inscripcionRealizada.getFechaInscripcion(), pagoDTO);
+        
+        //notificadr
+        notificadorInscripcion.notificarCancelacionInscripcion(alumno, clase);
         return inscripcionDTO;
     }
 
@@ -185,6 +194,10 @@ public class InscripcionesBO implements IInscripcionesBO {
     @Override
     public void cancelarInscripcion(InscripcionClaseDTO inscripcion){
         String idInscripcion = inscripcion.getIdInscricpcion();
+        Alumno alumno = alumnosDAO.obtenerAlumno(inscripcion.getAlumno().getId());
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(inscripcion.getClaseListaDTO().getCodigo());
         inscripcionesDAO.cancelarInscripcion(idInscripcion);
+        
+        notificadorInscripcion.notificarCancelacionInscripcion(alumno, clase);
     }
 }

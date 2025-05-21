@@ -30,6 +30,7 @@ import GestionarClasesPersistencia.IMaestrosDAO;
 import GestionarClasesPersistencia.IAulasClaseDAO;
 import DAOs.IAsistenciasDAO;
 import DAOs.IInscripcionesDAO;
+import ObserverInscribirClase.NotificadorInscripcion;
 import implementaciones.InscripcionesDAO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
 
@@ -65,12 +66,25 @@ public class FabricaObjetosNegocio {
         return bo;
     }
     
-    public static IInscripcionesBO obtenerInscripcionesBO(){
+    public static IInscripcionesBO obtenerInscripcionesBO() {
         IInscripcionesDAO inscripcionesDAO = new InscripcionesDAO();
         IClasesDAO clasesDAO = new ClasesDAO();
         IAlumnosDAO alumnosDAO = new AlumnosDAO();
         IMaestrosDAO maestrosDAO = new MaestrosDAO();
-        IInscripcionesBO bo = new InscripcionesBO(inscripcionesDAO, clasesDAO, alumnosDAO, maestrosDAO);
+
+        NotificadorInscripcion notificadorInscripcion = new NotificadorInscripcion();
+
+        // Crear observadores
+        IClasesBO clasesBO = obtenerClasesBO();
+        IAlumnosBO alumnosBO = obtenerAlumnosBO();
+
+
+        // Agregar listeners al notificador
+        notificadorInscripcion.agregarListener(clasesBO);
+
+        // Crear el BO de inscripciones pasándole el notificador con listeners ya agregados
+        IInscripcionesBO bo = new InscripcionesBO(inscripcionesDAO, clasesDAO, alumnosDAO, maestrosDAO, notificadorInscripcion);
+
         return bo;
     }
     

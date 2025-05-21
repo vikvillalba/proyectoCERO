@@ -4,6 +4,7 @@ import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import ObserverInscribirClase.INotificadorInscripcion;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author victoria
  */
-public interface IClasesBO {
+public interface IClasesBO extends INotificadorInscripcion {
 
     public List<ClaseDTO> obtenerClasesNombre(String nombreClase) throws NegocioException;
 
