@@ -57,6 +57,10 @@ public class ControlGestionarAlumnos implements IControlGestionarAlumnos {
     public List<AlumnoDTO> obtenerAlumnosDTOLista() {
         return alumnosBO.obtenerAlumnosDTOLista();
     }
+    
+//    public List<AlumnoDTO> buscarAlumnosNombre(String nombre){
+//        alumnosBO.obtenerAlumnosDTOLista()
+//    }
 
     //dar de baja de un inscripcion
     @Override

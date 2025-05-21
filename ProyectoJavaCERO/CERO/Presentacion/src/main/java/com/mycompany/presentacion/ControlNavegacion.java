@@ -845,7 +845,12 @@ public class ControlNavegacion {
     }
 
     public static List<ClaseListaDTO> buscarClasesNombre(String nombreClase) {
-        return gestionarClases.buscarClaseListaNombre(nombreClase);
+        try {
+            return gestionarClases.buscarClaseListaNombre(nombreClase);
+        } catch (GestionarClasesException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+        }
+        return null;
     }
 
     public static List<ReporteAsistenciaDTO> obtenerReportesAsistencia(

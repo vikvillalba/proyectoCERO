@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface IControlGestionarClases {
     
-    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase);
+    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase)throws GestionarClasesException;
     public void eliminarClase(ClaseListaDTO codigoClase);
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase)throws GestionarClasesException;
     public List<AulaClaseDTO> obtenerListasAulas();

@@ -150,7 +150,8 @@ public class ClasesDAO implements IClasesDAO {
 
     @Override
     public List<Clase> obtenerClasesPorNombre(String nombreClase) {
-        return coleccion.find(eq("nombre", nombreClase)).into(new ArrayList<>());
+        Pattern regex = Pattern.compile(nombreClase, Pattern.CASE_INSENSITIVE); // Coincidencia parcial y sin distinguir mayúsculas
+        return coleccion.find(Filters.regex("nombre", regex)).into(new ArrayList<>());
     }
 
     @Override

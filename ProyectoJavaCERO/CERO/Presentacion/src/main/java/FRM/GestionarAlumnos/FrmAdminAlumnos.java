@@ -287,7 +287,7 @@ public class FrmAdminAlumnos extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        String nombreClase = txtBuscar.getText().trim();
+        String nombreAlumno = txtBuscar.getText().trim();
         //buscar por nombre de la clase
         llenarClasesExistentes(alumnos);
     }//GEN-LAST:event_btnBuscarActionPerformed

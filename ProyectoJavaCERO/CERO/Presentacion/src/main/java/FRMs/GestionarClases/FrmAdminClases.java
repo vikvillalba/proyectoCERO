@@ -379,6 +379,10 @@ public class FrmAdminClases extends javax.swing.JFrame {
             llenarClasesExistentes(clasesExistentes);
         }
         List<ClaseListaDTO> clasesEncontradas = ControlNavegacion.buscarClasesNombre(nombreClase);
+        if(clasesEncontradas == null){
+            llenarClasesExistentes(clasesExistentes);
+            return;
+        }
         llenarClasesExistentes(clasesEncontradas);
     }//GEN-LAST:event_btnBuscarActionPerformed
 

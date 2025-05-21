@@ -41,8 +41,22 @@ public class ControlGestionarClases implements IControlGestionarClases {
 
     //obtiene las listas en claseListaDTO
     @Override
-    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase) {
-        return clasesBO.buscarClasesListaNombre(nombreClase);
+    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase) throws GestionarClasesException {
+        nombreClase = nombreClase.trim();
+
+        if (nombreClase.length() < 2) {
+            throw new GestionarClasesException("Ingresa al menos 2 caracteres para realizar la búsqueda.");
+        }
+
+        List<ClaseListaDTO> clasesEncontradas = clasesBO.buscarClasesListaNombre(nombreClase);
+
+        if (clasesEncontradas == null || clasesEncontradas.isEmpty()) {
+            // No se encontraron clases parecidas, se devuelven todas las existentes
+            return clasesBO.buscarClasesExistentes();
+        }
+
+        return clasesEncontradas;
+
     }
 
     //elimina una clase desde ClaseListaDTO
