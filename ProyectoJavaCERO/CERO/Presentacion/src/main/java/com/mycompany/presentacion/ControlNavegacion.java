@@ -778,6 +778,11 @@ public class ControlNavegacion {
         try {
 
             List<AsistenciaDTO> asistenciasClase = registroAsistencias.obtenerAsistenciasClase(clase, diaClase);
+            if(asistenciasClase.isEmpty()){
+                JOptionPane.showMessageDialog(null, "No se registraron asistencias para la clase " + clase.getNombre() +" en el día " + diaClase.toString(), 
+                        "Sin asistencias registradas", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             FrmAsistenciasClaseAnterior pantallaAsistencias = new FrmAsistenciasClaseAnterior(diaClase, clase, asistenciasClase);
             pantallaAsistencias.setVisible(true);
             frameActual = pantallaAsistencias;
