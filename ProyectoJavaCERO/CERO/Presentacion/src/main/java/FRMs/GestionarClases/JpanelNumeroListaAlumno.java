@@ -28,13 +28,19 @@ public class JpanelNumeroListaAlumno extends javax.swing.JPanel {
         JpanelHeader.repaint();
 
         String numLista = String.valueOf(alumno.getNumeroLista());
+        
         lblNumeroLista.setText(numLista);
         
         lblAlumno.setText(alumno.getNombreAlumno());
+        
         String id = String.valueOf(alumno.getCodigoAlumno());
-        lblAlumno.setText(id);
+        
+        lblID.setText(id);
+        
         configurarLabelDatos(lblID);
+        
         configurarLabelDatos(lblAlumno);
+        
         configurarLabelDatos(lblNumeroLista);
         
     }

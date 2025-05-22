@@ -259,7 +259,7 @@ public class JpanelClaseLista extends javax.swing.JPanel {
 
     private void btnSeleccionarClaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarClaseActionPerformed
         // TODO add your handling code here:
-
+        
         ControlNavegacion.mostrarDatosClase(this.clase);
 
         // SI LA CLASE ESTA LLENA DESHABILITAR EL BTN

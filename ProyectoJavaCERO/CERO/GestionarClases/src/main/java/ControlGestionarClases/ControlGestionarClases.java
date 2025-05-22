@@ -36,12 +36,13 @@ public class ControlGestionarClases implements IControlGestionarClases {
     private IClasesBO clasesBO;
     private IMaestroBO maestroBO;
     private IAulaBO aulaBO;
-    private InscripcionesBO inscripcionBO;
+    private IInscripcionesBO inscripcionBO;
 
     public ControlGestionarClases() {
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
         this.maestroBO = FabricaObjetosNegocio.obtenerMaestroBO();
         this.aulaBO = FabricaObjetosNegocio.obtenerAulaBO();
+        this.inscripcionBO = FabricaObjetosNegocio.obtenerInscripcionesBO();
     }
 
     //obtiene las listas en claseListaDTO
