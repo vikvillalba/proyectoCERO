@@ -27,5 +27,4 @@ public interface IGaleriaContenidos {
     public void seleccionarContenidoViejo(ContenidoViejoDTO contenido) throws GaleriaContenidosException;
     public ContenidoNuevoDTO getContenidoNuevo();
     
-    
 }

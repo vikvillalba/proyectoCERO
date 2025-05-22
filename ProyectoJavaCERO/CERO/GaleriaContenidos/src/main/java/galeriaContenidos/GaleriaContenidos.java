@@ -19,15 +19,23 @@ import java.util.List;
  */
 public class GaleriaContenidos implements IGaleriaContenidos {
     
+    private static GaleriaContenidos control;
     private ContenidoNuevoDTO contenidoNuevo = new ContenidoNuevoDTO();
     private ContenidoViejoDTO contenidoViejo;
     private ClaseDTO claseVieja;
     private IContenidoBO contenidoBO;
     private IClasesBO clasesBO;
 
-    public GaleriaContenidos() {
+    private GaleriaContenidos() {
         this.contenidoBO = FabricaObjetosNegocio.obtenerContenidoBO();
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
+    }
+    
+    public static GaleriaContenidos getInstancia() {
+        if (control == null) {
+            control = new GaleriaContenidos();
+        }
+        return control;
     }
     
     @Override
