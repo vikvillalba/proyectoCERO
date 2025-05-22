@@ -1,5 +1,6 @@
 package FRMs;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.NuevoPagoDTO;
@@ -23,7 +24,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmPagoEfectivo extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ClaseDTO clase;
+    private ClaseListaDTO clase;
     private AlumnoDTO alumno;
     private BigDecimal efectivoRecibido;
     private BigDecimal cambio;
@@ -33,7 +34,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
      *
      * @param clase clase a la que se está realizando la inscripcion
      */
-    public FrmPagoEfectivo(ClaseDTO clase, AlumnoDTO alumno) {
+    public FrmPagoEfectivo(ClaseListaDTO clase, AlumnoDTO alumno) {
         initComponents();
         this.clase = clase;
         this.alumno = alumno;

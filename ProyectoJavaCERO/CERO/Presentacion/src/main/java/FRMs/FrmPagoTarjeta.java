@@ -1,5 +1,6 @@
 package FRMs;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.infraestructura.sistemaPago.implementaciones.NuevoPagoTarjetaDTO;
@@ -26,13 +27,13 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmPagoTarjeta extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ClaseDTO clase;
+    private ClaseListaDTO clase;
     private AlumnoDTO alumno;
 
     /**
      * Creates new form FrmMenuPrincipal
      */
-    public FrmPagoTarjeta(ClaseDTO clase, AlumnoDTO alumno) {
+    public FrmPagoTarjeta(ClaseListaDTO clase, AlumnoDTO alumno) {
         initComponents();
         this.clase = clase;
         this.alumno = alumno;

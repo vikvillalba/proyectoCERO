@@ -1,239 +1,217 @@
 package FRMs;
 
-import com.mycompany.dtos.AlumnoBusquedaDTO;
-import com.mycompany.dtos.ClaseDTO;
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import com.mycompany.presentacion.excepciones.PresentacionException;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.time.DayOfWeek;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
+
 
 /**
  *
- * @author Carlos
+ * @author daniel
  */
 public class FrmDatosClase extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ClaseDTO clase;
-    private AlumnoBusquedaDTO alumnoBusqueda;
+    private ClaseListaDTO claseLista;
 
     /**
-     * Creates new form FrmDatosClase
+     * Creates new customizer FrmFinalizarInscripcion
+     *
+     * @param clase
      */
-    public FrmDatosClase(ClaseDTO claseDTO) {
-        initComponents();
-        this.clase = claseDTO;
-        this.setTitle("Datos Clase");
+    public FrmDatosClase(ClaseListaDTO clase) {
+        this.claseLista = clase;
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
 
-        JPanel pnlFondo = new javax.swing.JPanel() {
+        // Creamos el panel con la imagen de fondo
+        JPanel pnlFondo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        pnlFondo.setLayout(null); 
+        setContentPane(pnlFondo);
+        initComponents();
 
-        getContentPane().setLayout(new AbsoluteLayout());
-        pack();
-        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
-        this.setLocationRelativeTo(null);
+        // Configuración de la ventana
+        setTitle("DATOS CLASE");
+        setSize(1000, 700);
+        setLocationRelativeTo(null);
+        setResizable(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH);
 
-        lblIDClase.setText(Integer.toString(claseDTO.getCodigo()));
-        lblNombreClase.setText(claseDTO.getNombre());
-        lblHorarioClase.setText(claseDTO.getNombre());
+        configurarCampos(claseLista);
+    }
 
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+    private void configurarCampos(ClaseListaDTO claseLista) {
 
-        List<DayOfWeek> diasSemana = clase.getDias();
-        //Dias en español
-        Locale localeEspanol = new Locale("es", "MX");
+        // Formato HTML centrado
+        String nombreClase = "<html><div style='text-align: center;'>"
+                + claseLista.getNombreClase().replace(" ", "<br>")
+                + "</div></html>";
+        lblClase.setText(nombreClase);
 
-        String diasAbreviados = (diasSemana != null) ? diasSemana.stream()
-                .map(dia -> dia.getDisplayName(TextStyle.SHORT, localeEspanol))
-                .collect(Collectors.joining(", ")) : "Sin días";
+        String horarioClase = "<html><div style='text-align: center;'>"
+                + claseLista.getHorario().replace(" ", "<br>")
+                + "</div></html>";
+        lblHorario.setText(horarioClase);
 
-        String horario = String.format("%s %s %s",
-                diasAbreviados,
-                claseDTO.getHoraInicio().format(formatoHora),
-                claseDTO.getHoraFin().format(formatoHora));
+        String nombreMaestro = "<html><div style='text-align: center;'>"
+                + claseLista.getNombreMaestro().replace(" ", "<br>")
+                + "</div></html>";
+        lblMaestro.setText(nombreMaestro);
 
-        lblHorarioClase.setText(horario);
+        String nombreAula = "<html><div style='text-align: center;'>"
+                + claseLista.getNombreAula().replace(" ", "<br>")
+                + "</div></html>";
+        lblAula.setText(nombreAula);
 
-        System.out.println(lblHorarioClase.getText());
-        lblMaestro.setText(claseDTO.getMaestro());
-        lblPrecio.setText(claseDTO.getPrecio().toString());
+        String precio = "<html><div style='text-align: center;'>"
+                + "$" + claseLista.getPrecio().toPlainString()
+                + "</div></html>";
 
-        pack();
-        
-        System.out.println(clase.getNombre());
+        lblPrecio.setText(precio);
+
+        // Aplicar estilos
+        configurarLabelDatos(lblClase);
+        configurarLabelDatos(lblHorario);
+        configurarLabelDatos(lblMaestro);
+        configurarLabelDatos(lblAula);
+        configurarLabelDatos(lblPrecio);
+
+    }
+
+    // configura los labels de los datos
+    private void configurarLabelDatos(JLabel label) {
+        label.setFont(new Font("Menlo", Font.PLAIN, 12));
+        label.setForeground(Color.WHITE);
+        label.setOpaque(true);
+        label.setBackground(new Color(30, 47, 86));
+        label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
     }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the FormEditor.
      */
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        PanelDatosClase = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        lblIDClase = new javax.swing.JTextField();
-        lblPrecio = new javax.swing.JTextField();
-        lblHorarioClase = new javax.swing.JTextField();
-        lblMaestro = new javax.swing.JTextField();
-        lblNombreClase = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        btnVerAlumnosInscritos = new javax.swing.JButton();
-        btnRegresar = new javax.swing.JButton();
-        btnRegistrarAlumno = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        btnInscribirAlumno = new javax.swing.JButton();
+        btnRegistrarNuevoAlumno = new javax.swing.JButton();
+        PanelDatosClase = new javax.swing.JPanel();
+        lblColumnAlumno = new javax.swing.JLabel();
+        lblColumnClase = new javax.swing.JLabel();
+        lblColumnHorario = new javax.swing.JLabel();
+        lblColumnMaestro = new javax.swing.JLabel();
+        lblColumnAula = new javax.swing.JLabel();
+        lblClase = new javax.swing.JLabel();
+        lblHorario = new javax.swing.JLabel();
+        lblMaestro = new javax.swing.JLabel();
+        lblAula = new javax.swing.JLabel();
+        lblPrecio = new javax.swing.JLabel();
+        btnVerAlumnosInscritos = new javax.swing.JButton();
         txtCodigoAlumno = new javax.swing.JTextField();
+        btnInscribirAlumno = new javax.swing.JButton();
+        btnRgresar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(865, 654));
-        setPreferredSize(new java.awt.Dimension(1280, 832));
-        setSize(new java.awt.Dimension(865, 654));
+        jLabel4.setBackground(new java.awt.Color(30, 47, 86));
+        jLabel4.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("ID Alumno:");
+
+        jLabel9.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(30, 47, 86));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("DATOS CLASE");
+
+        btnRegistrarNuevoAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/registrarNuevoAlumno.png"))); // NOI18N
+        btnRegistrarNuevoAlumno.setBorder(null);
+        btnRegistrarNuevoAlumno.setContentAreaFilled(false);
+        btnRegistrarNuevoAlumno.setOpaque(false);
+        btnRegistrarNuevoAlumno.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/registrarNuevoAlumnoHovered.png"))); // NOI18N
+        btnRegistrarNuevoAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarNuevoAlumnoActionPerformed(evt);
+            }
+        });
 
         PanelDatosClase.setBackground(new java.awt.Color(30, 47, 86));
         PanelDatosClase.setForeground(new java.awt.Color(30, 47, 86));
+        PanelDatosClase.setLayout(new java.awt.GridLayout(2, 5));
 
-        jLabel3.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel3.setText("ID CLASE");
+        lblColumnAlumno.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnAlumno.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnAlumno.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnAlumno.setText("NOMBRE CLASE");
+        PanelDatosClase.add(lblColumnAlumno);
 
-        jLabel5.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel5.setText("PRECIO");
+        lblColumnClase.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnClase.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnClase.setText("HORARIO");
+        PanelDatosClase.add(lblColumnClase);
 
-        jLabel6.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel6.setText("NOMBRE CLASE");
+        lblColumnHorario.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnHorario.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnHorario.setText("MAESTRO");
+        PanelDatosClase.add(lblColumnHorario);
 
-        jLabel7.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel7.setText("HORARIO");
+        lblColumnMaestro.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnMaestro.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnMaestro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnMaestro.setText("AULA");
+        PanelDatosClase.add(lblColumnMaestro);
 
-        jLabel8.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel8.setText("MAESTRO");
+        lblColumnAula.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnAula.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnAula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnAula.setText("PRECIO");
+        PanelDatosClase.add(lblColumnAula);
 
-        lblIDClase.setEditable(false);
-        lblIDClase.setBackground(new java.awt.Color(30, 47, 86));
-        lblIDClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblIDClase.setForeground(new java.awt.Color(255, 255, 255));
-        lblIDClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblIDClase.setText("ID");
-        lblIDClase.setBorder(null);
+        lblClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblClase.setForeground(new java.awt.Color(255, 255, 255));
+        lblClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblClase.setText("jLabel1");
+        PanelDatosClase.add(lblClase);
 
-        lblPrecio.setEditable(false);
-        lblPrecio.setBackground(new java.awt.Color(30, 47, 86));
-        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblPrecio.setText("PRECIO");
-        lblPrecio.setBorder(null);
+        lblHorario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblHorario.setForeground(new java.awt.Color(255, 255, 255));
+        lblHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHorario.setText("jLabel1");
+        PanelDatosClase.add(lblHorario);
 
-        lblHorarioClase.setEditable(false);
-        lblHorarioClase.setBackground(new java.awt.Color(30, 47, 86));
-        lblHorarioClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblHorarioClase.setForeground(new java.awt.Color(255, 255, 255));
-        lblHorarioClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblHorarioClase.setText("NOMBRE");
-        lblHorarioClase.setBorder(null);
-
-        lblMaestro.setEditable(false);
-        lblMaestro.setBackground(new java.awt.Color(30, 47, 86));
         lblMaestro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblMaestro.setForeground(new java.awt.Color(255, 255, 255));
-        lblMaestro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblMaestro.setText("MAESTRO");
-        lblMaestro.setBorder(null);
+        lblMaestro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMaestro.setText("jLabel1");
+        PanelDatosClase.add(lblMaestro);
 
-        lblNombreClase.setEditable(false);
-        lblNombreClase.setBackground(new java.awt.Color(30, 47, 86));
-        lblNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblNombreClase.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblNombreClase.setText("NOMBRE");
-        lblNombreClase.setBorder(null);
+        lblAula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAula.setForeground(new java.awt.Color(255, 255, 255));
+        lblAula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAula.setText("jLabel1");
+        PanelDatosClase.add(lblAula);
 
-        javax.swing.GroupLayout PanelDatosClaseLayout = new javax.swing.GroupLayout(PanelDatosClase);
-        PanelDatosClase.setLayout(PanelDatosClaseLayout);
-        PanelDatosClaseLayout.setHorizontalGroup(
-            PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosClaseLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreClase)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel5))
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61))
-        );
-        PanelDatosClaseLayout.setVerticalGroup(
-            PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-
-        jLabel4.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel4.setText("DATOS DE LA CLASE");
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
+        lblPrecio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrecio.setText("jLabel1");
+        PanelDatosClase.add(lblPrecio);
 
         btnVerAlumnosInscritos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/verAlumnosInscritos.png"))); // NOI18N
         btnVerAlumnosInscritos.setBorder(null);
@@ -246,31 +224,6 @@ public class FrmDatosClase extends javax.swing.JFrame {
             }
         });
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
-        btnRegresar.setBorder(null);
-        btnRegresar.setContentAreaFilled(false);
-        btnRegresar.setOpaque(false);
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
-
-        btnRegistrarAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/registrarNuevoAlumno.png"))); // NOI18N
-        btnRegistrarAlumno.setBorder(null);
-        btnRegistrarAlumno.setContentAreaFilled(false);
-        btnRegistrarAlumno.setOpaque(false);
-        btnRegistrarAlumno.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/registrarNuevoAlumnoHovered.png"))); // NOI18N
-        btnRegistrarAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarAlumnoActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("ID alumno:");
-
         btnInscribirAlumno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/inscribirAlumno.png"))); // NOI18N
         btnInscribirAlumno.setBorder(null);
         btnInscribirAlumno.setContentAreaFilled(false);
@@ -282,11 +235,14 @@ public class FrmDatosClase extends javax.swing.JFrame {
             }
         });
 
-        txtCodigoAlumno.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txtCodigoAlumno.setBorder(null);
-        txtCodigoAlumno.addActionListener(new java.awt.event.ActionListener() {
+        btnRgresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
+        btnRgresar.setBorder(null);
+        btnRgresar.setContentAreaFilled(false);
+        btnRgresar.setOpaque(false);
+        btnRgresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresarHovered.png"))); // NOI18N
+        btnRgresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoAlumnoActionPerformed(evt);
+                btnRgresarActionPerformed(evt);
             }
         });
 
@@ -294,112 +250,102 @@ public class FrmDatosClase extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnVerAlumnosInscritos)
-                .addGap(458, 458, 458))
             .addGroup(layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnInscribirAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 65, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRegistrarAlumno))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(195, 195, 195)
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(btnInscribirAlumno))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(371, 371, 371)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(235, 235, 235))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(263, 263, 263))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnVerAlumnosInscritos)
+                        .addGap(416, 416, 416))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegistrarNuevoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(366, 366, 366))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRgresar)
+                        .addGap(472, 472, 472))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(53, 53, 53)
-                .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
                 .addComponent(btnVerAlumnosInscritos)
-                .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCodigoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(65, 65, 65)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegresar)
-                            .addComponent(btnRegistrarAlumno)))
-                    .addComponent(btnInscribirAlumno))
-                .addGap(48, 48, 48))
+                        .addGap(61, 61, 61)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                            .addComponent(txtCodigoAlumno)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(btnInscribirAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 44, 44)
+                .addComponent(btnRegistrarNuevoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRgresar)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        pack();
+        jLabel4.getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVerAlumnosInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAlumnosInscritosActionPerformed
-        ControlNavegacion.mostrarAlumnosInscritos(clase);
-    }//GEN-LAST:event_btnVerAlumnosInscritosActionPerformed
+    private void btnRegistrarNuevoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarNuevoAlumnoActionPerformed
+        ControlNavegacion.mostrarFrmNuevoAlumnoInscripcion(claseLista);
+    }//GEN-LAST:event_btnRegistrarNuevoAlumnoActionPerformed
 
-    private void btnRegistrarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAlumnoActionPerformed
-        try {
-            ControlNavegacion.mostrarRegistrarAlumno(clase);
-            this.dispose();
-        } catch (PresentacionException ex) {
-            ControlNavegacion.mostrarMensajeErrorConExcepcion(this, ex);
-        }
-    }//GEN-LAST:event_btnRegistrarAlumnoActionPerformed
+    private void btnVerAlumnosInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAlumnosInscritosActionPerformed
+        //ControlNavegacion.mostrarAlumnosInscritos(this.clase);
+    }//GEN-LAST:event_btnVerAlumnosInscritosActionPerformed
 
     private void btnInscribirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirAlumnoActionPerformed
 
         // obtenerInfo de txt
         String campo = txtCodigoAlumno.getText().trim();
         Integer campoId = ControlNavegacion.mostrarErrorcampoIdAlumno(campo);
-        ControlNavegacion.mostrarFinalizarInscripcion(this.clase, campoId);
+        ControlNavegacion.mostrarFinalizarInscripcion(claseLista, campoId);
     }//GEN-LAST:event_btnInscribirAlumnoActionPerformed
 
-    private void txtCodigoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoAlumnoActionPerformed
+    private void btnRgresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRgresarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoAlumnoActionPerformed
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-
-        ControlNavegacion.mostrarClasesExistentes(this.clase.getNombre());
+        ControlNavegacion.mostrarClasesExistentes(claseLista.getNombreClase());
         this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
+    }//GEN-LAST:event_btnRgresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelDatosClase;
     private javax.swing.JButton btnInscribirAlumno;
-    private javax.swing.JButton btnRegistrarAlumno;
-    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton btnRegistrarNuevoAlumno;
+    private javax.swing.JButton btnRgresar;
     private javax.swing.JButton btnVerAlumnosInscritos;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField lblHorarioClase;
-    private javax.swing.JTextField lblIDClase;
-    private javax.swing.JTextField lblMaestro;
-    private javax.swing.JTextField lblNombreClase;
-    private javax.swing.JTextField lblPrecio;
+    private javax.swing.JLabel lblAula;
+    private javax.swing.JLabel lblClase;
+    private javax.swing.JLabel lblColumnAlumno;
+    private javax.swing.JLabel lblColumnAula;
+    private javax.swing.JLabel lblColumnClase;
+    private javax.swing.JLabel lblColumnHorario;
+    private javax.swing.JLabel lblColumnMaestro;
+    private javax.swing.JLabel lblHorario;
+    private javax.swing.JLabel lblMaestro;
+    private javax.swing.JLabel lblPrecio;
     private javax.swing.JTextField txtCodigoAlumno;
     // End of variables declaration//GEN-END:variables
+
 }

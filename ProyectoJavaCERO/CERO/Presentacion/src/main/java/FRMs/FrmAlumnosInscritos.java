@@ -1,5 +1,6 @@
 package FRMs;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -21,12 +22,14 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
 
     private Image imagenFondo;
     private ClaseDTO clase;
+    private ClaseListaDTO claseLista;
 
     /**
      * Creates new form FrmAlumnosInscritos
      */
-    public FrmAlumnosInscritos(List<AlumnoDTO> alumnos, ClaseDTO clase) {
+    public FrmAlumnosInscritos(ClaseListaDTO claseLista, List<AlumnoDTO> alumnos, ClaseDTO clase) {
         this.clase = clase;
+        this.claseLista = claseLista;
         
         initComponents();
         int totalInscripciones = 0;
@@ -256,7 +259,7 @@ public class FrmAlumnosInscritos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarDatosClase(clase);
+        ControlNavegacion.mostrarDatosClase(claseLista);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

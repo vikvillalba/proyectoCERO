@@ -11,6 +11,7 @@ import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
 import Exceptions.GestionarClasesException;
+import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -41,7 +42,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
 
     //obtiene las listas en claseListaDTO
     @Override
-    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase) throws GestionarClasesException {
+    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase){
         nombreClase = nombreClase.trim();
 
         List<ClaseListaDTO> clasesEncontradas = clasesBO.buscarClasesListaNombre(nombreClase);
@@ -322,6 +323,11 @@ public class ControlGestionarClases implements IControlGestionarClases {
         }
 
         return true; // Solo si pasó todas las validaciones
+    }
+
+    @Override
+    public ClaseDTO buscarClaseCodigo(Integer codigo) {
+        return clasesBO.buscarClaseCodigo(codigo);
     }
 
 }

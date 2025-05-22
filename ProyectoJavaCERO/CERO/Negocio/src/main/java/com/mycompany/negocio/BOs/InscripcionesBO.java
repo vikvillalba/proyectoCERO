@@ -176,7 +176,7 @@ public class InscripcionesBO implements IInscripcionesBO {
     //METODO CU_GESTIONAR CLASES OBTIENE LAS INSCRIPCIONES 
 
     @Override
-    public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseDTO claseDTO) {
+    public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseListaDTO claseDTO) {
         Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
         List<Alumno> alumnos = this.inscripcionesDAO.obtenerAlumnosInscritosClase(clase.obtenerIdString());
         Integer numeroLista = 1;

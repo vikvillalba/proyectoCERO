@@ -81,12 +81,12 @@ public class ControlNavegacion {
     // formularios CU inscribir 
     private static FrmPagoEfectivo pagoEfectivo;
     private static FrmPagoTarjeta pagoTarjeta;
-    private static FrmRegistrarNuevoAlumnoInscribirClase frmRegistrarAlumnoInscribirClase;
+    private static FrmDatosClase frmDatosClase;
     private static FrmInscribirClase inscribir;
     private static FrmAlumnosInscritos alumnosInscritos;
     private static FrmClasesExistentes clasesExistentes;
-    private static FrmDatosClase datosClase;
     private static FrmFinalizarInscripcion finalizarInscripcion;
+    private static FrmNuevoAlumnoInscripcion frmNuevoAlumnoInscripcion;
 
     //formularios CU_GESTIONAR CLASES
     private static FrmAdminClases frmAdminClases;
@@ -149,7 +149,7 @@ public class ControlNavegacion {
     /**
      * Muestra la pantalla para registrar un pago en efectivo para el caso de uso de inscribir a un alumno.
      */
-    public static void mostrarPagoEfectivo(ClaseDTO clase, AlumnoDTO alumno) {
+    public static void mostrarPagoEfectivo(ClaseListaDTO clase, AlumnoDTO alumno) {
         pagoEfectivo = new FrmPagoEfectivo(clase, alumno);
         pagoEfectivo.setVisible(true);
         frameActual = pagoEfectivo;
@@ -158,7 +158,7 @@ public class ControlNavegacion {
     /**
      * Muestra la pantalla para registrar un pago con tarjeta para el caso de uso de inscribir a un alumno.
      */
-    public static void mostrarPagoTarjeta(ClaseDTO clase, AlumnoDTO alumno) {
+    public static void mostrarPagoTarjeta(ClaseListaDTO clase, AlumnoDTO alumno) {
         pagoTarjeta = new FrmPagoTarjeta(clase, alumno);
         pagoTarjeta.setVisible(true);
         frameActual = pagoTarjeta;
@@ -181,31 +181,32 @@ public class ControlNavegacion {
     /**
      * Muestra el JFrmae FrmFinalizarInscripcion.
      *
-     * @param claseDTO el DTO que tendra los datos a mostrar.
+     * @param claseLista
      * @param alumno
      */
-    public static void mostrarFrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
+    public static void mostrarFrmFinalizarInscripcion(ClaseListaDTO claseLista, AlumnoDTO alumno) {
         frameActual.dispose();
-        finalizarInscripcion = new FrmFinalizarInscripcion(claseDTO, alumno);
+        finalizarInscripcion = new FrmFinalizarInscripcion(claseLista, alumno);
         finalizarInscripcion.setVisible(true);
         frameActual = finalizarInscripcion;
 
-
     }
 
-    public static void mostrarAlumnosInscritos(ClaseDTO clase) {
-        frameActual.dispose();
-        List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
-        alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
-        alumnosInscritos.setVisible(true);
-        frameActual = alumnosInscritos;
- 
-    }
+    //frame inscripciones 
+//    public static void mostrarAlumnosInscritos(ClaseDTO clase) {
+//        frameActual.dispose();
+//        List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
+//        alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
+//        alumnosInscritos.setVisible(true);
+//        frameActual = alumnosInscritos;
+// 
+//    }
 
-    public static void mostrarRegistrarAlumno(ClaseDTO clase) throws PresentacionException {
-        frmRegistrarAlumnoInscribirClase = new FrmRegistrarNuevoAlumnoInscribirClase(clase);
-        frmRegistrarAlumnoInscribirClase.setVisible(true);
-        frameActual = frmRegistrarAlumnoInscribirClase;
+    public static void mostrarFrmNuevoAlumnoInscripcion(ClaseListaDTO claseLista) {
+        frameActual.dispose(); 
+        frmNuevoAlumnoInscripcion = new FrmNuevoAlumnoInscripcion(claseLista);
+        frameActual = frmNuevoAlumnoInscripcion;
+        frameActual.setVisible(true);
 
     }
 
@@ -287,7 +288,7 @@ public class ControlNavegacion {
     /**
      * LLamada al SS del CU de inscripciones para guardar los datos ya validados del pago con tarjeta. el sistema solo guarda datos no sensibles de la cuenta bancaria.
      */
-    public static void realizarPagoTarjeta(NuevoPagoTarjetaDTO pago, ClaseDTO clase, AlumnoDTO alumno, JFrame frame) {
+    public static void realizarPagoTarjeta(NuevoPagoTarjetaDTO pago, ClaseListaDTO clase, AlumnoDTO alumno, JFrame frame) {
         // validar datos 
         if (!validarNumeroCuenta(pago.getNumeroCuenta(), frame)) {
             try {
@@ -330,7 +331,9 @@ public class ControlNavegacion {
         
         PagoDTO pagoDTO = inscribirClase.realizarPagoTarjeta(nuevoPagoDTO);
         LocalDateTime fechaActual = LocalDateTime.now();
-        NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pagoDTO);
+        //hacer claseDTO
+        ClaseDTO claseEncontrada = gestionarClases.buscarClaseCodigo(clase.getCodigo());
+        NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(claseEncontrada, alumno, fechaActual, pagoDTO);
         
         InscripcionDTO inscripcion = realizarInscripcionPagoTarjeta(inscripcionDTO);
         mostrarMensajePagoExitoso(frameActual);
@@ -347,11 +350,12 @@ public class ControlNavegacion {
     /**
      * LLamada al SS del CU de inscripciones para guardar los datos ya validados del pago en efectivo.
      */
-    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseDTO clase, AlumnoDTO alumno) {
+    public static void realizarPagoEfectivo(NuevoPagoDTO nuevoPago, ClaseListaDTO clase, AlumnoDTO alumno) {
 
         PagoDTO pago = inscribirClase.realizarPagoEfectivo(nuevoPago);
         LocalDateTime fechaActual = LocalDateTime.now();
-        NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(clase, alumno, fechaActual, pago);
+        ClaseDTO claseEncontrada = gestionarClases.buscarClaseCodigo(clase.getCodigo());
+        NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(claseEncontrada, alumno, fechaActual, pago);
 
         InscripcionDTO inscripcion = realizarInscripcionPagoEfectivo(inscripcionDTO);
         if (inscripcion == null) {
@@ -385,11 +389,13 @@ public class ControlNavegacion {
     /**
      * Muestra pantalla de DatosClase
      */
-    public static void mostrarDatosClase(ClaseDTO claseDTO) {
+    public static void mostrarDatosClase(ClaseListaDTO claseDTO) {
         frameActual.dispose();
-        datosClase = new FrmDatosClase(claseDTO);
-        datosClase.setVisible(true);
-        frameActual = datosClase;
+        //pasarle la claseDTO 
+        //ClaseDTO claseFormateada = gestionarClases.buscarClaseCodigo(claseDTO.getCodigo());
+        frmDatosClase = new FrmDatosClase(claseDTO);
+        frmDatosClase.setVisible(true);
+        frameActual = frmDatosClase;
 
     }
 
@@ -418,12 +424,13 @@ public class ControlNavegacion {
     }
 
     public static void mostrarClasesExistentes(String nombre) {
-        if (validarErrorNombreClase(inscribir, nombre)) {            
+
+        if (validarErrorNombreClase(inscribir, nombre)) {
             return;
         }
 
         NombreClaseParam nombreClase = new NombreClaseParam(nombre);
-        List<ClaseDTO> clases = obtenerClases(nombreClase.getNombreClase());
+        List<ClaseListaDTO> clases = gestionarClases.buscarClaseListaNombre(nombreClase.getNombreClase());
 
         if (clases == null || clases.isEmpty()) {
             mostrarMensajeErrorClaseNoExiste();
@@ -453,25 +460,31 @@ public class ControlNavegacion {
 
     //ValidarCampo
     public static Integer mostrarErrorcampoIdAlumno(String campo) {
-        if (!campo.matches("\\d+")) {
-            try {
-                throw new PresentacionException("Ingrese solo números en el código de alumno.");
-            } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(datosClase, ex);
+        try {
+            if (campo == null || campo.trim().isEmpty()) {
+                throw new PresentacionException("El campo de código de alumno no puede estar vacío.");
             }
+
+            if (!campo.matches("\\d+")) {
+                throw new PresentacionException("Ingrese solo números en el código de alumno.");
+            }
+
+            return Integer.valueOf(campo);
+        } catch (PresentacionException ex) {
+            mostrarMensajeErrorConExcepcion(frameActual, ex);
+            return null; // O puedes relanzar la excepción si prefieres
         }
-        Integer codigoAlumno = Integer.valueOf(campo);
-        return codigoAlumno;
     }
 
-    public static void mostrarFinalizarInscripcion(ClaseDTO clase, Integer codigoAlumno) {
+
+    public static void mostrarFinalizarInscripcion(ClaseListaDTO clase, Integer codigoAlumno) {
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
         AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
         if (alumnoEncontrado == null) {
             try {
                 throw new PresentacionException("El alumno no existe");
             } catch (PresentacionException ex) {
-                mostrarMensajeErrorConExcepcion(datosClase, ex);
+                mostrarMensajeErrorConExcepcion(frameActual, ex);
             }
             return;
         }
@@ -487,7 +500,7 @@ public class ControlNavegacion {
     }
 
     //agregarAlumno desde el flujo InscribirClase
-    public static boolean AgregarAlumno(ClaseDTO clase, AlumnoDTO alumnoDTO) {
+    public static boolean AgregarAlumno(ClaseListaDTO claseLista, AlumnoDTO alumnoDTO) {
         try {
             gestionarAlumnos.validarDatosCompletosAlumno(alumnoDTO);
             //llamar a gestionar 
@@ -499,9 +512,9 @@ public class ControlNavegacion {
                         "El alumno se registró exitosamente. El código de integrante es: " + alumnoRegistrado.getCodigo().toString(),
                         "Alumno Registrado :)", JOptionPane.INFORMATION_MESSAGE);
                 JOptionPane.showMessageDialog(null,
-                        "El alumno : " + alumnoRegistrado.getCodigo().toString() + " \"se inscribira en la clase :  " + clase.getNombre(),
+                        "El alumno : " + alumnoRegistrado.getCodigo().toString() + " \"se inscribira en la clase :  " + claseLista.getNombreClase(),
                         "proxima inscripcion ", JOptionPane.INFORMATION_MESSAGE);
-                mostrarFrmFinalizarInscripcion(clase, alumnoRegistrado);
+                mostrarFrmFinalizarInscripcion(claseLista, alumnoRegistrado);
                 return true;
             }
         } catch (GestionarAlumnosException ex) {
@@ -862,12 +875,8 @@ public class ControlNavegacion {
     }
 
     public static List<ClaseListaDTO> buscarClasesNombre(String nombreClase) {
-        try {
-            return gestionarClases.buscarClaseListaNombre(nombreClase);
-        } catch (GestionarClasesException ex) {
-            mostrarMensajeErrorConExcepcion(frameActual, ex);
-        }
-        return null;
+        return gestionarClases.buscarClaseListaNombre(nombreClase);
+
     }
 
     public static List<ReporteAsistenciaDTO> obtenerReportesAsistencia(

@@ -330,4 +330,12 @@ public class ClasesBO implements IClasesBO{
         return clase;
     }
 
+    @Override
+    public ClaseDTO buscarClaseCodigo(Integer codigo) {
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(codigo);
+        ClaseDTO claseDTO = claseMapper.converitirClaseDTO(clase);
+        return claseDTO;
+    }
+    
+
 }

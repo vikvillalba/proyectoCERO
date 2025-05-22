@@ -1,5 +1,6 @@
 package FRMs;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -18,18 +19,19 @@ import javax.swing.JPanel;
  *
  * @author Jack Murrieta
  */
-public class FrmRegistrarNuevoAlumnoInscribirClase extends javax.swing.JFrame {
+public class FrmNuevoAlumnoInscripcion extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ClaseDTO clase;
+    private ClaseListaDTO claseLista;
 
     /**
      * Creates new form FrmClasesExistentes
      *
      * 
+     * @param claseLista
      */
-    public FrmRegistrarNuevoAlumnoInscribirClase(ClaseDTO clase) {
-        this.clase = clase;
+    public FrmNuevoAlumnoInscripcion(ClaseListaDTO claseLista) {
+        this.claseLista = claseLista;
         
         initComponents();
 
@@ -341,7 +343,7 @@ public class FrmRegistrarNuevoAlumnoInscribirClase extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         this.dispose();
-        ControlNavegacion.mostrarDatosClase(clase);
+        ControlNavegacion.mostrarDatosClase(claseLista);
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -360,7 +362,7 @@ public class FrmRegistrarNuevoAlumnoInscribirClase extends javax.swing.JFrame {
 
             // Crear alumnoDTO solo si la fecha fue válida
             AlumnoDTO nuevoAlumnoDTO = new AlumnoDTO(apellidoPaterno, apellidoMaterno, nombre, telefono, fechaNacimientoDate, correoElectronico);
-            ControlNavegacion.AgregarAlumno(clase, nuevoAlumnoDTO);
+            ControlNavegacion.AgregarAlumno(claseLista, nuevoAlumnoDTO);
         } else {
             ControlNavegacion.mostrarMensajeErrorConExcepcion(this, new PresentacionException("Campos vacios"));
         }

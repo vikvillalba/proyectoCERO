@@ -3,6 +3,7 @@ package com.mycompany.negocio.InterfazBO;
 import Entidades.Clase;
 import Entidades.Inscripcion;
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.dtos.InscripcionClaseDTO;
@@ -26,7 +27,7 @@ public interface IInscripcionesBO {
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws NegocioException;
 
     //Metodo para obtener la lista de alumnos id, numero de lista, nombre
-    public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseDTO clase);
+    public List<AlumnoClaseDTO> obtenerAlumnosClase(ClaseListaDTO clase);
     
     public void cancelarInscripcion(InscripcionClaseDTO inscripcion);
 }

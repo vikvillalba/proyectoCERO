@@ -1,5 +1,6 @@
 package FRMs;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import Utilerias.JpanelClaseLista;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
@@ -20,9 +21,9 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmClasesExistentes extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private List<ClaseDTO> clases;
+    private List<ClaseListaDTO> clases;
 
-    public FrmClasesExistentes(List<ClaseDTO> clases) {
+    public FrmClasesExistentes(List<ClaseListaDTO> clases) {
         initComponents();
         this.clases = clases;
         jScrollClases.setOpaque(false);
@@ -50,7 +51,7 @@ public class FrmClasesExistentes extends javax.swing.JFrame {
         contenedorTabla.setOpaque(false);
         contenedorTabla.setLayout(new BoxLayout(contenedorTabla, BoxLayout.Y_AXIS));
 
-        for (ClaseDTO clase : clases) {
+        for (ClaseListaDTO clase : clases) {
             JpanelClaseLista panelClase = new JpanelClaseLista(clase);
             contenedorTabla.add(panelClase);
         }

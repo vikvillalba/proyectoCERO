@@ -10,6 +10,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Clase;
 import Entidades.Maestro;
+import com.mycompany.dtos.ClaseDTO;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -58,7 +59,7 @@ public class ClaseMapper implements IClaseMapper {
         
         String fechaInicio = convertirFecha(clase.getFechaInicio());
         String fechaFin = convertirFecha(clase.getFechaFin());
-        String periodo = fechaInicio + "-" + fechaFin;
+        String periodo = fechaInicio + " - " + fechaFin;
         
         String horaInicio = convertirHora(clase.getHoraInicio());
         String horaFin = convertirHora(clase.getHoraFin());
@@ -72,7 +73,8 @@ public class ClaseMapper implements IClaseMapper {
                 clase.getCuposDisponibles(), //cupos disponibles
                 periodo,
                 aula != null ? aula.getNombreAula() : "Sin aula",
-                clase.isActiva()
+                clase.isActiva(),
+                clase.getPrecio()
         );
     }
     
@@ -101,6 +103,20 @@ public class ClaseMapper implements IClaseMapper {
                 precio,
                 clase.isActiva()
         );
+    }
+    
+    //Mapper claseDTO de inscribir clase 
+    public ClaseDTO converitirClaseDTO(Clase clase){
+        return new ClaseDTO(clase.getCodigo(),
+                clase.getNombre(),
+                clase.getDias(),
+                clase.getHoraInicio(),
+                clase.getHoraFin(),
+                clase.getNombreMaestro(),
+                clase.getPrecio(),
+                clase.getFechaInicio(),
+                clase.getFechaFin());
+    
     }
     
     private String convertirDias(List<DayOfWeek> dias) {

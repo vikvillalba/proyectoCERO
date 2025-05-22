@@ -10,6 +10,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Clase;
 import Entidades.Maestro;
+import com.mycompany.dtos.ClaseDTO;
 
 /**
  *
@@ -21,5 +22,6 @@ public interface IClaseMapper {
     
     public EditarClaseDTO convertirEditarClase(Clase clase, Maestro maestro, AulaClase aula);
     public ClaseListaDTO convertirClaseListaDTO(Clase clase, Maestro maestro, AulaClase aula);
+    public ClaseDTO converitirClaseDTO(Clase clase);
     //Metodo para obtener un editarClase y convertirlo en entidad clase
 }

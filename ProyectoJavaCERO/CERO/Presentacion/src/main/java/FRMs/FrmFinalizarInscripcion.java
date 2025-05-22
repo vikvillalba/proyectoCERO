@@ -1,15 +1,21 @@
 package FRMs;
 
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -21,61 +27,91 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmFinalizarInscripcion extends javax.swing.JFrame {
 
     private Image imagenFondo;
-    private ClaseDTO clase;
     private AlumnoDTO alumno;
+    private ClaseListaDTO claseLista;
 
     /**
      * Creates new customizer FrmFinalizarInscripcion
      */
-    public FrmFinalizarInscripcion(ClaseDTO claseDTO, AlumnoDTO alumno) {
-        this.clase = claseDTO;
+    public FrmFinalizarInscripcion(ClaseListaDTO clase, AlumnoDTO alumno) {
+        this.claseLista = clase;
         this.alumno = alumno;
-        initComponents();
-        this.setTitle("Finalizar Inscripcion");
-
-
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
-        JPanel pnlFondo = new javax.swing.JPanel() {
+
+        // Panel con imagen de fondo
+        JPanel pnlFondo = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
             }
         };
+        pnlFondo.setLayout(null); 
 
-        getContentPane().setLayout(new AbsoluteLayout());
-        pack();
-        getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setContentPane(pnlFondo);
 
-        lblIDClase.setText(Integer.toString(claseDTO.getCodigo()));
-        lblNombreClase.setText(claseDTO.getNombre());
+        initComponents();
 
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+        // Configuración de la ventana
+        setTitle("Finalizar Inscripción");
+        setSize(1000, 700); 
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(MAXIMIZED_BOTH); 
 
-        List<DayOfWeek> diasSemana = claseDTO.getDias();  // Lista de DayOfWeek
-        StringBuilder diasAbreviados = new StringBuilder();
-
-        for (DayOfWeek dia : diasSemana) {
-            // Tomamos las dos primeras letras del nombre en español
-            diasAbreviados.append(dia.getDisplayName(java.time.format.TextStyle.SHORT, new java.util.Locale("es")).substring(0, 2));
-        }
-
-        String horario = String.format("%s %s %s",
-                diasAbreviados.toString(),
-                claseDTO.getHoraInicio().format(formatoHora),
-                claseDTO.getHoraFin().format(formatoHora));
-
-        lblHorarioClase.setText(horario);
-
-        System.out.println(lblHorarioClase.getText());
-        lblMaestro.setText(claseDTO.getMaestro());
-        lblPrecio.setText(claseDTO.getPrecio().toString());
-        txtPrecio.setText(claseDTO.getPrecio().toString());
-
-        pack();
+        configurarCampos(claseLista, alumno);
     }
+
+    private void configurarCampos(ClaseListaDTO claseLista, AlumnoDTO alumno) {
+
+        // Formato HTML centrado
+        String nombreAlumno = "<html><div style='text-align: center;'>"
+                + alumno.getNombreCompleto().replace(" ", "<br>")
+                + "</div></html>";
+        lblAlumno.setText(nombreAlumno);
+
+        String nombreClase = "<html><div style='text-align: center;'>"
+                + claseLista.getNombreClase().replace(" ", "<br>")
+                + "</div></html>";
+        lblNombreClase.setText(nombreClase);
+
+        String horarioClase = "<html><div style='text-align: center;'>"
+                + claseLista.getHorario().replace(" ", "<br>")
+                + "</div></html>";
+        lblHorario.setText(horarioClase);
+
+        String nombreMaestro = "<html><div style='text-align: center;'>"
+                + claseLista.getNombreMaestro().replace(" ", "<br>")
+                + "</div></html>";
+        lblMaestro.setText(nombreMaestro);
+
+        String nombreAula = "<html><div style='text-align: center;'>"
+                + claseLista.getNombreAula().replace(" ", "<br>")
+                + "</div></html>";
+        lblAula.setText(nombreAula);
+//
+        
+        BigDecimal precio = this.claseLista.getPrecio();
+        txtPrecio.setText(precio.toPlainString());
+
+        // Aplicar estilos
+        configurarLabelDatos(lblAlumno);
+        configurarLabelDatos(lblNombreClase);
+        configurarLabelDatos(lblHorario);
+        configurarLabelDatos(lblMaestro);
+        configurarLabelDatos(lblAula);
+        
+    }
+
+    // configura los labels de los datos
+    private void configurarLabelDatos(JLabel label) {
+        label.setFont(new Font("Menlo", Font.PLAIN, 12));
+        label.setForeground(Color.WHITE);
+        label.setOpaque(true);
+        label.setBackground(new Color(30, 47, 86));
+        label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,39 +129,29 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         btnPagoTarjeta = new javax.swing.JButton();
         btnPagoEfectivo = new javax.swing.JButton();
         PanelDatosClase = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        lblIDClase = new javax.swing.JTextField();
-        lblPrecio = new javax.swing.JTextField();
-        lblHorarioClase = new javax.swing.JTextField();
-        lblMaestro = new javax.swing.JTextField();
-        lblNombreClase = new javax.swing.JTextField();
-
-        setPreferredSize(new java.awt.Dimension(1280, 832));
-        getContentPane().setLayout(null);
+        lblColumnAlumno = new javax.swing.JLabel();
+        lblColumnClase = new javax.swing.JLabel();
+        lblColumnHorario = new javax.swing.JLabel();
+        lblColumnMaestro = new javax.swing.JLabel();
+        lblColumnAula = new javax.swing.JLabel();
+        lblAlumno = new javax.swing.JLabel();
+        lblNombreClase = new javax.swing.JLabel();
+        lblHorario = new javax.swing.JLabel();
+        lblMaestro = new javax.swing.JLabel();
+        lblAula = new javax.swing.JLabel();
 
         jLabel4.setBackground(new java.awt.Color(30, 47, 86));
         jLabel4.setFont(new java.awt.Font("Menlo", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Total a pagar:");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(340, 450, 360, 62);
-        jLabel4.getAccessibleContext().setAccessibleDescription("");
 
         jLabel9.setFont(new java.awt.Font("Menlo", 1, 55)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(30, 47, 86));
         jLabel9.setText("FINALIZAR INSCRIPCIÓN");
-        getContentPane().add(jLabel9);
-        jLabel9.setBounds(310, 60, 710, 57);
 
         jLabel10.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
         jLabel10.setText("REALIZAR PAGO");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(430, 370, 400, 62);
 
         txtPrecio.setEditable(false);
         txtPrecio.setBackground(new java.awt.Color(30, 47, 86));
@@ -135,8 +161,6 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
         txtPrecio.setText("jTextField1");
         txtPrecio.setBorder(null);
         txtPrecio.setOpaque(false);
-        getContentPane().add(txtPrecio);
-        txtPrecio.setBounds(710, 460, 340, 50);
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/regresar.png"))); // NOI18N
         btnRegresar.setBorder(null);
@@ -148,8 +172,6 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegresar);
-        btnRegresar.setBounds(510, 660, 250, 70);
 
         btnPagoTarjeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnPagoTarjeta.png"))); // NOI18N
         btnPagoTarjeta.setBorder(null);
@@ -159,8 +181,6 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
                 btnPagoTarjetaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPagoTarjeta);
-        btnPagoTarjeta.setBounds(680, 560, 380, 70);
 
         btnPagoEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnPagoEfectivo.png"))); // NOI18N
         btnPagoEfectivo.setBorder(null);
@@ -169,146 +189,142 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
                 btnPagoEfectivoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnPagoEfectivo);
-        btnPagoEfectivo.setBounds(160, 560, 450, 70);
 
         PanelDatosClase.setBackground(new java.awt.Color(30, 47, 86));
         PanelDatosClase.setForeground(new java.awt.Color(30, 47, 86));
+        PanelDatosClase.setLayout(new java.awt.GridLayout(2, 5));
 
-        jLabel3.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel3.setText("ID CLASE");
+        lblColumnAlumno.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnAlumno.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnAlumno.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnAlumno.setText("ALUMNO");
+        PanelDatosClase.add(lblColumnAlumno);
 
-        jLabel5.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel5.setText("PRECIO");
+        lblColumnClase.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnClase.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnClase.setText("CLASE");
+        PanelDatosClase.add(lblColumnClase);
 
-        jLabel6.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel6.setText("NOMBRE CLASE");
+        lblColumnHorario.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnHorario.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnHorario.setText("HORARIO");
+        PanelDatosClase.add(lblColumnHorario);
 
-        jLabel7.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel7.setText("HORARIO");
+        lblColumnMaestro.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnMaestro.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnMaestro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnMaestro.setText("MAESTRO");
+        PanelDatosClase.add(lblColumnMaestro);
 
-        jLabel8.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(148, 197, 227));
-        jLabel8.setText("MAESTRO");
+        lblColumnAula.setFont(new java.awt.Font("Menlo", 1, 14)); // NOI18N
+        lblColumnAula.setForeground(new java.awt.Color(148, 197, 227));
+        lblColumnAula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblColumnAula.setText("AULA");
+        PanelDatosClase.add(lblColumnAula);
 
-        lblIDClase.setEditable(false);
-        lblIDClase.setBackground(new java.awt.Color(30, 47, 86));
-        lblIDClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblIDClase.setForeground(new java.awt.Color(255, 255, 255));
-        lblIDClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblIDClase.setText("ID");
-        lblIDClase.setBorder(null);
+        lblAlumno.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAlumno.setForeground(new java.awt.Color(255, 255, 255));
+        lblAlumno.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAlumno.setText("jLabel1");
+        PanelDatosClase.add(lblAlumno);
 
-        lblPrecio.setEditable(false);
-        lblPrecio.setBackground(new java.awt.Color(30, 47, 86));
-        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblPrecio.setText("PRECIO");
-        lblPrecio.setBorder(null);
-
-        lblHorarioClase.setEditable(false);
-        lblHorarioClase.setBackground(new java.awt.Color(30, 47, 86));
-        lblHorarioClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblHorarioClase.setForeground(new java.awt.Color(255, 255, 255));
-        lblHorarioClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblHorarioClase.setText("NOMBRE");
-        lblHorarioClase.setBorder(null);
-
-        lblMaestro.setEditable(false);
-        lblMaestro.setBackground(new java.awt.Color(30, 47, 86));
-        lblMaestro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblMaestro.setForeground(new java.awt.Color(255, 255, 255));
-        lblMaestro.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblMaestro.setText("MAESTRO");
-        lblMaestro.setBorder(null);
-
-        lblNombreClase.setEditable(false);
-        lblNombreClase.setBackground(new java.awt.Color(30, 47, 86));
         lblNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNombreClase.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lblNombreClase.setText("NOMBRE");
-        lblNombreClase.setBorder(null);
+        lblNombreClase.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreClase.setText("jLabel1");
+        PanelDatosClase.add(lblNombreClase);
 
-        javax.swing.GroupLayout PanelDatosClaseLayout = new javax.swing.GroupLayout(PanelDatosClase);
-        PanelDatosClase.setLayout(PanelDatosClaseLayout);
-        PanelDatosClaseLayout.setHorizontalGroup(
-            PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosClaseLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)))
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombreClase)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(106, 106, 106)
-                        .addComponent(jLabel5))
-                    .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61))
+        lblHorario.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblHorario.setForeground(new java.awt.Color(255, 255, 255));
+        lblHorario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHorario.setText("jLabel1");
+        PanelDatosClase.add(lblHorario);
+
+        lblMaestro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblMaestro.setForeground(new java.awt.Color(255, 255, 255));
+        lblMaestro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMaestro.setText("jLabel1");
+        PanelDatosClase.add(lblMaestro);
+
+        lblAula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblAula.setForeground(new java.awt.Color(255, 255, 255));
+        lblAula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAula.setText("jLabel1");
+        PanelDatosClase.add(lblAula);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(310, 310, 310)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(430, 430, 430)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(340, 340, 340)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(btnPagoEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(btnPagoTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(510, 510, 510)
+                        .addComponent(btnRegresar)))
+                .addGap(0, 195, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(235, 235, 235))
         );
-        PanelDatosClaseLayout.setVerticalGroup(
-            PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDatosClaseLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PanelDatosClaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIDClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblHorarioClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombreClase, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(PanelDatosClase, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(jLabel10)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPagoEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPagoTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(btnRegresar))
         );
 
-        getContentPane().add(PanelDatosClase);
-        PanelDatosClase.setBounds(160, 190, 985, 127);
+        jLabel4.getAccessibleContext().setAccessibleDescription("");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagoTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoTarjetaActionPerformed
-        ControlNavegacion.mostrarPagoTarjeta(clase, alumno);
+        ControlNavegacion.mostrarPagoTarjeta(claseLista, alumno);
         this.dispose();
        
     }//GEN-LAST:event_btnPagoTarjetaActionPerformed
 
     private void btnPagoEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoEfectivoActionPerformed
-       ControlNavegacion.mostrarPagoEfectivo(clase, alumno);
+       ControlNavegacion.mostrarPagoEfectivo(claseLista, alumno);
        this.dispose();
       
     }//GEN-LAST:event_btnPagoEfectivoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarDatosClase(clase);
+        ControlNavegacion.mostrarDatosClase(claseLista);
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
@@ -318,18 +334,18 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
     private javax.swing.JButton btnPagoTarjeta;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField lblHorarioClase;
-    private javax.swing.JTextField lblIDClase;
-    private javax.swing.JTextField lblMaestro;
-    private javax.swing.JTextField lblNombreClase;
-    private javax.swing.JTextField lblPrecio;
+    private javax.swing.JLabel lblAlumno;
+    private javax.swing.JLabel lblAula;
+    private javax.swing.JLabel lblColumnAlumno;
+    private javax.swing.JLabel lblColumnAula;
+    private javax.swing.JLabel lblColumnClase;
+    private javax.swing.JLabel lblColumnHorario;
+    private javax.swing.JLabel lblColumnMaestro;
+    private javax.swing.JLabel lblHorario;
+    private javax.swing.JLabel lblMaestro;
+    private javax.swing.JLabel lblNombreClase;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 package com.mycompany.inscribirclase;
 
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -138,8 +139,8 @@ public interface IInscribirClase {
     public AlumnoDTO obtenerAlumno(AlumnoBusquedaDTO alumnoBusqueda);
     
     //metodo q obtiene la lista de los alumnos n una lcase para validar que no se agregue si ya esta inscrito
-    public List<AlumnoClaseDTO> obtenerAlumnosInscritosClase(ClaseDTO clase);
+    public List<AlumnoClaseDTO> obtenerAlumnosInscritosClase(ClaseListaDTO clase);
     
-    public boolean validarExistenciaInscripcion(ClaseDTO clase, AlumnoDTO alumno) throws InscripcionException;
+    public boolean validarExistenciaInscripcion(ClaseListaDTO clase, AlumnoDTO alumno) throws InscripcionException;
 
 }

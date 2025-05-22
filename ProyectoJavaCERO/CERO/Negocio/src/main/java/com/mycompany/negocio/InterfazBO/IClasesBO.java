@@ -44,4 +44,6 @@ public interface IClasesBO extends INotificadorInscripcion {
     public List<Clase> calcularClasesCupos(List<Clase> clases);
 
     public Clase calcularClaseCupo(Clase clase);
+    
+    public ClaseDTO buscarClaseCodigo(Integer codigo);
 }

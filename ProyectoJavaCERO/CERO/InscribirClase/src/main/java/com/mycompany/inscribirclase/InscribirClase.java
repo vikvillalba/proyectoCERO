@@ -3,6 +3,7 @@ package com.mycompany.inscribirclase;
 
 
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import DTOs.GestionarClases.ClaseListaDTO;
 import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.ClaseDTO;
@@ -253,12 +254,12 @@ public class InscribirClase implements IInscribirClase {
 
     //validar existencia de alumno en una clase inscrita se utiliza este metodo
     @Override
-    public List<AlumnoClaseDTO> obtenerAlumnosInscritosClase(ClaseDTO clase) {
+    public List<AlumnoClaseDTO> obtenerAlumnosInscritosClase(ClaseListaDTO clase) {
         return inscripcionesBO.obtenerAlumnosClase(clase);
     }
 
     @Override
-    public boolean validarExistenciaInscripcion(ClaseDTO clase, AlumnoDTO alumno) throws InscripcionException {
+    public boolean validarExistenciaInscripcion(ClaseListaDTO clase, AlumnoDTO alumno) throws InscripcionException {
         List<AlumnoClaseDTO> inscripciones = obtenerAlumnosInscritosClase(clase);
         for (AlumnoClaseDTO inscripcion : inscripciones) {
             Integer codigoAlumno = inscripcion.getCodigoAlumno();

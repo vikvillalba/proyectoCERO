@@ -4,6 +4,8 @@
  */
 package DTOs.GestionarClases;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Jack Murrieta
@@ -17,8 +19,9 @@ public class ClaseListaDTO {
     private String periodo;
     private String nombreAula;
     private boolean activa;
+    private BigDecimal precio;
 
-    public ClaseListaDTO(Integer codigo, String nombreClase, String horario, String nombreMaestro, int cupo, String periodo, String nombreAula, boolean activa) {
+    public ClaseListaDTO(Integer codigo, String nombreClase, String horario, String nombreMaestro, int cupo, String periodo, String nombreAula, boolean activa, BigDecimal precio) {
         this.codigo = codigo;
         this.nombreClase = nombreClase;
         this.horario = horario;
@@ -27,7 +30,18 @@ public class ClaseListaDTO {
         this.periodo = periodo;
         this.nombreAula = nombreAula;
         this.activa = activa;
+        this.precio = precio;
     }
+
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+    
+    
 
     public Integer getCodigo() {
         return codigo;

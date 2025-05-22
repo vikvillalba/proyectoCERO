@@ -11,6 +11,7 @@ import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
 import Exceptions.GestionarClasesException;
+import com.mycompany.dtos.ClaseDTO;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public interface IControlGestionarClases {
     
-    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase)throws GestionarClasesException;
+    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase);
     public void eliminarClase(ClaseListaDTO codigoClase);
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase)throws GestionarClasesException;
     public List<AulaClaseDTO> obtenerListasAulas();
@@ -39,4 +40,7 @@ public interface IControlGestionarClases {
     public EditarClaseDTO obtenerClaseLista(ClaseListaDTO clase);
     public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException;
     public boolean validarDisponibilidadHorarioAula(NuevaClaseDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException;
+    
+    //buscar clase por codigo
+    public ClaseDTO buscarClaseCodigo(Integer codigo);
 }
