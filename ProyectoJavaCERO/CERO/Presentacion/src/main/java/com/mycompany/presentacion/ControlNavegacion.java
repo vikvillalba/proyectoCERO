@@ -1,6 +1,5 @@
 package com.mycompany.presentacion;
 
-
 import ControlGestionarAlumnos.ControlGestionarAlumnos;
 import ControlGestionarAlumnos.IControlGestionarAlumnos;
 import ControlGestionarClases.ControlGestionarClases;
@@ -78,7 +77,7 @@ public class ControlNavegacion {
     private static IRegistroAsistencias registroAsistencias = new RegistroAsistencias();
     private static IControlGestionarClases gestionarClases = new ControlGestionarClases();
     private static IControlGestionarAlumnos gestionarAlumnos = new ControlGestionarAlumnos();
-    
+
     private static FrmMenuPrincipal menuPrincipal;
 
     // formularios CU inscribir 
@@ -96,7 +95,7 @@ public class ControlNavegacion {
     private static FrmAdminClases frmAdminClases;
     private static PanelScrollGuardarClase frmRegistrarClase;
     private static PanelScrollEditarClase frmEditarClase;
-    
+
     //formularios CU_Gestionar Alumnos
     private static FrmAdminAlumnos frmAdminAlumnos;
     private static FrmEditarAlumno frmEditarAlumno;
@@ -126,7 +125,7 @@ public class ControlNavegacion {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         frameActual = frame; // Guarda referencia
-        
+
         return frame;
     }
 
@@ -196,29 +195,48 @@ public class ControlNavegacion {
 
     }
 
-//    frame inscripciones
-
-    //Frame para gestionar clases 
     public static void mostrarFrmAlumnosClase(ClaseListaDTO clase) {
-        frameActual.dispose();
+        
         List<AlumnoClaseDTO> inscripciones = gestionarClases.ObtenerInscripcionesClase(clase);
+
+        if (inscripciones == null || inscripciones.isEmpty()) {
+            try {
+                throw new PresentacionException("La clase no tiene inscripciones.");
+            } catch (PresentacionException ex) {
+                Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+            return; 
+        }
+
+        frameActual.dispose();
         frmAlumnosClase = new FrmAlumnosClase(clase, inscripciones);
         frmAlumnosClase.setVisible(true);
         frameActual = frmAlumnosClase;
-
     }
-    
-    //frame para cu_inscribir clase
+
     public static void mostrarFrmInscripcionesClase(ClaseListaDTO clase) {
-        frameActual.dispose();
         List<AlumnoClaseDTO> inscripciones = gestionarClases.ObtenerInscripcionesClase(clase);
+
+        if (inscripciones == null || inscripciones.isEmpty()) {
+            try {
+                throw new PresentacionException("La clase no tiene inscripciones.");
+            } catch (PresentacionException ex) {
+                Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+            return;
+        }
+
+        frameActual.dispose();
+
         frmInscripcionesClase = new FrmInscripcionesClase(clase, inscripciones);
-        frmAlumnosClase.setVisible(true);
-        frameActual = frmAlumnosClase;
+        frmInscripcionesClase.setVisible(true);
+        frameActual = frmInscripcionesClase;
     }
 
     public static void mostrarFrmNuevoAlumnoInscripcion(ClaseListaDTO claseLista) {
-        frameActual.dispose(); 
+        frameActual.dispose();
         frmNuevoAlumnoInscripcion = new FrmNuevoAlumnoInscripcion(claseLista);
         frameActual = frmNuevoAlumnoInscripcion;
         frameActual.setVisible(true);
@@ -343,13 +361,13 @@ public class ControlNavegacion {
         // arma la dto
         PagoTarjetaDTO pagoTarjeta = new PagoTarjetaDTO(pagoRealizadoSistemaPagos.getCodigoConfirmacion(), pagoRealizadoSistemaPagos.getFechaHora());
         NuevoPagoDTO nuevoPagoDTO = new NuevoPagoDTO(pago.getMonto(), pagoTarjeta);
-        
+
         PagoDTO pagoDTO = inscribirClase.realizarPagoTarjeta(nuevoPagoDTO);
         LocalDateTime fechaActual = LocalDateTime.now();
         //hacer claseDTO
         ClaseDTO claseEncontrada = gestionarClases.buscarClaseCodigo(clase.getCodigo());
         NuevaInscripcionDTO inscripcionDTO = new NuevaInscripcionDTO(claseEncontrada, alumno, fechaActual, pagoDTO);
-        
+
         InscripcionDTO inscripcion = realizarInscripcionPagoTarjeta(inscripcionDTO);
         mostrarMensajePagoExitoso(frameActual);
         if (inscripcion == null) {
@@ -359,7 +377,7 @@ public class ControlNavegacion {
                 mostrarMensajeErrorConExcepcion(frame, ex);
             }
         }
-        
+
     }
 
     /**
@@ -396,7 +414,7 @@ public class ControlNavegacion {
             }
             return inscribirClase.calcularCambio(precioClase, efectivoRecibido);
         } catch (InscripcionException ex) {
-            mostrarMensajeErrorConExcepcion(frame, ex);   
+            mostrarMensajeErrorConExcepcion(frame, ex);
         }
         return null;
     }
@@ -405,13 +423,18 @@ public class ControlNavegacion {
      * Muestra pantalla de DatosClase
      */
     public static void mostrarDatosClase(ClaseListaDTO claseDTO) {
+        if (claseDTO.getCupo() == 0) {
+            try {
+                throw new PresentacionException("La clase esta llena, Selecciona otra con cupos disponibles.");
+            } catch (PresentacionException ex) {
+                mostrarMensajeErrorConExcepcion(frameActual, ex);
+                return;
+            }
+        }
         frameActual.dispose();
-        //pasarle la claseDTO 
-        //ClaseDTO claseFormateada = gestionarClases.buscarClaseCodigo(claseDTO.getCodigo());
         frmDatosClase = new FrmDatosClase(claseDTO);
         frmDatosClase.setVisible(true);
         frameActual = frmDatosClase;
-
     }
 
     //MOSTRAR CLASES EXISTENTES
@@ -491,7 +514,6 @@ public class ControlNavegacion {
         }
     }
 
-
     public static void mostrarFinalizarInscripcion(ClaseListaDTO clase, Integer codigoAlumno) {
         AlumnoBusquedaDTO alumnoBusqueda = new AlumnoBusquedaDTO(codigoAlumno);
         AlumnoDTO alumnoEncontrado = inscribirClase.obtenerAlumno(alumnoBusqueda);
@@ -505,13 +527,13 @@ public class ControlNavegacion {
         }
         try {
             //valida que el alumno no este inscrito ya en la clase
-            if(inscribirClase.validarExistenciaInscripcion(clase, alumnoEncontrado)){
+            if (inscribirClase.validarExistenciaInscripcion(clase, alumnoEncontrado)) {
                 mostrarFrmFinalizarInscripcion(clase, alumnoEncontrado);
             }
         } catch (InscripcionException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
-        
+
     }
 
     //agregarAlumno desde el flujo InscribirClase
@@ -775,7 +797,7 @@ public class ControlNavegacion {
             AsistenciaDTO faltaValidada = registroAsistencias.justificarFalta(faltaJustificada);
             mostrarMensajeFaltaJustificadaCorrectamente(faltaValidada.getAlumno(), faltaValidada.getClase());
             frame.dispose();
-            
+
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorLimiteFaltasJustificadas(ex.getMessage());
         }
@@ -883,7 +905,7 @@ public class ControlNavegacion {
         }
 
     }
-    
+
     public List<AlumnoClaseDTO> obtenerInscripciones(ClaseListaDTO clase) {
         return gestionarClases.ObtenerInscripcionesClase(clase);
 
@@ -908,9 +930,9 @@ public class ControlNavegacion {
             return new ArrayList<>();
         }
     }
-    
+
     //CU GESTIONAR ALUMNOS
-    public static void mostrarFrmAdminAlumnos(){
+    public static void mostrarFrmAdminAlumnos() {
         frameActual.dispose();
         List<AlumnoDTO> alumnos = gestionarAlumnos.obtenerAlumnosDTOLista();
         frmAdminAlumnos = new FrmAdminAlumnos(alumnos);
@@ -918,23 +940,24 @@ public class ControlNavegacion {
         frameActual = frmAdminAlumnos;
         frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    
-    public static void mostrarFrmRegistrarNuevoAlumno(){
+
+    public static void mostrarFrmRegistrarNuevoAlumno() {
         frameActual.dispose();
         frmRegistrarNuevoAlumno = new FrmRegistrarNuevoAlumno();
         frmRegistrarNuevoAlumno.setVisible(true);
         frameActual = frmRegistrarNuevoAlumno;
         frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
     }
-    public static void mostrarFrmEditarAlumno(AlumnoDTO alumno){
+
+    public static void mostrarFrmEditarAlumno(AlumnoDTO alumno) {
         frameActual.dispose();
         frmEditarAlumno = new FrmEditarAlumno(alumno);
         frmEditarAlumno.setVisible(true);
         frameActual = frmEditarAlumno;
         frameActual.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-   
+
     public static void registrarNuevoAlumno(AlumnoDTO nuevoAlumno) {
         try {
             gestionarAlumnos.registrarNuevoAlumno(nuevoAlumno);
@@ -943,9 +966,9 @@ public class ControlNavegacion {
         } catch (GestionarAlumnosException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
-        
+
     }
-    
+
     public static void editarAlumno(AlumnoDTO alumno) {
 
         try {
@@ -957,19 +980,20 @@ public class ControlNavegacion {
         }
 
     }
-    public static void eliminarAlumno(AlumnoDTO alumno){
+
+    public static void eliminarAlumno(AlumnoDTO alumno) {
         gestionarAlumnos.eliminarAlumno(alumno);
     }
 
     public static void mostrarFrmInscripcionesClasesAlumno(AlumnoDTO alumno) {
-       
+
         List<InscripcionClaseDTO> inscripciones = obtenerInscripciones(alumno);
-        if(!inscripciones.isEmpty()){
+        if (!inscripciones.isEmpty()) {
             frameActual.dispose();
             frmInscripcionesClasesAlumno = new FrmInscripcionesClasesAlumno(inscripciones);
             frmInscripcionesClasesAlumno.setVisible(true);
             frameActual = frmInscripcionesClasesAlumno;
-        }else{
+        } else {
             try {
                 throw new PresentacionException("El alumno no tiene inscripciones");
             } catch (PresentacionException ex) {

@@ -311,6 +311,7 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
     private void btnVerAlumnosInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerAlumnosInscritosActionPerformed
         //ControlNavegacion.mostrarAlumnosInscritos(this.clase);
+        ControlNavegacion.mostrarFrmInscripcionesClase(claseLista);
     }//GEN-LAST:event_btnVerAlumnosInscritosActionPerformed
 
     private void btnInscribirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInscribirAlumnoActionPerformed
