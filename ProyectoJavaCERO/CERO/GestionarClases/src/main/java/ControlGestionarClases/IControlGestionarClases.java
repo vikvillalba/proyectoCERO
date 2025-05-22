@@ -5,6 +5,7 @@
 package ControlGestionarClases;
 
 import DTOs.GestionarClases.AulaClaseDTO;
+import DTOs.GestionarClases.ClaseAdminDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.MaestroDTO;
@@ -27,7 +28,7 @@ public interface IControlGestionarClases {
     public void registrarNuevaClase(NuevaClaseDTO nuevaClase)throws GestionarClasesException;
     public List<AulaClaseDTO> obtenerListasAulas();
     public List<MaestroDTO> obtenerListaMaestros();
-    public void validarDatosClase(NuevaClaseDTO nuevaClase) throws GestionarClasesException;
+    public void validarDatosClase(ClaseAdminDTO nuevaClase) throws GestionarClasesException;
     public void editarClase(EditarClaseDTO editarClase)throws GestionarClasesException;
     public List<ClaseListaDTO> buscarClasesActivas() throws GestionarClasesException;
 
@@ -38,9 +39,11 @@ public interface IControlGestionarClases {
     public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin)throws GestionarClasesException;
     
     public EditarClaseDTO obtenerClaseLista(ClaseListaDTO clase);
-    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException;
-    public boolean validarDisponibilidadHorarioAula(NuevaClaseDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException;
+    public boolean validarDisponibilidadHorarioMaestro(ClaseAdminDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException;
+    public boolean validarDisponibilidadHorarioAula(ClaseAdminDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException;
     
     //buscar clase por codigo
     public ClaseDTO buscarClaseCodigo(Integer codigo);
+    public void validarInactivaClase(EditarClaseDTO clase) throws GestionarClasesException;
+    public void validarCapacidadAlumnos(EditarClaseDTO clase) throws GestionarClasesException;
 }

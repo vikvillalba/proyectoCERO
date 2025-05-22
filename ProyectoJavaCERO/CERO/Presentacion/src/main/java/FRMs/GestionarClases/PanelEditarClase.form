@@ -466,7 +466,6 @@
               <Color blue="56" green="2f" red="1e" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="500.0"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -5,6 +5,7 @@
 package ControlGestionarClases;
 
 import DTOs.GestionarClases.AulaClaseDTO;
+import DTOs.GestionarClases.ClaseAdminDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.MaestroDTO;
@@ -42,7 +43,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
 
     //obtiene las listas en claseListaDTO
     @Override
-    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase){
+    public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase) {
         nombreClase = nombreClase.trim();
 
         List<ClaseListaDTO> clasesEncontradas = clasesBO.buscarClasesListaNombre(nombreClase);
@@ -110,7 +111,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
     }
 
     @Override
-    public void validarDatosClase(NuevaClaseDTO nuevaClase) throws GestionarClasesException {
+    public void validarDatosClase(ClaseAdminDTO nuevaClase) throws GestionarClasesException {
         // valida los datos de la clase como nombre
         try {
             validarNombreClase(nuevaClase.getNombreClase());
@@ -126,29 +127,35 @@ public class ControlGestionarClases implements IControlGestionarClases {
     @Override
     public void editarClase(EditarClaseDTO editarClase) throws GestionarClasesException {
 
-        DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+        // Validaciones generales
+        validacionesCompletasEditarClase(editarClase);
+        String modalidad = editarClase.getModalidad();
 
-        LocalTime horaInicio = LocalTime.parse(editarClase.getHoraInicio(), formatterHora);
-        LocalDate fechaInicio = LocalDate.parse(editarClase.getFechaInicio(), formatterFecha);
+        // Validación de aula si es presencial
+        if ("Presencial".equalsIgnoreCase(modalidad)) {
+            if (editarClase.getAula() == null) {
+                throw new GestionarClasesException("Una clase presencial debe tener un aula asignada.");
+            }
 
-        try {
-            validarLapsoHoras(horaInicio, editarClase.getHoraFin());
-        } catch (GestionarClasesException ex) {
-            throw new GestionarClasesException(ex.getMessage());
+            List<Clase> clasesPresencialesAula = aulaBO.obtenerClasesPresencialesAula(editarClase.getAula().getIdAula());
+
+            // no toma en cuenta su propia clase
+            clasesPresencialesAula.removeIf(clase -> clase.getCodigo().equals(editarClase.getCodigo()));
+
+            validarDisponibilidadHorarioAula(editarClase, clasesPresencialesAula);
+        } else {
+            editarClase.setAula(null); // Si es virtual, quitar aula
         }
-        try {
-            validarLapsoFechas(fechaInicio, editarClase.getFechaFin());
-        } catch (GestionarClasesException ex) {
-            throw new GestionarClasesException(ex.getMessage());
-        }
-        
-        //validar que no puedes inactivar una clase que no se ha cumplido su lapso de fecha fin 
-        // no puedes inactivar una clase con inscripciones
-        
+
+        // Validación de disponibilidad del maestro
+        List<Clase> clasesImpartidasMaestro = maestroBO.obtenerClasesImpartidadMaestro(editarClase.getMaestro().getId());
+
+        //no toma en cuenta su propia clase
+        clasesImpartidasMaestro.removeIf(clase -> clase.getCodigo().equals(editarClase.getCodigo()));
+        validarDisponibilidadHorarioMaestro(editarClase, clasesImpartidasMaestro);
         clasesBO.editarClase(editarClase);
+
     }
-    
 
     @Override
     public List<ClaseListaDTO> buscarClasesActivas() throws GestionarClasesException {
@@ -223,7 +230,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
         if (dias < 5) {
             throw new GestionarClasesException("El lapso entre fechas debe ser de al menos 5 días");
         }
-        
+
         // la fecha de fin no puede ser anterior a la fecha actual
         LocalDate fechaActual = LocalDate.now();
         if (fechaFin.isBefore(fechaActual)) {
@@ -240,7 +247,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
 
     //Validar disponibilidad del aula
     @Override
-    public boolean validarDisponibilidadHorarioAula(NuevaClaseDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException {
+    public boolean validarDisponibilidadHorarioAula(ClaseAdminDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException {
         List<DayOfWeek> diasClase = nuevaClase.getDiasClase();
         LocalDate fechaInicioClase = nuevaClase.getFechaInicio();
         LocalDate fechaFinClase = nuevaClase.getFechaFin();
@@ -283,7 +290,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
 
     //VALIDAR DISPONIBILIDD CON EL HORARIO DEL MAESTRO
     @Override
-    public boolean validarDisponibilidadHorarioMaestro(NuevaClaseDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException {
+    public boolean validarDisponibilidadHorarioMaestro(ClaseAdminDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException {
 
         List<DayOfWeek> diasClase = nuevaClase.getDiasClase();
         LocalDate fechaInicioClase = nuevaClase.getFechaInicio();
@@ -330,4 +337,38 @@ public class ControlGestionarClases implements IControlGestionarClases {
         return clasesBO.buscarClaseCodigo(codigo);
     }
 
+    //valida la capacidad ingresada con los cupos donde la capacidad no puede ser menor a los cuposDisponibles;
+    @Override
+    public void validarCapacidadAlumnos(EditarClaseDTO clase) throws GestionarClasesException {
+        int capacidad = clase.getCapacidadAlumnos();
+        int cupos = clase.getCuposDisponibles();
+
+        if (capacidad < cupos) {
+            throw new GestionarClasesException("La capacidad no puede ser menor que los cupos disponibles (" + cupos + ").");
+        }
+    }
+    //validar que no puedes inactivar una clase que no se ha cumplido su lapso de fecha fin 
+    // no puedes inactivar una clase con inscripciones
+
+    @Override
+    public void validarInactivaClase(EditarClaseDTO clase) throws GestionarClasesException {
+        int capacidad = clase.getCapacidadAlumnos();
+        int cuposDisponibles = clase.getCuposDisponibles();
+        LocalDate fechaFin = clase.getFechaFin();
+        LocalDate hoy = LocalDate.now();
+
+        // Si la clase tiene inscripciones
+        // y la fecha de fin aún no ha llegado, no se puede inactivar
+        if (fechaFin.isAfter(hoy)) {
+            throw new GestionarClasesException("No puedes inactivar una clase que aun no ha finalizado.");
+        }
+    }
+
+    private void validacionesCompletasEditarClase(EditarClaseDTO claseEdit) throws GestionarClasesException {
+        validarDatosClase(claseEdit);
+        validarInactivaClase(claseEdit);
+        validarCapacidadAlumnos(claseEdit);
+        validarLapsoHoras(claseEdit.getHoraInicio(), claseEdit.getHoraFin());
+
+    }
 }

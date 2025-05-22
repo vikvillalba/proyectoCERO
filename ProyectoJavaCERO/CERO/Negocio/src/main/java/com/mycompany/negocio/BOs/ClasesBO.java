@@ -148,7 +148,7 @@ public class ClasesBO implements IClasesBO{
         //actualiza activa
         claseEncontrada.setActiva(editarClase.isActiva());
         //actualiza la capacidad
-        claseEncontrada.setCapacidadAlumnos(editarClase.getCapacidad());
+        claseEncontrada.setCapacidadAlumnos(editarClase.getCapacidadAlumnos());
         //actualiza la hora fin
         claseEncontrada.setFechaFin(editarClase.getFechaFin());
         //actualiza la fechaFin

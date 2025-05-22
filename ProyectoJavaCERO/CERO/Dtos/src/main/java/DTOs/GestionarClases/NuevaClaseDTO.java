@@ -13,22 +13,9 @@ import java.util.List;
  *
  * @author Jack Murrieta
  */
-public class NuevaClaseDTO {
-    private Integer codigo;
-    private String nombreClase;
-    private MaestroDTO maestro;
-    private String modalidad;
-    private AulaClaseDTO aula;
-    
-    private List<DayOfWeek> diasClase;
-    private LocalTime horaInicio;
-    private LocalTime horaFin;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
-    
-    private int capacidadAlumnos;
+public class NuevaClaseDTO extends ClaseAdminDTO{
+
     private double precio;
-    private boolean activa;
 
     public NuevaClaseDTO(Integer codigo,String nombreClase, MaestroDTO maestro, String modalidad, AulaClaseDTO aula, List<DayOfWeek> diasClase, LocalTime horaInicio, LocalTime horaFin, LocalDate fechaInicio, LocalDate fechaFin, int capacidadAlumnos, double precio, boolean activa) {
         this.codigo = codigo;

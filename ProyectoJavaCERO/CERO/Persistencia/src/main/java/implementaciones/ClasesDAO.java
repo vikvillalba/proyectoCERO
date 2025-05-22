@@ -18,6 +18,9 @@ import static com.mongodb.client.model.Filters.regex;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -139,13 +142,20 @@ public class ClasesDAO implements IClasesDAO {
     @Override
     public void editarClase(Clase editarClase) {
         //se actualizan los campos activa FechaFin, Hora Fin y capacidadAlumnos
+        // Asegúrate de reconstruir correctamente fechaHoraFin antes de guardar
+        LocalDate fechaFin = editarClase.getFechaFin();
+        LocalTime horaFin = editarClase.getHoraFin();
+
+        if (fechaFin != null && horaFin != null) {
+            editarClase.setFechaHoraFin(LocalDateTime.of(fechaFin, horaFin));
+        }
+
         coleccion.updateOne(
                 eq("_id", editarClase.getId()),
                 Updates.combine(
                         Updates.set("activa", editarClase.isActiva()),
-                        Updates.set("fechaFin", editarClase.getFechaFin()),
-                        Updates.set("horaFin", editarClase.getHoraFin()),
-                        Updates.set("capacidadAlumnos", editarClase.getCapacidadAlumnos())
+                        Updates.set("capacidadAlumnos", editarClase.getCapacidadAlumnos()),
+                        Updates.set("fechaHoraFin", editarClase.getFechaHoraFin()) // <-- aquí está la clave
                 )
         );
     }

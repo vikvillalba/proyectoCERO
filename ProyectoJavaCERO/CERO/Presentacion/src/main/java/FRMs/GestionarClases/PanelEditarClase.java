@@ -43,18 +43,19 @@ public class PanelEditarClase extends javax.swing.JPanel {
         //Configurar labels
         //informacion general
         lblClaseNombre.setText(claseEditarDTO.getNombreClase());
-        lblNombreMaestro.setText(claseEditarDTO.getNombreMaestro());
-        lblAula.setText(claseEditarDTO.getAulaNombre());
-        lblDias.setText(claseEditarDTO.getDiasClase());
+        lblNombreMaestro.setText(claseEditarDTO.getMaestro().getNombreCompleto());
+        lblAula.setText(claseEditarDTO.getAula().getNombreAula());
+        lblDias.setText(claseEditarDTO.getDiasStr());
 
         //horario 
         //dias de la semana
         //fecha inicio y hora inicio
-        lblFechaInicio.setText(claseEditarDTO.getFechaInicio());
-        lblHoraInicio.setText(claseEditarDTO.getHoraInicio());
+        lblFechaInicio.setText(claseEditarDTO.getFechaInicioStr());
+        lblHoraInicio.setText(claseEditarDTO.getHoraInicioStr());
         lblPrecio.setText(claseEditarDTO.getPrecio());
         activa = true;
-
+        //capacidad
+        capacidad.setValue(claseEditarDTO.getCuposDisponibles());
     }
 
     @Override
@@ -298,7 +299,6 @@ public class PanelEditarClase extends javax.swing.JPanel {
         lblPrecio.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblPrecio.setForeground(new java.awt.Color(30, 47, 86));
         lblPrecio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPrecio.setText("500.0");
         panelCantidadPrecio.add(lblPrecio);
 
         add(panelCantidadPrecio);
@@ -379,7 +379,6 @@ public class PanelEditarClase extends javax.swing.JPanel {
                 LocalDate fechaFin = fechaSeleccionada.toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate();
-                System.out.println("Fecha Fin: " + fechaFin);
                 this.fechaFin = fechaFin;
             }
         }
@@ -407,7 +406,6 @@ public class PanelEditarClase extends javax.swing.JPanel {
             ));
         }
 
-        System.out.println("Estado actual DTO: " + claseEditarDTO.isActiva());
     }//GEN-LAST:event_btnInactivarClaseActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -427,23 +425,23 @@ public class PanelEditarClase extends javax.swing.JPanel {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
 
-// Crear un objeto LocalTime
-        //Hora FIN
+        // Crear un objeto LocalTime
+         // Obtener valores spinners
         int horaFin = (int) spinnerHoraFin.getValue();
         int minutoFin = (int) spinnerMinutosFin.getValue();
 
         LocalTime horaFinCompleta = LocalTime.of(horaFin, minutoFin);
 
-        //capacidad y Precio
+// Obtener otros datos
         int capacidad = (int) this.capacidad.getValue();
 
-        //settear nuevos valores a la clase
-        this.claseEditarDTO.setCapacidad(capacidad);
+        //settear valores
+        this.claseEditarDTO.setHoraFin(horaFinCompleta);
+        this.claseEditarDTO.setCapacidadAlumnos(capacidad);
         this.claseEditarDTO.setFechaFin(fechaFin);
-        this.claseEditarDTO.setFechaFin(fechaFin);
+        this.claseEditarDTO.setActiva(activa);
 
         ControlNavegacion.editarClase(claseEditarDTO);
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 

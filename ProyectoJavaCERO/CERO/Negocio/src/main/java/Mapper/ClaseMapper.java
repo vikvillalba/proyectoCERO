@@ -4,8 +4,10 @@
  */
 package Mapper;
 
+import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
+import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.AulaClase;
 import Entidades.Clase;
@@ -87,22 +89,22 @@ public class ClaseMapper implements IClaseMapper {
         String fechaInicio = convertirFecha(clase.getFechaInicio());
         String horaInicio = convertirHora(clase.getHoraInicio());
         String precio = String.valueOf(clase.getPrecio());
+        MaestroDTO maestroDTO = new MaestroDTO(maestro.getIdString(), nombreMaestro);
+        AulaClaseDTO aulaDTO = new AulaClaseDTO(aula.getIdString(), nombreAula);
         
-        return new EditarClaseDTO(
-                clase.getCodigo(),
+        return new EditarClaseDTO(clase.getCodigo(),
                 clase.getNombre(),
-                nombreMaestro,
+                maestroDTO,
                 clase.getModalidad(),
-                nombreAula,
-                diasTexto,
-                fechaInicio,
-                horaInicio,
-                clase.getFechaFin(),
+                aulaDTO,
+                clase.getDias(),
+                clase.getHoraInicio(),
                 clase.getHoraFin(),
-                clase.getCuposDisponibles(), // cambiar por cupos disponibles
-                precio,
-                clase.isActiva()
-        );
+                clase.getFechaInicio(),
+                clase.getFechaFin(),
+                clase.getCapacidadAlumnos(), precio,
+                clase.isActiva(), clase.getCuposDisponibles(), 
+                fechaInicio, horaInicio,diasTexto);
     }
     
     //Mapper claseDTO de inscribir clase 
