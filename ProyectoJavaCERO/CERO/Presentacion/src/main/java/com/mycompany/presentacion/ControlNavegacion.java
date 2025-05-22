@@ -5,6 +5,7 @@ import ControlGestionarAlumnos.ControlGestionarAlumnos;
 import ControlGestionarAlumnos.IControlGestionarAlumnos;
 import ControlGestionarClases.ControlGestionarClases;
 import ControlGestionarClases.IControlGestionarClases;
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
@@ -18,6 +19,7 @@ import FRM.GestionarAlumnos.FrmInscripcionesClasesAlumno;
 import FRM.GestionarAlumnos.FrmRegistrarNuevoAlumno;
 import FRMs.*;
 import FRMs.GestionarClases.FrmAdminClases;
+import FRMs.GestionarClases.FrmAlumnosClase;
 import FRMs.GestionarClases.PanelScrollEditarClase;
 import FRMs.GestionarClases.PanelScrollGuardarClase;
 import FRMs.registroAsistencia.FrmAsistenciasClaseAnterior;
@@ -27,6 +29,7 @@ import FRMs.registroAsistencia.FrmBuscarClaseReporte;
 import FRMs.registroAsistencia.FrmClasesExistentesAsistencia;
 import FRMs.registroAsistencia.FrmDiasAnterioresClase;
 import FRMs.registroAsistencia.FrmInscripcionesAlumno;
+import FRMs.registroAsistencia.FrmInscripcionesClase;
 import FRMs.registroAsistencia.FrmJustificarFalta;
 import FRMs.registroAsistencia.FrmRegistrarAsistenciaActualAlumno;
 import FRMs.registroAsistencia.FrmReporteAsistencias;
@@ -83,10 +86,11 @@ public class ControlNavegacion {
     private static FrmPagoTarjeta pagoTarjeta;
     private static FrmDatosClase frmDatosClase;
     private static FrmInscribirClase inscribir;
-    private static FrmAlumnosInscritos alumnosInscritos;
+    private static FrmAlumnosClase frmAlumnosClase;
     private static FrmClasesExistentes clasesExistentes;
     private static FrmFinalizarInscripcion finalizarInscripcion;
     private static FrmNuevoAlumnoInscripcion frmNuevoAlumnoInscripcion;
+    private static FrmInscripcionesClase frmInscripcionesClase;
 
     //formularios CU_GESTIONAR CLASES
     private static FrmAdminClases frmAdminClases;
@@ -192,15 +196,26 @@ public class ControlNavegacion {
 
     }
 
-    //frame inscripciones 
-//    public static void mostrarAlumnosInscritos(ClaseDTO clase) {
-//        frameActual.dispose();
-//        List<AlumnoDTO> alumnos = inscribirClase.obtenerAlumnosClase();
-//        alumnosInscritos = new FrmAlumnosInscritos(alumnos, clase);
-//        alumnosInscritos.setVisible(true);
-//        frameActual = alumnosInscritos;
-// 
-//    }
+//    frame inscripciones
+
+    //Frame para gestionar clases 
+    public static void mostrarFrmAlumnosClase(ClaseListaDTO clase) {
+        frameActual.dispose();
+        List<AlumnoClaseDTO> inscripciones = gestionarClases.ObtenerInscripcionesClase(clase);
+        frmAlumnosClase = new FrmAlumnosClase(clase, inscripciones);
+        frmAlumnosClase.setVisible(true);
+        frameActual = frmAlumnosClase;
+
+    }
+    
+    //frame para cu_inscribir clase
+    public static void mostrarFrmInscripcionesClase(ClaseListaDTO clase) {
+        frameActual.dispose();
+        List<AlumnoClaseDTO> inscripciones = gestionarClases.ObtenerInscripcionesClase(clase);
+        frmInscripcionesClase = new FrmInscripcionesClase(clase, inscripciones);
+        frmAlumnosClase.setVisible(true);
+        frameActual = frmAlumnosClase;
+    }
 
     public static void mostrarFrmNuevoAlumnoInscripcion(ClaseListaDTO claseLista) {
         frameActual.dispose(); 
@@ -866,6 +881,11 @@ public class ControlNavegacion {
         } catch (GestionarClasesException ex) {
             mostrarMensajeErrorConExcepcion(frameActual, ex);
         }
+
+    }
+    
+    public List<AlumnoClaseDTO> obtenerInscripciones(ClaseListaDTO clase) {
+        return gestionarClases.ObtenerInscripcionesClase(clase);
 
     }
 

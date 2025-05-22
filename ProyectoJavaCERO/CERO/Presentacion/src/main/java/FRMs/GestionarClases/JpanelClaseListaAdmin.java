@@ -12,16 +12,16 @@ import javax.swing.JLabel;
  * @author Jack Murrieta
  */
 public class JpanelClaseListaAdmin extends javax.swing.JPanel {
-
+    
     private ClaseListaDTO clase;
-
+    
     public JpanelClaseListaAdmin(ClaseListaDTO clase) {
         initComponents();
         this.clase = clase;
         setOpaque(false);
-
+        
         configurarDatos();
-
+        
         JpanelDatos.revalidate();
         JpanelDatos.repaint();
         JpanelHeader.revalidate();
@@ -30,14 +30,16 @@ public class JpanelClaseListaAdmin extends javax.swing.JPanel {
         //hacer inclickeables los btns si la clase esta inactiva
         if (clase.isActiva() == false) {
             btnEditar.setEnabled(false);
-            btnEliminar.setEnabled(false);
+            btnEliminar.setEnabled(true);
             btnVerInscritos.setEnabled(false);
-
-            //Poner la imagen de editar y eliminar
         }
-
+        if (clase.getCupo() == clase.getCapacidad()) {
+            btnVerInscritos.setEnabled(false);
+            btnEditar.setEnabled(false);
+        }
+        
     }
-
+    
     private void configurarDatos() {
         JpanelDatos.setBackground(new Color(30, 47, 86));
 
@@ -74,7 +76,7 @@ public class JpanelClaseListaAdmin extends javax.swing.JPanel {
 
         //dato Aula
         lblAula.setText(clase.getNombreAula());
-
+        
         configurarLabelDatos(lblNombreClase);
         configurarLabelDatos(lblCupo);
         configurarLabelDatos(lblMaestro);
@@ -92,7 +94,7 @@ public class JpanelClaseListaAdmin extends javax.swing.JPanel {
         label.setBackground(new Color(30, 47, 86));
         label.setPreferredSize(new Dimension(150, 40)); // Tamaño uniforme para datos
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -289,6 +291,7 @@ public class JpanelClaseListaAdmin extends javax.swing.JPanel {
 
     private void btnVerInscritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerInscritosActionPerformed
         // TODO add your handling code here:
+        ControlNavegacion.mostrarFrmAlumnosClase(clase);
     }//GEN-LAST:event_btnVerInscritosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

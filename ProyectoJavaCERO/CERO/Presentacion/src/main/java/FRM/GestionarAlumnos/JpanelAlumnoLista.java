@@ -1,5 +1,6 @@
 package FRM.GestionarAlumnos;
 
+import FRM.GestionarAlumnos.*;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Color;

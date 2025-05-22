@@ -4,6 +4,7 @@
  */
 package ControlGestionarClases;
 
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.ClaseAdminDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
@@ -24,26 +25,43 @@ import java.util.List;
 public interface IControlGestionarClases {
     
     public List<ClaseListaDTO> buscarClaseListaNombre(String nombreClase);
+
     public void eliminarClase(ClaseListaDTO codigoClase);
-    public void registrarNuevaClase(NuevaClaseDTO nuevaClase)throws GestionarClasesException;
+
+    public void registrarNuevaClase(NuevaClaseDTO nuevaClase) throws GestionarClasesException;
+
     public List<AulaClaseDTO> obtenerListasAulas();
+
     public List<MaestroDTO> obtenerListaMaestros();
+
     public void validarDatosClase(ClaseAdminDTO nuevaClase) throws GestionarClasesException;
-    public void editarClase(EditarClaseDTO editarClase)throws GestionarClasesException;
+
+    public void editarClase(EditarClaseDTO editarClase) throws GestionarClasesException;
+
     public List<ClaseListaDTO> buscarClasesActivas() throws GestionarClasesException;
 
     public List<ClaseListaDTO> buscarClasesInactivas();
+
     public List<ClaseListaDTO> buscarClasesExistentes();
-    public void validarNombreClase(String nombre)throws GestionarClasesException;
-    public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horafin)throws GestionarClasesException;
-    public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin)throws GestionarClasesException;
-    
+
+    public void validarNombreClase(String nombre) throws GestionarClasesException;
+
+    public boolean validarLapsoHoras(LocalTime horaInicio, LocalTime horafin) throws GestionarClasesException;
+
+    public boolean validarLapsoFechas(LocalDate fechaInicio, LocalDate fechaFin) throws GestionarClasesException;
+
     public EditarClaseDTO obtenerClaseLista(ClaseListaDTO clase);
+
     public boolean validarDisponibilidadHorarioMaestro(ClaseAdminDTO nuevaClase, List<Clase> clasesImpartidasMaestro) throws GestionarClasesException;
+
     public boolean validarDisponibilidadHorarioAula(ClaseAdminDTO nuevaClase, List<Clase> clasesPresencialesAula) throws GestionarClasesException;
-    
+
     //buscar clase por codigo
     public ClaseDTO buscarClaseCodigo(Integer codigo);
+
     public void validarInactivaClase(EditarClaseDTO clase) throws GestionarClasesException;
+
     public void validarCapacidadAlumnos(EditarClaseDTO clase) throws GestionarClasesException;
+
+    public List<AlumnoClaseDTO> ObtenerInscripcionesClase(ClaseListaDTO clase);
 }

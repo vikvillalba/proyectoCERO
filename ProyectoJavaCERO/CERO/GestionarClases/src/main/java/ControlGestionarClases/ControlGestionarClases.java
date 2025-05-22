@@ -4,6 +4,7 @@
  */
 package ControlGestionarClases;
 
+import DTOs.GestionarClases.AlumnoClaseDTO;
 import DTOs.GestionarClases.AulaClaseDTO;
 import DTOs.GestionarClases.ClaseAdminDTO;
 import DTOs.GestionarClases.ClaseListaDTO;
@@ -13,6 +14,7 @@ import DTOs.GestionarClases.NuevaClaseDTO;
 import Entidades.Clase;
 import Exceptions.GestionarClasesException;
 import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.negocio.BOs.InscripcionesBO;
 import com.mycompany.negocio.Fabricas.FabricaObjetosNegocio;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,6 +36,7 @@ public class ControlGestionarClases implements IControlGestionarClases {
     private IClasesBO clasesBO;
     private IMaestroBO maestroBO;
     private IAulaBO aulaBO;
+    private InscripcionesBO inscripcionBO;
 
     public ControlGestionarClases() {
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
@@ -370,5 +373,9 @@ public class ControlGestionarClases implements IControlGestionarClases {
         validarCapacidadAlumnos(claseEdit);
         validarLapsoHoras(claseEdit.getHoraInicio(), claseEdit.getHoraFin());
 
+    }
+    
+    public List<AlumnoClaseDTO> ObtenerInscripcionesClase(ClaseListaDTO clase) {
+        return inscripcionBO.obtenerAlumnosClase(clase);
     }
 }

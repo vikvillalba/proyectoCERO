@@ -72,7 +72,7 @@ public class ClaseMapper implements IClaseMapper {
                 clase.getNombre(),
                 horario,
                 maestro != null ? maestro.getNombreCompleto() : "Sin asignar",
-                clase.getCuposDisponibles(), //cupos disponibles
+                clase.getCapacidadAlumnos(),clase.getCuposDisponibles(), //cupos disponibles
                 periodo,
                 aula != null ? aula.getNombreAula() : "Sin aula",
                 clase.isActiva(),

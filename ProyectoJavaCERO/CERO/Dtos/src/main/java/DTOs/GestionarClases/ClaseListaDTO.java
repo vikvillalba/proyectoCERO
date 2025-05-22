@@ -20,17 +20,27 @@ public class ClaseListaDTO {
     private String nombreAula;
     private boolean activa;
     private BigDecimal precio;
+    private int capacidad;
 
-    public ClaseListaDTO(Integer codigo, String nombreClase, String horario, String nombreMaestro, int cupo, String periodo, String nombreAula, boolean activa, BigDecimal precio) {
+    public ClaseListaDTO(Integer codigo, String nombreClase, String horario, String nombreMaestro,int capacidad, int cupo, String periodo, String nombreAula, boolean activa, BigDecimal precio) {
         this.codigo = codigo;
         this.nombreClase = nombreClase;
         this.horario = horario;
         this.nombreMaestro = nombreMaestro;
+        this.capacidad = capacidad;
         this.cupo = cupo;
         this.periodo = periodo;
         this.nombreAula = nombreAula;
         this.activa = activa;
         this.precio = precio;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
+    }
+
+    public void setCapacidad(int capacidad) {
+        this.capacidad = capacidad;
     }
 
     public BigDecimal getPrecio() {
