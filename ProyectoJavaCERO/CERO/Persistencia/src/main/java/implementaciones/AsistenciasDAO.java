@@ -20,6 +20,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import org.bson.conversions.Bson;
@@ -114,41 +115,42 @@ public class AsistenciasDAO implements IAsistenciasDAO {
 
     @Override
     public List<Asistencia> actualizarAsistencias(List<Asistencia> nuevasAsistencias, String idClase) {
+        System.err.println("Tamaño de la lista nuevasAsistencias: " + nuevasAsistencias.size());
+
         MongoDatabase baseDatos = ConexionMongoBD.getConexion();
         MongoCollection<Asistencia> coleccion = baseDatos.getCollection(COLECCION, Asistencia.class);
 
-        Document filtros = new Document("clase", new ObjectId(idClase));
-        List<Asistencia> asistenciasRegistradas = coleccion.find(filtros).into(new ArrayList<>());
-
-        List<ObjectId> idsRegistrados = new ArrayList<>();
-        for (Asistencia asistencia : asistenciasRegistradas) {
-            if (asistencia.getId() != null) {
-                idsRegistrados.add(asistencia.getId());
-            }
-        }
-
         for (Asistencia nueva : nuevasAsistencias) {
-            if (nueva.getId() != null && idsRegistrados.contains(nueva.getId())) {
-                // reemplaza si existe
-                Document filtro = new Document();
-                filtro.append("alumno", nueva.getAlumno());
-                filtro.append("clase", nueva.getClase());
-                Asistencia asistenciaExistente = coleccion.find(filtro).first();
 
-                if (asistenciaExistente != null) {
-                    ObjectId idExistente = asistenciaExistente.getId();
-                    Document filtroId = new Document("_id", idExistente);
-                    nueva.setId(idExistente);
-                    ReplaceOptions opciones = new ReplaceOptions().upsert(true);
-                    coleccion.replaceOne(filtroId, nueva, opciones);
-                } else {
+            System.err.println("entro general");
+            LocalDate fechaSoloDia = nueva.getFechaHora().toLocalDate();
 
-                    coleccion.insertOne(nueva);
-                }
+            ZonedDateTime inicioZDT = fechaSoloDia.atStartOfDay(ZoneId.systemDefault());
+            ZonedDateTime finZDT = fechaSoloDia.plusDays(1).atStartOfDay(ZoneId.systemDefault());
 
+            Date inicioDia = Date.from(inicioZDT.toInstant());
+            Date finDia = Date.from(finZDT.toInstant());
+
+            Document filtro = new Document()
+                    .append("alumno", nueva.getAlumno())
+                    .append("clase", nueva.getClase())
+                    .append("fechaHora", new Document("$gte", inicioDia).append("$lt", finDia));
+
+            Asistencia asistenciaExistente = coleccion.find(filtro).first();
+
+            if (asistenciaExistente != null) {
+                System.err.println("actualiza");
+                ObjectId idExistente = asistenciaExistente.getId();
+                nueva.setId(idExistente);
+                ReplaceOptions opciones = new ReplaceOptions().upsert(true);
+                coleccion.replaceOne(new Document("_id", idExistente), nueva, opciones);
+            } else {
+                System.err.println("inserta nueva");
+                nueva.setId(null); 
+                coleccion.insertOne(nueva);
             }
-
         }
+
         return nuevasAsistencias;
     }
 

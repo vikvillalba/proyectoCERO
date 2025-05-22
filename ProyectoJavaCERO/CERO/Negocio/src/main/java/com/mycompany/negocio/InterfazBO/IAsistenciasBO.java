@@ -20,6 +20,6 @@ public interface IAsistenciasBO {
     public List<AsistenciaDTO>obtenerAsistenciasClase(ClaseDTO clase, LocalDate diaClase);
     public AsistenciaDTO justificarFalta(AsistenciaDTO faltaJustificada);
     public List<AsistenciaDTO> obtenerFaltasJustificadas(AsistenciaDTO asistencia);
-    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias)throws NegocioException;
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias, ClaseDTO claseDTO)throws NegocioException;
     public List<ReporteAsistenciaDTO> obtenerReporteAsistencias(Integer codigoClase, Integer codigoAlumno, LocalDate fechaInicio, LocalDate fechaFin) throws NegocioException;
 }

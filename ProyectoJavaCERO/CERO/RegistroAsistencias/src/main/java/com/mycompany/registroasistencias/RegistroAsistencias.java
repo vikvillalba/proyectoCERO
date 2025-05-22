@@ -154,9 +154,9 @@ public class RegistroAsistencias implements IRegistroAsistencias {
     }
 
     @Override
-    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias) throws AsistenciaException {
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias, ClaseDTO claseDTO) throws AsistenciaException {
         try {
-            return this.asistenciasBO.actualizarAsistencias(asistencias);
+            return this.asistenciasBO.actualizarAsistencias(asistencias, claseDTO);
         } catch (NegocioException ex) {
             throw new AsistenciaException(ex.getMessage());
         }

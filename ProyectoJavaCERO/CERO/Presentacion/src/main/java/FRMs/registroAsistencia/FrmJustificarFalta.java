@@ -236,7 +236,7 @@ public class FrmJustificarFalta extends javax.swing.JFrame {
         // armar justificanteDTO
         JustificanteDTO justificante = new JustificanteDTO(txtMotivoFalta.getText(), LocalDateTime.now());
         this.asistencia.setJustificante(justificante);
-        ControlNavegacion.justificarFalta(asistencia);
+        ControlNavegacion.justificarFalta(asistencia, this);
         this.dispose();
         ControlNavegacion.mostrarAsistenciasAnterioresClase(asistencia.getClase(), asistencia.getFechaHora().toLocalDate());
         

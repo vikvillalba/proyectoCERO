@@ -96,7 +96,7 @@ public interface IRegistroAsistencias {
 
     public List<InscripcionDTO> obtenerInscripcionesClase(ClaseDTO clase) throws AsistenciaException;
 
-    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias) throws AsistenciaException;
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistencias, ClaseDTO claseDTO) throws AsistenciaException;
     
     public List<ClaseListaDTO> obtenerClasesActivas()throws AsistenciaException;
     

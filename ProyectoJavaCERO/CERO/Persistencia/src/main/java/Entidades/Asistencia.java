@@ -2,6 +2,7 @@ package Entidades;
 
 import implementaciones.ObjectIDMapper;
 import java.time.LocalDateTime;
+import java.util.Date;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.types.ObjectId;
 

@@ -741,10 +741,12 @@ public class ControlNavegacion {
         frameActual = justificarFalta;
     }
 
-    public static void justificarFalta(AsistenciaDTO faltaJustificada) {
+    public static void justificarFalta(AsistenciaDTO faltaJustificada, JFrame frame) {
         try {
             AsistenciaDTO faltaValidada = registroAsistencias.justificarFalta(faltaJustificada);
             mostrarMensajeFaltaJustificadaCorrectamente(faltaValidada.getAlumno(), faltaValidada.getClase());
+            frame.dispose();
+            
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorLimiteFaltasJustificadas(ex.getMessage());
         }
@@ -784,10 +786,11 @@ public class ControlNavegacion {
                 "Sin asistencias para registrar", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void actualizarAsistencias(List<AsistenciaDTO> asistencias, ClaseDTO clase) {
+    public static void actualizarAsistencias(List<AsistenciaDTO> asistencias, ClaseDTO clase, JFrame frame) {
         try {
-            registroAsistencias.actualizarAsistencias(asistencias);
+            registroAsistencias.actualizarAsistencias(asistencias, clase);
             mostrarAsistenciasAlumnosClaseRegistradasCorrectamente(clase);
+            frame.dispose();
 
         } catch (AsistenciaException ex) {
             mostrarMensajeErrorConExcepcion(null, ex);

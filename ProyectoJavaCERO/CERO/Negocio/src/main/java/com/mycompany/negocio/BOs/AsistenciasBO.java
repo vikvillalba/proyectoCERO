@@ -159,15 +159,14 @@ public class AsistenciasBO implements IAsistenciasBO {
     }
 
     @Override
-    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistenciasDTO) throws NegocioException {
+    public List<AsistenciaDTO> actualizarAsistencias(List<AsistenciaDTO> asistenciasDTO, ClaseDTO claseDTO) throws NegocioException {
 
         List<Asistencia> asistenciasEntidad = new ArrayList<>();
-        String idClase = "";
+        Clase clase = clasesDAO.buscarClaseCodigoInteger(claseDTO.getCodigo());
+        String idClase = clase.obtenerIdString();
 
         for (AsistenciaDTO dto : asistenciasDTO) {
-            Alumno alumno = alumnosDAO.obtenerAlumno(dto.getAlumno().getId());
-            Clase clase = clasesDAO.buscarClaseCodigoInteger(dto.getClase().getCodigo());
-            idClase = clase.obtenerIdString();
+            Alumno alumno = alumnosDAO.obtenerAlumnoPorCodigo(dto.getAlumno().getCodigo());
 
             if (alumno == null || clase == null) {
                 throw new NegocioException("No se pudo encontrar el alumno o la clase para una de las asistencias.");
@@ -176,17 +175,18 @@ public class AsistenciasBO implements IAsistenciasBO {
             TipoAsistencia tipo = TipoAsistencia.valueOf(dto.getTipoAsistencia().name());
 
             Asistencia asistencia = new Asistencia(
+                    null,
                     tipo.toString(),
                     dto.getFechaHora(),
                     alumno.getIdString(),
                     clase.obtenerIdString()
             );
 
-            if (dto.getId() != null) {
+            if (dto.getId() != null && !dto.getId().isBlank() && dto.getId().length() == 24) {
                 asistencia.setIdString(dto.getId());
+            } else {
+                asistencia.setIdString(null);
             }
-
-            System.out.println("Actualizando asistencia: " + asistencia.getId() + " con tipo " + asistencia.getTipoAsistencia());
 
             asistenciasEntidad.add(asistencia);
 
@@ -207,20 +207,6 @@ public class AsistenciasBO implements IAsistenciasBO {
                     alumnoEntidad.getCorreoElectronico()
             );
             alumno.setId(alumnoEntidad.getIdString());
-
-            Clase clase = clasesDAO.buscarClase(asistencia.getIdClaseString());
-            ClaseDTO claseDTO = new ClaseDTO(
-                    clase.getCodigo(),
-                    clase.getNombre(),
-                    clase.getDias(),
-                    clase.getHoraInicio(),
-                    clase.getHoraFin(),
-                    clase.getNombreMaestro(),
-                    clase.getPrecio(),
-                    clase.getFechaInicio(),
-                    clase.getFechaFin()
-            );
-
             TipoAsistenciaDTO tipoDTO = TipoAsistenciaDTO.valueOf(asistencia.getTipoAsistencia());
 
             AsistenciaDTO dtoActualizado = new AsistenciaDTO(

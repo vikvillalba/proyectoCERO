@@ -101,12 +101,12 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     private void llenarAlumnos() {
         this.asistenciasActualizadas = new ArrayList<>();
         this.panelesAsistencias = new ArrayList<>();
-        
+
         JPanel contenedorAsistencias = new JPanel();
         contenedorAsistencias.setOpaque(false);
         jScrollAsistencias.getViewport().setOpaque(false);
         contenedorAsistencias.setLayout(new BoxLayout(contenedorAsistencias, BoxLayout.Y_AXIS));
-        
+
         for (InscripcionDTO inscripcion : inscripciones) {
             AlumnoDTO alumno = inscripcion.getAlumno();
             AsistenciaDTO asistenciaAlumno = null;
@@ -339,24 +339,24 @@ public class FrmAsistenciasClaseDiaActual extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnRegistrarAsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAsistenciasActionPerformed
-for (AsistenciaDTO asistenciaActualizada : asistenciasActualizadas) {
-    for (PnlAsistenciaEditable asistencia : panelesAsistencias) {
-        AsistenciaDTO panelDTO = asistencia.getAsistencia();
+        for (AsistenciaDTO asistenciaActualizada : asistenciasActualizadas) {
+            for (PnlAsistenciaEditable asistencia : panelesAsistencias) {
+                AsistenciaDTO panelDTO = asistencia.getAsistencia();
 
-        boolean mismoAlumno = panelDTO.getAlumno().getCodigo().equals(asistenciaActualizada.getAlumno().getCodigo());
-        boolean mismaClase = panelDTO.getClase().getCodigo().equals(asistenciaActualizada.getClase().getCodigo());
-        
-        LocalDate fechaPanel = panelDTO.getFechaHora().toLocalDate();
-        LocalDate fechaActualizada = asistenciaActualizada.getFechaHora().toLocalDate();
-        boolean mismaFecha = fechaPanel.equals(fechaActualizada);
+                boolean mismoAlumno = panelDTO.getAlumno().getCodigo().equals(asistenciaActualizada.getAlumno().getCodigo());
+                boolean mismaClase = panelDTO.getClase().getCodigo().equals(asistenciaActualizada.getClase().getCodigo());
 
-        if (mismoAlumno && mismaClase && mismaFecha) {
-            asistenciaActualizada.setTipoAsistencia(asistencia.getTipoAsistencia());
-            break; 
+                LocalDate fechaPanel = panelDTO.getFechaHora().toLocalDate();
+                LocalDate fechaActualizada = asistenciaActualizada.getFechaHora().toLocalDate();
+                boolean mismaFecha = fechaPanel.equals(fechaActualizada);
+
+                if (mismoAlumno && mismaClase && mismaFecha) {
+                    asistenciaActualizada.setTipoAsistencia(asistencia.getTipoAsistencia());
+                    break;
+                }
+            }
         }
-    }
-}
-        ControlNavegacion.actualizarAsistencias(asistencias, clase);
+        ControlNavegacion.actualizarAsistencias(asistenciasActualizadas, clase, this);
     }//GEN-LAST:event_btnRegistrarAsistenciasActionPerformed
 
 
