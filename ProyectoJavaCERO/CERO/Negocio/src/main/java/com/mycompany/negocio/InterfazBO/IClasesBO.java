@@ -4,6 +4,7 @@ import DTOs.GestionarClases.ClaseListaDTO;
 import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import DTOs.GestionarClases.AlumnoClaseDTO;
+import Entidades.Clase;
 import ObserverInscribirClase.INotificadorInscripcion;
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.negocio.excepciones.NegocioException;
@@ -35,13 +36,12 @@ public interface IClasesBO extends INotificadorInscripcion {
 
     public List<ClaseListaDTO> buscarClasesExistentes();
 
-    public int obtenerCuposDisponibles(int cantidadInscritos, int capacidadClase);
-
-    public boolean validarCapacidadMaxMenorCantidadInscritos(int capacidad, int cantidadInscritos);
 
     public void eliminarClase(ClaseListaDTO clase);
 
     public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase);
     
+    public List<Clase> calcularClasesCupos(List<Clase> clases);
 
+    public Clase calcularClaseCupo(Clase clase);
 }

@@ -52,6 +52,7 @@ public class ClaseMapper implements IClaseMapper {
     
     @Override
     public ClaseListaDTO convertirClaseListaDTO(Clase clase, Maestro maestro, AulaClase aula) {
+        
         List<DayOfWeek> dias = clase.getDias();
         String diasTexto = convertirDias(dias);
         
@@ -68,7 +69,7 @@ public class ClaseMapper implements IClaseMapper {
                 clase.getNombre(),
                 horario,
                 maestro != null ? maestro.getNombreCompleto() : "Sin asignar",
-                clase.getCapacidadAlumnos(),
+                clase.getCuposDisponibles(), //cupos disponibles
                 periodo,
                 aula != null ? aula.getNombreAula() : "Sin aula",
                 clase.isActiva()
@@ -96,7 +97,7 @@ public class ClaseMapper implements IClaseMapper {
                 horaInicio,
                 clase.getFechaFin(),
                 clase.getHoraFin(),
-                clase.getCapacidadAlumnos(),
+                clase.getCuposDisponibles(), // cambiar por cupos disponibles
                 precio,
                 clase.isActiva()
         );

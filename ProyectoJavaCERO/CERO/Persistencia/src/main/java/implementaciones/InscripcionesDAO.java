@@ -155,5 +155,16 @@ public class InscripcionesDAO implements IInscripcionesDAO {
     }
     
     //obtener inscripciones no activas en list<Inscripcion> ........
+    //
+    @Override
+    public int contarInscripcionesPorClase(ObjectId idClase) {
+        MongoCollection<Inscripcion> coleccion = ConexionMongoBD.getConexion().getCollection("Inscripciones", Inscripcion.class);
 
+        return (int) coleccion.countDocuments(
+                Filters.and(
+                        Filters.eq("clase", idClase),
+                        Filters.eq("activo", true)
+                )
+        );
+    }
 }

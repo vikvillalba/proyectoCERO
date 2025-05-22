@@ -100,7 +100,7 @@ public class InscripcionesBO implements IInscripcionesBO {
         InscripcionDTO inscripcionDTO = new InscripcionDTO(alumnoDTO, claseDTO, inscripcionRealizada.getFechaInscripcion(), pagoDTO);
         
         //notificadr
-        notificadorInscripcion.notificarCancelacionInscripcion(alumno, clase);
+        notificadorInscripcion.notificarRegistroInscripcion(alumno, clase);
         return inscripcionDTO;
     }
 

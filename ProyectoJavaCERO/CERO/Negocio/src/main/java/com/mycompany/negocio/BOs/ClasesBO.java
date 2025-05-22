@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
+import implementaciones.InscripcionesDAO;
 
 /**
  *
@@ -34,12 +35,14 @@ public class ClasesBO implements IClasesBO{
     private IClaseMapper claseMapper;
     private IAulaBO aulaBO;
     private IMaestroBO maestroBO;
+    private InscripcionesDAO inscripcionesDAO;
 
     public ClasesBO(IClasesDAO clasesDAO, IAulaBO aulaBO, IMaestroBO maestroBO) {
         this.clasesDAO = clasesDAO;
         this.claseMapper = new ClaseMapper();
         this.aulaBO = aulaBO;
         this.maestroBO = maestroBO;
+        this.inscripcionesDAO = new InscripcionesDAO();
     }
 
     @Override
@@ -162,8 +165,11 @@ public class ClasesBO implements IClasesBO{
         if (clasesActivas.isEmpty() || clasesActivas == null) {
             return new ArrayList<>();
         }
+        
+        List<Clase> claseCalculadas = calcularClasesCupos(clasesActivas);
+        
         List<ClaseListaDTO> clases = new ArrayList<>();
-        for (Clase clase : clasesActivas) {
+        for (Clase clase : claseCalculadas) {
             try {
                 Maestro maestro = maestroBO.buscarMaestroID(clase.getIdMaestroString());
                 AulaClase aula = aulaBO.buscarAulaClaseID(clase.getIdAulaString());
@@ -183,7 +189,8 @@ public class ClasesBO implements IClasesBO{
             List<Clase> clasesInactivas = clasesDAO.obtenerClasesInactivas();
             List<ClaseListaDTO> clasesDTO = new ArrayList<>();
 
-            for (Clase clase : clasesInactivas) {
+            List<Clase> claseCalculadas = calcularClasesCupos(clasesInactivas);
+            for (Clase clase : claseCalculadas) {
                 Maestro maestro = null;
                 AulaClase aula = null;
 
@@ -211,8 +218,10 @@ public class ClasesBO implements IClasesBO{
         try {
             List<Clase> clasesExistentes = clasesDAO.obtenerClases();
             List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+            
+            List<Clase> clasesCalculadas = calcularClasesCupos(clasesExistentes);
 
-            for (Clase clase : clasesExistentes) {
+            for (Clase clase : clasesCalculadas) {
                 Maestro maestro = null;
                 AulaClase aula = null;
 
@@ -236,16 +245,6 @@ public class ClasesBO implements IClasesBO{
     }
 
     @Override
-    public int obtenerCuposDisponibles(int cantidadInscritos, int capacidadClase) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean validarCapacidadMaxMenorCantidadInscritos(int capacidad, int cantidadInscritos) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public void eliminarClase(ClaseListaDTO clase) {
         Clase claseEncontrada = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
         if (claseEncontrada != null) {
@@ -258,8 +257,10 @@ public class ClasesBO implements IClasesBO{
         try {
             List<Clase> clasesNombre = clasesDAO.obtenerClasesPorNombre(nombreClase);
             List<ClaseListaDTO> clasesDTO = new ArrayList<>();
+            
+            List<Clase> clasesCalculadas = calcularClasesCupos(clasesNombre);
 
-            for (Clase clase : clasesNombre) {
+            for (Clase clase : clasesCalculadas) {
                 Maestro maestro = null;
                 AulaClase aula = null;
 
@@ -286,9 +287,10 @@ public class ClasesBO implements IClasesBO{
     public EditarClaseDTO obtenerClaseListaDTO(ClaseListaDTO clase) {
         try {
             Clase claseEntity = clasesDAO.buscarClaseCodigoInteger(clase.getCodigo());
+            Clase claseClaculada = calcularClaseCupo(claseEntity);
             Maestro maestro = maestroBO.buscarMaestroID(claseEntity.getIdMaestroString());
             AulaClase aula = aulaBO.buscarAulaClaseID(claseEntity.getIdAulaString());
-            return claseMapper.convertirEditarClase(claseEntity, maestro, aula);
+            return claseMapper.convertirEditarClase(claseClaculada, maestro, aula);
         } catch (NegocioException ex) {
             Logger.getLogger(ClasesBO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -297,13 +299,35 @@ public class ClasesBO implements IClasesBO{
 
     @Override
     public void notificarRegistroInscripcion(Alumno alumno, Clase clase) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //obtener la cantidad de alumnos inscritos
+        //obtener la capacidad del aula
+        //calcular los cupos disponibles ya que se realizo una nueva inscripcion
+        calcularClaseCupo(clase);
     }
 
     @Override
     public void notificarCancelacionInscripcion(Alumno alumno, Clase clase) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        //obtener la cantidad de alumnos inscritos
+        //obtener la capacidad del aula
+        //calcular los cupos disponibles ya que se realizo una nueva inscripcion
+        calcularClaseCupo(clase);
     }
 
+    @Override
+    public List<Clase> calcularClasesCupos(List<Clase> clases) {
+        for (Clase clase : clases) {
+            int inscripciones = inscripcionesDAO.contarInscripcionesPorClase(clase.getId());
+            clase.calcularCuposDisponibles(inscripciones);
+        }
+        return clases;
+    }
+
+    @Override
+    public Clase calcularClaseCupo(Clase clase) {
+        int inscripciones = inscripcionesDAO.contarInscripcionesPorClase(clase.getId());
+        clase.calcularCuposDisponibles(inscripciones);
+        return clase;
+    }
 
 }

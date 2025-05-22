@@ -54,6 +54,9 @@ public class Clase {
 
     private LocalDateTime fechaHoraInicio;
     private LocalDateTime fechaHoraFin;
+    
+    //cupos disponibles para mostrar en dto y validar en inscripcion
+    private int cuposDisponibles = -1; //valor por defecto
 
     public Clase() {
     }
@@ -330,27 +333,21 @@ public class Clase {
         return ObjectIDMapper.toString(id);
     }
 
-    @Override
-    public String toString() {
-        return "Clase{"
-                + "id=" + id
-                + ", codigo=" + codigo
-                + ", nombre='" + nombre + '\''
-                + ", idMaestro=" + idMaestro
-                + ", idAula=" + idAula
-                + ", modalidad='" + modalidad + '\''
-                + ", dias=" + dias
-                + ", horaInicio=" + horaInicio
-                + ", horaFin=" + horaFin
-                + ", fechaInicio=" + fechaInicio
-                + ", fechaFin=" + fechaFin
-                + ", capacidadAlumnos=" + capacidadAlumnos
-                + ", LIMITE_FALTAS=" + LIMITE_FALTAS
-                + ", nombreMaestro='" + nombreMaestro + '\''
-                + ", nombreAula='" + nombreAula + '\''
-                + ", precio=" + precio
-                + ", activa=" + activa
-                + '}';
+    @BsonIgnore
+    public int getCuposDisponibles() {
+        // Si no se ha calculado, devolver la capacidad completa
+        if (cuposDisponibles == -1) {
+            return capacidadAlumnos;
+        }
+        return cuposDisponibles;
     }
-    
+
+    /**
+     * Calcula los cupos disponibles con base en el número de inscripciones actuales. Si las inscripciones superan la capacidad, se devuelve 0.
+     */
+    @BsonIgnore
+    public void calcularCuposDisponibles(int inscripcionesActuales) {
+        int calculado = capacidadAlumnos - inscripcionesActuales;
+        this.cuposDisponibles = Math.max(calculado, 0); // Asegura que nunca sea negativo
+    }
 }

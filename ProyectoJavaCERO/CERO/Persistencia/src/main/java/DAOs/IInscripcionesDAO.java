@@ -4,10 +4,11 @@ package DAOs;
 import Entidades.Alumno;
 import Entidades.Inscripcion;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public interface IInscripcionesDAO {
     public List<Inscripcion> obtenerInscripcionesClase(String idClase);
@@ -19,5 +20,7 @@ public interface IInscripcionesDAO {
     
     public void cancelarInscripcion(String idInscripcion);
 
+    // obtener total de inscritos 
+    public int contarInscripcionesPorClase(ObjectId idClase);
     
 }

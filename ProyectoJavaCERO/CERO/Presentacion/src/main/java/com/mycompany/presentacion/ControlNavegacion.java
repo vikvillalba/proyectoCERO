@@ -142,6 +142,7 @@ public class ControlNavegacion {
         frameActual.dispose();
         inscribir = new FrmInscribirClase();
         inscribir.setVisible(true);
+        frameActual = inscribir;
 
     }
 
