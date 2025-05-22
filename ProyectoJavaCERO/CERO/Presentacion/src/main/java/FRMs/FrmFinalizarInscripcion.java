@@ -54,10 +54,8 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
 
         // Configuración de la ventana
         setTitle("Finalizar Inscripción");
-        setSize(1000, 700); 
+        setSize(1255, 759); 
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(MAXIMIZED_BOTH); 
 
         configurarCampos(claseLista, alumno);
     }
@@ -305,7 +303,8 @@ public class FrmFinalizarInscripcion extends javax.swing.JFrame {
                     .addComponent(btnPagoEfectivo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPagoTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(btnRegresar))
+                .addComponent(btnRegresar)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jLabel4.getAccessibleContext().setAccessibleDescription("");

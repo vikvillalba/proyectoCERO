@@ -65,7 +65,6 @@ public class FrmAlumnosClase extends javax.swing.JFrame {
         setTitle("Administración alumnos");
         setSize(1300, 500);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
  
         String capacidad = String.valueOf(claseLista.getCapacidad());

@@ -8,6 +8,7 @@ import com.mycompany.dtos.PagoEfectivoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import com.mycompany.presentacion.excepciones.PresentacionException;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.math.BigDecimal;
@@ -54,6 +55,7 @@ public class FrmPagoEfectivo extends javax.swing.JFrame {
         pack();
         getContentPane().add(pnlFondo, new AbsoluteConstraints(0, 0, getWidth(), getHeight()));
         this.setLocationRelativeTo(null);
+        this.setMaximumSize(new Dimension(1109, 777));
 
     }
 

@@ -71,7 +71,7 @@ public class FrmInscribirClase extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(30, 47, 86));
         jLabel10.setText("INSCRIBIR EN CLASE");
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(340, 140, 640, 70);
+        jLabel10.setBounds(340, 140, 640, 65);
 
         txfNombreClase.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txfNombreClase.setHorizontalAlignment(javax.swing.JTextField.CENTER);

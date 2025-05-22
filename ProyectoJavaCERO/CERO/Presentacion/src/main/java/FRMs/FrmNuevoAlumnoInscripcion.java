@@ -62,7 +62,6 @@ public class FrmNuevoAlumnoInscripcion extends javax.swing.JFrame {
         setTitle("Registrar alumno");
         setSize(1300, 500);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
     }

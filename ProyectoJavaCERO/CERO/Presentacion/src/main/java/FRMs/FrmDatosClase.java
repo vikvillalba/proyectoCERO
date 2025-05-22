@@ -46,11 +46,9 @@ public class FrmDatosClase extends javax.swing.JFrame {
 
         // Configuración de la ventana
         setTitle("DATOS CLASE");
-        setSize(1000, 700);
+        setSize(1255, 781);
         setLocationRelativeTo(null);
         setResizable(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(MAXIMIZED_BOTH);
 
         configurarCampos(claseLista);
     }
