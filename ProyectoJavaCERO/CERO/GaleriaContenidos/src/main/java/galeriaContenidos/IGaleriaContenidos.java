@@ -21,10 +21,13 @@ public interface IGaleriaContenidos {
     public boolean validarNombreContenidoRegistrar(String nombre) throws GaleriaContenidosException;
     public boolean validarAutorContenidoRegistrar(String autor) throws GaleriaContenidosException;
     public void seleccionarContenido(ContenidoViejoDTO contenido) throws GaleriaContenidosException;
-    public List<ContenidoViejoDTO> obtenerListaContenidos(ContenidoBusquedaDTO contenido) throws GaleriaContenidosException;
+    public List<ContenidoViejoDTO> obtenerListaContenidos() throws GaleriaContenidosException;
     public ClaseDTO getClaseSeleccionada() throws GaleriaContenidosException;
     public ContenidoViejoDTO getContenidoViejoSeleccionado() throws GaleriaContenidosException;
     public void seleccionarContenidoViejo(ContenidoViejoDTO contenido) throws GaleriaContenidosException;
     public ContenidoNuevoDTO getContenidoNuevo();
+    public byte[] obtenerBytesContenido(ContenidoViejoDTO contenido) throws GaleriaContenidosException;
+    public ContenidoBusquedaDTO getContenidoBusqueda();
+    public void setContenidoBusqueda(ContenidoBusquedaDTO contenidoBusqueda);
     
 }

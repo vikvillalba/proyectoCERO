@@ -1,8 +1,10 @@
 package FRMs.GaleriaContenidos;
 
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -22,6 +24,13 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
     public FrmVistaPrevia() {
         initComponents();
         setTitle("Vista Previa");
+        
+        txfAutor.setText(ControlNavegacion.getContenidoNuevo().getAutor());
+        txfGuardarComo.setText(ControlNavegacion.getContenidoNuevo().getNombre());
+        JLabel imagen = ControlNavegacion.mostrarContenidoBytes(ControlNavegacion.getContenidoNuevo().getContenido());
+        pnlContenedor.add(imagen); 
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
         
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         
@@ -58,7 +67,7 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
         txfGuardarComo = new javax.swing.JTextField();
         txfAutor = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        pnlContenedor = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,10 +87,8 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
         jLabel2.setText("Guardar como:");
 
         txfGuardarComo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txfGuardarComo.setText("contenido1");
 
         txfAutor.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txfAutor.setText("César");
 
         btnAceptar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnAñadirContenidoVistaPrevia.png"))); // NOI18N
         btnAceptar.setContentAreaFilled(false);
@@ -91,19 +98,15 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
-        );
+        pnlContenedor.setBackground(new java.awt.Color(30, 47, 86));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnCancelarVistaPreviaContenido.png"))); // NOI18N
         btnCancelar.setContentAreaFilled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,7 +119,7 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnAceptar))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,12 +143,12 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
-                .addGap(45, 45, 45))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,9 +160,9 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(311, 311, 311))
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+                .addGap(53, 53, 53)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,50 +171,34 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        boolean exitoNombre = ControlNavegacion.validarNombreContenidoRegistrarGC(txfGuardarComo.getText());
+        boolean exitoAutor = ControlNavegacion.validarAutorContenidoRegistrarGC(txfAutor.getText());
+        
+        if (exitoNombre == true && exitoAutor == true) {
+            String nombre = txfGuardarComo.getText();
+            String autor = txfAutor.getText();
+            ControlNavegacion.getContenidoNuevo().setNombre(nombre);
+            ControlNavegacion.getContenidoNuevo().setAutor(autor);
+            
+            boolean exito = ControlNavegacion.registrarContenidoGC(ControlNavegacion.getContenidoNuevo());
+            if (exito) {
+                ControlNavegacion.mostrarFrmMensajeAñadidoCorrecto();
+                this.dispose();
+            }   
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmVistaPrevia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmVistaPrevia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmVistaPrevia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmVistaPrevia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmVistaPrevia().setVisible(true);
-            }
-        });
-    }
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        ControlNavegacion.mostrarFrmAñadirContenido();
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -220,7 +207,7 @@ public class FrmVistaPrevia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel pnlContenedor;
     private javax.swing.JTextField txfAutor;
     private javax.swing.JTextField txfGuardarComo;
     // End of variables declaration//GEN-END:variables

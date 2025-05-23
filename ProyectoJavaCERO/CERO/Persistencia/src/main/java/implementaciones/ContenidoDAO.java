@@ -16,12 +16,12 @@ import DAOs.IContenidoDAO;
 public class ContenidoDAO implements IContenidoDAO {
     
     private List<Contenido> contenidos = new ArrayList<>();
-    private Integer id = 1;
+    private Integer id;
 
     @Override
     public Contenido registrarContenido(Contenido contenido) throws PersistenciaException {
         try {
-            contenido.setId(id);
+//            contenido.setId(id);
             this.contenidos.add(contenido);
             
             return this.contenidos.getLast();
@@ -47,10 +47,11 @@ public class ContenidoDAO implements IContenidoDAO {
     public List<Contenido> obtenerListaContenidos(String nombre, String autor, LocalDateTime fechaHora, Clase clase) throws PersistenciaException {
         try {
             List<Contenido> contenidos = this.contenidos.stream()
-                                                        .filter(c -> c.getNombre() == nombre &&
-                                                                     c.getAutor() == autor &&
-                                                                     c.getFechaHora() == fechaHora &&
-                                                                     c.getClase().getId()== clase.getId())
+                                                        .filter(c -> 
+                                                               (nombre == null || c.getNombre().equals(nombre)) &&
+                                                               (autor == null || c.getAutor().equals(autor)) &&
+                                                               (fechaHora == null || c.getFechaHora().equals(fechaHora)) &&
+                                                               (clase == null || c.getCodigoClase()== clase.getCodigo()))
                                                         .collect(Collectors.toList());
             
             return contenidos;

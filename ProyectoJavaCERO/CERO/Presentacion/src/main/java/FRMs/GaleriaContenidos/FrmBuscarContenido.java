@@ -1,9 +1,19 @@
 package FRMs.GaleriaContenidos;
 
+import com.mycompany.dtos.ContenidoBusquedaDTO;
+import com.mycompany.presentacion.ControlNavegacion;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -15,6 +25,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class FrmBuscarContenido extends javax.swing.JFrame {
 
     Image imagenFondo;
+    JDateChooser dateChooser;
     
     /**
      * Creates new form FrmBuscarContenido
@@ -22,6 +33,12 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
     public FrmBuscarContenido() {
         initComponents();
         setTitle("Buscar Contenido");
+        
+        this.dateChooser = new JDateChooser();
+        dateChooser.setPreferredSize(new Dimension(150, 25));
+        JTextField editor = (JTextField) dateChooser.getDateEditor().getUiComponent();
+        editor.setEditable(false);
+        pnlFecha.add(dateChooser);
         
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         
@@ -58,7 +75,7 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txfNombre = new javax.swing.JTextField();
         txfCreador = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        pnlFecha = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
 
@@ -83,13 +100,10 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
         jLabel3.setText("Fecha y Hora:");
 
         txfNombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txfNombre.setText("coreografia(2)");
 
         txfCreador.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txfCreador.setText("César");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField3.setText("2025/05/22 13:58");
+        pnlFecha.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,10 +118,11 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(4, 4, 4)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txfNombre)
-                    .addComponent(txfCreador)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                        .addComponent(txfCreador))
+                    .addComponent(pnlFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -122,17 +137,27 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(txfCreador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarContenidos.png"))); // NOI18N
         btnRegresar.setContentAreaFilled(false);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarContenidoGaleria.png"))); // NOI18N
         btnBuscar.setContentAreaFilled(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +168,7 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRegresar)
-                        .addGap(395, 395, 395)
+                        .addGap(392, 392, 392)
                         .addComponent(btnBuscar))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(60, Short.MAX_VALUE))
@@ -169,40 +194,42 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmBuscarContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmBuscarContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmBuscarContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmBuscarContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        Date date = dateChooser.getDate();
+        LocalDateTime fechaHora = null;
+        
+        if(date != null) {
+            Instant instant = date.toInstant();
+            ZoneId zona = ZoneId.systemDefault();
+            fechaHora = instant.atZone(zona).toLocalDateTime();
         }
-        //</editor-fold>
+        
+        String nombre = txfNombre.getText();
+        String autor = txfCreador.getText();
+        
+        if (nombre.isBlank()) {
+            nombre = null;
+        }
+        if (autor.isBlank()) {
+            autor = null;
+        }
+        
+        ContenidoBusquedaDTO busquedaDTO = new ContenidoBusquedaDTO(
+                nombre,
+                autor,
+                fechaHora
+        );
+        
+        ControlNavegacion.setContenidoBusquedaDTOGC(busquedaDTO);
+        
+        ControlNavegacion.mostrarFrmContenidos();
+        this.dispose();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmBuscarContenido().setVisible(true);
-            }
-        });
-    }
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        ControlNavegacion.mostrarFrmContenidos();
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -212,7 +239,7 @@ public class FrmBuscarContenido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JPanel pnlFecha;
     private javax.swing.JTextField txfCreador;
     private javax.swing.JTextField txfNombre;
     // End of variables declaration//GEN-END:variables

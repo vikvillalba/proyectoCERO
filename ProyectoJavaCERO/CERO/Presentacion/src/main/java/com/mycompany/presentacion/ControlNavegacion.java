@@ -11,12 +11,24 @@ import DTOs.GestionarClases.EditarClaseDTO;
 import DTOs.GestionarClases.MaestroDTO;
 import DTOs.GestionarClases.NuevaClaseDTO;
 import Exception.GestionarAlumnosException;
+import Exceptions.GaleriaContenidosException;
 import Exceptions.GestionarClasesException;
 import FRM.GestionarAlumnos.FrmAdminAlumnos;
 import FRM.GestionarAlumnos.FrmEditarAlumno;
 import FRM.GestionarAlumnos.FrmInscripcionesClasesAlumno;
 import FRM.GestionarAlumnos.FrmRegistrarNuevoAlumno;
 import FRMs.*;
+import FRMs.GaleriaContenidos.FrmAñadirContenido;
+import FRMs.GaleriaContenidos.FrmBuscarClases;
+import FRMs.GaleriaContenidos.FrmBuscarContenido;
+import FRMs.GaleriaContenidos.FrmClasesExistentesGC;
+import FRMs.GaleriaContenidos.FrmContenidos;
+import FRMs.GaleriaContenidos.FrmGaleria;
+import FRMs.GaleriaContenidos.FrmMensajeAñadidoCorrecto;
+import FRMs.GaleriaContenidos.FrmMensajeEliminacionExitosa;
+import FRMs.GaleriaContenidos.FrmMensajeEliminarContenido;
+import FRMs.GaleriaContenidos.FrmVistaContenido;
+import FRMs.GaleriaContenidos.FrmVistaPrevia;
 import FRMs.GestionarClases.FrmAdminClases;
 import FRMs.GestionarClases.FrmAlumnosClase;
 import FRMs.GestionarClases.PanelScrollEditarClase;
@@ -37,6 +49,9 @@ import com.mycompany.dtos.AlumnoBusquedaDTO;
 import com.mycompany.dtos.AlumnoDTO;
 import com.mycompany.dtos.AsistenciaDTO;
 import com.mycompany.dtos.ClaseDTO;
+import com.mycompany.dtos.ContenidoBusquedaDTO;
+import com.mycompany.dtos.ContenidoNuevoDTO;
+import com.mycompany.dtos.ContenidoViejoDTO;
 import com.mycompany.dtos.InscripcionClaseDTO;
 import com.mycompany.dtos.InscripcionDTO;
 import com.mycompany.dtos.NombreClaseParam;
@@ -55,6 +70,11 @@ import com.mycompany.presentacion.excepciones.PresentacionException;
 import com.mycompany.registroasistencias.IRegistroAsistencias;
 import com.mycompany.registroasistencias.RegistroAsistencias;
 import com.mycompany.registroasistencias.excepciones.AsistenciaException;
+import galeriaContenidos.GaleriaContenidos;
+import galeriaContenidos.IGaleriaContenidos;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -63,7 +83,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -77,6 +100,7 @@ public class ControlNavegacion {
     private static IRegistroAsistencias registroAsistencias = new RegistroAsistencias();
     private static IControlGestionarClases gestionarClases = new ControlGestionarClases();
     private static IControlGestionarAlumnos gestionarAlumnos = new ControlGestionarAlumnos();
+    private static IGaleriaContenidos galeriaContenidos = new GaleriaContenidos();
 
     private static FrmMenuPrincipal menuPrincipal;
 
@@ -1021,5 +1045,198 @@ public class ControlNavegacion {
     public static void cancelarInscripcion(InscripcionClaseDTO inscripcion) {
         gestionarAlumnos.cancelarInscripcion(inscripcion);
         JOptionPane.showMessageDialog(frameActual, "La inscripcion ya esta inactiva");
+    }
+    
+    public static void mostrarFrmAñadirContenido() {
+        new FrmAñadirContenido().setVisible(true);
+    }
+    
+    public static void mostrarFrmBuscarContenido() {
+        new FrmBuscarContenido().setVisible(true);
+    }
+    
+    public static void mostrarFrmContenidos() {
+        new FrmContenidos().setVisible(true);
+    }
+    
+    public static void mostrarFrmGaleria() {
+        new FrmGaleria().setVisible(true);
+    }
+    
+    public static void mostrarFrmMensajeAñadidoCorrecto() {
+        new FrmMensajeAñadidoCorrecto().setVisible(true);
+    }
+    
+    public static void mostrarFrmMensajeEliminacionExitosa() {
+        new FrmMensajeEliminacionExitosa().setVisible(true);
+    }
+    
+    public static void mostrarFrmMensajeEliminarContenido() {
+        new FrmMensajeEliminarContenido().setVisible(true);
+    }
+    
+    public static void mostrarFrmVistaContenido() {
+        new FrmVistaContenido().setVisible(true);
+    }
+    
+    public static void mostrarFrmVistaPrevia() {
+        new FrmVistaPrevia().setVisible(true);
+    }
+    public static void mostrarFrmBuscarClasesGC() {
+        new FrmBuscarClases().setVisible(true);
+    }
+    
+    public static void mostrarFrmClasesExistentesGC() {
+        new FrmClasesExistentesGC().setVisible(true);
+    }
+    
+    public static void leerContenidoGC(String ruta) {
+        try {
+            galeriaContenidos.leerContenido(ruta);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public static List<ClaseDTO> obtenerClasesGC(String nombre) {
+        List<ClaseDTO> clasesDTO = new ArrayList<>();
+        
+        try {
+            clasesDTO = galeriaContenidos.obtenerClases(nombre);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return clasesDTO;
+    }
+    
+    public static void seleccionarClaseGC(ClaseDTO clase) {
+        try {
+            galeriaContenidos.seleccionarClase(clase);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public static boolean registrarContenidoGC(ContenidoNuevoDTO contenido) {
+        try {
+            return galeriaContenidos.registrarContenido(contenido);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
+    public static boolean eliminarContenidoGC(ContenidoViejoDTO contenido) {
+        try {
+            return galeriaContenidos.eliminarContenido(contenido);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
+    public static boolean validarNombreContenidoRegistrarGC(String nombre) {
+        try {
+            return galeriaContenidos.validarNombreContenidoRegistrar(nombre);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
+    public static boolean validarAutorContenidoRegistrarGC(String autor) {
+        try {
+            return galeriaContenidos.validarAutorContenidoRegistrar(autor);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return false;
+    }
+    
+    public static void seleccionarContenidoGC(ContenidoViejoDTO contenido) {
+        try {
+            galeriaContenidos.seleccionarContenido(contenido);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public static List<ContenidoViejoDTO> obtenerListaContenidosGC() {
+        List<ContenidoViejoDTO> contenidosDTO = new ArrayList<>();
+        try {
+            return galeriaContenidos.obtenerListaContenidos();
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return contenidosDTO;
+    }
+    
+    public static ClaseDTO getClaseSeleccionadaGC() {
+        try {
+            return galeriaContenidos.getClaseSeleccionada();
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
+    public static ContenidoViejoDTO getContenidoViejoSeleccionadoGC() {
+        try {
+            return galeriaContenidos.getContenidoViejoSeleccionado();
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
+    public static void seleccionarContenidoViejoGC(ContenidoViejoDTO contenido) {
+        try {
+            galeriaContenidos.seleccionarContenidoViejo(contenido);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public static ContenidoNuevoDTO getContenidoNuevo() {
+        return galeriaContenidos.getContenidoNuevo();
+        
+    }
+    
+    public static JLabel mostrarContenidoBytes(byte[] bytes) {
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+            BufferedImage bufferedImage = ImageIO.read(bis);
+
+            ImageIcon iconOriginal = new ImageIcon(bufferedImage);
+            int anchoDeseado = 300;
+            int altoDeseado = 200;
+
+            Image imagenEscalada = iconOriginal.getImage().getScaledInstance(anchoDeseado, altoDeseado, Image.SCALE_SMOOTH);
+            ImageIcon iconEscalado = new ImageIcon(imagenEscalada);
+
+            JLabel label = new JLabel(iconEscalado);
+            
+            return label;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: No se pudo cargar la imagen.", "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
+    public static byte[] obtenerBytesContenido(ContenidoViejoDTO contenido) {
+        try {
+            return galeriaContenidos.obtenerBytesContenido(contenido);
+        } catch(GaleriaContenidosException e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage(), "Erorr", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
+    public static void setContenidoBusquedaDTOGC(ContenidoBusquedaDTO contenidoBusqueda) {
+        galeriaContenidos.setContenidoBusqueda(contenidoBusqueda);
+    }
+    
+    public static ContenidoBusquedaDTO getContenidoBusquedaDTOGC() {
+        return galeriaContenidos.getContenidoBusqueda();
     }
 }

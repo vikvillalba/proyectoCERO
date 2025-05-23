@@ -1,12 +1,11 @@
 package FRMs.GaleriaContenidos;
 
 import com.mycompany.dtos.ClaseDTO;
-import com.mycompany.dtos.ContenidoViejoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.List;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
@@ -16,23 +15,19 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
  *
  * @author daniel
  */
-public class FrmVistaContenido extends javax.swing.JFrame {
+public class FrmClasesExistentesGC extends javax.swing.JFrame {
 
     Image imagenFondo;
     
     /**
-     * Creates new form FrmVistaContenido
+     * Creates new form FrmClasesExistentes
      */
-    public FrmVistaContenido() {
+    public FrmClasesExistentesGC() {
         initComponents();
-        setTitle("Vista");
         
-        ContenidoViejoDTO contenido = ControlNavegacion.getContenidoViejoSeleccionadoGC();
-        
-        byte[] datos = ControlNavegacion.obtenerBytesContenido(contenido);
-        JLabel imagen = ControlNavegacion.mostrarContenidoBytes(datos);
-        
-        pnlContenedor.add(imagen);
+        String nombreClase = ControlNavegacion.getClaseSeleccionadaGC().getNombre();
+        List<ClaseDTO> clases = ControlNavegacion.obtenerClasesGC(nombreClase);
+        clases.forEach(c -> pnlContenedor.add(new PnlClaseExistente(c)));
         
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         
@@ -63,22 +58,26 @@ public class FrmVistaContenido extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         pnlContenedor = new javax.swing.JPanel();
-        btnRegresar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Menlo", 1, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(30, 47, 86));
-        jLabel4.setText("VISTA");
+        jLabel4.setText("CLASES EXISTENTES");
+
+        jScrollPane1.setBorder(null);
 
         pnlContenedor.setBackground(new java.awt.Color(30, 47, 86));
+        pnlContenedor.setLayout(new javax.swing.BoxLayout(pnlContenedor, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(pnlContenedor);
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarContenidos.png"))); // NOI18N
-        btnRegresar.setContentAreaFilled(false);
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Regresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -86,41 +85,44 @@ public class FrmVistaContenido extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRegresar)
-                            .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(223, 223, 223)
+                        .addComponent(jLabel4))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(388, 388, 388)
-                        .addComponent(jLabel4)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addGap(382, 382, 382)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(btnRegresar)
-                .addGap(18, 18, 18))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        ControlNavegacion.mostrarFrmContenidos();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ControlNavegacion.mostrarFrmBuscarClasesGC();
         this.dispose();
-    }//GEN-LAST:event_btnRegresarActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegresar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlContenedor;
     // End of variables declaration//GEN-END:variables
 }

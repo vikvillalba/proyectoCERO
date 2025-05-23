@@ -23,6 +23,12 @@ public class ContenidoBusquedaDTO {
         this.clase = clase;
     }
 
+    public ContenidoBusquedaDTO(String nombre, String autor, LocalDateTime fechaHora) {
+        this.nombre = nombre;
+        this.autor = autor;
+        this.fechaHora = fechaHora;
+    }
+
     public String getNombre() {
         return nombre;
     }

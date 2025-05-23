@@ -1,10 +1,14 @@
 package FRMs.GaleriaContenidos;
 
+import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
@@ -21,8 +25,11 @@ public class FrmAñadirContenido extends javax.swing.JFrame {
      */
     public FrmAñadirContenido() {
         initComponents();
-        
         setTitle("Añadir Contenido");
+        
+        ControlNavegacion.getContenidoNuevo().setContenido(null);
+        ControlNavegacion.getContenidoNuevo().setAutor(null);
+        ControlNavegacion.getContenidoNuevo().setNombre(null);
         
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         
@@ -78,13 +85,16 @@ public class FrmAñadirContenido extends javax.swing.JFrame {
         jLabel2.setText("Guardar como:");
 
         txfGuardarComo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txfGuardarComo.setText("contenido1");
 
         txfCreador.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        txfCreador.setText("César");
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarAñadirContenido.png"))); // NOI18N
         btnBuscar.setContentAreaFilled(false);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarContenidos.png"))); // NOI18N
         btnRegresar.setContentAreaFilled(false);
@@ -156,40 +166,32 @@ public class FrmAñadirContenido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAñadirContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAñadirContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAñadirContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAñadirContenido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Imágenes PNG y JPG", "png", "jpg");
+        fileChooser.setFileFilter(filter);
+        
+        int resultado = fileChooser.showOpenDialog(null);
+        
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+            String ruta = archivoSeleccionado.getAbsolutePath();
+            
+            ControlNavegacion.leerContenidoGC(ruta);
+            
+            String nombre = txfGuardarComo.getText();
+            String autor = txfCreador.getText();
+            ControlNavegacion.getContenidoNuevo().setNombre(nombre);
+            ControlNavegacion.getContenidoNuevo().setAutor(autor);
+            
+            ControlNavegacion.mostrarFrmVistaPrevia();
+            this.dispose();
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmAñadirContenido().setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

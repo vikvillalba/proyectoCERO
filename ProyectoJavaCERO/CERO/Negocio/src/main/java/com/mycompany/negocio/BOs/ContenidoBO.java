@@ -9,13 +9,10 @@ import com.mycompany.dtos.ContenidoNuevoDTO;
 import com.mycompany.dtos.ContenidoViejoDTO;
 import com.mycompany.negocio.InterfazBO.IContenidoBO;
 import com.mycompany.negocio.excepciones.NegocioException;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import DAOs.IContenidoDAO;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -32,20 +29,15 @@ public class ContenidoBO implements IContenidoBO {
     @Override
     public boolean registrarContenido(ContenidoNuevoDTO contenido) throws NegocioException {
         ClaseDTO clase = contenido.getClase();
+        Clase claseEn = new Clase();
+        claseEn.setCodigo(contenido.getClase().getCodigo());
         
         Contenido c = new Contenido(
                     contenido.getNombre(),
                     contenido.getAutor(),
                     contenido.getFechaHora(),
                     contenido.getContenido(),
-                    new Clase(clase.getNombre(),
-                            clase.getDias(),
-                            clase.getHoraInicio(),
-                            clase.getHoraFin(), 
-                            clase.getMaestro(),
-                            clase.getPrecio(),
-                            clase.getFechaInicio(),
-                            clase.getFechaFin())
+                    contenido.getClase().getCodigo()
         );
         
         try {
@@ -63,7 +55,7 @@ public class ContenidoBO implements IContenidoBO {
 
     @Override
     public boolean eliminarContenido(ContenidoViejoDTO contenido) throws NegocioException {
-        Integer id = (Integer) contenido.getId();
+        ObjectId id = (ObjectId) contenido.getId();
         Contenido c = new Contenido();
         c.setId(id);
         
@@ -83,21 +75,16 @@ public class ContenidoBO implements IContenidoBO {
     @Override
     public List<ContenidoViejoDTO> obtenerListaContenidos(ContenidoBusquedaDTO contenido) throws NegocioException {
         ClaseDTO clase = contenido.getClase();
+        Clase claseEntity = new Clase();
+        claseEntity.setCodigo(clase.getCodigo());
+        
         
         try {
             List<Contenido> contenidos = this.contenidoDAO.obtenerListaContenidos(
                     contenido.getNombre(),
                     contenido.getAutor(),
                     contenido.getFechaHora(),
-                    new Clase(
-                            clase.getNombre(),
-                            clase.getDias(),
-                            clase.getHoraInicio(),
-                            clase.getHoraFin(), 
-                            clase.getMaestro(),
-                            clase.getPrecio(),
-                            clase.getFechaInicio(),
-                            clase.getFechaFin())
+                    claseEntity
             );
             
             return contenidos.stream()
@@ -106,16 +93,7 @@ public class ContenidoBO implements IContenidoBO {
                                      c.getNombre(),
                                      c.getAutor(),
                                      c.getFechaHora(),
-                                     new ClaseDTO(
-                                             c.getClase().getCodigo(),
-                                             c.getClase().getNombre(),
-                                             c.getClase().getDias(),
-                                             c.getClase().getHoraInicio(),
-                                             c.getClase().getHoraFin(), 
-                                             c.getClase().getNombreMaestro(),
-                                             c.getClase().getPrecio(),
-                                             c.getClase().getFechaInicio(),
-                                             c.getClase().getFechaFin())
+                                     new ClaseDTO(c.getCodigoClase())
                                      ))
                               .collect(Collectors.toList());
         } catch(PersistenciaException e) {
@@ -125,20 +103,15 @@ public class ContenidoBO implements IContenidoBO {
 
     @Override
     public byte[] obtenerBytesContenido(ContenidoViejoDTO contenido) throws NegocioException {
+        Clase clase = new Clase();
+        clase.setCodigo(contenido.getClase().getCodigo());
+        
         Contenido c = new Contenido(
-                 (Integer) contenido.getId(),
+                 (ObjectId) contenido.getId(),
                  contenido.getNombre(),
                  contenido.getAutor(),
                  contenido.getFechaHora(),
-                 new Clase( contenido.getClase().getCodigo(),
-                         contenido.getClase().getNombre(),
-                         contenido.getClase().getDias(),
-                         contenido.getClase().getHoraInicio(),
-                         contenido.getClase().getHoraFin(),
-                         contenido.getClase().getPrecio(),
-                         contenido.getClase().getFechaInicio(),
-                         contenido.getClase().getFechaFin(),
-                         contenido.getClase().getMaestro())
+                 clase.getCodigo()
         );
         
         try {
@@ -149,8 +122,5 @@ public class ContenidoBO implements IContenidoBO {
             throw new NegocioException(e.getMessage());
         }
     }
-
-    
-    
     
 }

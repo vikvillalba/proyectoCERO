@@ -69,6 +69,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         btnGaleriaProyectos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGaleriaProyectos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
         btnGaleriaProyectos.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/proyectosHovered.png"))); // NOI18N
+        btnGaleriaProyectos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGaleriaProyectosActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnGaleriaProyectos, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 560, -1, -1));
 
         btnGestionarClases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/GestionarClase.png"))); // NOI18N
@@ -153,6 +158,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
       ControlNavegacion.mostrarFrmAdminAlumnos();
       this.dispose();
     }//GEN-LAST:event_btnGestionarAlumnosActionPerformed
+
+    private void btnGaleriaProyectosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaleriaProyectosActionPerformed
+        ControlNavegacion.mostrarFrmBuscarClasesGC();
+        this.dispose();
+    }//GEN-LAST:event_btnGaleriaProyectosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

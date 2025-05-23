@@ -25,6 +25,10 @@ public class ClaseDTO {
     public ClaseDTO() {
     }
 
+    public ClaseDTO(Integer codigo) {
+        this.codigo = codigo;
+    }
+
     public ClaseDTO(Integer codigo, String nombre, List<DayOfWeek> dias, LocalTime horaInicio, LocalTime horaFin, String maestro, BigDecimal precio, LocalDate fechaInicio, LocalDate fechaFin) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -52,6 +56,14 @@ public class ClaseDTO {
 
     public Integer getCodigo() {
         return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getNombre() {

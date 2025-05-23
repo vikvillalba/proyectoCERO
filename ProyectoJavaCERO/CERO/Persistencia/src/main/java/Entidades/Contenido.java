@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.time.LocalDateTime;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -8,46 +9,46 @@ import java.time.LocalDateTime;
  */
 public class Contenido {
     
-    private Integer id;
+    private ObjectId id;
     private String nombre;
     private String autor;
     private LocalDateTime fechaHora;
     private byte[] contenido;
-    private Clase clase;
+    private Integer codigoClase;
 
     public Contenido() {
     }
 
-    public Contenido(Integer id, String nombre, String autor, LocalDateTime fechaHora, byte[] contenido, Clase clase) {
+    public Contenido(ObjectId id, String nombre, String autor, LocalDateTime fechaHora, byte[] contenido, Integer codigoClase) {
         this.id = id;
         this.nombre = nombre;
         this.autor = autor;
         this.fechaHora = fechaHora;
         this.contenido = contenido;
-        this.clase = clase;
+        this.codigoClase = codigoClase;
     }
 
-    public Contenido(String nombre, String autor, LocalDateTime fechaHora, byte[] contenido, Clase clase) {
+    public Contenido(String nombre, String autor, LocalDateTime fechaHora, byte[] contenido, Integer codigoClase) {
         this.nombre = nombre;
         this.autor = autor;
         this.fechaHora = fechaHora;
         this.contenido = contenido;
-        this.clase = clase;
+        this.codigoClase = codigoClase;
     }
 
-    public Contenido(Integer id, String nombre, String autor, LocalDateTime fechaHora, Clase clase) {
+    public Contenido(ObjectId id, String nombre, String autor, LocalDateTime fechaHora, Integer codigoClase) {
         this.id = id;
         this.nombre = nombre;
         this.autor = autor;
         this.fechaHora = fechaHora;
-        this.clase = clase;
+        this.codigoClase = codigoClase;
     }
 
-    public Integer getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -83,17 +84,17 @@ public class Contenido {
         this.contenido = contenido;
     }
 
-    public Clase getClase() {
-        return clase;
+    public Integer getCodigoClase() {
+        return codigoClase;
     }
 
-    public void setClase(Clase clase) {
-        this.clase = clase;
+    public void setCodigoClase(Integer codigoClase) {
+        this.codigoClase = codigoClase;
     }
 
     @Override
     public String toString() {
-        return "Contenido{" + "id=" + id + ", nombre=" + nombre + ", autor=" + autor + ", fechaHora=" + fechaHora + ", clase=" + clase + '}';
+        return "Contenido{" + "id=" + id + ", nombre=" + nombre + ", autor=" + autor + ", fechaHora=" + fechaHora + ", clase=" + codigoClase + '}';
     }
     
 }

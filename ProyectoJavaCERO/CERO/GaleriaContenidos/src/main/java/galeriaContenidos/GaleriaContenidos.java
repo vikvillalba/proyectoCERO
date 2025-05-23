@@ -11,6 +11,10 @@ import com.mycompany.negocio.InterfazBO.IContenidoBO;
 import com.mycompany.negocio.excepciones.NegocioException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -19,23 +23,27 @@ import java.util.List;
  */
 public class GaleriaContenidos implements IGaleriaContenidos {
     
-    private static GaleriaContenidos control;
     private ContenidoNuevoDTO contenidoNuevo = new ContenidoNuevoDTO();
-    private ContenidoViejoDTO contenidoViejo;
-    private ClaseDTO claseVieja;
+    private ContenidoViejoDTO contenidoViejo; 
+    private ClaseDTO claseVieja = new ClaseDTO();
+//            new ClaseDTO(
+//            1, 
+//            "nombre", 
+//            null, 
+//            LocalTime.now(), 
+//            LocalTime.now(), 
+//            "maestro", 
+//            BigDecimal.valueOf(10), 
+//            LocalDate.now(), 
+//            LocalDate.now());
+    private ContenidoBusquedaDTO contenidoBusqueda = new ContenidoBusquedaDTO();
     private IContenidoBO contenidoBO;
     private IClasesBO clasesBO;
 
-    private GaleriaContenidos() {
+    public GaleriaContenidos() {
         this.contenidoBO = FabricaObjetosNegocio.obtenerContenidoBO();
         this.clasesBO = FabricaObjetosNegocio.obtenerClasesBO();
-    }
-    
-    public static GaleriaContenidos getInstancia() {
-        if (control == null) {
-            control = new GaleriaContenidos();
-        }
-        return control;
+        this.contenidoNuevo.setClase(claseVieja);
     }
     
     @Override
@@ -51,6 +59,7 @@ public class GaleriaContenidos implements IGaleriaContenidos {
             }
             
             this.contenidoNuevo.setContenido(datos);
+            System.err.println(datos);
         } catch(IOException e) {
             throw new GaleriaContenidosException("No se pudo leer archivo.");
         }
@@ -58,11 +67,16 @@ public class GaleriaContenidos implements IGaleriaContenidos {
     
     @Override
     public List<ClaseDTO> obtenerClases(String nombre) throws GaleriaContenidosException {
-        if (nombre.isBlank() || nombre == null) {
+        if (nombre == null) {
             throw new GaleriaContenidosException("El nombre no puede estar vacio.");
         }
         
-        return null;
+        try {
+            List<ClaseDTO> clasesDTO = clasesBO.obtenerClasesNombre(nombre);
+            return clasesDTO;
+        } catch(NegocioException e) {
+            throw new GaleriaContenidosException("No se pudo obtener la lista de Clases.");
+        }
     }
     
     @Override
@@ -71,14 +85,16 @@ public class GaleriaContenidos implements IGaleriaContenidos {
             throw new GaleriaContenidosException("La Clase no puede estar vacia.");
         }
         
-        this.contenidoNuevo.setClase(clase);
+        this.claseVieja = clase;
     }
     
     @Override
     public boolean registrarContenido(ContenidoNuevoDTO contenido) throws GaleriaContenidosException {
         if (contenido == null) {
             throw new GaleriaContenidosException("El contenido esta vacio.");
-        }
+        }   
+        
+        contenido.setFechaHora(LocalDateTime.now());
         
         try {
             boolean exito = this.contenidoBO.registrarContenido(contenido);
@@ -99,6 +115,8 @@ public class GaleriaContenidos implements IGaleriaContenidos {
             throw new GaleriaContenidosException("El contenido esta vacio.");
         }
                 
+        contenido.setClase(claseVieja);
+        
         try {
             boolean exito = this.contenidoBO.eliminarContenido(contenido);
             
@@ -138,11 +156,13 @@ public class GaleriaContenidos implements IGaleriaContenidos {
     }
     
     @Override
-    public List<ContenidoViejoDTO> obtenerListaContenidos(ContenidoBusquedaDTO contenido) throws GaleriaContenidosException {
+    public List<ContenidoViejoDTO> obtenerListaContenidos() throws GaleriaContenidosException {
+        contenidoBusqueda.setClase(claseVieja);
+        
         try {
-            List<ContenidoViejoDTO> listaContenidos = this.contenidoBO.obtenerListaContenidos(contenido);
+            List<ContenidoViejoDTO> listaContenidos = this.contenidoBO.obtenerListaContenidos(contenidoBusqueda);
             
-            if (listaContenidos.isEmpty() || listaContenidos == null) {
+            if (listaContenidos == null) {
                 throw new GaleriaContenidosException("No se encontraron contenidos.");
             }
             
@@ -182,6 +202,32 @@ public class GaleriaContenidos implements IGaleriaContenidos {
     @Override
     public ContenidoNuevoDTO getContenidoNuevo() {
         return this.contenidoNuevo;
+    }
+    
+    @Override
+    public byte[] obtenerBytesContenido(ContenidoViejoDTO contenido) throws GaleriaContenidosException {
+        contenido.setClase(claseVieja);
+        
+        try {
+            byte[] datos = contenidoBO.obtenerBytesContenido(contenido);
+            if (datos.length == 0 || datos == null) {
+                throw new GaleriaContenidosException("Los datos del Contenido no estan.");
+            }
+            
+            return datos;
+        } catch(NegocioException e) {
+            throw new GaleriaContenidosException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ContenidoBusquedaDTO getContenidoBusqueda() {
+        return contenidoBusqueda;
+    }
+
+    @Override
+    public void setContenidoBusqueda(ContenidoBusquedaDTO contenidoBusqueda) {
+        this.contenidoBusqueda = contenidoBusqueda;
     }
     
 }

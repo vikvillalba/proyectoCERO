@@ -1,8 +1,16 @@
 package FRMs.GaleriaContenidos;
 
+import com.mycompany.dtos.ContenidoBusquedaDTO;
+import com.mycompany.dtos.ContenidoViejoDTO;
 import com.mycompany.presentacion.ControlNavegacion;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.List;
+import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.text.SimpleAttributeSet;
@@ -26,9 +34,12 @@ public class FrmContenidos extends javax.swing.JFrame {
         initComponents();
         setTitle("Contenidos");
         
-        for (int i = 0; i < 10; i++) {
-            pnlContenedor.add(new PnlContenido());
-        }
+        List<ContenidoViejoDTO> clases = ControlNavegacion.obtenerListaContenidosGC();
+        clases.forEach(c -> pnlContenedor.add(new PnlContenido(c)));
+        
+        ControlNavegacion.setContenidoBusquedaDTOGC(new ContenidoBusquedaDTO());
+        
+        mostrarDatosClase();
         
         this.imagenFondo = new ImageIcon(getClass().getResource("/Utilerias/FondoCERO.jpeg")).getImage();
         
@@ -64,7 +75,7 @@ public class FrmContenidos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txfId = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txpNombreClase = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -81,8 +92,8 @@ public class FrmContenidos extends javax.swing.JFrame {
         pnlContenedor = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnBuscarContenido = new javax.swing.JButton();
+        btnGaleria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,12 +121,12 @@ public class FrmContenidos extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(148, 197, 227));
         jLabel5.setText("MAESTRO");
 
-        jTextField1.setEditable(false);
-        jTextField1.setBackground(new java.awt.Color(30, 47, 86));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("01");
-        jTextField1.setBorder(null);
+        txfId.setEditable(false);
+        txfId.setBackground(new java.awt.Color(30, 47, 86));
+        txfId.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txfId.setForeground(new java.awt.Color(255, 255, 255));
+        txfId.setText("01");
+        txfId.setBorder(null);
 
         jScrollPane1.setBackground(new java.awt.Color(30, 47, 86));
         jScrollPane1.setBorder(null);
@@ -191,7 +202,7 @@ public class FrmContenidos extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -223,7 +234,7 @@ public class FrmContenidos extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane2))
@@ -292,17 +303,37 @@ public class FrmContenidos extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresar.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnAñadirContenido.png"))); // NOI18N
         jButton2.setBorder(null);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarContenido.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setContentAreaFilled(false);
+        btnBuscarContenido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarContenido.png"))); // NOI18N
+        btnBuscarContenido.setBorder(null);
+        btnBuscarContenido.setContentAreaFilled(false);
+        btnBuscarContenido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarContenidoActionPerformed(evt);
+            }
+        });
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnGaleria.png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.setContentAreaFilled(false);
+        btnGaleria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnGaleria.png"))); // NOI18N
+        btnGaleria.setBorder(null);
+        btnGaleria.setContentAreaFilled(false);
+        btnGaleria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGaleriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -321,11 +352,11 @@ public class FrmContenidos extends javax.swing.JFrame {
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(btnBuscarContenido)
                         .addGap(31, 31, 31)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5))
+                        .addComponent(btnGaleria))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -343,7 +374,7 @@ public class FrmContenidos extends javax.swing.JFrame {
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton5)
+                                .addComponent(btnGaleria)
                                 .addGap(55, 55, 55)))
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -355,57 +386,61 @@ public class FrmContenidos extends javax.swing.JFrame {
                         .addGap(22, 22, 22))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addComponent(jButton3)
+                        .addComponent(btnBuscarContenido)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void mostrarContenidos() {
-        
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmContenidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmContenidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmContenidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmContenidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ControlNavegacion.mostrarFrmAñadirContenido();
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmContenidos().setVisible(true);
-            }
-        });
+    private void btnBuscarContenidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarContenidoActionPerformed
+        ControlNavegacion.mostrarFrmBuscarContenido();
+        this.dispose();
+    }//GEN-LAST:event_btnBuscarContenidoActionPerformed
+
+    private void btnGaleriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGaleriaActionPerformed
+        ControlNavegacion.mostrarFrmGaleria();
+        this.dispose();
+    }//GEN-LAST:event_btnGaleriaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ControlNavegacion.mostrarFrmClasesExistentesGC();
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void mostrarDatosClase() {
+        txfId.setText(ControlNavegacion.getClaseSeleccionadaGC().getId().toString());
+        txpNombreClase.setText(ControlNavegacion.getClaseSeleccionadaGC().getNombre());
+        txpMaestro.setText(ControlNavegacion.getClaseSeleccionadaGC().getMaestro());
+        
+        StringBuilder horario = new StringBuilder();
+        Locale locale = new Locale("es", "ES");
+        List<DayOfWeek> dias = ControlNavegacion.getClaseSeleccionadaGC().getDias();
+        for (DayOfWeek dia : dias) {
+            String nombre = dia.getDisplayName(TextStyle.FULL, locale);
+            horario.append(nombre.substring(0, 2));
+        }
+
+        LocalTime horaInicio = ControlNavegacion.getClaseSeleccionadaGC().getHoraInicio();
+        LocalTime horaFin = ControlNavegacion.getClaseSeleccionadaGC().getHoraFin();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        horario.append("\n" + horaInicio.format(formatter));
+        horario.append("-").append(horaFin.format(formatter));
+        
+        txpHorario.setText(horario.toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscarContenido;
+    private javax.swing.JButton btnGaleria;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -422,8 +457,8 @@ public class FrmContenidos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnlContenedor;
+    private javax.swing.JTextField txfId;
     private javax.swing.JTextPane txpHorario;
     private javax.swing.JTextPane txpMaestro;
     private javax.swing.JTextPane txpNombreClase;

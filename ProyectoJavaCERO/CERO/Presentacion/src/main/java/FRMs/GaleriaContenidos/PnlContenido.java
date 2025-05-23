@@ -1,8 +1,9 @@
 package FRMs.GaleriaContenidos;
 
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import com.mycompany.dtos.ContenidoViejoDTO;
+import com.mycompany.presentacion.ControlNavegacion;
+import java.time.format.DateTimeFormatter;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -10,11 +11,20 @@ import javax.swing.text.StyledDocument;
  */
 public class PnlContenido extends javax.swing.JPanel {
 
+    private ContenidoViejoDTO contenido;
+    
     /**
      * Creates new form PnlContenido
      */
-    public PnlContenido() {
+    public PnlContenido(ContenidoViejoDTO contenido) {
         initComponents();
+        this.contenido = contenido;
+        
+        txpNombre.setText(contenido.getNombre());
+        txpMaestro.setText(contenido.getAutor());
+        
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        txfFechaHora.setText(contenido.getFechaHora().format(formato));
     }
 
     /**
@@ -31,8 +41,8 @@ public class PnlContenido extends javax.swing.JPanel {
         jScrollPane5 = new javax.swing.JScrollPane();
         txpNombre = new javax.swing.JTextPane();
         txfFechaHora = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnVer = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(30, 47, 86));
         setMaximumSize(new java.awt.Dimension(1200, 99));
@@ -70,16 +80,23 @@ public class PnlContenido extends javax.swing.JPanel {
         txfFechaHora.setText("jTextField4");
         txfFechaHora.setBorder(null);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnVer.png"))); // NOI18N
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnVer.png"))); // NOI18N
+        btnVer.setBorder(null);
+        btnVer.setContentAreaFilled(false);
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVerActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnEliminarContenido.png"))); // NOI18N
-        jButton2.setContentAreaFilled(false);
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnEliminarContenido.png"))); // NOI18N
+        btnEliminar.setBorder(null);
+        btnEliminar.setContentAreaFilled(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -92,36 +109,49 @@ public class PnlContenido extends javax.swing.JPanel {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txfFechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(42, 42, 42)
-                .addComponent(jButton2)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addComponent(btnVer)
+                .addGap(41, 41, 41)
+                .addComponent(btnEliminar)
+                .addGap(27, 27, 27))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3)
-                        .addComponent(txfFechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton2)
-                        .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)
+                            .addComponent(txfFechaHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnVer))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        ControlNavegacion.seleccionarContenidoViejoGC(this.contenido);
+        ControlNavegacion.mostrarFrmVistaContenido();
+        
+        SwingUtilities.getWindowAncestor(this).dispose();
+    }//GEN-LAST:event_btnVerActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        ControlNavegacion.seleccionarContenidoViejoGC(contenido);
+        
+        ControlNavegacion.mostrarFrmMensajeEliminarContenido();
+        SwingUtilities.getWindowAncestor(this).dispose();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnVer;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextField txfFechaHora;

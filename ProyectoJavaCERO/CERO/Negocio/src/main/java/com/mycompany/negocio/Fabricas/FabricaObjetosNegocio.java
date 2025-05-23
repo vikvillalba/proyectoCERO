@@ -33,6 +33,7 @@ import DAOs.IInscripcionesDAO;
 import ObserverInscribirClase.NotificadorInscripcion;
 import implementaciones.InscripcionesDAO;
 import com.mycompany.negocio.InterfazBO.IClasesBO;
+import implementaciones.ContenidoMongoDAO;
 
 
 /**
@@ -103,7 +104,7 @@ public class FabricaObjetosNegocio {
     }
     
     public static IContenidoBO obtenerContenidoBO() {
-        IContenidoDAO dao = new ContenidoDAO();
+        IContenidoDAO dao = new ContenidoMongoDAO();
         IContenidoBO bo = new ContenidoBO(dao);
         return bo;
     }
