@@ -28,9 +28,6 @@ public class ContenidoBO implements IContenidoBO {
 
     @Override
     public boolean registrarContenido(ContenidoNuevoDTO contenido) throws NegocioException {
-        ClaseDTO clase = contenido.getClase();
-        Clase claseEn = new Clase();
-        claseEn.setCodigo(contenido.getClase().getCodigo());
         
         Contenido c = new Contenido(
                     contenido.getNombre(),

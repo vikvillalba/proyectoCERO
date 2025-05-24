@@ -94,6 +94,7 @@ public class GaleriaContenidos implements IGaleriaContenidos {
             throw new GaleriaContenidosException("El contenido esta vacio.");
         }   
         
+        contenido.setClase(claseVieja);
         contenido.setFechaHora(LocalDateTime.now());
         
         try {

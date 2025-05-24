@@ -89,6 +89,7 @@ public class FrmAñadirContenido extends javax.swing.JFrame {
         txfCreador.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnBuscarAñadirContenido.png"))); // NOI18N
+        btnBuscar.setBorder(null);
         btnBuscar.setContentAreaFilled(false);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,6 +98,7 @@ public class FrmAñadirContenido extends javax.swing.JFrame {
         });
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnRegresarContenidos.png"))); // NOI18N
+        btnRegresar.setBorder(null);
         btnRegresar.setContentAreaFilled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -160,7 +162,7 @@ public class FrmAñadirContenido extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();

@@ -414,7 +414,7 @@ public class FrmContenidos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void mostrarDatosClase() {
-        txfId.setText(ControlNavegacion.getClaseSeleccionadaGC().getId().toString());
+        txfId.setText(ControlNavegacion.getClaseSeleccionadaGC().getCodigo().toString());
         txpNombreClase.setText(ControlNavegacion.getClaseSeleccionadaGC().getNombre());
         txpMaestro.setText(ControlNavegacion.getClaseSeleccionadaGC().getMaestro());
         

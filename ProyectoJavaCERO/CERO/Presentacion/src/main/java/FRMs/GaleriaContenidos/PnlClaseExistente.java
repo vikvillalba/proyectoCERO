@@ -2,6 +2,12 @@ package FRMs.GaleriaContenidos;
 
 import com.mycompany.dtos.ClaseDTO;
 import com.mycompany.presentacion.ControlNavegacion;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
+import java.util.List;
+import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -25,6 +31,23 @@ public class PnlClaseExistente extends javax.swing.JPanel {
         txfId.setText(clase.getCodigo().toString());
         txpNombreClase.setText(clase.getNombre());
         txpMaestro.setText(clase.getMaestro());
+        
+        StringBuilder horario = new StringBuilder();
+        Locale locale = new Locale("es", "ES");
+        List<DayOfWeek> dias = clase.getDias();
+        for (DayOfWeek dia : dias) {
+            String nombre = dia.getDisplayName(TextStyle.FULL, locale);
+            horario.append(nombre.substring(0, 2));
+        }
+
+        LocalTime horaInicio = clase.getHoraInicio();
+        LocalTime horaFin = clase.getHoraFin();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        horario.append("\n" + horaInicio.format(formatter));
+        horario.append("-").append(horaFin.format(formatter));
+        
+        txpHorario.setText(horario.toString());
     }
 
     /**
@@ -37,7 +60,7 @@ public class PnlClaseExistente extends javax.swing.JPanel {
     private void initComponents() {
 
         txfId = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSeleccionar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txpNombreClase = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -56,12 +79,12 @@ public class PnlClaseExistente extends javax.swing.JPanel {
         txfId.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txfId.setBorder(null);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnSeleccionarClaseGC.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Utilerias/botones/btnSeleccionarClaseGC.png"))); // NOI18N
+        btnSeleccionar.setBorder(null);
+        btnSeleccionar.setContentAreaFilled(false);
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSeleccionarActionPerformed(evt);
             }
         });
 
@@ -142,7 +165,7 @@ public class PnlClaseExistente extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addComponent(btnSeleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                 .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
@@ -155,20 +178,20 @@ public class PnlClaseExistente extends javax.swing.JPanel {
             .addComponent(jScrollPane3)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         ControlNavegacion.seleccionarClaseGC(clase);
         ControlNavegacion.mostrarFrmContenidos();
         SwingUtilities.getWindowAncestor(this).dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSeleccionar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
